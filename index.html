@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QRP2P MARKETPLACE</title>
+    
+    <!-- PWA Meta Tags for Google -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="QRP2P">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="QRP2P MARKETPLACE">
+    <meta name="format-detection" content="telephone=no">
+    
+    <!-- Favicons for all platforms -->
+    <link rel="icon" type="image/png" sizes="192x192" href="img/icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="img/icon-512.png">
+    <link rel="apple-touch-icon" href="img/icon-192.png">
+    
+    <!-- Existing CSS and Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Serif+Pro:wght@400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #ffffff;
+            --secondary: #f5f5f5;
+            --accent: #e0e0e0;
+            --light: #4a4a4a;
+            --text: #000000;
+            --border: #d0d0d0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Libre Baskerville', 'Source Serif Pro', Georgia, serif;
+        }
+        
+        body {
+            background-color: var(--primary);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        /* Install button for PWA */
+        #install-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--text);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 24px;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            display: none;
+        }
+        
+        #install-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+        }
+        
+        header {
+            background-color: var(--primary);
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .logo-container {
+            max-width: 400px;
+            margin: 0 auto 1rem;
+            padding: 0 1rem;
+        }
+        
+        .logo-container img {
+            width: 100%;
+            height: auto;
+            max-height: 80px;
+            object-fit: contain;
+        }
+        
+        .fallback-logo {
+            font-size: 2rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: var(--text);
+            border: 2px solid var(--text);
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+            color: var(--text);
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+        
+        .search-container {
+            margin: 2rem auto;
+            max-width: 600px;
+            position: relative;
+        }
+        
+        #marketplace-search {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            border: 1px solid var(--border);
+            background: var(--primary);
+            color: var(--text);
+            font-size: 1rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+        
+        #marketplace-search:focus {
+            outline: none;
+            background: var(--primary);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+            border-color: var(--light);
+        }
+        
+        #marketplace-search::placeholder {
+            color: rgba(0, 0, 0, 0.5);
+        }
+        
+        .cities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .city-card {
+            background: var(--primary);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            cursor: pointer;
+            border: 1px solid var(--border);
+        }
+        
+        .city-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            border-color: var(--light);
+        }
+        
+        .city-image {
+            height: 160px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            border-bottom: 1px solid var(--border);
+            background-color: #f0f0f0;
+        }
+        
+        .city-info {
+            padding: 1.5rem;
+        }
+        
+        .city-name {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+        }
+        
+        .city-name .flag-icon {
+            font-size: 1.5rem;
+            border-radius: 3px;
+        }
+        
+        .city-desc {
+            opacity: 0.8;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+        
+        .city-link {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--text);
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+        
+        .city-link:hover {
+            background: transparent;
+            border-color: var(--text);
+            color: var(--text);
+        }
+        
+        /* Offline indicator */
+        .offline-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #ff4444;
+            color: white;
+            text-align: center;
+            padding: 8px;
+            font-size: 0.9rem;
+            z-index: 2000;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .offline-indicator.show {
+            transform: translateY(0);
+        }
+        
+        footer {
+            background: var(--secondary);
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 3rem;
+            border-top: 1px solid var(--border);
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: var(--text);
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+        
+        .footer-links a:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .logo-container {
+                max-width: 300px;
+            }
+            
+            .tagline {
+                font-size: 1rem;
+                padding: 0 1rem;
+            }
+            
+            .cities-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+            
+            .city-image {
+                height: 120px;
+            }
+            
+            .city-info {
+                padding: 1rem;
+            }
+            
+            .city-name {
+                font-size: 1.1rem;
+            }
+            
+            #install-button {
+                bottom: 10px;
+                right: 10px;
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo-container {
+                max-width: 250px;
+            }
+            
+            .cities-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .city-card {
+            animation: fadeIn 0.5s ease forwards;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Offline indicator -->
+    <div class="offline-indicator" id="offline-indicator">
+        🔴 You are offline - Showing cached content
+    </div>
+    
+    <!-- Install button for PWA -->
+    <button id="install-button" style="display: none;">
+        📱 Install App
+    </button>
+    
+    <header>
+        <div class="logo-container">
+            <img src="img/c-index.png" 
+                 alt="QRP2P MARKETPLACE" 
+                 onerror="this.onerror=null; this.style.display='none'; this.parentElement.innerHTML='<div class=\'fallback-logo\'>QRP2P</div>';">
+        </div>
+        <div class="tagline">QRP2P MARKETPLACE</div>
+    </header>
+    
+    <div class="container">
+        <div class="search-container">
+            <input type="text" id="marketplace-search" placeholder="Search Marketplace">
+        </div>
+        
+        <div class="cities-grid" id="cities-container">
+            <!-- Cities will be inserted here by JavaScript -->
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-links">
+            <a href="terms.html">Terms of Service</a>
+        </div>
+        <div class="copyright">©️ QRP2P MARKETPLACE. All rights reserved. 196 Countries Worldwide.</div>
+    </footer>
+
+    <script>
+        // All 196 countries with subdomains - Now using QRP2P + Country Name format
+        const cities = [
+            { code: "AF", name: "QRP2P AFGHANISTAN", region: "Global", country: "Afghanistan", flag: "flag-icon flag-icon-af", description: "QRP2P Marketplace Afghanistan", subdomain: "af", link: "https://af.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "AL", name: "QRP2P ALBANIA", region: "Global", country: "Albania", flag: "flag-icon flag-icon-al", description: "QRP2P Marketplace Albania", subdomain: "al", link: "https://al.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "DZ", name: "QRP2P ALGERIA", region: "Global", country: "Algeria", flag: "flag-icon flag-icon-dz", description: "QRP2P Marketplace Algeria", subdomain: "dz", link: "https://dz.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "AD", name: "QRP2P ANDORRA", region: "Global", country: "Andorra", flag: "flag-icon flag-icon-ad", description: "QRP2P Marketplace Andorra", subdomain: "ad", link: "https://ad.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "AO", name: "QRP2P ANGOLA", region: "Global", country: "Angola", flag: "flag-icon flag-icon-ao", description: "QRP2P Marketplace Angola", subdomain: "ao", link: "https://ao.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "AG", name: "QRP2P ANTIGUA AND BARBUDA", region: "Global", country: "Antigua and Barbuda", flag: "flag-icon flag-icon-ag", description: "QRP2P Marketplace Antigua and Barbuda", subdomain: "ag", link: "https://ag.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "AR", name: "QRP2P ARGENTINA", region: "Global", country: "Argentina", flag: "flag-icon flag-icon-ar", description: "QRP2P Marketplace Argentina", subdomain: "ar", link: "https://ar.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "AM", name: "QRP2P ARMENIA", region: "Global", country: "Armenia", flag: "flag-icon flag-icon-am", description: "QRP2P Marketplace Armenia", subdomain: "am", link: "https://am.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "AU", name: "QRP2P AUSTRALIA", region: "Global", country: "Australia", flag: "flag-icon flag-icon-au", description: "QRP2P Marketplace Australia", subdomain: "au", link: "https://au.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "AT", name: "QRP2P AUSTRIA", region: "Global", country: "Austria", flag: "flag-icon flag-icon-at", description: "QRP2P Marketplace Austria", subdomain: "at", link: "https://at.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "AZ", name: "QRP2P AZERBAIJAN", region: "Global", country: "Azerbaijan", flag: "flag-icon flag-icon-az", description: "QRP2P Marketplace Azerbaijan", subdomain: "az", link: "https://az.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "BS", name: "QRP2P BAHAMAS", region: "Global", country: "Bahamas", flag: "flag-icon flag-icon-bs", description: "QRP2P Marketplace Bahamas", subdomain: "bs", link: "https://bs.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "BH", name: "QRP2P BAHRAIN", region: "Global", country: "Bahrain", flag: "flag-icon flag-icon-bh", description: "QRP2P Marketplace Bahrain", subdomain: "bh", link: "https://bh.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "BD", name: "QRP2P BANGLADESH", region: "Global", country: "Bangladesh", flag: "flag-icon flag-icon-bd", description: "QRP2P Marketplace Bangladesh", subdomain: "bd", link: "https://bd.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "BB", name: "QRP2P BARBADOS", region: "Global", country: "Barbados", flag: "flag-icon flag-icon-bb", description: "QRP2P Marketplace Barbados", subdomain: "bb", link: "https://bb.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "BY", name: "QRP2P BELARUS", region: "Global", country: "Belarus", flag: "flag-icon flag-icon-by", description: "QRP2P Marketplace Belarus", subdomain: "by", link: "https://by.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "BE", name: "QRP2P BELGIUM", region: "Global", country: "Belgium", flag: "flag-icon flag-icon-be", description: "QRP2P Marketplace Belgium", subdomain: "be", link: "https://be.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "BZ", name: "QRP2P BELIZE", region: "Global", country: "Belize", flag: "flag-icon flag-icon-bz", description: "QRP2P Marketplace Belize", subdomain: "bz", link: "https://bz.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "BJ", name: "QRP2P BENIN", region: "Global", country: "Benin", flag: "flag-icon flag-icon-bj", description: "QRP2P Marketplace Benin", subdomain: "bj", link: "https://bj.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "BT", name: "QRP2P BHUTAN", region: "Global", country: "Bhutan", flag: "flag-icon flag-icon-bt", description: "QRP2P Marketplace Bhutan", subdomain: "bt", link: "https://bt.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "BO", name: "QRP2P BOLIVIA", region: "Global", country: "Bolivia", flag: "flag-icon flag-icon-bo", description: "QRP2P Marketplace Bolivia", subdomain: "bo", link: "https://bo.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "BA", name: "QRP2P BOSNIA AND HERZEGOVINA", region: "Global", country: "Bosnia and Herzegovina", flag: "flag-icon flag-icon-ba", description: "QRP2P Marketplace Bosnia and Herzegovina", subdomain: "ba", link: "https://ba.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "BW", name: "QRP2P BOTSWANA", region: "Global", country: "Botswana", flag: "flag-icon flag-icon-bw", description: "QRP2P Marketplace Botswana", subdomain: "bw", link: "https://bw.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "BR", name: "QRP2P BRAZIL", region: "Global", country: "Brazil", flag: "flag-icon flag-icon-br", description: "QRP2P Marketplace Brazil", subdomain: "br", link: "https://br.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "BN", name: "QRP2P BRUNEI", region: "Global", country: "Brunei", flag: "flag-icon flag-icon-bn", description: "QRP2P Marketplace Brunei", subdomain: "bn", link: "https://bn.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "BG", name: "QRP2P BULGARIA", region: "Global", country: "Bulgaria", flag: "flag-icon flag-icon-bg", description: "QRP2P Marketplace Bulgaria", subdomain: "bg", link: "https://bg.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "BF", name: "QRP2P BURKINA FASO", region: "Global", country: "Burkina Faso", flag: "flag-icon flag-icon-bf", description: "QRP2P Marketplace Burkina Faso", subdomain: "bf", link: "https://bf.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "BI", name: "QRP2P BURUNDI", region: "Global", country: "Burundi", flag: "flag-icon flag-icon-bi", description: "QRP2P Marketplace Burundi", subdomain: "bi", link: "https://bi.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "CV", name: "QRP2P CABO VERDE", region: "Global", country: "Cabo Verde", flag: "flag-icon flag-icon-cv", description: "QRP2P Marketplace Cabo Verde", subdomain: "cv", link: "https://cv.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "KH", name: "QRP2P CAMBODIA", region: "Global", country: "Cambodia", flag: "flag-icon flag-icon-kh", description: "QRP2P Marketplace Cambodia", subdomain: "kh", link: "https://kh.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "CM", name: "QRP2P CAMEROON", region: "Global", country: "Cameroon", flag: "flag-icon flag-icon-cm", description: "QRP2P Marketplace Cameroon", subdomain: "cm", link: "https://cm.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "CA", name: "QRP2P CANADA", region: "Global", country: "Canada", flag: "flag-icon flag-icon-ca", description: "QRP2P Marketplace Canada", subdomain: "ca", link: "https://ca.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "CF", name: "QRP2P CENTRAL AFRICAN REPUBLIC", region: "Global", country: "Central African Republic", flag: "flag-icon flag-icon-cf", description: "QRP2P Marketplace Central African Republic", subdomain: "cf", link: "https://cf.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "TD", name: "QRP2P CHAD", region: "Global", country: "Chad", flag: "flag-icon flag-icon-td", description: "QRP2P Marketplace Chad", subdomain: "td", link: "https://td.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "CL", name: "QRP2P CHILE", region: "Global", country: "Chile", flag: "flag-icon flag-icon-cl", description: "QRP2P Marketplace Chile", subdomain: "cl", link: "https://cl.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "CN", name: "QRP2P CHINA", region: "Global", country: "China", flag: "flag-icon flag-icon-cn", description: "QRP2P Marketplace China", subdomain: "cn", link: "https://cn.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "CO", name: "QRP2P COLOMBIA", region: "Global", country: "Colombia", flag: "flag-icon flag-icon-co", description: "QRP2P Marketplace Colombia", subdomain: "co", link: "https://co.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "KM", name: "QRP2P COMOROS", region: "Global", country: "Comoros", flag: "flag-icon flag-icon-km", description: "QRP2P Marketplace Comoros", subdomain: "km", link: "https://km.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "CG", name: "QRP2P CONGO", region: "Global", country: "Congo", flag: "flag-icon flag-icon-cg", description: "QRP2P Marketplace Congo", subdomain: "cg", link: "https://cg.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "CR", name: "QRP2P COSTA RICA", region: "Global", country: "Costa Rica", flag: "flag-icon flag-icon-cr", description: "QRP2P Marketplace Costa Rica", subdomain: "cr", link: "https://cr.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "CI", name: "QRP2P CÔTE D'IVOIRE", region: "Global", country: "Côte d'Ivoire", flag: "flag-icon flag-icon-ci", description: "QRP2P Marketplace Côte d'Ivoire", subdomain: "ci", link: "https://ci.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "HR", name: "QRP2P CROATIA", region: "Global", country: "Croatia", flag: "flag-icon flag-icon-hr", description: "QRP2P Marketplace Croatia", subdomain: "hr", link: "https://hr.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "CU", name: "QRP2P CUBA", region: "Global", country: "Cuba", flag: "flag-icon flag-icon-cu", description: "QRP2P Marketplace Cuba", subdomain: "cu", link: "https://cu.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "CY", name: "QRP2P CYPRUS", region: "Global", country: "Cyprus", flag: "flag-icon flag-icon-cy", description: "QRP2P Marketplace Cyprus", subdomain: "cy", link: "https://cy.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "CZ", name: "QRP2P CZECH REPUBLIC", region: "Global", country: "Czech Republic", flag: "flag-icon flag-icon-cz", description: "QRP2P Marketplace Czech Republic", subdomain: "cz", link: "https://cz.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "DK", name: "QRP2P DENMARK", region: "Global", country: "Denmark", flag: "flag-icon flag-icon-dk", description: "QRP2P Marketplace Denmark", subdomain: "dk", link: "https://dk.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "DJ", name: "QRP2P DJIBOUTI", region: "Global", country: "Djibouti", flag: "flag-icon flag-icon-dj", description: "QRP2P Marketplace Djibouti", subdomain: "dj", link: "https://dj.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "DM", name: "QRP2P DOMINICA", region: "Global", country: "Dominica", flag: "flag-icon flag-icon-dm", description: "QRP2P Marketplace Dominica", subdomain: "dm", link: "https://dm.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "DO", name: "QRP2P DOMINICAN REPUBLIC", region: "Global", country: "Dominican Republic", flag: "flag-icon flag-icon-do", description: "QRP2P Marketplace Dominican Republic", subdomain: "do", link: "https://do.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "EC", name: "QRP2P ECUADOR", region: "Global", country: "Ecuador", flag: "flag-icon flag-icon-ec", description: "QRP2P Marketplace Ecuador", subdomain: "ec", link: "https://ec.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "EG", name: "QRP2P EGYPT", region: "Global", country: "Egypt", flag: "flag-icon flag-icon-eg", description: "QRP2P Marketplace Egypt", subdomain: "eg", link: "https://eg.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "SV", name: "QRP2P EL SALVADOR", region: "Global", country: "El Salvador", flag: "flag-icon flag-icon-sv", description: "QRP2P Marketplace El Salvador", subdomain: "sv", link: "https://sv.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "GQ", name: "QRP2P EQUATORIAL GUINEA", region: "Global", country: "Equatorial Guinea", flag: "flag-icon flag-icon-gq", description: "QRP2P Marketplace Equatorial Guinea", subdomain: "gq", link: "https://gq.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "ER", name: "QRP2P ERITREA", region: "Global", country: "Eritrea", flag: "flag-icon flag-icon-er", description: "QRP2P Marketplace Eritrea", subdomain: "er", link: "https://er.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "EE", name: "QRP2P ESTONIA", region: "Global", country: "Estonia", flag: "flag-icon flag-icon-ee", description: "QRP2P Marketplace Estonia", subdomain: "ee", link: "https://ee.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "SZ", name: "QRP2P ESWATINI", region: "Global", country: "Eswatini", flag: "flag-icon flag-icon-sz", description: "QRP2P Marketplace Eswatini", subdomain: "sz", link: "https://sz.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "ET", name: "QRP2P ETHIOPIA", region: "Global", country: "Ethiopia", flag: "flag-icon flag-icon-et", description: "QRP2P Marketplace Ethiopia", subdomain: "et", link: "https://et.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "FJ", name: "QRP2P FIJI", region: "Global", country: "Fiji", flag: "flag-icon flag-icon-fj", description: "QRP2P Marketplace Fiji", subdomain: "fj", link: "https://fj.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "FI", name: "QRP2P FINLAND", region: "Global", country: "Finland", flag: "flag-icon flag-icon-fi", description: "QRP2P Marketplace Finland", subdomain: "fi", link: "https://fi.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "FR", name: "QRP2P FRANCE", region: "Global", country: "France", flag: "flag-icon flag-icon-fr", description: "QRP2P Marketplace France", subdomain: "fr", link: "https://fr.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "GA", name: "QRP2P GABON", region: "Global", country: "Gabon", flag: "flag-icon flag-icon-ga", description: "QRP2P Marketplace Gabon", subdomain: "ga", link: "https://ga.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "GM", name: "QRP2P GAMBIA", region: "Global", country: "Gambia", flag: "flag-icon flag-icon-gm", description: "QRP2P Marketplace Gambia", subdomain: "gm", link: "https://gm.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "GE", name: "QRP2P GEORGIA", region: "Global", country: "Georgia", flag: "flag-icon flag-icon-ge", description: "QRP2P Marketplace Georgia", subdomain: "ge", link: "https://ge.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "DE", name: "QRP2P GERMANY", region: "Global", country: "Germany", flag: "flag-icon flag-icon-de", description: "QRP2P Marketplace Germany", subdomain: "de", link: "https://de.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "GH", name: "QRP2P GHANA", region: "Global", country: "Ghana", flag: "flag-icon flag-icon-gh", description: "QRP2P Marketplace Ghana", subdomain: "gh", link: "https://gh.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "GR", name: "QRP2P GREECE", region: "Global", country: "Greece", flag: "flag-icon flag-icon-gr", description: "QRP2P Marketplace Greece", subdomain: "gr", link: "https://gr.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "GD", name: "QRP2P GRENADA", region: "Global", country: "Grenada", flag: "flag-icon flag-icon-gd", description: "QRP2P Marketplace Grenada", subdomain: "gd", link: "https://gd.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "GT", name: "QRP2P GUATEMALA", region: "Global", country: "Guatemala", flag: "flag-icon flag-icon-gt", description: "QRP2P Marketplace Guatemala", subdomain: "gt", link: "https://gt.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "GN", name: "QRP2P GUINEA", region: "Global", country: "Guinea", flag: "flag-icon flag-icon-gn", description: "QRP2P Marketplace Guinea", subdomain: "gn", link: "https://gn.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "GW", name: "QRP2P GUINEA-BISSAU", region: "Global", country: "Guinea-Bissau", flag: "flag-icon flag-icon-gw", description: "QRP2P Marketplace Guinea-Bissau", subdomain: "gw", link: "https://gw.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "GY", name: "QRP2P GUYANA", region: "Global", country: "Guyana", flag: "flag-icon flag-icon-gy", description: "QRP2P Marketplace Guyana", subdomain: "gy", link: "https://gy.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "HT", name: "QRP2P HAITI", region: "Global", country: "Haiti", flag: "flag-icon flag-icon-ht", description: "QRP2P Marketplace Haiti", subdomain: "ht", link: "https://ht.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "HN", name: "QRP2P HONDURAS", region: "Global", country: "Honduras", flag: "flag-icon flag-icon-hn", description: "QRP2P Marketplace Honduras", subdomain: "hn", link: "https://hn.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "HU", name: "QRP2P HUNGARY", region: "Global", country: "Hungary", flag: "flag-icon flag-icon-hu", description: "QRP2P Marketplace Hungary", subdomain: "hu", link: "https://hu.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "IS", name: "QRP2P ICELAND", region: "Global", country: "Iceland", flag: "flag-icon flag-icon-is", description: "QRP2P Marketplace Iceland", subdomain: "is", link: "https://is.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "IN", name: "QRP2P INDIA", region: "Global", country: "India", flag: "flag-icon flag-icon-in", description: "QRP2P Marketplace India", subdomain: "in", link: "https://in.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "ID", name: "QRP2P INDONESIA", region: "Global", country: "Indonesia", flag: "flag-icon flag-icon-id", description: "QRP2P Marketplace Indonesia", subdomain: "id", link: "https://id.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "IR", name: "QRP2P IRAN", region: "Global", country: "Iran", flag: "flag-icon flag-icon-ir", description: "QRP2P Marketplace Iran", subdomain: "ir", link: "https://ir.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "IQ", name: "QRP2P IRAQ", region: "Global", country: "Iraq", flag: "flag-icon flag-icon-iq", description: "QRP2P Marketplace Iraq", subdomain: "iq", link: "https://iq.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "IE", name: "QRP2P IRELAND", region: "Global", country: "Ireland", flag: "flag-icon flag-icon-ie", description: "QRP2P Marketplace Ireland", subdomain: "ie", link: "https://ie.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "IL", name: "QRP2P ISRAEL", region: "Global", country: "Israel", flag: "flag-icon flag-icon-il", description: "QRP2P Marketplace Israel", subdomain: "il", link: "https://il.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "IT", name: "QRP2P ITALY", region: "Global", country: "Italy", flag: "flag-icon flag-icon-it", description: "QRP2P Marketplace Italy", subdomain: "it", link: "https://it.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "JM", name: "QRP2P JAMAICA", region: "Global", country: "Jamaica", flag: "flag-icon flag-icon-jm", description: "QRP2P Marketplace Jamaica", subdomain: "jm", link: "https://jm.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "JP", name: "QRP2P JAPAN", region: "Global", country: "Japan", flag: "flag-icon flag-icon-jp", description: "QRP2P Marketplace Japan", subdomain: "jp", link: "https://jp.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "JO", name: "QRP2P JORDAN", region: "Global", country: "Jordan", flag: "flag-icon flag-icon-jo", description: "QRP2P Marketplace Jordan", subdomain: "jo", link: "https://jo.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "KZ", name: "QRP2P KAZAKHSTAN", region: "Global", country: "Kazakhstan", flag: "flag-icon flag-icon-kz", description: "QRP2P Marketplace Kazakhstan", subdomain: "kz", link: "https://kz.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "KE", name: "QRP2P KENYA", region: "Global", country: "Kenya", flag: "flag-icon flag-icon-ke", description: "QRP2P Marketplace Kenya", subdomain: "ke", link: "https://ke.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "KI", name: "QRP2P KIRIBATI", region: "Global", country: "Kiribati", flag: "flag-icon flag-icon-ki", description: "QRP2P Marketplace Kiribati", subdomain: "ki", link: "https://ki.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "KP", name: "QRP2P NORTH KOREA", region: "Global", country: "North Korea", flag: "flag-icon flag-icon-kp", description: "QRP2P Marketplace North Korea", subdomain: "kp", link: "https://kp.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "KR", name: "QRP2P SOUTH KOREA", region: "Global", country: "South Korea", flag: "flag-icon flag-icon-kr", description: "QRP2P Marketplace South Korea", subdomain: "kr", link: "https://kr.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "KW", name: "QRP2P KUWAIT", region: "Global", country: "Kuwait", flag: "flag-icon flag-icon-kw", description: "QRP2P Marketplace Kuwait", subdomain: "kw", link: "https://kw.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "KG", name: "QRP2P KYRGYZSTAN", region: "Global", country: "Kyrgyzstan", flag: "flag-icon flag-icon-kg", description: "QRP2P Marketplace Kyrgyzstan", subdomain: "kg", link: "https://kg.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "LA", name: "QRP2P LAOS", region: "Global", country: "Laos", flag: "flag-icon flag-icon-la", description: "QRP2P Marketplace Laos", subdomain: "la", link: "https://la.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "LV", name: "QRP2P LATVIA", region: "Global", country: "Latvia", flag: "flag-icon flag-icon-lv", description: "QRP2P Marketplace Latvia", subdomain: "lv", link: "https://lv.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "LB", name: "QRP2P LEBANON", region: "Global", country: "Lebanon", flag: "flag-icon flag-icon-lb", description: "QRP2P Marketplace Lebanon", subdomain: "lb", link: "https://lb.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "LS", name: "QRP2P LESOTHO", region: "Global", country: "Lesotho", flag: "flag-icon flag-icon-ls", description: "QRP2P Marketplace Lesotho", subdomain: "ls", link: "https://ls.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "LR", name: "QRP2P LIBERIA", region: "Global", country: "Liberia", flag: "flag-icon flag-icon-lr", description: "QRP2P Marketplace Liberia", subdomain: "lr", link: "https://lr.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "LY", name: "QRP2P LIBYA", region: "Global", country: "Libya", flag: "flag-icon flag-icon-ly", description: "QRP2P Marketplace Libya", subdomain: "ly", link: "https://ly.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "LI", name: "QRP2P LIECHTENSTEIN", region: "Global", country: "Liechtenstein", flag: "flag-icon flag-icon-li", description: "QRP2P Marketplace Liechtenstein", subdomain: "li", link: "https://li.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "LT", name: "QRP2P LITHUANIA", region: "Global", country: "Lithuania", flag: "flag-icon flag-icon-lt", description: "QRP2P Marketplace Lithuania", subdomain: "lt", link: "https://lt.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "LU", name: "QRP2P LUXEMBOURG", region: "Global", country: "Luxembourg", flag: "flag-icon flag-icon-lu", description: "QRP2P Marketplace Luxembourg", subdomain: "lu", link: "https://lu.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "MG", name: "QRP2P MADAGASCAR", region: "Global", country: "Madagascar", flag: "flag-icon flag-icon-mg", description: "QRP2P Marketplace Madagascar", subdomain: "mg", link: "https://mg.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "MW", name: "QRP2P MALAWI", region: "Global", country: "Malawi", flag: "flag-icon flag-icon-mw", description: "QRP2P Marketplace Malawi", subdomain: "mw", link: "https://mw.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "MY", name: "QRP2P MALAYSIA", region: "Global", country: "Malaysia", flag: "flag-icon flag-icon-my", description: "QRP2P Marketplace Malaysia", subdomain: "my", link: "https://my.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "MV", name: "QRP2P MALDIVES", region: "Global", country: "Maldives", flag: "flag-icon flag-icon-mv", description: "QRP2P Marketplace Maldives", subdomain: "mv", link: "https://mv.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "ML", name: "QRP2P MALI", region: "Global", country: "Mali", flag: "flag-icon flag-icon-ml", description: "QRP2P Marketplace Mali", subdomain: "ml", link: "https://ml.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "MT", name: "QRP2P MALTA", region: "Global", country: "Malta", flag: "flag-icon flag-icon-mt", description: "QRP2P Marketplace Malta", subdomain: "mt", link: "https://mt.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "MH", name: "QRP2P MARSHALL ISLANDS", region: "Global", country: "Marshall Islands", flag: "flag-icon flag-icon-mh", description: "QRP2P Marketplace Marshall Islands", subdomain: "mh", link: "https://mh.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "MR", name: "QRP2P MAURITANIA", region: "Global", country: "Mauritania", flag: "flag-icon flag-icon-mr", description: "QRP2P Marketplace Mauritania", subdomain: "mr", link: "https://mr.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "MU", name: "QRP2P MAURITIUS", region: "Global", country: "Mauritius", flag: "flag-icon flag-icon-mu", description: "QRP2P Marketplace Mauritius", subdomain: "mu", link: "https://mu.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "MX", name: "QRP2P MEXICO", region: "Global", country: "Mexico", flag: "flag-icon flag-icon-mx", description: "QRP2P Marketplace Mexico", subdomain: "mx", link: "https://mx.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "FM", name: "QRP2P MICRONESIA", region: "Global", country: "Micronesia", flag: "flag-icon flag-icon-fm", description: "QRP2P Marketplace Micronesia", subdomain: "fm", link: "https://fm.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "MD", name: "QRP2P MOLDOVA", region: "Global", country: "Moldova", flag: "flag-icon flag-icon-md", description: "QRP2P Marketplace Moldova", subdomain: "md", link: "https://md.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "MC", name: "QRP2P MONACO", region: "Global", country: "Monaco", flag: "flag-icon flag-icon-mc", description: "QRP2P Marketplace Monaco", subdomain: "mc", link: "https://mc.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "MN", name: "QRP2P MONGOLIA", region: "Global", country: "Mongolia", flag: "flag-icon flag-icon-mn", description: "QRP2P Marketplace Mongolia", subdomain: "mn", link: "https://mn.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "ME", name: "QRP2P MONTENEGRO", region: "Global", country: "Montenegro", flag: "flag-icon flag-icon-me", description: "QRP2P Marketplace Montenegro", subdomain: "me", link: "https://me.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "MA", name: "QRP2P MOROCCO", region: "Global", country: "Morocco", flag: "flag-icon flag-icon-ma", description: "QRP2P Marketplace Morocco", subdomain: "ma", link: "https://ma.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "MZ", name: "QRP2P MOZAMBIQUE", region: "Global", country: "Mozambique", flag: "flag-icon flag-icon-mz", description: "QRP2P Marketplace Mozambique", subdomain: "mz", link: "https://mz.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "MM", name: "QRP2P MYANMAR", region: "Global", country: "Myanmar", flag: "flag-icon flag-icon-mm", description: "QRP2P Marketplace Myanmar", subdomain: "mm", link: "https://mm.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "NA", name: "QRP2P NAMIBIA", region: "Global", country: "Namibia", flag: "flag-icon flag-icon-na", description: "QRP2P Marketplace Namibia", subdomain: "na", link: "https://na.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "NR", name: "QRP2P NAURU", region: "Global", country: "Nauru", flag: "flag-icon flag-icon-nr", description: "QRP2P Marketplace Nauru", subdomain: "nr", link: "https://nr.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "NP", name: "QRP2P NEPAL", region: "Global", country: "Nepal", flag: "flag-icon flag-icon-np", description: "QRP2P Marketplace Nepal", subdomain: "np", link: "https://np.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "NL", name: "QRP2P NETHERLANDS", region: "Global", country: "Netherlands", flag: "flag-icon flag-icon-nl", description: "QRP2P Marketplace Netherlands", subdomain: "nl", link: "https://nl.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "NZ", name: "QRP2P NEW ZEALAND", region: "Global", country: "New Zealand", flag: "flag-icon flag-icon-nz", description: "QRP2P Marketplace New Zealand", subdomain: "nz", link: "https://nz.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "NI", name: "QRP2P NICARAGUA", region: "Global", country: "Nicaragua", flag: "flag-icon flag-icon-ni", description: "QRP2P Marketplace Nicaragua", subdomain: "ni", link: "https://ni.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "NE", name: "QRP2P NIGER", region: "Global", country: "Niger", flag: "flag-icon flag-icon-ne", description: "QRP2P Marketplace Niger", subdomain: "ne", link: "https://ne.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "NG", name: "QRP2P NIGERIA", region: "Global", country: "Nigeria", flag: "flag-icon flag-icon-ng", description: "QRP2P Marketplace Nigeria", subdomain: "ng", link: "https://ng.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "MK", name: "QRP2P NORTH MACEDONIA", region: "Global", country: "North Macedonia", flag: "flag-icon flag-icon-mk", description: "QRP2P Marketplace North Macedonia", subdomain: "mk", link: "https://mk.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "NO", name: "QRP2P NORWAY", region: "Global", country: "Norway", flag: "flag-icon flag-icon-no", description: "QRP2P Marketplace Norway", subdomain: "no", link: "https://no.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "OM", name: "QRP2P OMAN", region: "Global", country: "Oman", flag: "flag-icon flag-icon-om", description: "QRP2P Marketplace Oman", subdomain: "om", link: "https://om.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "PK", name: "QRP2P PAKISTAN", region: "Global", country: "Pakistan", flag: "flag-icon flag-icon-pk", description: "QRP2P Marketplace Pakistan", subdomain: "pk", link: "https://pk.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "PW", name: "QRP2P PALAU", region: "Global", country: "Palau", flag: "flag-icon flag-icon-pw", description: "QRP2P Marketplace Palau", subdomain: "pw", link: "https://pw.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "PS", name: "QRP2P PALESTINE", region: "Global", country: "Palestine", flag: "flag-icon flag-icon-ps", description: "QRP2P Marketplace Palestine", subdomain: "ps", link: "https://ps.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "PA", name: "QRP2P PANAMA", region: "Global", country: "Panama", flag: "flag-icon flag-icon-pa", description: "QRP2P Marketplace Panama", subdomain: "pa", link: "https://pa.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "PG", name: "QRP2P PAPUA NEW GUINEA", region: "Global", country: "Papua New Guinea", flag: "flag-icon flag-icon-pg", description: "QRP2P Marketplace Papua New Guinea", subdomain: "pg", link: "https://pg.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "PY", name: "QRP2P PARAGUAY", region: "Global", country: "Paraguay", flag: "flag-icon flag-icon-py", description: "QRP2P Marketplace Paraguay", subdomain: "py", link: "https://py.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "PE", name: "QRP2P PERU", region: "Global", country: "Peru", flag: "flag-icon flag-icon-pe", description: "QRP2P Marketplace Peru", subdomain: "pe", link: "https://pe.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "PH", name: "QRP2P PHILIPPINES", region: "Global", country: "Philippines", flag: "flag-icon flag-icon-ph", description: "QRP2P Marketplace Philippines", subdomain: "ph", link: "https://ph.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "PL", name: "QRP2P POLAND", region: "Global", country: "Poland", flag: "flag-icon flag-icon-pl", description: "QRP2P Marketplace Poland", subdomain: "pl", link: "https://pl.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "PT", name: "QRP2P PORTUGAL", region: "Global", country: "Portugal", flag: "flag-icon flag-icon-pt", description: "QRP2P Marketplace Portugal", subdomain: "pt", link: "https://pt.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "QA", name: "QRP2P QATAR", region: "Global", country: "Qatar", flag: "flag-icon flag-icon-qa", description: "QRP2P Marketplace Qatar", subdomain: "qa", link: "https://qa.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "RO", name: "QRP2P ROMANIA", region: "Global", country: "Romania", flag: "flag-icon flag-icon-ro", description: "QRP2P Marketplace Romania", subdomain: "ro", link: "https://ro.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "RU", name: "QRP2P RUSSIA", region: "Global", country: "Russia", flag: "flag-icon flag-icon-ru", description: "QRP2P Marketplace Russia", subdomain: "ru", link: "https://ru.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "RW", name: "QRP2P RWANDA", region: "Global", country: "Rwanda", flag: "flag-icon flag-icon-rw", description: "QRP2P Marketplace Rwanda", subdomain: "rw", link: "https://rw.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "KN", name: "QRP2P SAINT KITTS AND NEVIS", region: "Global", country: "Saint Kitts and Nevis", flag: "flag-icon flag-icon-kn", description: "QRP2P Marketplace Saint Kitts and Nevis", subdomain: "kn", link: "https://kn.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "LC", name: "QRP2P SAINT LUCIA", region: "Global", country: "Saint Lucia", flag: "flag-icon flag-icon-lc", description: "QRP2P Marketplace Saint Lucia", subdomain: "lc", link: "https://lc.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "VC", name: "QRP2P SAINT VINCENT AND THE GRENADINES", region: "Global", country: "Saint Vincent and the Grenadines", flag: "flag-icon flag-icon-vc", description: "QRP2P Marketplace Saint Vincent and the Grenadines", subdomain: "vc", link: "https://vc.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "WS", name: "QRP2P SAMOA", region: "Global", country: "Samoa", flag: "flag-icon flag-icon-ws", description: "QRP2P Marketplace Samoa", subdomain: "ws", link: "https://ws.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "SM", name: "QRP2P SAN MARINO", region: "Global", country: "San Marino", flag: "flag-icon flag-icon-sm", description: "QRP2P Marketplace San Marino", subdomain: "sm", link: "https://sm.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "ST", name: "QRP2P SAO TOME AND PRINCIPE", region: "Global", country: "Sao Tome and Principe", flag: "flag-icon flag-icon-st", description: "QRP2P Marketplace Sao Tome and Principe", subdomain: "st", link: "https://st.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "SA", name: "QRP2P SAUDI ARABIA", region: "Global", country: "Saudi Arabia", flag: "flag-icon flag-icon-sa", description: "QRP2P Marketplace Saudi Arabia", subdomain: "sa", link: "https://sa.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "SN", name: "QRP2P SENEGAL", region: "Global", country: "Senegal", flag: "flag-icon flag-icon-sn", description: "QRP2P Marketplace Senegal", subdomain: "sn", link: "https://sn.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "RS", name: "QRP2P SERBIA", region: "Global", country: "Serbia", flag: "flag-icon flag-icon-rs", description: "QRP2P Marketplace Serbia", subdomain: "rs", link: "https://rs.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "SC", name: "QRP2P SEYCHELLES", region: "Global", country: "Seychelles", flag: "flag-icon flag-icon-sc", description: "QRP2P Marketplace Seychelles", subdomain: "sc", link: "https://sc.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "SL", name: "QRP2P SIERRA LEONE", region: "Global", country: "Sierra Leone", flag: "flag-icon flag-icon-sl", description: "QRP2P Marketplace Sierra Leone", subdomain: "sl", link: "https://sl.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "SG", name: "QRP2P SINGAPORE", region: "Global", country: "Singapore", flag: "flag-icon flag-icon-sg", description: "QRP2P Marketplace Singapore", subdomain: "sg", link: "https://sg.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "SK", name: "QRP2P SLOVAKIA", region: "Global", country: "Slovakia", flag: "flag-icon flag-icon-sk", description: "QRP2P Marketplace Slovakia", subdomain: "sk", link: "https://sk.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "SI", name: "QRP2P SLOVENIA", region: "Global", country: "Slovenia", flag: "flag-icon flag-icon-si", description: "QRP2P Marketplace Slovenia", subdomain: "si", link: "https://si.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "SB", name: "QRP2P SOLOMON ISLANDS", region: "Global", country: "Solomon Islands", flag: "flag-icon flag-icon-sb", description: "QRP2P Marketplace Solomon Islands", subdomain: "sb", link: "https://sb.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "SO", name: "QRP2P SOMALIA", region: "Global", country: "Somalia", flag: "flag-icon flag-icon-so", description: "QRP2P Marketplace Somalia", subdomain: "so", link: "https://so.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "ZA", name: "QRP2P SOUTH AFRICA", region: "Global", country: "South Africa", flag: "flag-icon flag-icon-za", description: "QRP2P Marketplace South Africa", subdomain: "za", link: "https://za.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "SS", name: "QRP2P SOUTH SUDAN", region: "Global", country: "South Sudan", flag: "flag-icon flag-icon-ss", description: "QRP2P Marketplace South Sudan", subdomain: "ss", link: "https://ss.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "ES", name: "QRP2P SPAIN", region: "Global", country: "Spain", flag: "flag-icon flag-icon-es", description: "QRP2P Marketplace Spain", subdomain: "es", link: "https://es.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "LK", name: "QRP2P SRI LANKA", region: "Global", country: "Sri Lanka", flag: "flag-icon flag-icon-lk", description: "QRP2P Marketplace Sri Lanka", subdomain: "lk", link: "https://lk.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "SD", name: "QRP2P SUDAN", region: "Global", country: "Sudan", flag: "flag-icon flag-icon-sd", description: "QRP2P Marketplace Sudan", subdomain: "sd", link: "https://sd.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "SR", name: "QRP2P SURINAME", region: "Global", country: "Suriname", flag: "flag-icon flag-icon-sr", description: "QRP2P Marketplace Suriname", subdomain: "sr", link: "https://sr.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "SE", name: "QRP2P SWEDEN", region: "Global", country: "Sweden", flag: "flag-icon flag-icon-se", description: "QRP2P Marketplace Sweden", subdomain: "se", link: "https://se.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "CH", name: "QRP2P SWITZERLAND", region: "Global", country: "Switzerland", flag: "flag-icon flag-icon-ch", description: "QRP2P Marketplace Switzerland", subdomain: "ch", link: "https://ch.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "SY", name: "QRP2P SYRIA", region: "Global", country: "Syria", flag: "flag-icon flag-icon-sy", description: "QRP2P Marketplace Syria", subdomain: "sy", link: "https://sy.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "TW", name: "QRP2P TAIWAN", region: "Global", country: "Taiwan", flag: "flag-icon flag-icon-tw", description: "QRP2P Marketplace Taiwan", subdomain: "tw", link: "https://tw.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "TJ", name: "QRP2P TAJIKISTAN", region: "Global", country: "Tajikistan", flag: "flag-icon flag-icon-tj", description: "QRP2P Marketplace Tajikistan", subdomain: "tj", link: "https://tj.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "TZ", name: "QRP2P TANZANIA", region: "Global", country: "Tanzania", flag: "flag-icon flag-icon-tz", description: "QRP2P Marketplace Tanzania", subdomain: "tz", link: "https://tz.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "TH", name: "QRP2P THAILAND", region: "Global", country: "Thailand", flag: "flag-icon flag-icon-th", description: "QRP2P Marketplace Thailand", subdomain: "th", link: "https://th.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "TL", name: "QRP2P TIMOR-LESTE", region: "Global", country: "Timor-Leste", flag: "flag-icon flag-icon-tl", description: "QRP2P Marketplace Timor-Leste", subdomain: "tl", link: "https://tl.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "TG", name: "QRP2P TOGO", region: "Global", country: "Togo", flag: "flag-icon flag-icon-tg", description: "QRP2P Marketplace Togo", subdomain: "tg", link: "https://tg.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "TO", name: "QRP2P TONGA", region: "Global", country: "Tonga", flag: "flag-icon flag-icon-to", description: "QRP2P Marketplace Tonga", subdomain: "to", link: "https://to.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "TT", name: "QRP2P TRINIDAD AND TOBAGO", region: "Global", country: "Trinidad and Tobago", flag: "flag-icon flag-icon-tt", description: "QRP2P Marketplace Trinidad and Tobago", subdomain: "tt", link: "https://tt.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "TN", name: "QRP2P TUNISIA", region: "Global", country: "Tunisia", flag: "flag-icon flag-icon-tn", description: "QRP2P Marketplace Tunisia", subdomain: "tn", link: "https://tn.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "TR", name: "QRP2P TURKEY", region: "Global", country: "Turkey", flag: "flag-icon flag-icon-tr", description: "QRP2P Marketplace Turkey", subdomain: "tr", link: "https://tr.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "TM", name: "QRP2P TURKMENISTAN", region: "Global", country: "Turkmenistan", flag: "flag-icon flag-icon-tm", description: "QRP2P Marketplace Turkmenistan", subdomain: "tm", link: "https://tm.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "TV", name: "QRP2P TUVALU", region: "Global", country: "Tuvalu", flag: "flag-icon flag-icon-tv", description: "QRP2P Marketplace Tuvalu", subdomain: "tv", link: "https://tv.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "UG", name: "QRP2P UGANDA", region: "Global", country: "Uganda", flag: "flag-icon flag-icon-ug", description: "QRP2P Marketplace Uganda", subdomain: "ug", link: "https://ug.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "UA", name: "QRP2P UKRAINE", region: "Global", country: "Ukraine", flag: "flag-icon flag-icon-ua", description: "QRP2P Marketplace Ukraine", subdomain: "ua", link: "https://ua.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "AE", name: "QRP2P UNITED ARAB EMIRATES", region: "Global", country: "United Arab Emirates", flag: "flag-icon flag-icon-ae", description: "QRP2P Marketplace United Arab Emirates", subdomain: "ae", link: "https://ae.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "GB", name: "QRP2P UNITED KINGDOM", region: "Global", country: "United Kingdom", flag: "flag-icon flag-icon-gb", description: "QRP2P Marketplace United Kingdom", subdomain: "uk", link: "https://uk.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "US", name: "QRP2P UNITED STATES", region: "Global", country: "United States", flag: "flag-icon flag-icon-us", description: "QRP2P Marketplace United States", subdomain: "us", link: "https://us.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "UY", name: "QRP2P URUGUAY", region: "Global", country: "Uruguay", flag: "flag-icon flag-icon-uy", description: "QRP2P Marketplace Uruguay", subdomain: "uy", link: "https://uy.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "UZ", name: "QRP2P UZBEKISTAN", region: "Global", country: "Uzbekistan", flag: "flag-icon flag-icon-uz", description: "QRP2P Marketplace Uzbekistan", subdomain: "uz", link: "https://uz.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "VU", name: "QRP2P VANUATU", region: "Global", country: "Vanuatu", flag: "flag-icon flag-icon-vu", description: "QRP2P Marketplace Vanuatu", subdomain: "vu", link: "https://vu.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "VA", name: "QRP2P VATICAN CITY", region: "Global", country: "Vatican City", flag: "flag-icon flag-icon-va", description: "QRP2P Marketplace Vatican City", subdomain: "va", link: "https://va.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "VE", name: "QRP2P VENEZUELA", region: "Global", country: "Venezuela", flag: "flag-icon flag-icon-ve", description: "QRP2P Marketplace Venezuela", subdomain: "ve", link: "https://ve.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "VN", name: "QRP2P VIETNAM", region: "Global", country: "Vietnam", flag: "flag-icon flag-icon-vn", description: "QRP2P Marketplace Vietnam", subdomain: "vn", link: "https://vn.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "YE", name: "QRP2P YEMEN", region: "Global", country: "Yemen", flag: "flag-icon flag-icon-ye", description: "QRP2P Marketplace Yemen", subdomain: "ye", link: "https://ye.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "ZM", name: "QRP2P ZAMBIA", region: "Global", country: "Zambia", flag: "flag-icon flag-icon-zm", description: "QRP2P Marketplace Zambia", subdomain: "zm", link: "https://zm.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" },
+            { code: "ZW", name: "QRP2P ZIMBABWE", region: "Global", country: "Zimbabwe", flag: "flag-icon flag-icon-zw", description: "QRP2P Marketplace Zimbabwe", subdomain: "zw", link: "https://zw.qrp2p.com/", image: "https://qrp2p.com/img/c.jpg" }
+        ];
+
+        // PWA Install Button Logic
+        let deferredPrompt;
+        const installButton = document.getElementById('install-button');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installButton.style.display = 'block';
+
+            installButton.addEventListener('click', () => {
+                installButton.style.display = 'none';
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the install prompt');
+                    } else {
+                        console.log('User dismissed the install prompt');
+                    }
+                    deferredPrompt = null;
+                });
+            });
+        });
+
+        // Network status indicator
+        const offlineIndicator = document.getElementById('offline-indicator');
+        
+        function updateOnlineStatus() {
+            if (navigator.onLine) {
+                offlineIndicator.classList.remove('show');
+            } else {
+                offlineIndicator.classList.add('show');
+            }
+        }
+
+        window.addEventListener('online', updateOnlineStatus);
+        window.addEventListener('offline', updateOnlineStatus);
+        updateOnlineStatus();
+
+        // Function to normalize text for search
+        function normalizeText(text) {
+            return text
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .trim()
+                .toLowerCase();
+        }
+
+        // Function to render cities
+        function renderCities(cityList) {
+            const container = document.getElementById('cities-container');
+            container.innerHTML = '';
+            
+            cityList.forEach((city, index) => {
+                const card = document.createElement('div');
+                card.className = 'city-card';
+                card.style.animationDelay = `${index * 0.1}s`;
+                
+                card.innerHTML = `
+                    <div class="city-image" style="background-image: url('${city.image}')" 
+                         onerror="this.style.backgroundColor='#e0e0e0'; this.style.backgroundImage='linear-gradient(135deg, #667eea 0%, #764ba2 100%)';">
+                    </div>
+                    <div class="city-info">
+                        <h3 class="city-name">
+                            <span class="${city.flag}"></span>
+                            ${city.name}
+                        </h3>
+                        <p class="city-desc">${city.description}</p>
+                        <p class="city-desc" style="font-size: 0.85rem; opacity: 0.7;">${city.subdomain}.qrp2p.com</p>
+                        <a href="${city.link}" class="city-link" target="_blank">Enter Marketplace</a>
+                    </div>
+                `;
+                
+                // Make entire card clickable
+                card.addEventListener('click', (e) => {
+                    if (e.target.tagName !== 'A') {
+                        window.open(city.link, '_blank');
+                    }
+                });
+                
+                container.appendChild(card);
+            });
+        }
+
+        // Search functionality
+        function performSearch(searchTerm) {
+            const normalizedSearch = normalizeText(searchTerm);
+            const filteredCities = cities.filter(city => 
+                normalizeText(city.name).includes(normalizedSearch) || 
+                normalizeText(city.country).includes(normalizedSearch) ||
+                normalizeText(city.description).includes(normalizedSearch) ||
+                normalizeText(city.subdomain).includes(normalizedSearch)
+            );
+            renderCities(filteredCities);
+            
+            return filteredCities.length > 0 ? filteredCities[0] : null;
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sort cities alphabetically by country name
+            cities.sort((a, b) => a.country.localeCompare(b.country));
+            
+            // Initial render
+            renderCities(cities);
+            
+            // Set up search functionality
+            const searchInput = document.getElementById('marketplace-search');
+            searchInput.addEventListener('input', (e) => {
+                performSearch(e.target.value);
+            });
+            
+            // Add Enter key functionality
+            searchInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    const firstResult = performSearch(e.target.value);
+                    if (firstResult) {
+                        window.open(firstResult.link, '_blank');
+                    }
+                }
+            });
+        });
+    </script>
+    
+    <!-- Service Worker Registration - Enhanced for PWA -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('sw.js')
+                    .then(function(registration) {
+                        console.log('✅ Service Worker registrado con éxito:', registration.scope);
+                        
+                        // Check for updates
+                        registration.addEventListener('updatefound', () => {
+                            const newWorker = registration.installing;
+                            console.log('🔄 Nuevo Service Worker encontrado');
+                            
+                            newWorker.addEventListener('statechange', () => {
+                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                    console.log('📦 Nueva versión disponible - Actualiza la página');
+                                }
+                            });
+                        });
+                    })
+                    .catch(function(error) {
+                        console.log('❌ Error al registrar Service Worker:', error);
+                    });
+                    
+                // Handle controller changes
+                navigator.serviceWorker.addEventListener('controllerchange', () => {
+                    console.log('⚡ Service Worker actualizado');
+                });
+            });
+        }
+    </script>
+</body>
+</html>
