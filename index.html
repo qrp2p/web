@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,6 +14,13 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="application-name" content="QRP2P MARKETPLACE">
     <meta name="format-detection" content="telephone=no">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="QRP2P Marketplace - La plataforma líder de comercio peer-to-peer con presencia en 196 países. Compra y vende de forma segura en todo el mundo.">
+    <meta name="keywords" content="marketplace, comercio p2p, qrp2p, compra venta, global, peer to peer">
+    <meta name="author" content="QRP2P">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://qrp2p.com/">
     
     <!-- Favicons for all platforms -->
     <link rel="icon" type="image/png" sizes="192x192" href="img/icon-192.png">
@@ -176,15 +183,9 @@
             position: relative;
             border-bottom: 1px solid var(--border);
             background-color: #f0f0f0;
-        }
-        
-        /* Flag overlay for country image - muestra la bandera del país como imagen de fondo */
-        .city-image {
             display: flex;
             align-items: center;
             justify-content: center;
-            background-size: cover;
-            background-position: center;
         }
         
         .flag-overlay {
@@ -205,6 +206,7 @@
             align-items: center;
             gap: 10px;
             font-weight: 700;
+            flex-wrap: wrap;
         }
         
         .city-name .flag-icon {
@@ -212,7 +214,6 @@
             border-radius: 3px;
         }
         
-        /* Estilo para la bandera pequeña junto al nombre */
         .small-flag {
             width: 32px;
             height: 24px;
@@ -299,6 +300,25 @@
             font-size: 0.9rem;
         }
         
+        /* Breadcrumbs para SEO */
+        .breadcrumbs {
+            max-width: 1200px;
+            margin: 1rem auto;
+            padding: 0 1.5rem;
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
+        .breadcrumbs a {
+            color: #666;
+            text-decoration: none;
+        }
+        
+        .breadcrumbs a:hover {
+            text-decoration: underline;
+            color: #000;
+        }
+        
         @media (max-width: 768px) {
             .logo-container {
                 max-width: 300px;
@@ -371,6 +391,56 @@
             font-size: 0.9rem;
             color: #666;
         }
+        
+        /* SEO Content Section */
+        .seo-content {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 2rem 1.5rem;
+            background: var(--secondary);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+        
+        .seo-content h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .seo-content h3 {
+            font-size: 1.2rem;
+            margin: 1.5rem 0 0.5rem;
+        }
+        
+        .seo-content p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        
+        .country-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .country-tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: var(--primary);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.2s;
+        }
+        
+        .country-tag:hover {
+            background: var(--text);
+            color: white;
+            border-color: var(--text);
+        }
     </style>
 </head>
 <body>
@@ -393,6 +463,13 @@
         <div class="tagline">MARKETPLACE</div>
     </header>
     
+    <!-- Breadcrumbs para SEO -->
+    <div class="breadcrumbs">
+        <a href="/">Home</a>
+        <span>›</span>
+        <span>Countries</span>
+    </div>
+    
     <div class="container">
         <div class="search-container">
             <input type="text" id="marketplace-search" placeholder="Search Marketplace">
@@ -405,73 +482,144 @@
         </div>
     </div>
     
+    <!-- SEO Content Section -->
+    <div class="seo-content">
+        <h2>QRP2P Marketplace: The World's Largest P2P Commerce Platform</h2>
+        <p>QRP2P Marketplace is the leading peer-to-peer commerce solution, connecting buyers and sellers in 196 countries worldwide. Our platform offers a secure, reliable, and efficient experience for all your commercial transactions.</p>
+        
+        <h3>Markets by Region</h3>
+        <div class="country-tags" id="country-tags-container"></div>
+        
+        <h3>Why Choose QRP2P Marketplace?</h3>
+        <p>✅ <strong>Security Guaranteed:</strong> Escrow system and buyer/seller protection.<br>
+        ✅ <strong>Global Coverage:</strong> Presence in every country in the world.<br>
+        ✅ <strong>Low Fees:</strong> The most competitive rates in the market.<br>
+        ✅ <strong>Multilingual Support:</strong> Customer service in over 20 languages.<br>
+        ✅ <strong>PWA App:</strong> Install our application on your mobile device.</p>
+        
+        <p>Discover your country's marketplace and start trading securely. QRP2P is the preferred platform for thousands of users worldwide to buy and sell products, services, and digital assets.</p>
+    </div>
+    
     <footer>
         <div class="footer-links">
             <a href="terms.html">Terms of Service</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="contact.html">Contact</a>
+            <a href="blog.html">Blog</a>
         </div>
         <div class="copyright">©️ QRP2P MARKETPLACE. All rights reserved. 196 Countries Worldwide.</div>
     </footer>
 
     <script>
-        // Todos los 196 países con sus banderas REALES como imágenes
-        // Usamos flagcdn.com que es rápido y confiable para mostrar banderas de todos los países
-        const cities = [
-            { code: "AF", name: "QRP2P AFGHANISTAN", region: "Global", country: "Afghanistan", flagIcon: "flag-icon flag-icon-af", flagUrl: "https://flagcdn.com/af.svg", description: "QRP2P Marketplace Afghanistan", subdomain: "af", link: "https://af.qrp2p.com/", imageBg: "https://flagcdn.com/af.svg" },
-            { code: "AL", name: "QRP2P ALBANIA", region: "Global", country: "Albania", flagIcon: "flag-icon flag-icon-al", flagUrl: "https://flagcdn.com/al.svg", description: "QRP2P Marketplace Albania", subdomain: "al", link: "https://al.qrp2p.com/", imageBg: "https://flagcdn.com/al.svg" },
-            { code: "DZ", name: "QRP2P ALGERIA", region: "Global", country: "Algeria", flagIcon: "flag-icon flag-icon-dz", flagUrl: "https://flagcdn.com/dz.svg", description: "QRP2P Marketplace Algeria", subdomain: "dz", link: "https://dz.qrp2p.com/", imageBg: "https://flagcdn.com/dz.svg" },
-            { code: "AD", name: "QRP2P ANDORRA", region: "Global", country: "Andorra", flagIcon: "flag-icon flag-icon-ad", flagUrl: "https://flagcdn.com/ad.svg", description: "QRP2P Marketplace Andorra", subdomain: "ad", link: "https://ad.qrp2p.com/", imageBg: "https://flagcdn.com/ad.svg" },
-            { code: "AO", name: "QRP2P ANGOLA", region: "Global", country: "Angola", flagIcon: "flag-icon flag-icon-ao", flagUrl: "https://flagcdn.com/ao.svg", description: "QRP2P Marketplace Angola", subdomain: "ao", link: "https://ao.qrp2p.com/", imageBg: "https://flagcdn.com/ao.svg" },
-            { code: "AG", name: "QRP2P ANTIGUA AND BARBUDA", region: "Global", country: "Antigua and Barbuda", flagIcon: "flag-icon flag-icon-ag", flagUrl: "https://flagcdn.com/ag.svg", description: "QRP2P Marketplace Antigua and Barbuda", subdomain: "ag", link: "https://ag.qrp2p.com/", imageBg: "https://flagcdn.com/ag.svg" },
-            { code: "AR", name: "QRP2P ARGENTINA", region: "Global", country: "Argentina", flagIcon: "flag-icon flag-icon-ar", flagUrl: "https://flagcdn.com/ar.svg", description: "QRP2P Marketplace Argentina", subdomain: "ar", link: "https://ar.qrp2p.com/", imageBg: "https://flagcdn.com/ar.svg" },
-            { code: "AM", name: "QRP2P ARMENIA", region: "Global", country: "Armenia", flagIcon: "flag-icon flag-icon-am", flagUrl: "https://flagcdn.com/am.svg", description: "QRP2P Marketplace Armenia", subdomain: "am", link: "https://am.qrp2p.com/", imageBg: "https://flagcdn.com/am.svg" },
-            { code: "AU", name: "QRP2P AUSTRALIA", region: "Global", country: "Australia", flagIcon: "flag-icon flag-icon-au", flagUrl: "https://flagcdn.com/au.svg", description: "QRP2P Marketplace Australia", subdomain: "au", link: "https://au.qrp2p.com/", imageBg: "https://flagcdn.com/au.svg" },
-            { code: "AT", name: "QRP2P AUSTRIA", region: "Global", country: "Austria", flagIcon: "flag-icon flag-icon-at", flagUrl: "https://flagcdn.com/at.svg", description: "QRP2P Marketplace Austria", subdomain: "at", link: "https://at.qrp2p.com/", imageBg: "https://flagcdn.com/at.svg" },
-            { code: "AZ", name: "QRP2P AZERBAIJAN", region: "Global", country: "Azerbaijan", flagIcon: "flag-icon flag-icon-az", flagUrl: "https://flagcdn.com/az.svg", description: "QRP2P Marketplace Azerbaijan", subdomain: "az", link: "https://az.qrp2p.com/", imageBg: "https://flagcdn.com/az.svg" },
-            { code: "BS", name: "QRP2P BAHAMAS", region: "Global", country: "Bahamas", flagIcon: "flag-icon flag-icon-bs", flagUrl: "https://flagcdn.com/bs.svg", description: "QRP2P Marketplace Bahamas", subdomain: "bs", link: "https://bs.qrp2p.com/", imageBg: "https://flagcdn.com/bs.svg" },
-            { code: "BH", name: "QRP2P BAHRAIN", region: "Global", country: "Bahrain", flagIcon: "flag-icon flag-icon-bh", flagUrl: "https://flagcdn.com/bh.svg", description: "QRP2P Marketplace Bahrain", subdomain: "bh", link: "https://bh.qrp2p.com/", imageBg: "https://flagcdn.com/bh.svg" },
-            { code: "BD", name: "QRP2P BANGLADESH", region: "Global", country: "Bangladesh", flagIcon: "flag-icon flag-icon-bd", flagUrl: "https://flagcdn.com/bd.svg", description: "QRP2P Marketplace Bangladesh", subdomain: "bd", link: "https://bd.qrp2p.com/", imageBg: "https://flagcdn.com/bd.svg" },
-            { code: "BB", name: "QRP2P BARBADOS", region: "Global", country: "Barbados", flagIcon: "flag-icon flag-icon-bb", flagUrl: "https://flagcdn.com/bb.svg", description: "QRP2P Marketplace Barbados", subdomain: "bb", link: "https://bb.qrp2p.com/", imageBg: "https://flagcdn.com/bb.svg" },
-            { code: "BY", name: "QRP2P BELARUS", region: "Global", country: "Belarus", flagIcon: "flag-icon flag-icon-by", flagUrl: "https://flagcdn.com/by.svg", description: "QRP2P Marketplace Belarus", subdomain: "by", link: "https://by.qrp2p.com/", imageBg: "https://flagcdn.com/by.svg" },
-            { code: "BE", name: "QRP2P BELGIUM", region: "Global", country: "Belgium", flagIcon: "flag-icon flag-icon-be", flagUrl: "https://flagcdn.com/be.svg", description: "QRP2P Marketplace Belgium", subdomain: "be", link: "https://be.qrp2p.com/", imageBg: "https://flagcdn.com/be.svg" },
-            { code: "BZ", name: "QRP2P BELIZE", region: "Global", country: "Belize", flagIcon: "flag-icon flag-icon-bz", flagUrl: "https://flagcdn.com/bz.svg", description: "QRP2P Marketplace Belize", subdomain: "bz", link: "https://bz.qrp2p.com/", imageBg: "https://flagcdn.com/bz.svg" },
-            { code: "BJ", name: "QRP2P BENIN", region: "Global", country: "Benin", flagIcon: "flag-icon flag-icon-bj", flagUrl: "https://flagcdn.com/bj.svg", description: "QRP2P Marketplace Benin", subdomain: "bj", link: "https://bj.qrp2p.com/", imageBg: "https://flagcdn.com/bj.svg" },
-            { code: "BT", name: "QRP2P BHUTAN", region: "Global", country: "Bhutan", flagIcon: "flag-icon flag-icon-bt", flagUrl: "https://flagcdn.com/bt.svg", description: "QRP2P Marketplace Bhutan", subdomain: "bt", link: "https://bt.qrp2p.com/", imageBg: "https://flagcdn.com/bt.svg" },
-            { code: "BO", name: "QRP2P BOLIVIA", region: "Global", country: "Bolivia", flagIcon: "flag-icon flag-icon-bo", flagUrl: "https://flagcdn.com/bo.svg", description: "QRP2P Marketplace Bolivia", subdomain: "bo", link: "https://bo.qrp2p.com/", imageBg: "https://flagcdn.com/bo.svg" },
-            { code: "BA", name: "QRP2P BOSNIA AND HERZEGOVINA", region: "Global", country: "Bosnia and Herzegovina", flagIcon: "flag-icon flag-icon-ba", flagUrl: "https://flagcdn.com/ba.svg", description: "QRP2P Marketplace Bosnia and Herzegovina", subdomain: "ba", link: "https://ba.qrp2p.com/", imageBg: "https://flagcdn.com/ba.svg" }
+        // Todos los 196 países con NOMBRES EN IDIOMA NATIVO, descripciones en idioma nativo, y usando RUTAS en lugar de subdominios
+        const countriesData = [
+            // Asia - Middle East
+            { code: "AF", nativeName: "افغانستان", displayName: "Afghanistan", nativeDesc: "QRP2P مارکیټ په افغانستان کې - د پیرودونکو او پلورونکو لپاره خوندي پی ټو پی پلیټ فارم", path: "afghanistan", url: "/afghanistan/", flagUrl: "https://flagcdn.com/af.svg", imageBg: "https://flagcdn.com/af.svg" },
+            { code: "SA", nativeName: "المملكة العربية السعودية", displayName: "Saudi Arabia", nativeDesc: "سوق QRP2P في المملكة العربية السعودية - منصة تداول P2P آمنة للمشترين والبائعين", path: "saudi-arabia", url: "/saudi-arabia/", flagUrl: "https://flagcdn.com/sa.svg", imageBg: "https://flagcdn.com/sa.svg" },
+            { code: "AE", nativeName: "الإمارات العربية المتحدة", displayName: "UAE", nativeDesc: "سوق QRP2P في الإمارات - منصة تداول P2P آمنة وموثوقة", path: "uae", url: "/uae/", flagUrl: "https://flagcdn.com/ae.svg", imageBg: "https://flagcdn.com/ae.svg" },
+            { code: "EG", nativeName: "مصر", displayName: "Egypt", nativeDesc: "سوق QRP2P في مصر - منصة تداول P2P آمنة للمشترين والبائعين", path: "egypt", url: "/egypt/", flagUrl: "https://flagcdn.com/eg.svg", imageBg: "https://flagcdn.com/eg.svg" },
+            { code: "IQ", nativeName: "العراق", displayName: "Iraq", nativeDesc: "سوق QRP2P في العراق - منصة تداول P2P آمنة", path: "iraq", url: "/iraq/", flagUrl: "https://flagcdn.com/iq.svg", imageBg: "https://flagcdn.com/iq.svg" },
+            { code: "JO", nativeName: "الأردن", displayName: "Jordan", nativeDesc: "سوق QRP2P في الأردن - منصة تداول P2P آمنة", path: "jordan", url: "/jordan/", flagUrl: "https://flagcdn.com/jo.svg", imageBg: "https://flagcdn.com/jo.svg" },
+            { code: "KW", nativeName: "الكويت", displayName: "Kuwait", nativeDesc: "سوق QRP2P في الكويت - منصة تداول P2P آمنة", path: "kuwait", url: "/kuwait/", flagUrl: "https://flagcdn.com/kw.svg", imageBg: "https://flagcdn.com/kw.svg" },
+            { code: "QA", nativeName: "قطر", displayName: "Qatar", nativeDesc: "سوق QRP2P في قطر - منصة تداول P2P آمنة", path: "qatar", url: "/qatar/", flagUrl: "https://flagcdn.com/qa.svg", imageBg: "https://flagcdn.com/qa.svg" },
+            { code: "OM", nativeName: "عمان", displayName: "Oman", nativeDesc: "سوق QRP2P في عمان - منصة تداول P2P آمنة", path: "oman", url: "/oman/", flagUrl: "https://flagcdn.com/om.svg", imageBg: "https://flagcdn.com/om.svg" },
+            { code: "BH", nativeName: "البحرين", displayName: "Bahrain", nativeDesc: "سوق QRP2P في البحرين - منصة تداول P2P آمنة", path: "bahrain", url: "/bahrain/", flagUrl: "https://flagcdn.com/bh.svg", imageBg: "https://flagcdn.com/bh.svg" },
+            { code: "LB", nativeName: "لبنان", displayName: "Lebanon", nativeDesc: "سوق QRP2P في لبنان - منصة تداول P2P آمنة", path: "lebanon", url: "/lebanon/", flagUrl: "https://flagcdn.com/lb.svg", imageBg: "https://flagcdn.com/lb.svg" },
+            { code: "PS", nativeName: "فلسطين", displayName: "Palestine", nativeDesc: "سوق QRP2P في فلسطين - منصة تداول P2P آمنة", path: "palestine", url: "/palestine/", flagUrl: "https://flagcdn.com/ps.svg", imageBg: "https://flagcdn.com/ps.svg" },
+            { code: "SY", nativeName: "سوريا", displayName: "Syria", nativeDesc: "سوق QRP2P في سوريا - منصة تداول P2P آمنة", path: "syria", url: "/syria/", flagUrl: "https://flagcdn.com/sy.svg", imageBg: "https://flagcdn.com/sy.svg" },
+            { code: "YE", nativeName: "اليمن", displayName: "Yemen", nativeDesc: "سوق QRP2P في اليمن - منصة تداول P2P آمنة", path: "yemen", url: "/yemen/", flagUrl: "https://flagcdn.com/ye.svg", imageBg: "https://flagcdn.com/ye.svg" },
+            
+            // Asia - East
+            { code: "CN", nativeName: "中国", displayName: "China", nativeDesc: "QRP2P中国市场 - 安全可靠的P2P交易平台，连接买家和卖家", path: "china", url: "/china/", flagUrl: "https://flagcdn.com/cn.svg", imageBg: "https://flagcdn.com/cn.svg" },
+            { code: "JP", nativeName: "日本", displayName: "Japan", nativeDesc: "QRP2P日本マーケットプレイス - 安全なP2P取引プラットフォーム", path: "japan", url: "/japan/", flagUrl: "https://flagcdn.com/jp.svg", imageBg: "https://flagcdn.com/jp.svg" },
+            { code: "KR", nativeName: "한국", displayName: "South Korea", nativeDesc: "QRP2P 한국 마켓플레이스 - 안전한 P2P 거래 플랫폼", path: "korea", url: "/korea/", flagUrl: "https://flagcdn.com/kr.svg", imageBg: "https://flagcdn.com/kr.svg" },
+            { code: "IN", nativeName: "भारत", displayName: "India", nativeDesc: "QRP2P भारत बाज़ार - सुरक्षित पीयर-टू-पीयर ट्रेडिंग प्लेटफॉर्म", path: "india", url: "/india/", flagUrl: "https://flagcdn.com/in.svg", imageBg: "https://flagcdn.com/in.svg" },
+            { code: "ID", nativeName: "Indonesia", displayName: "Indonesia", nativeDesc: "Pasar QRP2P Indonesia - Platform perdagangan P2P yang aman dan terpercaya", path: "indonesia", url: "/indonesia/", flagUrl: "https://flagcdn.com/id.svg", imageBg: "https://flagcdn.com/id.svg" },
+            { code: "TH", nativeName: "ไทย", displayName: "Thailand", nativeDesc: "ตลาด QRP2P ไทย - แพลตฟอร์มการซื้อขาย P2P ที่ปลอดภัย", path: "thailand", url: "/thailand/", flagUrl: "https://flagcdn.com/th.svg", imageBg: "https://flagcdn.com/th.svg" },
+            { code: "VN", nativeName: "Việt Nam", displayName: "Vietnam", nativeDesc: "Chợ QRP2P Việt Nam - Nền tảng giao dịch P2P an toàn", path: "vietnam", url: "/vietnam/", flagUrl: "https://flagcdn.com/vn.svg", imageBg: "https://flagcdn.com/vn.svg" },
+            { code: "MY", nativeName: "Malaysia", displayName: "Malaysia", nativeDesc: "Pasaran QRP2P Malaysia - Platform dagangan P2P yang selamat", path: "malaysia", url: "/malaysia/", flagUrl: "https://flagcdn.com/my.svg", imageBg: "https://flagcdn.com/my.svg" },
+            { code: "PH", nativeName: "Pilipinas", displayName: "Philippines", nativeDesc: "Merkado ng QRP2P Pilipinas - Ligtas na P2P trading platform", path: "philippines", url: "/philippines/", flagUrl: "https://flagcdn.com/ph.svg", imageBg: "https://flagcdn.com/ph.svg" },
+            { code: "PK", nativeName: "پاکستان", displayName: "Pakistan", nativeDesc: "QRP2P پاکستان مارکیٹ - محفوظ P2P تجارتی پلیٹ فارم", path: "pakistan", url: "/pakistan/", flagUrl: "https://flagcdn.com/pk.svg", imageBg: "https://flagcdn.com/pk.svg" },
+            { code: "BD", nativeName: "বাংলাদেশ", displayName: "Bangladesh", nativeDesc: "QRP2P বাংলাদেশ বাজার - নিরাপদ P2P ট্রেডিং প্ল্যাটফর্ম", path: "bangladesh", url: "/bangladesh/", flagUrl: "https://flagcdn.com/bd.svg", imageBg: "https://flagcdn.com/bd.svg" },
+            { code: "MM", nativeName: "မြန်မာ", displayName: "Myanmar", nativeDesc: "QRP2P မြန်မာစျေးကွက် - လုံခြုံသော P2P ကုန်သွယ်မှုပလက်ဖောင်း", path: "myanmar", url: "/myanmar/", flagUrl: "https://flagcdn.com/mm.svg", imageBg: "https://flagcdn.com/mm.svg" },
+            { code: "LK", nativeName: "ශ්‍රී ලංකාව", displayName: "Sri Lanka", nativeDesc: "QRP2P ශ්‍රී ලංකා වෙළඳපොළ - ආරක්ෂිත P2P වෙළඳ වේදිකාව", path: "sri-lanka", url: "/sri-lanka/", flagUrl: "https://flagcdn.com/lk.svg", imageBg: "https://flagcdn.com/lk.svg" },
+            
+            // Europe
+            { code: "DE", nativeName: "Deutschland", displayName: "Germany", nativeDesc: "QRP2P Deutschland Marktplatz - Sichere P2P-Handelsplattform für Käufer und Verkäufer", path: "deutschland", url: "/deutschland/", flagUrl: "https://flagcdn.com/de.svg", imageBg: "https://flagcdn.com/de.svg" },
+            { code: "FR", nativeName: "France", displayName: "France", nativeDesc: "Marketplace QRP2P France - Plateforme d'échange P2P sécurisée pour acheteurs et vendeurs", path: "france", url: "/france/", flagUrl: "https://flagcdn.com/fr.svg", imageBg: "https://flagcdn.com/fr.svg" },
+            { code: "ES", nativeName: "España", displayName: "Spain", nativeDesc: "Mercado QRP2P España - Plataforma de comercio P2P segura para compradores y vendedores", path: "espana", url: "/espana/", flagUrl: "https://flagcdn.com/es.svg", imageBg: "https://flagcdn.com/es.svg" },
+            { code: "IT", nativeName: "Italia", displayName: "Italy", nativeDesc: "Marketplace QRP2P Italia - Piattaforma di trading P2P sicura per acquirenti e venditori", path: "italia", url: "/italia/", flagUrl: "https://flagcdn.com/it.svg", imageBg: "https://flagcdn.com/it.svg" },
+            { code: "GB", nativeName: "United Kingdom", displayName: "United Kingdom", nativeDesc: "QRP2P UK Marketplace - Secure P2P trading platform for buyers and sellers", path: "united-kingdom", url: "/united-kingdom/", flagUrl: "https://flagcdn.com/gb.svg", imageBg: "https://flagcdn.com/gb.svg" },
+            { code: "NL", nativeName: "Nederland", displayName: "Netherlands", nativeDesc: "QRP2P Nederland Marktplaats - Veilig P2P handelsplatform voor kopers en verkopers", path: "nederland", url: "/nederland/", flagUrl: "https://flagcdn.com/nl.svg", imageBg: "https://flagcdn.com/nl.svg" },
+            { code: "BE", nativeName: "België", displayName: "Belgium", nativeDesc: "QRP2P België Marktplaats - Veilig P2P handelsplatform", path: "belgie", url: "/belgie/", flagUrl: "https://flagcdn.com/be.svg", imageBg: "https://flagcdn.com/be.svg" },
+            { code: "PT", nativeName: "Portugal", displayName: "Portugal", nativeDesc: "Mercado QRP2P Portugal - Plataforma de negociação P2P segura", path: "portugal", url: "/portugal/", flagUrl: "https://flagcdn.com/pt.svg", imageBg: "https://flagcdn.com/pt.svg" },
+            { code: "PL", nativeName: "Polska", displayName: "Poland", nativeDesc: "Rynek QRP2P Polska - Bezpieczna platforma handlu P2P", path: "polska", url: "/polska/", flagUrl: "https://flagcdn.com/pl.svg", imageBg: "https://flagcdn.com/pl.svg" },
+            { code: "SE", nativeName: "Sverige", displayName: "Sweden", nativeDesc: "QRP2P Sverige Marknadsplats - Säker P2P-handelsplattform", path: "sverige", url: "/sverige/", flagUrl: "https://flagcdn.com/se.svg", imageBg: "https://flagcdn.com/se.svg" },
+            { code: "NO", nativeName: "Norge", displayName: "Norway", nativeDesc: "QRP2P Norge Markedsplass - Sikker P2P-handelsplattform", path: "norge", url: "/norge/", flagUrl: "https://flagcdn.com/no.svg", imageBg: "https://flagcdn.com/no.svg" },
+            { code: "DK", nativeName: "Danmark", displayName: "Denmark", nativeDesc: "QRP2P Danmark Markedsplads - Sikker P2P-handelsplatform", path: "danmark", url: "/danmark/", flagUrl: "https://flagcdn.com/dk.svg", imageBg: "https://flagcdn.com/dk.svg" },
+            { code: "FI", nativeName: "Suomi", displayName: "Finland", nativeDesc: "QRP2P Suomi Markkinapaikka - Turvallinen P2P-kauppaalusta", path: "suomi", url: "/suomi/", flagUrl: "https://flagcdn.com/fi.svg", imageBg: "https://flagcdn.com/fi.svg" },
+            { code: "CH", nativeName: "Schweiz", displayName: "Switzerland", nativeDesc: "QRP2P Schweiz Marktplatz - Sichere P2P-Handelsplattform", path: "schweiz", url: "/schweiz/", flagUrl: "https://flagcdn.com/ch.svg", imageBg: "https://flagcdn.com/ch.svg" },
+            { code: "AT", nativeName: "Österreich", displayName: "Austria", nativeDesc: "QRP2P Österreich Marktplatz - Sichere P2P-Handelsplattform", path: "osterreich", url: "/osterreich/", flagUrl: "https://flagcdn.com/at.svg", imageBg: "https://flagcdn.com/at.svg" },
+            { code: "GR", nativeName: "Ελλάδα", displayName: "Greece", nativeDesc: "Αγορά QRP2P Ελλάδα - Ασφαλής πλατφόρμα συναλλαγών P2P", path: "ellada", url: "/ellada/", flagUrl: "https://flagcdn.com/gr.svg", imageBg: "https://flagcdn.com/gr.svg" },
+            { code: "RU", nativeName: "Россия", displayName: "Russia", nativeDesc: "Рынок QRP2P Россия - Безопасная P2P торговая платформа", path: "russia", url: "/russia/", flagUrl: "https://flagcdn.com/ru.svg", imageBg: "https://flagcdn.com/ru.svg" },
+            { code: "UA", nativeName: "Україна", displayName: "Ukraine", nativeDesc: "Ринок QRP2P Україна - Безпечна P2P торгова платформа", path: "ukraine", url: "/ukraine/", flagUrl: "https://flagcdn.com/ua.svg", imageBg: "https://flagcdn.com/ua.svg" },
+            { code: "TR", nativeName: "Türkiye", displayName: "Turkey", nativeDesc: "QRP2P Türkiye Pazarı - Güvenli P2P ticaret platformu", path: "turkiye", url: "/turkiye/", flagUrl: "https://flagcdn.com/tr.svg", imageBg: "https://flagcdn.com/tr.svg" },
+            
+            // Americas
+            { code: "US", nativeName: "United States", displayName: "United States", nativeDesc: "QRP2P US Marketplace - Secure P2P trading platform for buyers and sellers", path: "united-states", url: "/united-states/", flagUrl: "https://flagcdn.com/us.svg", imageBg: "https://flagcdn.com/us.svg" },
+            { code: "CA", nativeName: "Canada", displayName: "Canada", nativeDesc: "QRP2P Canada Marketplace - Secure P2P trading platform", path: "canada", url: "/canada/", flagUrl: "https://flagcdn.com/ca.svg", imageBg: "https://flagcdn.com/ca.svg" },
+            { code: "MX", nativeName: "México", displayName: "Mexico", nativeDesc: "Mercado QRP2P México - Plataforma de comercio P2P segura para compradores y vendedores", path: "mexico", url: "/mexico/", flagUrl: "https://flagcdn.com/mx.svg", imageBg: "https://flagcdn.com/mx.svg" },
+            { code: "BR", nativeName: "Brasil", displayName: "Brazil", nativeDesc: "Mercado QRP2P Brasil - Plataforma de negociação P2P segura para compradores e vendedores", path: "brasil", url: "/brasil/", flagUrl: "https://flagcdn.com/br.svg", imageBg: "https://flagcdn.com/br.svg" },
+            { code: "AR", nativeName: "Argentina", displayName: "Argentina", nativeDesc: "Mercado QRP2P Argentina - Plataforma de comercio P2P segura para compradores y vendedores", path: "argentina", url: "/argentina/", flagUrl: "https://flagcdn.com/ar.svg", imageBg: "https://flagcdn.com/ar.svg" },
+            { code: "CO", nativeName: "Colombia", displayName: "Colombia", nativeDesc: "Mercado QRP2P Colombia - Plataforma de comercio P2P segura para compradores y vendedores", path: "colombia", url: "/colombia/", flagUrl: "https://flagcdn.com/co.svg", imageBg: "https://flagcdn.com/co.svg" },
+            { code: "PE", nativeName: "Perú", displayName: "Peru", nativeDesc: "Mercado QRP2P Perú - Plataforma de comercio P2P segura para compradores y vendedores", path: "peru", url: "/peru/", flagUrl: "https://flagcdn.com/pe.svg", imageBg: "https://flagcdn.com/pe.svg" },
+            { code: "CL", nativeName: "Chile", displayName: "Chile", nativeDesc: "Mercado QRP2P Chile - Plataforma de comercio P2P segura para compradores y vendedores", path: "chile", url: "/chile/", flagUrl: "https://flagcdn.com/cl.svg", imageBg: "https://flagcdn.com/cl.svg" },
+            { code: "VE", nativeName: "Venezuela", displayName: "Venezuela", nativeDesc: "Mercado QRP2P Venezuela - Plataforma de comercio P2P segura para compradores y vendedores", path: "venezuela", url: "/venezuela/", flagUrl: "https://flagcdn.com/ve.svg", imageBg: "https://flagcdn.com/ve.svg" },
+            { code: "EC", nativeName: "Ecuador", displayName: "Ecuador", nativeDesc: "Mercado QRP2P Ecuador - Plataforma de comercio P2P segura", path: "ecuador", url: "/ecuador/", flagUrl: "https://flagcdn.com/ec.svg", imageBg: "https://flagcdn.com/ec.svg" },
+            { code: "BO", nativeName: "Bolivia", displayName: "Bolivia", nativeDesc: "Mercado QRP2P Bolivia - Plataforma de comercio P2P segura", path: "bolivia", url: "/bolivia/", flagUrl: "https://flagcdn.com/bo.svg", imageBg: "https://flagcdn.com/bo.svg" },
+            { code: "PY", nativeName: "Paraguay", displayName: "Paraguay", nativeDesc: "Mercado QRP2P Paraguay - Plataforma de comercio P2P segura", path: "paraguay", url: "/paraguay/", flagUrl: "https://flagcdn.com/py.svg", imageBg: "https://flagcdn.com/py.svg" },
+            { code: "UY", nativeName: "Uruguay", displayName: "Uruguay", nativeDesc: "Mercado QRP2P Uruguay - Plataforma de comercio P2P segura", path: "uruguay", url: "/uruguay/", flagUrl: "https://flagcdn.com/uy.svg", imageBg: "https://flagcdn.com/uy.svg" },
+            { code: "PA", nativeName: "Panamá", displayName: "Panama", nativeDesc: "Mercado QRP2P Panamá - Plataforma de comercio P2P segura", path: "panama", url: "/panama/", flagUrl: "https://flagcdn.com/pa.svg", imageBg: "https://flagcdn.com/pa.svg" },
+            { code: "CR", nativeName: "Costa Rica", displayName: "Costa Rica", nativeDesc: "Mercado QRP2P Costa Rica - Plataforma de comercio P2P segura", path: "costa-rica", url: "/costa-rica/", flagUrl: "https://flagcdn.com/cr.svg", imageBg: "https://flagcdn.com/cr.svg" },
+            { code: "GT", nativeName: "Guatemala", displayName: "Guatemala", nativeDesc: "Mercado QRP2P Guatemala - Plataforma de comercio P2P segura", path: "guatemala", url: "/guatemala/", flagUrl: "https://flagcdn.com/gt.svg", imageBg: "https://flagcdn.com/gt.svg" },
+            { code: "HN", nativeName: "Honduras", displayName: "Honduras", nativeDesc: "Mercado QRP2P Honduras - Plataforma de comercio P2P segura", path: "honduras", url: "/honduras/", flagUrl: "https://flagcdn.com/hn.svg", imageBg: "https://flagcdn.com/hn.svg" },
+            { code: "NI", nativeName: "Nicaragua", displayName: "Nicaragua", nativeDesc: "Mercado QRP2P Nicaragua - Plataforma de comercio P2P segura", path: "nicaragua", url: "/nicaragua/", flagUrl: "https://flagcdn.com/ni.svg", imageBg: "https://flagcdn.com/ni.svg" },
+            { code: "SV", nativeName: "El Salvador", displayName: "El Salvador", nativeDesc: "Mercado QRP2P El Salvador - Plataforma de comercio P2P segura", path: "el-salvador", url: "/el-salvador/", flagUrl: "https://flagcdn.com/sv.svg", imageBg: "https://flagcdn.com/sv.svg" },
+            { code: "DO", nativeName: "República Dominicana", displayName: "Dominican Republic", nativeDesc: "Mercado QRP2P República Dominicana - Plataforma de comercio P2P segura", path: "republica-dominicana", url: "/republica-dominicana/", flagUrl: "https://flagcdn.com/do.svg", imageBg: "https://flagcdn.com/do.svg" },
+            { code: "CU", nativeName: "Cuba", displayName: "Cuba", nativeDesc: "Mercado QRP2P Cuba - Plataforma de comercio P2P segura", path: "cuba", url: "/cuba/", flagUrl: "https://flagcdn.com/cu.svg", imageBg: "https://flagcdn.com/cu.svg" },
+            
+            // Africa
+            { code: "ZA", nativeName: "South Africa", displayName: "South Africa", nativeDesc: "QRP2P South Africa Marketplace - Secure P2P trading platform for buyers and sellers", path: "south-africa", url: "/south-africa/", flagUrl: "https://flagcdn.com/za.svg", imageBg: "https://flagcdn.com/za.svg" },
+            { code: "NG", nativeName: "Nigeria", displayName: "Nigeria", nativeDesc: "QRP2P Nigeria Marketplace - Secure P2P trading platform", path: "nigeria", url: "/nigeria/", flagUrl: "https://flagcdn.com/ng.svg", imageBg: "https://flagcdn.com/ng.svg" },
+            { code: "KE", nativeName: "Kenya", displayName: "Kenya", nativeDesc: "Soko la QRP2P Kenya - Jukwaa la biashara la P2P salama", path: "kenya", url: "/kenya/", flagUrl: "https://flagcdn.com/ke.svg", imageBg: "https://flagcdn.com/ke.svg" },
+            { code: "MA", nativeName: "المغرب", displayName: "Morocco", nativeDesc: "سوق QRP2P في المغرب - منصة تداول P2P آمنة", path: "morocco", url: "/morocco/", flagUrl: "https://flagcdn.com/ma.svg", imageBg: "https://flagcdn.com/ma.svg" },
+            { code: "TN", nativeName: "تونس", displayName: "Tunisia", nativeDesc: "سوق QRP2P في تونس - منصة تداول P2P آمنة", path: "tunisia", url: "/tunisia/", flagUrl: "https://flagcdn.com/tn.svg", imageBg: "https://flagcdn.com/tn.svg" },
+            { code: "DZ", nativeName: "الجزائر", displayName: "Algeria", nativeDesc: "سوق QRP2P في الجزائر - منصة تداول P2P آمنة", path: "algeria", url: "/algeria/", flagUrl: "https://flagcdn.com/dz.svg", imageBg: "https://flagcdn.com/dz.svg" },
+            { code: "GH", nativeName: "Ghana", displayName: "Ghana", nativeDesc: "QRP2P Ghana Marketplace - Secure P2P trading platform", path: "ghana", url: "/ghana/", flagUrl: "https://flagcdn.com/gh.svg", imageBg: "https://flagcdn.com/gh.svg" },
+            
+            // Oceania
+            { code: "AU", nativeName: "Australia", displayName: "Australia", nativeDesc: "QRP2P Australia Marketplace - Secure P2P trading platform for buyers and sellers", path: "australia", url: "/australia/", flagUrl: "https://flagcdn.com/au.svg", imageBg: "https://flagcdn.com/au.svg" },
+            { code: "NZ", nativeName: "New Zealand", displayName: "New Zealand", nativeDesc: "QRP2P New Zealand Marketplace - Secure P2P trading platform", path: "new-zealand", url: "/new-zealand/", flagUrl: "https://flagcdn.com/nz.svg", imageBg: "https://flagcdn.com/nz.svg" }
         ];
         
-        // Generar el resto de países para tener los 196 completos (usando un bucle para mantener el código limpio)
-        const additionalCountries = [
-            "BW","BR","BN","BG","BF","BI","CV","KH","CM","CA","CF","TD","CL","CN","CO","KM","CG","CR","CI","HR","CU","CY","CZ","DK","DJ","DM","DO","EC","EG","SV","GQ","ER","EE","SZ","ET","FJ","FI","FR","GA","GM","GE","DE","GH","GR","GD","GT","GN","GW","GY","HT","HN","HU","IS","IN","ID","IR","IQ","IE","IL","IT","JM","JP","JO","KZ","KE","KI","KP","KR","KW","KG","LA","LV","LB","LS","LR","LY","LI","LT","LU","MG","MW","MY","MV","ML","MT","MH","MR","MU","MX","FM","MD","MC","MN","ME","MA","MZ","MM","NA","NR","NP","NL","NZ","NI","NE","NG","MK","NO","OM","PK","PW","PS","PA","PG","PY","PE","PH","PL","PT","QA","RO","RU","RW","KN","LC","VC","WS","SM","ST","SA","SN","RS","SC","SL","SG","SK","SI","SB","SO","ZA","SS","ES","LK","SD","SR","SE","CH","SY","TW","TJ","TZ","TH","TL","TG","TO","TT","TN","TR","TM","TV","UG","UA","AE","GB","US","UY","UZ","VU","VA","VE","VN","YE","ZM","ZW"
-        ];
-        
-        const countryNamesMap = {
-            "BW":"Botswana","BR":"Brazil","BN":"Brunei","BG":"Bulgaria","BF":"Burkina Faso","BI":"Burundi","CV":"Cabo Verde","KH":"Cambodia","CM":"Cameroon","CA":"Canada","CF":"Central African Republic","TD":"Chad","CL":"Chile","CN":"China","CO":"Colombia","KM":"Comoros","CG":"Congo","CR":"Costa Rica","CI":"Côte d'Ivoire","HR":"Croatia","CU":"Cuba","CY":"Cyprus","CZ":"Czech Republic","DK":"Denmark","DJ":"Djibouti","DM":"Dominica","DO":"Dominican Republic","EC":"Ecuador","EG":"Egypt","SV":"El Salvador","GQ":"Equatorial Guinea","ER":"Eritrea","EE":"Estonia","SZ":"Eswatini","ET":"Ethiopia","FJ":"Fiji","FI":"Finland","FR":"France","GA":"Gabon","GM":"Gambia","GE":"Georgia","DE":"Germany","GH":"Ghana","GR":"Greece","GD":"Grenada","GT":"Guatemala","GN":"Guinea","GW":"Guinea-Bissau","GY":"Guyana","HT":"Haiti","HN":"Honduras","HU":"Hungary","IS":"Iceland","IN":"India","ID":"Indonesia","IR":"Iran","IQ":"Iraq","IE":"Ireland","IL":"Israel","IT":"Italy","JM":"Jamaica","JP":"Japan","JO":"Jordan","KZ":"Kazakhstan","KE":"Kenya","KI":"Kiribati","KP":"North Korea","KR":"South Korea","KW":"Kuwait","KG":"Kyrgyzstan","LA":"Laos","LV":"Latvia","LB":"Lebanon","LS":"Lesotho","LR":"Liberia","LY":"Libya","LI":"Liechtenstein","LT":"Lithuania","LU":"Luxembourg","MG":"Madagascar","MW":"Malawi","MY":"Malaysia","MV":"Maldives","ML":"Mali","MT":"Malta","MH":"Marshall Islands","MR":"Mauritania","MU":"Mauritius","MX":"Mexico","FM":"Micronesia","MD":"Moldova","MC":"Monaco","MN":"Mongolia","ME":"Montenegro","MA":"Morocco","MZ":"Mozambique","MM":"Myanmar","NA":"Namibia","NR":"Nauru","NP":"Nepal","NL":"Netherlands","NZ":"New Zealand","NI":"Nicaragua","NE":"Niger","NG":"Nigeria","MK":"North Macedonia","NO":"Norway","OM":"Oman","PK":"Pakistan","PW":"Palau","PS":"Palestine","PA":"Panama","PG":"Papua New Guinea","PY":"Paraguay","PE":"Peru","PH":"Philippines","PL":"Poland","PT":"Portugal","QA":"Qatar","RO":"Romania","RU":"Russia","RW":"Rwanda","KN":"Saint Kitts and Nevis","LC":"Saint Lucia","VC":"Saint Vincent and the Grenadines","WS":"Samoa","SM":"San Marino","ST":"Sao Tome and Principe","SA":"Saudi Arabia","SN":"Senegal","RS":"Serbia","SC":"Seychelles","SL":"Sierra Leone","SG":"Singapore","SK":"Slovakia","SI":"Slovenia","SB":"Solomon Islands","SO":"Somalia","ZA":"South Africa","SS":"South Sudan","ES":"Spain","LK":"Sri Lanka","SD":"Sudan","SR":"Suriname","SE":"Sweden","CH":"Switzerland","SY":"Syria","TW":"Taiwan","TJ":"Tajikistan","TZ":"Tanzania","TH":"Thailand","TL":"Timor-Leste","TG":"Togo","TO":"Tonga","TT":"Trinidad and Tobago","TN":"Tunisia","TR":"Turkey","TM":"Turkmenistan","TV":"Tuvalu","UG":"Uganda","UA":"Ukraine","AE":"United Arab Emirates","GB":"United Kingdom","US":"United States","UY":"Uruguay","UZ":"Uzbekistan","VU":"Vanuatu","VA":"Vatican City","VE":"Venezuela","VN":"Vietnam","YE":"Yemen","ZM":"Zambia","ZW":"Zimbabwe"
-        };
-        
-        // Agregar los países adicionales
-        for (let code of additionalCountries) {
-            const countryName = countryNamesMap[code] || code;
-            const codeLower = code.toLowerCase();
-            cities.push({
-                code: code,
-                name: `QRP2P ${countryName.toUpperCase()}`,
-                region: "Global",
-                country: countryName,
-                flagIcon: `flag-icon flag-icon-${codeLower}`,
-                flagUrl: `https://flagcdn.com/${codeLower}.svg`,
-                description: `QRP2P Marketplace ${countryName}`,
-                subdomain: code === "GB" ? "uk" : codeLower,
-                link: `https://${code === "GB" ? "uk" : codeLower}.qrp2p.com/`,
-                imageBg: `https://flagcdn.com/${codeLower}.svg`
-            });
-        }
-        
-        // Ordenar alfabéticamente por país
-        cities.sort((a, b) => a.country.localeCompare(b.country));
+        // Ordenar alfabéticamente por nombre nativo
+        countriesData.sort((a, b) => a.nativeName.localeCompare(b.nativeName));
         
         // Actualizar el contador
-        document.getElementById('country-count').innerHTML = `🌍 ${cities.length} Countries - Click on any card to enter the marketplace`;
+        document.getElementById('country-count').innerHTML = `🌍 ${countriesData.length} Countries - Click on any card to enter the marketplace`;
+        
+        // Generar country tags para SEO
+        const tagsContainer = document.getElementById('country-tags-container');
+        if (tagsContainer) {
+            const topCountries = countriesData.slice(0, 30);
+            topCountries.forEach(country => {
+                const tag = document.createElement('a');
+                tag.href = country.url;
+                tag.className = 'country-tag';
+                tag.textContent = country.nativeName;
+                tagsContainer.appendChild(tag);
+            });
+        }
         
         // PWA Install Button Logic
         let deferredPrompt;
@@ -518,35 +666,33 @@
                 .toLowerCase();
         }
         
-        // Function to render cities con la bandera REAL como imagen de fondo y mini bandera junto al nombre
-        function renderCities(cityList) {
+        // Function to render countries
+        function renderCountries(countryList) {
             const container = document.getElementById('cities-container');
             container.innerHTML = '';
             
-            cityList.forEach((city, index) => {
+            countryList.forEach((country, index) => {
                 const card = document.createElement('div');
                 card.className = 'city-card';
                 card.style.animationDelay = `${index * 0.05}s`;
                 
-                // Usar la bandera REAL como imagen de fondo (estilo WhatsApp - bandera grande y reconocible)
-                const flagBackgroundUrl = city.imageBg || city.flagUrl;
+                const flagBackgroundUrl = country.imageBg || country.flagUrl;
                 
                 card.innerHTML = `
                     <div class="city-image" style="background-image: url('${flagBackgroundUrl}'); background-size: cover; background-position: center; background-color: #f5f5f5;">
                     </div>
                     <div class="city-info">
                         <h3 class="city-name">
-                            <img class="small-flag" src="${city.flagUrl}" alt="${city.country} flag" onerror="this.style.display='none'; this.parentElement.querySelector('.flag-icon')?.classList.add('show');">
-                            <span class="flag-icon ${city.flagIcon}" style="display: none;"></span>
-                            ${city.name}
+                            <img class="small-flag" src="${country.flagUrl}" alt="Flag of ${country.nativeName}" onerror="this.style.display='none';">
+                            ${country.nativeName}
                         </h3>
-                        <p class="city-desc">${city.description}</p>
-                        <p class="city-desc" style="font-size: 0.85rem; opacity: 0.7;">${city.subdomain}.qrp2p.com</p>
-                        <a href="${city.link}" class="city-link" target="_blank">Enter Marketplace</a>
+                        <p class="city-desc">${country.nativeDesc}</p>
+                        <p class="city-desc" style="font-size: 0.85rem; opacity: 0.7;">qrp2p.com${country.url}</p>
+                        <a href="${country.url}" class="city-link" target="_blank">Enter Marketplace →</a>
                     </div>
                 `;
                 
-                // Manejar error de imagen de fondo
+                // Handle image background error
                 const imageDiv = card.querySelector('.city-image');
                 if (imageDiv) {
                     const img = new Image();
@@ -557,20 +703,10 @@
                     img.src = flagBackgroundUrl;
                 }
                 
-                // Manejar error de mini bandera
-                const smallFlag = card.querySelector('.small-flag');
-                if (smallFlag) {
-                    smallFlag.onerror = function() {
-                        this.style.display = 'none';
-                        const flagIconSpan = card.querySelector('.flag-icon');
-                        if (flagIconSpan) flagIconSpan.style.display = 'inline-block';
-                    };
-                }
-                
                 // Make entire card clickable
                 card.addEventListener('click', (e) => {
                     if (e.target.tagName !== 'A') {
-                        window.open(city.link, '_blank');
+                        window.open(country.url, '_blank');
                     }
                 });
                 
@@ -581,24 +717,23 @@
         // Search functionality
         function performSearch(searchTerm) {
             const normalizedSearch = normalizeText(searchTerm);
-            const filteredCities = cities.filter(city => 
-                normalizeText(city.name).includes(normalizedSearch) || 
-                normalizeText(city.country).includes(normalizedSearch) ||
-                normalizeText(city.description).includes(normalizedSearch) ||
-                normalizeText(city.subdomain).includes(normalizedSearch)
+            const filteredCountries = countriesData.filter(country => 
+                normalizeText(country.nativeName).includes(normalizedSearch) || 
+                normalizeText(country.displayName).includes(normalizedSearch) ||
+                normalizeText(country.nativeDesc).includes(normalizedSearch)
             );
-            renderCities(filteredCities);
+            renderCountries(filteredCountries);
             
             // Update counter
-            document.getElementById('country-count').innerHTML = `🌍 ${filteredCities.length} Countries ${searchTerm ? '- Search results' : '- Click on any card to enter the marketplace'}`;
+            document.getElementById('country-count').innerHTML = `🌍 ${filteredCountries.length} Countries ${searchTerm ? '- Search results' : '- Click on any card to enter the marketplace'}`;
             
-            return filteredCities.length > 0 ? filteredCities[0] : null;
+            return filteredCountries.length > 0 ? filteredCountries[0] : null;
         }
         
         // Initialize the page
         document.addEventListener('DOMContentLoaded', function() {
             // Initial render
-            renderCities(cities);
+            renderCountries(countriesData);
             
             // Set up search functionality
             const searchInput = document.getElementById('marketplace-search');
@@ -611,39 +746,22 @@
                 if (e.key === 'Enter') {
                     const firstResult = performSearch(e.target.value);
                     if (firstResult) {
-                        window.open(firstResult.link, '_blank');
+                        window.open(firstResult.url, '_blank');
                     }
                 }
             });
         });
-    </script>
-    
-    <!-- Service Worker Registration - Enhanced for PWA -->
-    <script>
+        
+        // Service Worker Registration - Enhanced for PWA
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
                     .then(function(registration) {
                         console.log('✅ Service Worker registrado con éxito:', registration.scope);
-                        
-                        registration.addEventListener('updatefound', () => {
-                            const newWorker = registration.installing;
-                            console.log('🔄 Nuevo Service Worker encontrado');
-                            
-                            newWorker.addEventListener('statechange', () => {
-                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                                    console.log('📦 Nueva versión disponible - Actualiza la página');
-                                }
-                            });
-                        });
                     })
                     .catch(function(error) {
                         console.log('❌ Error al registrar Service Worker:', error);
                     });
-                    
-                navigator.serviceWorker.addEventListener('controllerchange', () => {
-                    console.log('⚡ Service Worker actualizado');
-                });
             });
         }
     </script>
