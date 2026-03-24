@@ -1,1 +1,647 @@
-a
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MARKETPLACE COLOMBIA</title>
+    
+    <!-- PWA Meta Tags for Google -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="QRP2P">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="QRP2P MARKETPLACE">
+    <meta name="format-detection" content="telephone=no">
+    
+    <!-- Favicons for all platforms -->
+    <link rel="icon" type="image/png" sizes="192x192" href="img/icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="img/icon-512.png">
+    <link rel="apple-touch-icon" href="img/icon-192.png">
+    
+    <!-- Existing CSS and Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Serif+Pro:wght@400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #ffffff;
+            --secondary: #f5f5f5;
+            --accent: #e0e0e0;
+            --light: #4a4a4a;
+            --text: #000000;
+            --border: #d0d0d0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Libre Baskerville', 'Source Serif Pro', Georgia, serif;
+        }
+        
+        body {
+            background-color: var(--primary);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        /* Install button for PWA */
+        #install-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--text);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 24px;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            display: none;
+        }
+        
+        #install-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+        }
+        
+        header {
+            background-color: var(--primary);
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .logo-container {
+            max-width: 400px;
+            margin: 0 auto 1rem;
+            padding: 0 1rem;
+        }
+        
+        .logo-container img {
+            width: 100%;
+            height: auto;
+            max-height: 80px;
+            object-fit: contain;
+        }
+        
+        .fallback-logo {
+            font-size: 2rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: var(--text);
+            border: 2px solid var(--text);
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+            color: var(--text);
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+        
+        .search-container {
+            margin: 2rem auto;
+            max-width: 600px;
+            position: relative;
+        }
+        
+        #marketplace-search {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            border: 1px solid var(--border);
+            background: var(--primary);
+            color: var(--text);
+            font-size: 1rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+        
+        #marketplace-search:focus {
+            outline: none;
+            background: var(--primary);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+            border-color: var(--light);
+        }
+        
+        #marketplace-search::placeholder {
+            color: rgba(0, 0, 0, 0.5);
+        }
+        
+        .cities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .city-card {
+            background: var(--primary);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            cursor: pointer;
+            border: 1px solid var(--border);
+        }
+        
+        .city-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            border-color: var(--light);
+        }
+        
+        .city-image {
+            height: 160px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            border-bottom: 1px solid var(--border);
+            background-color: #f0f0f0;
+        }
+        
+        .city-image {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .city-info {
+            padding: 1.5rem;
+        }
+        
+        .city-name {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+        }
+        
+        .city-name .flag-icon {
+            font-size: 1.5rem;
+            border-radius: 3px;
+        }
+        
+        .small-flag {
+            width: 32px;
+            height: 24px;
+            object-fit: cover;
+            border-radius: 4px;
+            border: 1px solid rgba(0,0,0,0.1);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .city-desc {
+            opacity: 0.8;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+        
+        .city-link {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--text);
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+        
+        .city-link:hover {
+            background: transparent;
+            border-color: var(--text);
+            color: var(--text);
+        }
+        
+        /* Offline indicator */
+        .offline-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #ff4444;
+            color: white;
+            text-align: center;
+            padding: 8px;
+            font-size: 0.9rem;
+            z-index: 2000;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .offline-indicator.show {
+            transform: translateY(0);
+        }
+        
+        footer {
+            background: var(--secondary);
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 3rem;
+            border-top: 1px solid var(--border);
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: var(--text);
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+        
+        .footer-links a:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .logo-container {
+                max-width: 300px;
+            }
+            
+            .tagline {
+                font-size: 1rem;
+                padding: 0 1rem;
+            }
+            
+            .cities-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+            
+            .city-image {
+                height: 120px;
+            }
+            
+            .city-info {
+                padding: 1rem;
+            }
+            
+            .city-name {
+                font-size: 1.1rem;
+            }
+            
+            .small-flag {
+                width: 28px;
+                height: 21px;
+            }
+            
+            #install-button {
+                bottom: 10px;
+                right: 10px;
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo-container {
+                max-width: 250px;
+            }
+            
+            .cities-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .city-card {
+            animation: fadeIn 0.5s ease forwards;
+            opacity: 0;
+        }
+        
+        .capital-count {
+            text-align: center;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <!-- Offline indicator -->
+    <div class="offline-indicator" id="offline-indicator">
+        🔴 You are offline - Showing cached content
+    </div>
+    
+    <!-- Install button for PWA -->
+    <button id="install-button" style="display: none;">
+        📱 Install App
+    </button>
+    
+    <header>
+        <div class="logo-container">
+            <img src="img/c-index.png" 
+                 alt="MARKETPLACE" 
+                 onerror="this.onerror=null; this.style.display='none'; this.parentElement.innerHTML='<div class=\'fallback-logo\'>QRP2P</div>';">
+        </div>
+        <div class="tagline">MARKETPLACE COLOMBIA</div>
+    </header>
+    
+    <div class="container">
+        <div class="search-container">
+            <input type="text" id="marketplace-search" placeholder="Buscar capital o departamento...">
+        </div>
+        
+        <div class="capital-count" id="capital-count"></div>
+        
+        <div class="cities-grid" id="cities-container">
+            <!-- Cities will be inserted here by JavaScript -->
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-links">
+            <a href="terms.html">Terms of Service</a>
+        </div>
+        <div class="copyright">©️ QRP2P MARKETPLACE COLOMBIA. All rights reserved. 32 Departamentos y sus Capitales.</div>
+    </footer>
+
+    <script>
+        // Los 32 departamentos de Colombia con sus capitales
+        // Usamos la bandera de Colombia para todas las capitales
+        const colombiaFlagUrl = "https://flagcdn.com/co.svg";
+        
+        // Dominio base para las rutas
+        const baseDomain = "https://qrp2p.com";
+        
+        const capitales = [
+            { depto: "Amazonas", capital: "Leticia", slug: "leticia", descripcion: "Capital del Amazonas, puerta de entrada a la selva amazónica colombiana", ruta: "/leticia", imagen: colombiaFlagUrl },
+            { depto: "Antioquia", capital: "Medellín", slug: "medellin", descripcion: "Capital de Antioquia, la ciudad de la eterna primavera", ruta: "/medellin", imagen: colombiaFlagUrl },
+            { depto: "Arauca", capital: "Arauca", slug: "arauca", descripcion: "Capital de Arauca, tierra del joropo y el petróleo", ruta: "/arauca", imagen: colombiaFlagUrl },
+            { depto: "Atlántico", capital: "Barranquilla", slug: "barranquilla", descripcion: "Capital del Atlántico, sede del carnaval más importante de Colombia", ruta: "/barranquilla", imagen: colombiaFlagUrl },
+            { depto: "Bolívar", capital: "Cartagena", slug: "cartagena", descripcion: "Capital de Bolívar, la heroica ciudad amurallada del Caribe", ruta: "/cartagena", imagen: colombiaFlagUrl },
+            { depto: "Boyacá", capital: "Tunja", slug: "tunja", descripcion: "Capital de Boyacá, ciudad histórica del altiplano cundiboyacense", ruta: "/tunja", imagen: colombiaFlagUrl },
+            { depto: "Caldas", capital: "Manizales", slug: "manizales", descripcion: "Capital de Caldas, ciudad del paisaje cultural cafetero", ruta: "/manizales", imagen: colombiaFlagUrl },
+            { depto: "Caquetá", capital: "Florencia", slug: "florencia", descripcion: "Capital de Caquetá, puerta de entrada a la Amazonía colombiana", ruta: "/florencia", imagen: colombiaFlagUrl },
+            { depto: "Casanare", capital: "Yopal", slug: "yopal", descripcion: "Capital de Casanare, capital petrolera de Colombia", ruta: "/yopal", imagen: colombiaFlagUrl },
+            { depto: "Cauca", capital: "Popayán", slug: "popayan", descripcion: "Capital de Cauca, la ciudad blanca de Colombia", ruta: "/popayan", imagen: colombiaFlagUrl },
+            { depto: "Cesar", capital: "Valledupar", slug: "valledupar", descripcion: "Capital del Cesar, cuna del vallenato", ruta: "/valledupar", imagen: colombiaFlagUrl },
+            { depto: "Chocó", capital: "Quibdó", slug: "quibdo", descripcion: "Capital de Chocó, ciudad del Pacífico colombiano con gran biodiversidad", ruta: "/quibdo", imagen: colombiaFlagUrl },
+            { depto: "Córdoba", capital: "Montería", slug: "monteria", descripcion: "Capital de Córdoba, ciudad de la ganadería y la cultura sabanera", ruta: "/monteria", imagen: colombiaFlagUrl },
+            { depto: "Cundinamarca", capital: "Bogotá", slug: "bogota", descripcion: "Capital de Cundinamarca y de Colombia, ciudad cosmopolita y cultural", ruta: "/bogota", imagen: colombiaFlagUrl },
+            { depto: "Guainía", capital: "Inírida", slug: "inirida", descripcion: "Capital de Guainía, tierra del cerro de Mavecure", ruta: "/inirida", imagen: colombiaFlagUrl },
+            { depto: "Guaviare", capital: "San José del Guaviare", slug: "san-jose-del-guaviare", descripcion: "Capital del Guaviare, puerta de entrada a la Amazonía", ruta: "/san-jose-del-guaviare", imagen: colombiaFlagUrl },
+            { depto: "Huila", capital: "Neiva", slug: "neiva", descripcion: "Capital del Huila, ciudad del bambuco y el río Magdalena", ruta: "/neiva", imagen: colombiaFlagUrl },
+            { depto: "La Guajira", capital: "Riohacha", slug: "riohacha", descripcion: "Capital de La Guajira, puerta al desierto y la cultura wayuu", ruta: "/riohacha", imagen: colombiaFlagUrl },
+            { depto: "Magdalena", capital: "Santa Marta", slug: "santa-marta", descripcion: "Capital del Magdalena, ciudad más antigua de Colombia, puerta a la Sierra Nevada", ruta: "/santa-marta", imagen: colombiaFlagUrl },
+            { depto: "Meta", capital: "Villavicencio", slug: "villavicencio", descripcion: "Capital del Meta, puerta de entrada a los Llanos Orientales", ruta: "/villavicencio", imagen: colombiaFlagUrl },
+            { depto: "Nariño", capital: "Pasto", slug: "pasto", descripcion: "Capital de Nariño, ciudad del carnaval de negros y blancos", ruta: "/pasto", imagen: colombiaFlagUrl },
+            { depto: "Norte de Santander", capital: "Cúcuta", slug: "cucuta", descripcion: "Capital de Norte de Santander, ciudad fronteriza con Venezuela", ruta: "/cucuta", imagen: colombiaFlagUrl },
+            { depto: "Putumayo", capital: "Mocoa", slug: "mocoa", descripcion: "Capital del Putumayo, puerta a la Amazonía colombiana", ruta: "/mocoa", imagen: colombiaFlagUrl },
+            { depto: "Quindío", capital: "Armenia", slug: "armenia", descripcion: "Capital del Quindío, corazón del eje cafetero", ruta: "/armenia", imagen: colombiaFlagUrl },
+            { depto: "Risaralda", capital: "Pereira", slug: "pereira", descripcion: "Capital de Risaralda, ciudad del eje cafetero", ruta: "/pereira", imagen: colombiaFlagUrl },
+            { depto: "San Andrés y Providencia", capital: "San Andrés", slug: "san-andres", descripcion: "Capital de San Andrés y Providencia, paraíso caribeño", ruta: "/san-andres", imagen: colombiaFlagUrl },
+            { depto: "Santander", capital: "Bucaramanga", slug: "bucaramanga", descripcion: "Capital de Santander, ciudad de los parques", ruta: "/bucaramanga", imagen: colombiaFlagUrl },
+            { depto: "Sucre", capital: "Sincelejo", slug: "sincelejo", descripcion: "Capital de Sucre, ciudad de las corralejas", ruta: "/sincelejo", imagen: colombiaFlagUrl },
+            { depto: "Tolima", capital: "Ibagué", slug: "ibague", descripcion: "Capital del Tolima, ciudad musical de Colombia", ruta: "/ibague", imagen: colombiaFlagUrl },
+            { depto: "Valle del Cauca", capital: "Cali", slug: "cali", descripcion: "Capital del Valle del Cauca, la sucursal del cielo y capital mundial de la salsa", ruta: "/cali", imagen: colombiaFlagUrl },
+            { depto: "Vaupés", capital: "Mitú", slug: "mitu", descripcion: "Capital del Vaupés, puerta a la selva amazónica", ruta: "/mitu", imagen: colombiaFlagUrl },
+            { depto: "Vichada", capital: "Puerto Carreño", slug: "puerto-carreno", descripcion: "Capital del Vichada, puerta a los Llanos Orientales", ruta: "/puerto-carreno", imagen: colombiaFlagUrl }
+        ];
+        
+        // Crear el array de ciudades con el formato exacto "QRP2P + municipio"
+        const cities = capitales.map(capital => ({
+            code: "CO",
+            name: `QRP2P ${capital.capital.toUpperCase()}`,
+            region: capital.depto,
+            country: "Colombia",
+            flagIcon: "flag-icon flag-icon-co",
+            flagUrl: colombiaFlagUrl,
+            description: capital.descripcion,
+            slug: capital.slug,
+            link: `${baseDomain}${capital.ruta}`,
+            imageBg: capital.imagen,
+            departamento: capital.depto,
+            capitalNombre: capital.capital,
+            ruta: capital.ruta
+        }));
+        
+        // Ordenar alfabéticamente por nombre de capital
+        cities.sort((a, b) => a.capitalNombre.localeCompare(b.capitalNombre));
+        
+        // Actualizar el contador
+        document.getElementById('capital-count').innerHTML = `🇨🇴 ${cities.length} Capitales de Departamento - Haz clic en cualquier tarjeta para entrar al marketplace`;
+        
+        // PWA Install Button Logic
+        let deferredPrompt;
+        const installButton = document.getElementById('install-button');
+        
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installButton.style.display = 'block';
+            
+            installButton.addEventListener('click', () => {
+                installButton.style.display = 'none';
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the install prompt');
+                    }
+                    deferredPrompt = null;
+                });
+            });
+        });
+        
+        // Network status indicator
+        const offlineIndicator = document.getElementById('offline-indicator');
+        
+        function updateOnlineStatus() {
+            if (navigator.onLine) {
+                offlineIndicator.classList.remove('show');
+            } else {
+                offlineIndicator.classList.add('show');
+            }
+        }
+        
+        window.addEventListener('online', updateOnlineStatus);
+        window.addEventListener('offline', updateOnlineStatus);
+        updateOnlineStatus();
+        
+        // Function to normalize text for search
+        function normalizeText(text) {
+            return text
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .trim()
+                .toLowerCase();
+        }
+        
+        // Function to render cities con la bandera de Colombia como imagen de fondo y mini bandera junto al nombre
+        function renderCities(cityList) {
+            const container = document.getElementById('cities-container');
+            container.innerHTML = '';
+            
+            cityList.forEach((city, index) => {
+                const card = document.createElement('div');
+                card.className = 'city-card';
+                card.style.animationDelay = `${index * 0.05}s`;
+                
+                // Usar la bandera de Colombia como imagen de fondo
+                const flagBackgroundUrl = city.imageBg || city.flagUrl;
+                
+                card.innerHTML = `
+                    <div class="city-image" style="background-image: url('${flagBackgroundUrl}'); background-size: cover; background-position: center; background-color: #f5f5f5;">
+                    </div>
+                    <div class="city-info">
+                        <h3 class="city-name">
+                            <img class="small-flag" src="${city.flagUrl}" alt="Bandera de Colombia" onerror="this.style.display='none'; this.parentElement.querySelector('.flag-icon')?.classList.add('show');">
+                            <span class="flag-icon ${city.flagIcon}" style="display: none;"></span>
+                            ${city.name}
+                        </h3>
+                        <p class="city-desc">${city.description}</p>
+                        <p class="city-desc" style="font-size: 0.85rem; opacity: 0.7; margin-top: 5px;">📌 ${city.departamento}</p>
+                        <p class="city-desc" style="font-size: 0.8rem; opacity: 0.6; font-family: monospace;">🔗 ${baseDomain}${city.ruta}</p>
+                        <a href="${city.link}" class="city-link" target="_blank">Ingresar al Marketplace</a>
+                    </div>
+                `;
+                
+                // Manejar error de imagen de fondo
+                const imageDiv = card.querySelector('.city-image');
+                if (imageDiv) {
+                    const img = new Image();
+                    img.onerror = function() {
+                        imageDiv.style.backgroundImage = "linear-gradient(135deg, #FCD116 0%, #FCD116 33%, #003893 33%, #003893 66%, #CE1126 66%, #CE1126 100%)";
+                        imageDiv.innerHTML = '<div style="display: flex; align-items: center; justify-content: center; height: 100%; font-size: 3rem;">🇨🇴</div>';
+                    };
+                    img.src = flagBackgroundUrl;
+                }
+                
+                // Manejar error de mini bandera
+                const smallFlag = card.querySelector('.small-flag');
+                if (smallFlag) {
+                    smallFlag.onerror = function() {
+                        this.style.display = 'none';
+                        const flagIconSpan = card.querySelector('.flag-icon');
+                        if (flagIconSpan) flagIconSpan.style.display = 'inline-block';
+                    };
+                }
+                
+                // Make entire card clickable
+                card.addEventListener('click', (e) => {
+                    if (e.target.tagName !== 'A') {
+                        window.open(city.link, '_blank');
+                    }
+                });
+                
+                container.appendChild(card);
+            });
+        }
+        
+        // Search functionality
+        function performSearch(searchTerm) {
+            const normalizedSearch = normalizeText(searchTerm);
+            const filteredCities = cities.filter(city => 
+                normalizeText(city.name).includes(normalizedSearch) || 
+                normalizeText(city.capitalNombre).includes(normalizedSearch) ||
+                normalizeText(city.departamento).includes(normalizedSearch) ||
+                normalizeText(city.description).includes(normalizedSearch)
+            );
+            renderCities(filteredCities);
+            
+            // Update counter
+            document.getElementById('capital-count').innerHTML = `🇨🇴 ${filteredCities.length} Capitales ${searchTerm ? '- Resultados de búsqueda' : '- Haz clic en cualquier tarjeta para entrar al marketplace'}`;
+            
+            return filteredCities.length > 0 ? filteredCities[0] : null;
+        }
+        
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initial render
+            renderCities(cities);
+            
+            // Set up search functionality
+            const searchInput = document.getElementById('marketplace-search');
+            searchInput.addEventListener('input', (e) => {
+                performSearch(e.target.value);
+            });
+            
+            // Add Enter key functionality
+            searchInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    const firstResult = performSearch(e.target.value);
+                    if (firstResult) {
+                        window.open(firstResult.link, '_blank');
+                    }
+                }
+            });
+        });
+    </script>
+    
+    <!-- Service Worker Registration - Enhanced for PWA -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('sw.js')
+                    .then(function(registration) {
+                        console.log('✅ Service Worker registrado con éxito:', registration.scope);
+                        
+                        registration.addEventListener('updatefound', () => {
+                            const newWorker = registration.installing;
+                            console.log('🔄 Nuevo Service Worker encontrado');
+                            
+                            newWorker.addEventListener('statechange', () => {
+                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                    console.log('📦 Nueva versión disponible - Actualiza la página');
+                                }
+                            });
+                        });
+                    })
+                    .catch(function(error) {
+                        console.log('❌ Error al registrar Service Worker:', error);
+                    });
+                    
+                navigator.serviceWorker.addEventListener('controllerchange', () => {
+                    console.log('⚡ Service Worker actualizado');
+                });
+            });
+        }
+    </script>
+</body>
+</html>
