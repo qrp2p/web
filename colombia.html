@@ -20,12 +20,12 @@
     <link rel="icon" type="image/png" sizes="512x512" href="img/icon-512.png">
     <link rel="apple-touch-icon" href="img/icon-192.png">
     
-    <!-- CSS / Fonts (solo tipografía neutra) -->
+    <!-- CSS / Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
     
     <style>
-        /* ========== BLANCO Y NEGRO PUR0 ========== */
+        /* ========== BLANCO Y NEGRO (excepto imágenes de banderas/colombia) ========== */
         * {
             margin: 0;
             padding: 0;
@@ -39,7 +39,6 @@
             line-height: 1.45;
         }
         
-        /* solo escala de grises / blanco-negro puro */
         :root {
             --bg-body: #ffffff;
             --card-bg: #ffffff;
@@ -95,7 +94,7 @@
             height: auto;
             max-height: 68px;
             object-fit: contain;
-            filter: grayscale(100%);
+            /* logo mantiene color original (sin grayscale) */
         }
         
         .fallback-logo {
@@ -118,14 +117,12 @@
             margin-top: 0.25rem;
         }
         
-        /* contenedor principal */
         .container {
             max-width: 1200px;
             margin: 1.2rem auto;
             padding: 0 1rem;
         }
         
-        /* buscador monocromático */
         .search-container {
             margin: 0.75rem auto 1.5rem;
             max-width: 560px;
@@ -156,7 +153,6 @@
             font-weight: 300;
         }
         
-        /* contador sutil */
         .capital-count {
             text-align: center;
             font-size: 0.85rem;
@@ -176,7 +172,7 @@
             margin-top: 0.75rem;
         }
         
-        /* Tarjetas: estilo B/N absoluto */
+        /* Tarjetas: diseño B/N, pero imágenes a color */
         .city-card {
             background: var(--card-bg);
             border-radius: 20px;
@@ -197,7 +193,7 @@
             border-color: #aaaaaa;
         }
         
-        /* imagen superior: fondo blanco/negro puro, con emoji bandera si falla */
+        /* imagen superior: a COLOR (sin grayscale) para banderas y fotos de Colombia */
         .city-image {
             height: 140px;
             background-size: cover;
@@ -206,7 +202,7 @@
             position: relative;
             border-bottom: 1px solid #ececec;
             transition: filter 0.2s;
-            filter: grayscale(100%);
+            /* IMPORTANTE: sin grayscale para mantener los colores originales */
         }
         
         .city-info {
@@ -226,18 +222,18 @@
             color: #000;
         }
         
+        /* mini bandera a COLOR (sin filtro) */
         .small-flag {
             width: 28px;
             height: 21px;
             object-fit: cover;
             border-radius: 3px;
             border: 1px solid #d4d4d4;
-            filter: grayscale(100%);
-            background: #f0f0f0;
+            /* sin grayscale: color original */
         }
         
         .flag-icon {
-            filter: grayscale(100%);
+            /* bandera icono a color natural */
             font-size: 1.5rem;
         }
         
@@ -294,7 +290,6 @@
             border-color: #000;
         }
         
-        /* offline indicator b/n */
         .offline-indicator {
             position: fixed;
             top: 0;
@@ -348,7 +343,6 @@
             color: #4f4f4f;
         }
         
-        /* ANIMACION */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -399,7 +393,6 @@
             }
         }
         
-        /* para pantallas muy pequeñas, igual 2 columnas fijas */
         @media (max-width: 480px) {
             .cities-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -419,7 +412,6 @@
             }
         }
         
-        /* en desktop se puede ver más de 2, pero mantiene buena grilla responsiva */
         @media (min-width: 800px) {
             .cities-grid {
                 grid-template-columns: repeat(3, 1fr);
@@ -433,13 +425,15 @@
             }
         }
         
-        /* Forzar contraste blanco-negro en todos los elementos */
-        a, button, input, .city-card, .city-link {
-            transition: all 0.2s ease;
+        /* Las imágenes de bandera (mini y fondo) se muestran a COLOR, sin grayscale */
+        /* Aseguramos que el ícono flag-icon tampoco tenga filtro */
+        .flag-icon, .small-flag, .city-image {
+            filter: none !important;
         }
         
-        img, .city-image {
-            filter: grayscale(100%);
+        /* solo elementos decorativos abstractos podrían ser grises, pero las banderas están a color */
+        a, button, input, .city-card, .city-link {
+            transition: all 0.2s ease;
         }
         
         .city-link:active {
@@ -449,12 +443,10 @@
 </head>
 <body>
 
-    <!-- Offline indicator B/N -->
     <div class="offline-indicator" id="offline-indicator">
         🔴 Sin conexión — Contenido en caché
     </div>
     
-    <!-- Botón instalación PWA -->
     <button id="install-button" style="display: none;">
         📱 Instalar App
     </button>
@@ -488,7 +480,7 @@
     </footer>
 
     <script>
-        // 32 DEPARTAMENTOS con sus capitales - contenido 100% B/N
+        // 32 DEPARTAMENTOS DE COLOMBIA - LAS BANDERAS E IMÁGENES A COLOR
         const colombiaFlagUrl = "https://flagcdn.com/co.svg";
         const baseDomain = "https://qrp2p.com";
         
@@ -547,7 +539,7 @@
         // orden alfabético por capital
         cities.sort((a, b) => a.capitalNombre.localeCompare(b.capitalNombre));
         
-        // contador inicial (sin texto extra antes de las tarjetas)
+        // contador sin texto extra antes de las tarjetas
         const countSpan = document.getElementById('capital-count');
         function updateCounter(filteredLength, searchActive = false) {
             if (searchActive) {
@@ -582,7 +574,6 @@
         window.addEventListener('offline', updateOnlineStatus);
         updateOnlineStatus();
         
-        // función normalizada para búsqueda
         function normalizeText(text) {
             return text
                 .normalize("NFD")
@@ -591,7 +582,7 @@
                 .toLowerCase();
         }
         
-        // renderizado de tarjetas (blanco y negro total)
+        // renderizado de tarjetas (banderas e imágenes a COLOR)
         function renderCities(cityList) {
             const container = document.getElementById('cities-container');
             container.innerHTML = '';
@@ -619,20 +610,20 @@
                     </div>
                 `;
                 
-                // manejo de error imagen fondo: si falla se pone gradiente gris + emoji
+                // manejo de error imagen fondo: si falla se pone emoji grande de Colombia a COLOR
                 const imgDiv = card.querySelector('.city-image');
                 if (imgDiv) {
                     const testImg = new Image();
                     testImg.onerror = () => {
                         imgDiv.style.backgroundImage = "none";
-                        imgDiv.style.backgroundColor = "#e5e5e5";
-                        imgDiv.innerHTML = '<div style="display:flex; align-items:center; justify-content:center; height:100%; font-size:2.8rem; filter:grayscale(100%);">🇨🇴</div>';
+                        imgDiv.style.backgroundColor = "#f0f0f0";
+                        imgDiv.innerHTML = '<div style="display:flex; align-items:center; justify-content:center; height:100%; font-size:2.8rem;">🇨🇴</div>';
                         imgDiv.style.backgroundSize = "auto";
                     };
                     testImg.src = bgImgUrl;
                 }
                 
-                // mini bandera fallback
+                // mini bandera fallback (color)
                 const smallFlag = card.querySelector('.small-flag');
                 if (smallFlag) {
                     smallFlag.onerror = () => {
@@ -642,7 +633,7 @@
                     };
                 }
                 
-                // click en toda la tarjeta menos si es enlace
+                // click en toda la tarjeta
                 card.addEventListener('click', (e) => {
                     if (e.target.tagName !== 'A' && !e.target.closest('.city-link')) {
                         window.open(city.link, '_blank');
@@ -653,7 +644,7 @@
             });
         }
         
-        // búsqueda con actualización de contador y grid
+        // búsqueda
         function performSearch(searchTerm) {
             const normalized = normalizeText(searchTerm);
             const filtered = cities.filter(city => 
@@ -682,7 +673,7 @@
             });
         });
         
-        // Service worker registro (PWA)
+        // Service Worker registro PWA
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('sw.js')
