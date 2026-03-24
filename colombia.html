@@ -94,7 +94,6 @@
             height: auto;
             max-height: 68px;
             object-fit: contain;
-            /* logo mantiene color original (sin grayscale) */
         }
         
         .fallback-logo {
@@ -153,23 +152,14 @@
             font-weight: 300;
         }
         
-        .capital-count {
-            text-align: center;
-            font-size: 0.85rem;
-            font-weight: 450;
-            color: #2c2c2c;
-            margin-bottom: 1.2rem;
-            border-top: 1px solid #ececec;
-            padding-top: 0.9rem;
-            letter-spacing: -0.2px;
-        }
+        /* ELIMINADO: .capital-count ya no existe - no se muestra ningún texto descriptivo */
         
         /* GRID: por defecto 2 columnas en móvil (2 tarjetas por fila) */
         .cities-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 1rem;
-            margin-top: 0.75rem;
+            margin-top: 0.5rem;
         }
         
         /* Tarjetas: diseño B/N, pero imágenes a color */
@@ -202,7 +192,6 @@
             position: relative;
             border-bottom: 1px solid #ececec;
             transition: filter 0.2s;
-            /* IMPORTANTE: sin grayscale para mantener los colores originales */
         }
         
         .city-info {
@@ -229,11 +218,9 @@
             object-fit: cover;
             border-radius: 3px;
             border: 1px solid #d4d4d4;
-            /* sin grayscale: color original */
         }
         
         .flag-icon {
-            /* bandera icono a color natural */
             font-size: 1.5rem;
         }
         
@@ -426,14 +413,8 @@
         }
         
         /* Las imágenes de bandera (mini y fondo) se muestran a COLOR, sin grayscale */
-        /* Aseguramos que el ícono flag-icon tampoco tenga filtro */
         .flag-icon, .small-flag, .city-image {
             filter: none !important;
-        }
-        
-        /* solo elementos decorativos abstractos podrían ser grises, pero las banderas están a color */
-        a, button, input, .city-card, .city-link {
-            transition: all 0.2s ease;
         }
         
         .city-link:active {
@@ -465,7 +446,7 @@
             <input type="text" id="marketplace-search" placeholder="Buscar capital o departamento...">
         </div>
         
-        <div class="capital-count" id="capital-count"></div>
+        <!-- ELIMINADO: div con clase capital-count - ya no aparece ningún texto descriptivo -->
         
         <div class="cities-grid" id="cities-container">
             <!-- las tarjetas se inyectan dinámicamente -->
@@ -539,16 +520,7 @@
         // orden alfabético por capital
         cities.sort((a, b) => a.capitalNombre.localeCompare(b.capitalNombre));
         
-        // contador sin texto extra antes de las tarjetas
-        const countSpan = document.getElementById('capital-count');
-        function updateCounter(filteredLength, searchActive = false) {
-            if (searchActive) {
-                countSpan.innerHTML = `🇨🇴 ${filteredLength} capitales encontradas · toca cualquier tarjeta`;
-            } else {
-                countSpan.innerHTML = `🇨🇴 ${filteredLength} capitales de Colombia · haz clic en tarjeta para ingresar`;
-            }
-        }
-        updateCounter(cities.length, false);
+        // NO HAY FUNCIÓN DE CONTADOR NI TEXTO DESCRIPTIVO - ELIMINADO COMPLETAMENTE
         
         // PWA install
         let deferredPrompt;
@@ -610,7 +582,7 @@
                     </div>
                 `;
                 
-                // manejo de error imagen fondo: si falla se pone emoji grande de Colombia a COLOR
+                // manejo de error imagen fondo
                 const imgDiv = card.querySelector('.city-image');
                 if (imgDiv) {
                     const testImg = new Image();
@@ -644,7 +616,7 @@
             });
         }
         
-        // búsqueda
+        // búsqueda (sin actualizar contador porque no hay contador)
         function performSearch(searchTerm) {
             const normalized = normalizeText(searchTerm);
             const filtered = cities.filter(city => 
@@ -654,7 +626,6 @@
                 normalizeText(city.description).includes(normalized)
             );
             renderCities(filtered);
-            updateCounter(filtered.length, searchTerm.trim().length > 0);
             return filtered.length ? filtered[0] : null;
         }
         
