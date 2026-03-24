@@ -1,1 +1,964 @@
-aaa
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QRP2P CALI - Vendedores Verificados</title>
+    
+    <!-- PWA Meta Tags for Google -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="QRP2P CALI">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="QRP2P CALI">
+    <meta name="format-detection" content="telephone=no">
+    
+    <!-- Favicons for all platforms -->
+    <link rel="icon" type="image/png" sizes="192x192" href="img/icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="img/icon-512.png">
+    <link rel="apple-touch-icon" href="img/icon-192.png">
+    
+    <!-- Leaflet CSS for Maps -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Existing CSS and Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Serif+Pro:wght@400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #ffffff;
+            --secondary: #f5f5f5;
+            --accent: #e0e0e0;
+            --light: #4a4a4a;
+            --text: #000000;
+            --border: #d0d0d0;
+            --colombia-yellow: #FCD116;
+            --colombia-blue: #003893;
+            --colombia-red: #CE1126;
+            --verified-green: #2ecc71;
+            --gold: #f1c40f;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Libre Baskerville', 'Source Serif Pro', Georgia, serif;
+        }
+        
+        body {
+            background-color: var(--primary);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        /* Install button for PWA */
+        #install-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--text);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 24px;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            display: none;
+        }
+        
+        #install-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--colombia-yellow) 0%, var(--colombia-yellow) 33%, var(--colombia-blue) 33%, var(--colombia-blue) 66%, var(--colombia-red) 66%, var(--colombia-red) 100%);
+            padding: 1.5rem 0;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .logo-container {
+            max-width: 400px;
+            margin: 0 auto 1rem;
+            padding: 0 1rem;
+            background: rgba(255,255,255,0.9);
+            border-radius: 10px;
+            padding: 10px;
+        }
+        
+        .logo-container img {
+            width: 100%;
+            height: auto;
+            max-height: 80px;
+            object-fit: contain;
+        }
+        
+        .fallback-logo {
+            font-size: 2rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: var(--text);
+            border: 2px solid var(--text);
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: white;
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+            color: white;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+        
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 1rem;
+        }
+        
+        .tab-btn {
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .tab-btn i {
+            font-size: 1.2rem;
+        }
+        
+        .tab-btn:hover {
+            background: var(--secondary);
+        }
+        
+        .tab-btn.active {
+            background: linear-gradient(135deg, var(--colombia-yellow), var(--colombia-blue));
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Search Container */
+        .search-container {
+            margin: 2rem auto;
+            max-width: 600px;
+            position: relative;
+        }
+        
+        #seller-search {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            border: 1px solid var(--border);
+            background: var(--primary);
+            color: var(--text);
+            font-size: 1rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+        
+        #seller-search:focus {
+            outline: none;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+            border-color: var(--light);
+        }
+        
+        /* Sellers Grid */
+        .sellers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .seller-card {
+            background: var(--primary);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--border);
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .seller-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .verified-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--verified-green);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            z-index: 10;
+        }
+        
+        .seller-image {
+            height: 160px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .seller-logo {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            background: white;
+        }
+        
+        .seller-info {
+            padding: 1.5rem;
+        }
+        
+        .seller-name {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+        }
+        
+        .seller-category {
+            display: inline-block;
+            padding: 4px 12px;
+            background: var(--secondary);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .seller-rating {
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+        
+        .seller-subdomain {
+            font-size: 0.85rem;
+            color: var(--colombia-blue);
+            margin: 0.5rem 0;
+            font-family: monospace;
+            word-break: break-all;
+        }
+        
+        .seller-contact {
+            margin-top: 1rem;
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .visit-btn {
+            padding: 10px 16px;
+            background: linear-gradient(135deg, var(--colombia-yellow), var(--colombia-blue));
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            width: 100%;
+            justify-content: center;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .visit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        /* Map Container */
+        .map-container {
+            height: 500px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            margin-bottom: 2rem;
+        }
+        
+        #cali-map {
+            height: 100%;
+            width: 100%;
+        }
+        
+        .map-info {
+            text-align: center;
+            margin-bottom: 1rem;
+            color: #666;
+        }
+        
+        /* Registration Form */
+        .register-form {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--secondary);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--colombia-blue);
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, var(--colombia-yellow), var(--colombia-blue));
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        /* Stats */
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .stat-card {
+            background: var(--secondary);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            flex: 1;
+            min-width: 150px;
+            border: 1px solid var(--border);
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--colombia-blue);
+        }
+        
+        .stat-label {
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
+        footer {
+            background: linear-gradient(135deg, var(--colombia-yellow), var(--colombia-blue), var(--colombia-red));
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 3rem;
+            border-top: 1px solid var(--border);
+            color: white;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+        
+        .footer-links a:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @media (max-width: 768px) {
+            .sellers-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .map-container {
+                height: 350px;
+            }
+            
+            .register-form {
+                padding: 1.5rem;
+            }
+            
+            .tab-btn {
+                padding: 8px 16px;
+                font-size: 0.85rem;
+            }
+            
+            .seller-logo {
+                width: 80px;
+                height: 80px;
+            }
+        }
+        
+        .offline-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #ff4444;
+            color: white;
+            text-align: center;
+            padding: 8px;
+            font-size: 0.9rem;
+            z-index: 2000;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .offline-indicator.show {
+            transform: translateY(0);
+        }
+        
+        .clickable-card {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="offline-indicator" id="offline-indicator">
+        🔴 You are offline - Showing cached content
+    </div>
+    
+    <button id="install-button" style="display: none;">
+        📱 Install App
+    </button>
+    
+    <header>
+        <div class="logo-container">
+            <img src="img/c-index.png" 
+                 alt="QRP2P CALI" 
+                 onerror="this.onerror=null; this.style.display='none'; this.parentElement.innerHTML='<div class=\'fallback-logo\'>QRP2P CALI</div>';">
+        </div>
+        <div class="tagline">QRP2P CALI - Vendedores Verificados</div>
+    </header>
+    
+    <div class="container">
+        <!-- Navigation Tabs -->
+        <div class="nav-tabs">
+            <button class="tab-btn active" data-tab="sellers">
+                <i class="fas fa-store"></i> Vendedores Verificados
+            </button>
+            <button class="tab-btn" data-tab="map">
+                <i class="fas fa-map-marker-alt"></i> Mapa Cali
+            </button>
+            <button class="tab-btn" data-tab="register">
+                <i class="fas fa-user-plus"></i> Registrar Vendedor
+            </button>
+        </div>
+        
+        <!-- Tab: Vendedores Verificados -->
+        <div id="sellers-tab" class="tab-content active">
+            <div class="search-container">
+                <input type="text" id="seller-search" placeholder="Buscar vendedor por nombre, categoría o ubicación...">
+            </div>
+            
+            <div class="stats" id="seller-stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="total-sellers">0</div>
+                    <div class="stat-label">Vendedores Verificados</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="total-categories">0</div>
+                    <div class="stat-label">Categorías</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">⭐ 4.9</div>
+                    <div class="stat-label">Calificación Promedio</div>
+                </div>
+            </div>
+            
+            <div class="sellers-grid" id="sellers-container"></div>
+        </div>
+        
+        <!-- Tab: Mapa Cali -->
+        <div id="map-tab" class="tab-content">
+            <div class="map-info">
+                <i class="fas fa-map-marked-alt"></i> Ubicación de vendedores verificados en Cali
+            </div>
+            <div class="map-container">
+                <div id="cali-map"></div>
+            </div>
+            <div class="map-info">
+                <p>📍 Los marcadores muestran la ubicación de nuestros vendedores verificados en la ciudad de Cali</p>
+                <p><i class="fas fa-link"></i> Ruta del mapa: <strong>https://qrp2p.com/mapa-cali</strong></p>
+            </div>
+        </div>
+        
+        <!-- Tab: Registrar Vendedor -->
+        <div id="register-tab" class="tab-content">
+            <form class="register-form" id="seller-registration-form">
+                <h2 style="margin-bottom: 1.5rem; text-align: center;">Registro de Vendedor Verificado</h2>
+                <p style="text-align: center; margin-bottom: 1.5rem; color: #666;">
+                    <i class="fas fa-link"></i> Ruta de registro: <strong>https://qrp2p.com/cali-registro</strong>
+                </p>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-user"></i> Nombre del Negocio *</label>
+                    <input type="text" id="business-name" required placeholder="Ej: YoxBox">
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-tag"></i> Categoría *</label>
+                    <select id="category" required>
+                        <option value="">Seleccione una categoría</option>
+                        <option value="Tecnología">💻 Tecnología</option>
+                        <option value="Moda">👗 Moda</option>
+                        <option value="Alimentos">🍔 Alimentos</option>
+                        <option value="Hogar">🏠 Hogar</option>
+                        <option value="Servicios">🔧 Servicios</option>
+                        <option value="Arte">🎨 Arte</option>
+                        <option value="Deportes">⚽ Deportes</option>
+                        <option value="Salud">💊 Salud</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-globe"></i> Subdominio *</label>
+                    <input type="text" id="subdomain" required placeholder="Ej: yoxbox (será: yoxbox.qrp2p.com)">
+                    <small style="color: #666;">.qrp2p.com se agregará automáticamente</small>
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-image"></i> URL del Logo *</label>
+                    <input type="url" id="logo-url" required placeholder="https://ejemplo.com/logo.png">
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-map-pin"></i> Ubicación en Cali *</label>
+                    <input type="text" id="location" required placeholder="Ej: Barrio Granada, Cali">
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-phone"></i> Teléfono *</label>
+                    <input type="tel" id="phone" required placeholder="Ej: 3001234567">
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-envelope"></i> Correo Electrónico *</label>
+                    <input type="email" id="email" required placeholder="Ej: contacto@tutienda.com">
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-align-left"></i> Descripción del Negocio</label>
+                    <textarea id="description" rows="3" placeholder="Cuéntanos sobre tu negocio..."></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-check-circle"></i> Registrar Vendedor
+                </button>
+                
+                <p style="text-align: center; margin-top: 1rem; font-size: 0.8rem; color: #666;">
+                    <i class="fas fa-shield-alt"></i> Todos los vendedores pasan por un proceso de verificación
+                </p>
+            </form>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-links">
+            <a href="terms.html"><i class="fas fa-file-contract"></i> Términos de Servicio</a>
+            <a href="privacy.html"><i class="fas fa-lock"></i> Política de Privacidad</a>
+            <a href="https://qrp2p.com/cali"><i class="fas fa-store"></i> QRP2P Cali</a>
+            <a href="https://qrp2p.com/mapa-cali"><i class="fas fa-map"></i> Mapa Cali</a>
+        </div>
+        <div class="copyright">©️ QRP2P MARKETPLACE CALI - Vendedores Verificados de Colombia</div>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <script>
+        // Vendedores verificados con sus subdominios y logos personalizados
+        let sellers = [
+            {
+                id: 1,
+                name: "YoxBox",
+                subdomain: "yoxbox",
+                fullUrl: "https://yoxbox.qrp2p.com",
+                category: "Tecnología",
+                location: "Centro Comercial Unicentro, Cali",
+                rating: 5.0,
+                phone: "3001234567",
+                email: "ventas@yoxbox.com",
+                description: "Venta de dispositivos electrónicos, accesorios y tecnología de última generación",
+                lat: 3.4216,
+                lng: -76.5230,
+                verified: true,
+                logoUrl: "https://via.placeholder.com/100/003893/ffffff?text=YOXBOX",
+                colorGradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+            },
+            {
+                id: 2,
+                name: "QRP2P Cali",
+                subdomain: "qrp2pcali",
+                fullUrl: "https://qrp2pcali.qrp2p.com",
+                category: "Servicios",
+                location: "Avenida Sexta, Cali",
+                rating: 4.9,
+                phone: "3109876543",
+                email: "info@qrp2pcali.com",
+                description: "Plataforma de servicios P2P en Cali, conexión entre compradores y vendedores",
+                lat: 3.4416,
+                lng: -76.5120,
+                verified: true,
+                logoUrl: "https://via.placeholder.com/100/FCD116/003893?text=QRP2P",
+                colorGradient: "linear-gradient(135deg, #FCD116, #003893, #CE1126)"
+            },
+            {
+                id: 3,
+                name: "Hermanos Dreams",
+                subdomain: "hermanosdreams",
+                fullUrl: "https://hermanosdreams.qrp2p.com",
+                category: "Moda",
+                location: "Barrio Granada, Cali",
+                rating: 4.8,
+                phone: "3154321098",
+                email: "contacto@hermanosdreams.com",
+                description: "Ropa y calzado de diseñadores colombianos, estilo único y auténtico",
+                lat: 3.4516,
+                lng: -76.5320,
+                verified: true,
+                logoUrl: "https://via.placeholder.com/100/CE1126/ffffff?text=DREAMS",
+                colorGradient: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)"
+            }
+        ];
+        
+        // Función para renderizar vendedores
+        function renderSellers(sellerList) {
+            const container = document.getElementById('sellers-container');
+            container.innerHTML = '';
+            
+            sellerList.forEach(seller => {
+                const card = document.createElement('div');
+                card.className = 'seller-card';
+                
+                card.innerHTML = `
+                    <div class="verified-badge">
+                        <i class="fas fa-check-circle"></i> Verificado
+                    </div>
+                    <div class="seller-image" style="background: ${seller.colorGradient || 'linear-gradient(135deg, #FCD116, #003893, #CE1126)'};">
+                        <img src="${seller.logoUrl}" alt="${seller.name}" class="seller-logo" onerror="this.src='https://via.placeholder.com/100/cccccc/666666?text=${seller.name.charAt(0)}'">
+                    </div>
+                    <div class="seller-info">
+                        <h3 class="seller-name">
+                            <i class="fas fa-certificate" style="color: var(--verified-green); font-size: 1rem;"></i>
+                            ${seller.name}
+                        </h3>
+                        <span class="seller-category"><i class="fas fa-tag"></i> ${seller.category}</span>
+                        <div class="seller-rating">
+                            ${'⭐'.repeat(Math.floor(seller.rating))} ${seller.rating}
+                        </div>
+                        <p><i class="fas fa-map-marker-alt"></i> ${seller.location}</p>
+                        <p><i class="fas fa-phone"></i> ${seller.phone}</p>
+                        <p><i class="fas fa-envelope"></i> ${seller.email}</p>
+                        <div class="seller-subdomain">
+                            <i class="fas fa-globe"></i> ${seller.fullUrl}
+                        </div>
+                        <p class="city-desc" style="margin-top: 8px;">${seller.description}</p>
+                        <div class="seller-contact">
+                            <button class="visit-btn" data-url="${seller.fullUrl}">
+                                <i class="fas fa-external-link-alt"></i> Visitar Tienda
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                // Agregar evento de clic al botón
+                const visitBtn = card.querySelector('.visit-btn');
+                visitBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    window.open(seller.fullUrl, '_blank');
+                });
+                
+                // Hacer que toda la tarjeta sea clickeable también
+                card.addEventListener('click', (e) => {
+                    if (e.target.tagName !== 'BUTTON' && e.target.closest('.visit-btn') === null) {
+                        window.open(seller.fullUrl, '_blank');
+                    }
+                });
+                
+                container.appendChild(card);
+            });
+            
+            // Actualizar stats
+            document.getElementById('total-sellers').innerText = sellerList.length;
+            const categories = [...new Set(sellerList.map(s => s.category))];
+            document.getElementById('total-categories').innerText = categories.length;
+        }
+        
+        // Función de búsqueda
+        function searchSellers(searchTerm) {
+            const normalizedSearch = searchTerm.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            const filtered = sellers.filter(seller => 
+                seller.name.toLowerCase().includes(normalizedSearch) ||
+                seller.category.toLowerCase().includes(normalizedSearch) ||
+                seller.location.toLowerCase().includes(normalizedSearch) ||
+                seller.description.toLowerCase().includes(normalizedSearch) ||
+                seller.subdomain.toLowerCase().includes(normalizedSearch)
+            );
+            renderSellers(filtered);
+        }
+        
+        // Inicializar mapa de Cali con marcadores de vendedores
+        let map;
+        function initMap() {
+            map = L.map('cali-map').setView([3.4516, -76.5320], 13);
+            
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; CartoDB',
+                subdomains: 'abcd',
+                maxZoom: 19
+            }).addTo(map);
+            
+            // Agregar marcadores de vendedores
+            sellers.forEach(seller => {
+                const marker = L.marker([seller.lat, seller.lng]).addTo(map);
+                marker.bindPopup(`
+                    <div style="text-align: center;">
+                        <img src="${seller.logoUrl}" style="width: 50px; height: 50px; border-radius: 50%; margin-bottom: 8px;" onerror="this.style.display='none'">
+                        <b>${seller.name}</b><br>
+                        <i class="fas fa-tag"></i> ${seller.category}<br>
+                        <i class="fas fa-map-marker-alt"></i> ${seller.location}<br>
+                        <a href="${seller.fullUrl}" target="_blank" style="color: #003893; display: inline-block; margin-top: 8px;">🔗 Visitar Tienda</a>
+                    </div>
+                `);
+            });
+        }
+        
+        // Tab navigation
+        function setupTabs() {
+            const tabs = document.querySelectorAll('.tab-btn');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabId = tab.getAttribute('data-tab');
+                    
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    
+                    document.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    
+                    document.getElementById(`${tabId}-tab`).classList.add('active');
+                    
+                    // Re-inicializar mapa si es necesario
+                    if (tabId === 'map' && map) {
+                        setTimeout(() => map.invalidateSize(), 100);
+                    }
+                });
+            });
+        }
+        
+        // Formulario de registro
+        function setupRegistrationForm() {
+            const form = document.getElementById('seller-registration-form');
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const subdomainValue = document.getElementById('subdomain').value.trim().toLowerCase();
+                
+                const newSeller = {
+                    id: sellers.length + 1,
+                    name: document.getElementById('business-name').value,
+                    subdomain: subdomainValue,
+                    fullUrl: `https://${subdomainValue}.qrp2p.com`,
+                    category: document.getElementById('category').value,
+                    location: document.getElementById('location').value,
+                    rating: 5.0,
+                    phone: document.getElementById('phone').value,
+                    email: document.getElementById('email').value,
+                    description: document.getElementById('description').value || "Nuevo vendedor verificado",
+                    lat: 3.4516 + (Math.random() - 0.5) * 0.05,
+                    lng: -76.5320 + (Math.random() - 0.5) * 0.05,
+                    verified: true,
+                    logoUrl: document.getElementById('logo-url').value,
+                    colorGradient: `linear-gradient(135deg, #${Math.floor(Math.random()*16777215).toString(16)}, #${Math.floor(Math.random()*16777215).toString(16)})`
+                };
+                
+                sellers.push(newSeller);
+                renderSellers(sellers);
+                
+                alert(`✅ ¡Registro exitoso! ${newSeller.name} ha sido registrado como vendedor verificado.\n\n🔗 Tienda: ${newSeller.fullUrl}\n📍 Ruta registro: https://qrp2p.com/cali-registro\n🗺️ Mapa: https://qrp2p.com/mapa-cali`);
+                
+                form.reset();
+                
+                // Cambiar a la pestaña de vendedores
+                document.querySelector('[data-tab="sellers"]').click();
+            });
+        }
+        
+        // PWA Install Button Logic
+        let deferredPrompt;
+        const installButton = document.getElementById('install-button');
+        
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installButton.style.display = 'block';
+            
+            installButton.addEventListener('click', () => {
+                installButton.style.display = 'none';
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the install prompt');
+                    }
+                    deferredPrompt = null;
+                });
+            });
+        });
+        
+        // Offline indicator
+        const offlineIndicator = document.getElementById('offline-indicator');
+        
+        function updateOnlineStatus() {
+            if (navigator.onLine) {
+                offlineIndicator.classList.remove('show');
+            } else {
+                offlineIndicator.classList.add('show');
+            }
+        }
+        
+        window.addEventListener('online', updateOnlineStatus);
+        window.addEventListener('offline', updateOnlineStatus);
+        updateOnlineStatus();
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderSellers(sellers);
+            setupTabs();
+            setupRegistrationForm();
+            initMap();
+            
+            const searchInput = document.getElementById('seller-search');
+            searchInput.addEventListener('input', (e) => {
+                searchSellers(e.target.value);
+            });
+        });
+    </script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('sw.js')
+                    .then(function(registration) {
+                        console.log('✅ Service Worker registrado con éxito:', registration.scope);
+                    })
+                    .catch(function(error) {
+                        console.log('❌ Error al registrar Service Worker:', error);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
