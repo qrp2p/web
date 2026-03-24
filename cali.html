@@ -133,51 +133,56 @@
             padding: 0 1.5rem;
         }
         
-        /* Navigation Tabs */
-        .nav-tabs {
+        /* Navigation Buttons */
+        .nav-buttons {
             display: flex;
             justify-content: center;
-            gap: 1rem;
+            gap: 1.5rem;
             margin-bottom: 2rem;
             flex-wrap: wrap;
-            border-bottom: 2px solid var(--border);
-            padding-bottom: 1rem;
         }
         
-        .tab-btn {
-            padding: 12px 24px;
+        .nav-btn {
+            padding: 14px 32px;
             font-size: 1rem;
             font-weight: 600;
             background: transparent;
-            border: none;
+            border: 2px solid var(--colombia-blue);
             cursor: pointer;
             transition: all 0.3s ease;
-            color: var(--text);
-            border-radius: 8px;
-            display: flex;
+            color: var(--colombia-blue);
+            border-radius: 50px;
+            display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            text-decoration: none;
         }
         
-        .tab-btn i {
+        .nav-btn i {
             font-size: 1.2rem;
         }
         
-        .tab-btn:hover {
-            background: var(--secondary);
-        }
-        
-        .tab-btn.active {
+        .nav-btn:hover {
             background: linear-gradient(135deg, var(--colombia-yellow), var(--colombia-blue));
             color: white;
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
         
-        .tab-content {
+        .nav-btn.active {
+            background: linear-gradient(135deg, var(--colombia-yellow), var(--colombia-blue));
+            color: white;
+            border-color: transparent;
+        }
+        
+        /* Page Content */
+        .page-content {
             display: none;
             animation: fadeIn 0.5s ease;
         }
         
-        .tab-content.active {
+        .page-content.active {
             display: block;
         }
         
@@ -331,6 +336,36 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
         
+        /* Stats */
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .stat-card {
+            background: var(--secondary);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            flex: 1;
+            min-width: 150px;
+            border: 1px solid var(--border);
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--colombia-blue);
+        }
+        
+        .stat-label {
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
         /* Map Container */
         .map-container {
             height: 500px;
@@ -407,34 +442,19 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
         
-        /* Stats */
-        .stats {
-            display: flex;
-            justify-content: space-between;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-        
-        .stat-card {
-            background: var(--secondary);
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, rgba(252,209,22,0.1), rgba(0,56,147,0.1));
+            border-left: 4px solid var(--colombia-blue);
             padding: 1rem;
+            margin-bottom: 2rem;
             border-radius: 8px;
             text-align: center;
-            flex: 1;
-            min-width: 150px;
-            border: 1px solid var(--border);
         }
         
-        .stat-number {
-            font-size: 2rem;
-            font-weight: bold;
+        .info-box i {
             color: var(--colombia-blue);
-        }
-        
-        .stat-label {
-            font-size: 0.85rem;
-            color: #666;
+            margin-right: 8px;
         }
         
         footer {
@@ -489,9 +509,9 @@
                 padding: 1.5rem;
             }
             
-            .tab-btn {
-                padding: 8px 16px;
-                font-size: 0.85rem;
+            .nav-btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
             }
             
             .seller-logo {
@@ -519,8 +539,19 @@
             transform: translateY(0);
         }
         
-        .clickable-card {
-            cursor: pointer;
+        .success-message {
+            background: var(--verified-green);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            text-align: center;
+            display: none;
+        }
+        
+        .success-message.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
         }
     </style>
 </head>
@@ -543,21 +574,26 @@
     </header>
     
     <div class="container">
-        <!-- Navigation Tabs -->
-        <div class="nav-tabs">
-            <button class="tab-btn active" data-tab="sellers">
+        <!-- Navigation Buttons -->
+        <div class="nav-buttons">
+            <button class="nav-btn active" data-page="sellers">
                 <i class="fas fa-store"></i> Vendedores Verificados
             </button>
-            <button class="tab-btn" data-tab="map">
+            <button class="nav-btn" data-page="map">
                 <i class="fas fa-map-marker-alt"></i> Mapa Cali
             </button>
-            <button class="tab-btn" data-tab="register">
+            <button class="nav-btn" data-page="register">
                 <i class="fas fa-user-plus"></i> Registrar Vendedor
             </button>
         </div>
         
-        <!-- Tab: Vendedores Verificados -->
-        <div id="sellers-tab" class="tab-content active">
+        <!-- Page 1: Vendedores Verificados -->
+        <div id="sellers-page" class="page-content active">
+            <div class="info-box">
+                <i class="fas fa-info-circle"></i> 
+                Haz clic en cualquier tarjeta para visitar la tienda del vendedor en su subdominio: <strong>nombreusuario.qrp2p.com</strong>
+            </div>
+            
             <div class="search-container">
                 <input type="text" id="seller-search" placeholder="Buscar vendedor por nombre, categoría o ubicación...">
             </div>
@@ -580,27 +616,34 @@
             <div class="sellers-grid" id="sellers-container"></div>
         </div>
         
-        <!-- Tab: Mapa Cali -->
-        <div id="map-tab" class="tab-content">
+        <!-- Page 2: Mapa Cali -->
+        <div id="map-page" class="page-content">
             <div class="map-info">
                 <i class="fas fa-map-marked-alt"></i> Ubicación de vendedores verificados en Cali
+                <p><strong>Ruta del mapa:</strong> <code>https://qrp2p.com/mapa-cali</code></p>
             </div>
             <div class="map-container">
                 <div id="cali-map"></div>
             </div>
             <div class="map-info">
                 <p>📍 Los marcadores muestran la ubicación de nuestros vendedores verificados en la ciudad de Cali</p>
-                <p><i class="fas fa-link"></i> Ruta del mapa: <strong>https://qrp2p.com/mapa-cali</strong></p>
+                <p>📌 Haz clic en cada marcador para ver la información del vendedor y visitar su tienda</p>
             </div>
         </div>
         
-        <!-- Tab: Registrar Vendedor -->
-        <div id="register-tab" class="tab-content">
+        <!-- Page 3: Registrar Vendedor -->
+        <div id="register-page" class="page-content">
+            <div class="info-box">
+                <i class="fas fa-link"></i> Ruta de registro: <strong>https://qrp2p.com/cali-registro</strong>
+                <p style="margin-top: 5px; font-size: 0.9rem;">Completa el formulario para registrar tu negocio como vendedor verificado</p>
+            </div>
+            
+            <div id="register-success" class="success-message"></div>
+            
             <form class="register-form" id="seller-registration-form">
-                <h2 style="margin-bottom: 1.5rem; text-align: center;">Registro de Vendedor Verificado</h2>
-                <p style="text-align: center; margin-bottom: 1.5rem; color: #666;">
-                    <i class="fas fa-link"></i> Ruta de registro: <strong>https://qrp2p.com/cali-registro</strong>
-                </p>
+                <h2 style="margin-bottom: 1.5rem; text-align: center;">
+                    <i class="fas fa-store"></i> Registro de Vendedor Verificado
+                </h2>
                 
                 <div class="form-group">
                     <label><i class="fas fa-user"></i> Nombre del Negocio *</label>
@@ -631,6 +674,7 @@
                 <div class="form-group">
                     <label><i class="fas fa-image"></i> URL del Logo *</label>
                     <input type="url" id="logo-url" required placeholder="https://ejemplo.com/logo.png">
+                    <small style="color: #666;">Puedes usar: https://via.placeholder.com/100/003893/ffffff?text=TEXTO</small>
                 </div>
                 
                 <div class="form-group">
@@ -668,8 +712,9 @@
         <div class="footer-links">
             <a href="terms.html"><i class="fas fa-file-contract"></i> Términos de Servicio</a>
             <a href="privacy.html"><i class="fas fa-lock"></i> Política de Privacidad</a>
-            <a href="https://qrp2p.com/cali"><i class="fas fa-store"></i> QRP2P Cali</a>
-            <a href="https://qrp2p.com/mapa-cali"><i class="fas fa-map"></i> Mapa Cali</a>
+            <a href="#" data-page="sellers"><i class="fas fa-store"></i> QRP2P Cali</a>
+            <a href="#" data-page="map"><i class="fas fa-map"></i> Mapa Cali</a>
+            <a href="#" data-page="register"><i class="fas fa-user-plus"></i> Registro Vendedores</a>
         </div>
         <div class="copyright">©️ QRP2P MARKETPLACE CALI - Vendedores Verificados de Colombia</div>
     </footer>
@@ -735,6 +780,7 @@
         // Función para renderizar vendedores
         function renderSellers(sellerList) {
             const container = document.getElementById('sellers-container');
+            if (!container) return;
             container.innerHTML = '';
             
             sellerList.forEach(seller => {
@@ -772,14 +818,12 @@
                     </div>
                 `;
                 
-                // Agregar evento de clic al botón
                 const visitBtn = card.querySelector('.visit-btn');
                 visitBtn.addEventListener('click', (e) => {
                     e.stopPropagation();
                     window.open(seller.fullUrl, '_blank');
                 });
                 
-                // Hacer que toda la tarjeta sea clickeable también
                 card.addEventListener('click', (e) => {
                     if (e.target.tagName !== 'BUTTON' && e.target.closest('.visit-btn') === null) {
                         window.open(seller.fullUrl, '_blank');
@@ -789,14 +833,21 @@
                 container.appendChild(card);
             });
             
-            // Actualizar stats
-            document.getElementById('total-sellers').innerText = sellerList.length;
-            const categories = [...new Set(sellerList.map(s => s.category))];
-            document.getElementById('total-categories').innerText = categories.length;
+            const totalSellersElem = document.getElementById('total-sellers');
+            const totalCategoriesElem = document.getElementById('total-categories');
+            if (totalSellersElem) totalSellersElem.innerText = sellerList.length;
+            if (totalCategoriesElem) {
+                const categories = [...new Set(sellerList.map(s => s.category))];
+                totalCategoriesElem.innerText = categories.length;
+            }
         }
         
         // Función de búsqueda
         function searchSellers(searchTerm) {
+            if (!searchTerm) {
+                renderSellers(sellers);
+                return;
+            }
             const normalizedSearch = searchTerm.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
             const filtered = sellers.filter(seller => 
                 seller.name.toLowerCase().includes(normalizedSearch) ||
@@ -808,9 +859,12 @@
             renderSellers(filtered);
         }
         
-        // Inicializar mapa de Cali con marcadores de vendedores
+        // Inicializar mapa de Cali
         let map;
         function initMap() {
+            const mapContainer = document.getElementById('cali-map');
+            if (!mapContainer) return;
+            
             map = L.map('cali-map').setView([3.4516, -76.5320], 13);
             
             L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
@@ -819,41 +873,61 @@
                 maxZoom: 19
             }).addTo(map);
             
-            // Agregar marcadores de vendedores
             sellers.forEach(seller => {
                 const marker = L.marker([seller.lat, seller.lng]).addTo(map);
                 marker.bindPopup(`
-                    <div style="text-align: center;">
-                        <img src="${seller.logoUrl}" style="width: 50px; height: 50px; border-radius: 50%; margin-bottom: 8px;" onerror="this.style.display='none'">
-                        <b>${seller.name}</b><br>
-                        <i class="fas fa-tag"></i> ${seller.category}<br>
-                        <i class="fas fa-map-marker-alt"></i> ${seller.location}<br>
-                        <a href="${seller.fullUrl}" target="_blank" style="color: #003893; display: inline-block; margin-top: 8px;">🔗 Visitar Tienda</a>
+                    <div style="text-align: center; min-width: 200px;">
+                        <img src="${seller.logoUrl}" style="width: 60px; height: 60px; border-radius: 50%; margin-bottom: 8px; object-fit: cover;" onerror="this.style.display='none'">
+                        <div style="font-weight: bold; font-size: 1.1rem;">${seller.name}</div>
+                        <div><i class="fas fa-tag"></i> ${seller.category}</div>
+                        <div><i class="fas fa-map-marker-alt"></i> ${seller.location}</div>
+                        <div><i class="fas fa-phone"></i> ${seller.phone}</div>
+                        <div style="margin-top: 8px;">
+                            <a href="${seller.fullUrl}" target="_blank" style="background: #003893; color: white; padding: 5px 12px; border-radius: 5px; text-decoration: none; display: inline-block;">
+                                <i class="fas fa-store"></i> Visitar Tienda
+                            </a>
+                        </div>
                     </div>
                 `);
             });
         }
         
-        // Tab navigation
-        function setupTabs() {
-            const tabs = document.querySelectorAll('.tab-btn');
-            tabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    const tabId = tab.getAttribute('data-tab');
-                    
-                    tabs.forEach(t => t.classList.remove('active'));
-                    tab.classList.add('active');
-                    
-                    document.querySelectorAll('.tab-content').forEach(content => {
-                        content.classList.remove('active');
-                    });
-                    
-                    document.getElementById(`${tabId}-tab`).classList.add('active');
-                    
-                    // Re-inicializar mapa si es necesario
-                    if (tabId === 'map' && map) {
-                        setTimeout(() => map.invalidateSize(), 100);
+        // Navegación entre páginas
+        function setupNavigation() {
+            const navButtons = document.querySelectorAll('.nav-btn');
+            const footerLinks = document.querySelectorAll('.footer-links a[data-page]');
+            
+            function switchPage(pageId) {
+                document.querySelectorAll('.page-content').forEach(page => {
+                    page.classList.remove('active');
+                });
+                document.getElementById(`${pageId}-page`).classList.add('active');
+                
+                navButtons.forEach(btn => {
+                    if (btn.getAttribute('data-page') === pageId) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
                     }
+                });
+                
+                if (pageId === 'map' && map) {
+                    setTimeout(() => map.invalidateSize(), 100);
+                }
+            }
+            
+            navButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const pageId = btn.getAttribute('data-page');
+                    switchPage(pageId);
+                });
+            });
+            
+            footerLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const pageId = link.getAttribute('data-page');
+                    switchPage(pageId);
                 });
             });
         }
@@ -861,10 +935,13 @@
         // Formulario de registro
         function setupRegistrationForm() {
             const form = document.getElementById('seller-registration-form');
+            if (!form) return;
+            
             form.addEventListener('submit', (e) => {
                 e.preventDefault();
                 
                 const subdomainValue = document.getElementById('subdomain').value.trim().toLowerCase();
+                const logoUrlValue = document.getElementById('logo-url').value.trim();
                 
                 const newSeller = {
                     id: sellers.length + 1,
@@ -880,19 +957,43 @@
                     lat: 3.4516 + (Math.random() - 0.5) * 0.05,
                     lng: -76.5320 + (Math.random() - 0.5) * 0.05,
                     verified: true,
-                    logoUrl: document.getElementById('logo-url').value,
+                    logoUrl: logoUrlValue || `https://via.placeholder.com/100/${Math.floor(Math.random()*16777215).toString(16)}/ffffff?text=${subdomainValue.substring(0, 3).toUpperCase()}`,
                     colorGradient: `linear-gradient(135deg, #${Math.floor(Math.random()*16777215).toString(16)}, #${Math.floor(Math.random()*16777215).toString(16)})`
                 };
                 
                 sellers.push(newSeller);
                 renderSellers(sellers);
                 
-                alert(`✅ ¡Registro exitoso! ${newSeller.name} ha sido registrado como vendedor verificado.\n\n🔗 Tienda: ${newSeller.fullUrl}\n📍 Ruta registro: https://qrp2p.com/cali-registro\n🗺️ Mapa: https://qrp2p.com/mapa-cali`);
+                const successMsg = document.getElementById('register-success');
+                successMsg.innerHTML = `
+                    <i class="fas fa-check-circle"></i> 
+                    ✅ ¡Registro exitoso! ${newSeller.name} ha sido registrado como vendedor verificado.
+                    <br><br>
+                    🔗 Tienda: <strong>${newSeller.fullUrl}</strong><br>
+                    📍 Ruta registro: <strong>https://qrp2p.com/cali-registro</strong><br>
+                    🗺️ Mapa: <strong>https://qrp2p.com/mapa-cali</strong>
+                `;
+                successMsg.classList.add('show');
                 
                 form.reset();
                 
-                // Cambiar a la pestaña de vendedores
-                document.querySelector('[data-tab="sellers"]').click();
+                setTimeout(() => {
+                    successMsg.classList.remove('show');
+                }, 5000);
+                
+                document.querySelector('[data-page="sellers"]').click();
+                
+                if (map) {
+                    const newMarker = L.marker([newSeller.lat, newSeller.lng]).addTo(map);
+                    newMarker.bindPopup(`
+                        <div style="text-align: center;">
+                            <img src="${newSeller.logoUrl}" style="width: 50px; height: 50px; border-radius: 50%;">
+                            <b>${newSeller.name}</b><br>
+                            ${newSeller.category}<br>
+                            <a href="${newSeller.fullUrl}" target="_blank">Visitar Tienda</a>
+                        </div>
+                    `);
+                }
             });
         }
         
@@ -935,14 +1036,16 @@
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             renderSellers(sellers);
-            setupTabs();
+            setupNavigation();
             setupRegistrationForm();
             initMap();
             
             const searchInput = document.getElementById('seller-search');
-            searchInput.addEventListener('input', (e) => {
-                searchSellers(e.target.value);
-            });
+            if (searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    searchSellers(e.target.value);
+                });
+            }
         });
     </script>
     
