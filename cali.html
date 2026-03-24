@@ -122,6 +122,78 @@
       width: 100%;
     }
     
+    /* Modal de advertencia para ubicación fuera de Cali */
+    .modal-alerta {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.85);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(5px);
+    }
+    
+    .modal-contenido {
+      background: white;
+      max-width: 90%;
+      width: 400px;
+      padding: 2rem;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      animation: slideIn 0.3s ease;
+    }
+    
+    .modal-contenido i {
+      font-size: 3rem;
+      color: #ff6b6b;
+      margin-bottom: 1rem;
+    }
+    
+    .modal-contenido h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #333;
+    }
+    
+    .modal-contenido p {
+      color: #666;
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+    
+    .modal-contenido button {
+      background: #000000;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 40px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .modal-contenido button:hover {
+      background: #333;
+      transform: scale(1.02);
+    }
+    
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
     .cluster-marcadores { 
       background: rgba(40,40,40,0.7); 
       border-radius: 50%; 
@@ -295,8 +367,9 @@
         <div id="sugerencias-busqueda" class="sugerencias-busqueda"></div>
       </div>
       <div class="botones-secundarios">
-        <button class="btn btn-centrar" id="centrar-btn">CENTRAR</button>
-        <button class="btn btn-registro" id="registro-btn" onclick="window.open('https://qrp2p.com/cali-registro', '_blank')">REGISTRO VENDEDOR</button>
+        <button class="btn btn-centrar" id="centrar-btn">📍 CENTRAR</button>
+        <button class="btn btn-registro" id="registro-btn" onclick="window.open('https://qrp2p.com/cali-registro', '_blank')">📝 REGISTRO VENDEDOR</button>
+        <button class="btn btn-marketplace" id="marketplace-btn" onclick="window.open('https://qrp2p.com/cali', '_blank')">🛒 MARKETPLACE</button>
       </div>
     </div>
     <div id="mapa"></div>
@@ -318,6 +391,7 @@
     let googleMapsLayer;
     let googleSatelliteLayer;
     let currentLayer;
+    let ubicacionVerificada = false;
 
     // Datos de ubicaciones - CALI, VALLE DEL CAUCA
     const UBICACIONES = [
@@ -370,6 +444,47 @@
         "tipo": "socio"
       }
     ];
+
+    // Límites aproximados del área metropolitana de Cali
+    const LIMITES_CALI = {
+      minLat: 3.3000,  // Sur (Pance)
+      maxLat: 3.5500,  // Norte (Yumbo/Cali Norte)
+      minLng: -76.6500, // Oeste (Cristo Rey / Oeste)
+      maxLng: -76.4800  // Este (Cali Este)
+    };
+
+    // Función para verificar si la ubicación está dentro de Cali
+    function estaEnCali(lat, lng) {
+      return (lat >= LIMITES_CALI.minLat && lat <= LIMITES_CALI.maxLat &&
+              lng >= LIMITES_CALI.minLng && lng <= LIMITES_CALI.maxLng);
+    }
+
+    // Función para mostrar modal de advertencia
+    function mostrarModalFueraDeCali() {
+      const modal = document.createElement('div');
+      modal.className = 'modal-alerta';
+      modal.innerHTML = `
+        <div class="modal-contenido">
+          <i>⚠️</i>
+          <h3>Servicio exclusivo para Cali</h3>
+          <p>Nuestro servicio de contraentrega y directorio de vendedores verificados está disponible únicamente para la ciudad de Cali y su área metropolitana.</p>
+          <p style="font-size:0.9rem; background:#f5f5f5; padding:8px; border-radius:8px;">📍 <strong>Área de cobertura:</strong> Cali y municipios cercanos (Yumbo, Jamundí, Palmira, Candelaria)</p>
+          <button id="cerrar-modal">Entendido, seguir navegando</button>
+        </div>
+      `;
+      document.body.appendChild(modal);
+      
+      document.getElementById('cerrar-modal').addEventListener('click', () => {
+        modal.remove();
+      });
+      
+      // También cerrar al hacer clic fuera
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.remove();
+        }
+      });
+    }
 
     // Inicializar el mapa cuando el DOM esté listo
     document.addEventListener('DOMContentLoaded', function() {
@@ -678,8 +793,18 @@
     // Función para centrar el mapa en la ubicación actual
     function centrarMapa() {
       if (userMarker) {
-        mapa.setView(userMarker.getLatLng(), 15);
-        userMarker.openPopup();
+        const lat = userMarker.getLatLng().lat;
+        const lng = userMarker.getLatLng().lng;
+        
+        // Verificar si la ubicación está dentro de Cali
+        if (estaEnCali(lat, lng)) {
+          mapa.setView(userMarker.getLatLng(), 15);
+          userMarker.openPopup();
+        } else {
+          mostrarModalFueraDeCali();
+          // Centrar en Cali centro si está fuera
+          mapa.setView([3.4516, -76.5320], 13);
+        }
       } else {
         obtenerUbicacionUsuario();
       }
@@ -696,16 +821,39 @@
               mapa.removeLayer(userMarker);
             }
             
-            userMarker = L.marker([latitude, longitude], {
-              icon: L.icon({
-                iconUrl: 'https://cdn-icons-png.flaticon.com/512/447/447031.png',
-                iconSize: [32, 32]
-              })
-            }).addTo(mapa)
-              .bindPopup('📍 ¡Tu ubicación actual en Cali!');
+            // Verificar si la ubicación está dentro de Cali
+            if (estaEnCali(latitude, longitude)) {
+              userMarker = L.marker([latitude, longitude], {
+                icon: L.icon({
+                  iconUrl: 'https://cdn-icons-png.flaticon.com/512/447/447031.png',
+                  iconSize: [32, 32]
+                })
+              }).addTo(mapa)
+                .bindPopup('📍 ¡Tu ubicación actual en Cali! ✅');
               
-            mapa.setView([latitude, longitude], 14);
-            userMarker.openPopup();
+              mapa.setView([latitude, longitude], 14);
+              userMarker.openPopup();
+              ubicacionVerificada = true;
+            } else {
+              // Mostrar modal de advertencia si está fuera de Cali
+              mostrarModalFueraDeCali();
+              // Centrar en Cali centro
+              mapa.setView([3.4516, -76.5320], 13);
+              
+              // Agregar un marcador de advertencia en la ubicación del usuario
+              userMarker = L.marker([latitude, longitude], {
+                icon: L.icon({
+                  iconUrl: 'https://cdn-icons-png.flaticon.com/512/1828/1828843.png',
+                  iconSize: [32, 32]
+                })
+              }).addTo(mapa)
+                .bindPopup(`
+                  <div style="color:#ff6b6b;">
+                    <strong>⚠️ Fuera del área de cobertura</strong><br>
+                    El servicio de contraentrega QRP2P está disponible solo para Cali y su área metropolitana.
+                  </div>
+                `);
+            }
           },
           (error) => {
             console.log(`Error al obtener ubicación: ${error.message}`);
