@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <meta name="description" content="Completa tu proceso de compra de inmueble con QRP2P. Ingresa la información de la oferta, financiación y tus datos como comprador para recibir asesoría personalizada.">
-    <meta name="keywords" content="compra de inmueble, oferta, crédito hipotecario, arras, QRP2P, comprador">
+    <meta name="description" content="Completa tu proceso de compra de inmueble con QRP2P. Ingresa la información de la oferta, financiación y tus datos como comprador (persona natural o jurídica) para recibir asesoría personalizada.">
+    <meta name="keywords" content="compra de inmueble, oferta, crédito hipotecario, arras, QRP2P, comprador, persona natural, persona jurídica">
     <meta name="author" content="QRP2P">
     <meta name="robots" content="index, follow">
     <title>QRP2P | Proceso de Compra de Inmueble</title>
@@ -22,7 +22,6 @@
             line-height: 1.5;
         }
 
-        /* Header */
         .hero {
             background: #000000;
             color: #ffffff;
@@ -43,14 +42,12 @@
             opacity: 0.85;
         }
 
-        /* Container */
         .container {
             max-width: 1000px;
             margin: 0 auto;
             padding: 2rem 1.5rem;
         }
 
-        /* Secciones */
         .section {
             background: #ffffff;
             border: 1px solid #e0e0e0;
@@ -78,7 +75,6 @@
             padding-bottom: 0.4rem;
         }
 
-        /* Formulario */
         .form-group {
             margin-bottom: 1.2rem;
         }
@@ -162,6 +158,15 @@
             color: #333;
         }
 
+        .ejemplo-convencionado {
+            background: #fef7e0;
+            border-left: 4px solid #f5a623;
+            padding: 0.8rem 1rem;
+            margin: 0.8rem 0;
+            font-size: 0.85rem;
+            border-radius: 8px;
+        }
+
         button {
             background: #000000;
             color: #ffffff;
@@ -201,10 +206,7 @@
             text-align: center;
         }
 
-        .eliminar-co {
-            position: absolute;
-            top: 10px;
-            right: 10px;
+        .eliminar-item {
             background: none;
             border: none;
             font-size: 1.2rem;
@@ -213,19 +215,40 @@
             width: auto;
             padding: 0.2rem 0.5rem;
             margin: 0;
+            position: absolute;
+            top: 12px;
+            right: 12px;
         }
 
-        .eliminar-co:hover {
+        .eliminar-item:hover {
             color: #000000;
             background: none;
+            transform: none;
         }
 
-        .comprador-card {
+        .comprador-card, .juridica-card {
             border: 1px solid #e0e0e0;
             border-radius: 16px;
             padding: 1.2rem;
             margin-bottom: 1.5rem;
             position: relative;
+        }
+
+        .tipo-comprador-selector {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .badge-tipo {
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: #f0f0f0;
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
         }
 
         @media (max-width: 768px) {
@@ -250,18 +273,24 @@
             font-size: 0.8rem;
             color: #555;
         }
+
+        .valor-fondo-ejemplo {
+            font-size: 0.7rem;
+            color: #666;
+            margin-top: 0.2rem;
+        }
     </style>
 </head>
 <body>
 
     <header class="hero">
         <h1>QRP2P · Proceso de Compra de Inmueble</h1>
-        <p>Completa la información de tu oferta y tus datos como comprador. Un asesor te contactará para ayudarte con el crédito y la documentación.</p>
+        <p>Completa la información de tu oferta y tus datos como comprador (persona natural o jurídica). Un asesor te contactará para ayudarte con el crédito y la documentación.</p>
     </header>
 
     <div class="container">
         <form id="compraForm">
-            <!-- SECCIÓN 1: INFORMACIÓN DE LA OFERTA -->
+            <!-- SECCIÓN 1: INFORMACIÓN DE LA OFERTA con detalle de convencionado -->
             <div class="section">
                 <div class="section-title">📋 Información de mi oferta</div>
                 
@@ -270,6 +299,11 @@
                     <div class="radio-group">
                         <label><input type="radio" name="negocioConvencionado" value="Sí"> Sí</label>
                         <label><input type="radio" name="negocioConvencionado" value="No" checked> No</label>
+                    </div>
+                    <!-- Cuadro de ejemplo explicativo: qué significa convencionado y su implicación en valor ofertado -->
+                    <div id="convencionadoEjemplo" class="ejemplo-convencionado" style="margin-top: 8px;">
+                        💡 <strong>¿Qué significa "negocio convencionado"?</strong> Es cuando el inmueble tiene un acuerdo previo entre las partes (por ejemplo, una opción de compra, preacuerdo notariado o venta sujeta a condiciones especiales).<br>
+                        <strong>Ejemplo:</strong> Si seleccionas "Sí", el valor ofertado puede reflejar un precio fijo negociado con anterioridad, usualmente con arras ya acordadas. Por el contrario, si es "No", se trata de una oferta estándar sin convenio previo.
                     </div>
                 </div>
 
@@ -297,96 +331,86 @@
                     <label>¿Cómo voy a financiar el saldo?</label>
                     <div class="checkbox-group">
                         <label><input type="checkbox" name="saldoFinancia" value="Recursos propios"> Recursos propios</label>
-                        <label><input type="checkbox" name="saldoFinancia" value="Crédito"> Crédito hipotecario</label>
+                        <label><input type="checkbox" name="saldoFinancia" value="Crédito hipotecario"> Crédito hipotecario</label>
                         <label><input type="checkbox" name="saldoFinancia" value="Cesantías"> Cesantías</label>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label>Valor ofertado por el inmueble (COP$) *</label>
-                    <input type="number" id="valorOfertado" value="213000000" required>
+                    <input type="number" id="valorOfertado" placeholder="Ejemplo: 215000000" value="215000000">
+                    <div class="valor-fondo-ejemplo">🔍 Valor de fondo ilustrativo: 215.000.000 COP (puedes modificarlo según tu oferta real)</div>
                 </div>
             </div>
 
-            <!-- SECCIÓN 2: COMPRADORES (Persona Natural - Primera Persona) -->
+            <!-- SECCIÓN 2: COMPRADORES - Soporte para personas naturales y jurídicas (una persona jurídica puede comprar, y naturales pueden ser varios) -->
             <div class="section">
-                <div class="section-title">👤 Mis datos como comprador</div>
-                <p style="margin-bottom: 1rem; font-size: 0.9rem; color: #555;">Completa tu información. Si vas a comprar con otra persona, también puedes agregar sus datos.</p>
+                <div class="section-title">👥 Datos del comprador / Copropietarios</div>
+                <p style="margin-bottom: 1rem; font-size: 0.9rem; color: #555;">
+                    ✅ <strong>Nota:</strong> Solo una <strong>persona jurídica</strong> puede ser la compradora principal, pero si eliges persona natural, puedes agregar múltiples co-compradores naturales (copropietarios). 
+                    Si la compra es por una empresa, selecciona "Persona Jurídica" y completa los datos de la sociedad.
+                </p>
 
                 <div id="compradoresContainer">
-                    <!-- Comprador principal (persona natural) -->
-                    <div class="comprador-card">
-                        <h3 style="font-size: 1rem; margin-bottom: 1rem;">📌 Comprador principal (Yo)</h3>
-                        <div class="row-2">
-                            <div class="form-group">
-                                <label>Mi primer nombre *</label>
-                                <input type="text" class="nombre1" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Mi segundo nombre (opcional)</label>
-                                <input type="text" class="nombre2">
-                            </div>
+                    <!-- Bloque principal: el usuario elegirá si es Persona Natural o Jurídica -->
+                    <div class="comprador-card" id="compradorPrincipalCard">
+                        <div class="tipo-comprador-selector">
+                            <span style="font-weight: 600;">Tipo de comprador principal:</span>
+                            <label style="font-weight: normal;"><input type="radio" name="tipoCompradorPrincipal" value="natural" checked> Persona Natural</label>
+                            <label style="font-weight: normal;"><input type="radio" name="tipoCompradorPrincipal" value="juridica"> Persona Jurídica (Empresa)</label>
                         </div>
-                        <div class="row-2">
-                            <div class="form-group">
-                                <label>Mi primer apellido *</label>
-                                <input type="text" class="apellido1" required>
+                        
+                        <!-- Campos para Persona Natural (visibles por defecto) -->
+                        <div id="camposNaturalPrincipal">
+                            <h3 style="font-size: 1rem; margin-bottom: 0.8rem;">📌 Comprador (Persona Natural)</h3>
+                            <div class="row-2">
+                                <div class="form-group"><label>Primer nombre *</label><input type="text" id="pNombre1" class="nombre1" required></div>
+                                <div class="form-group"><label>Segundo nombre (opcional)</label><input type="text" id="pNombre2" class="nombre2"></div>
                             </div>
-                            <div class="form-group">
-                                <label>Mi segundo apellido *</label>
-                                <input type="text" class="apellido2" required>
+                            <div class="row-2">
+                                <div class="form-group"><label>Primer apellido *</label><input type="text" id="pApellido1" class="apellido1" required></div>
+                                <div class="form-group"><label>Segundo apellido *</label><input type="text" id="pApellido2" class="apellido2" required></div>
                             </div>
+                            <div class="row-2">
+                                <div class="form-group"><label>Estado civil *</label><select id="pEstadoCivil" class="estadoCivil" required><option value="">Selecciona</option><option value="Soltero(a)">Soltero(a)</option><option value="Casado(a)">Casado(a)</option><option value="Unión libre">Unión libre</option><option value="Divorciado(a)">Divorciado(a)</option><option value="Viudo(a)">Viudo(a)</option></select></div>
+                                <div class="form-group"><label>Tipo de documento *</label><select id="pTipoDoc" class="tipoDoc" required><option value="">Selecciona</option><option value="Cédula de ciudadanía">Cédula de ciudadanía</option><option value="Cédula de extranjería">Cédula de extranjería</option><option value="Pasaporte">Pasaporte</option></select></div>
+                            </div>
+                            <div class="row-2">
+                                <div class="form-group"><label>Número de documento *</label><input type="text" id="pNumDocumento" class="numDocumento" required></div>
+                                <div class="form-group"><label>Teléfono de contacto *</label><input type="tel" id="pTelefono" class="telefono" required></div>
+                            </div>
+                            <div class="form-group"><label>Correo electrónico *</label><input type="email" id="pEmail" class="email" required></div>
                         </div>
-                        <div class="row-2">
-                            <div class="form-group">
-                                <label>Mi estado civil *</label>
-                                <select class="estadoCivil" required>
-                                    <option value="">Selecciona</option>
-                                    <option value="Soltero(a)">Soltero(a)</option>
-                                    <option value="Casado(a)">Casado(a)</option>
-                                    <option value="Unión libre">Unión libre</option>
-                                    <option value="Divorciado(a)">Divorciado(a)</option>
-                                    <option value="Viudo(a)">Viudo(a)</option>
-                                </select>
+
+                        <!-- Campos para Persona Jurídica (ocultos inicialmente) -->
+                        <div id="camposJuridicaPrincipal" style="display: none;">
+                            <h3 style="font-size: 1rem; margin-bottom: 0.8rem;">🏢 Comprador (Persona Jurídica)</h3>
+                            <div class="form-group"><label>Razón social *</label><input type="text" id="juridicaRazon" placeholder="Ej: Inversiones QRP2P S.A.S."></div>
+                            <div class="row-2">
+                                <div class="form-group"><label>NIT *</label><input type="text" id="juridicaNit" placeholder="900.123.456-7"></div>
+                                <div class="form-group"><label>Representante legal (nombre completo) *</label><input type="text" id="juridicaRepresentante" placeholder="Nombre del representante"></div>
                             </div>
-                            <div class="form-group">
-                                <label>Mi tipo de documento *</label>
-                                <select class="tipoDoc" required>
-                                    <option value="">Selecciona</option>
-                                    <option value="Cédula de ciudadanía">Cédula de ciudadanía</option>
-                                    <option value="Cédula de extranjería">Cédula de extranjería</option>
-                                    <option value="Pasaporte">Pasaporte</option>
-                                </select>
+                            <div class="row-2">
+                                <div class="form-group"><label>Teléfono de contacto *</label><input type="tel" id="juridicaTelefono"></div>
+                                <div class="form-group"><label>Correo electrónico *</label><input type="email" id="juridicaEmail"></div>
                             </div>
-                        </div>
-                        <div class="row-2">
-                            <div class="form-group">
-                                <label>Mi número de documento *</label>
-                                <input type="text" class="numDocumento" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Mi teléfono de contacto *</label>
-                                <input type="tel" class="telefono" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Mi correo electrónico *</label>
-                            <input type="email" class="email" required>
+                            <div class="info-box">📌 Nota: La persona jurídica puede adquirir el inmueble sin necesidad de copropietarios adicionales. Si deseas incluir una persona natural adicional como codeudor o copropietario, puedes agregar un co-comprador más abajo.</div>
                         </div>
                     </div>
                 </div>
 
-                <button type="button" id="agregarCoComprador" class="btn-secondary" style="width: 100%;">+ Agregar co-comprador (persona natural)</button>
+                <!-- Botón agregar co-comprador solo aplicable si el principal es persona natural (se oculta si es jurídica) -->
+                <button type="button" id="agregarCoComprador" class="btn-secondary" style="width: 100%;">+ Agregar co-comprador (persona natural, solo para copropiedad)</button>
+                <div id="avisoJuridicoSinCo" style="display: none; font-size: 0.8rem; color: #777; margin-top: 8px;">⚠️ Si el comprador es persona jurídica, no se pueden agregar co-compradores adicionales (la adquisición es por la empresa).</div>
             </div>
 
-            <!-- SECCIÓN 3: INFORMACIÓN ADICIONAL Y ENVÍO -->
+            <!-- SECCIÓN 3: INFORMACIÓN ADICIONAL -->
             <div class="section">
                 <div class="section-title">📄 Información adicional</div>
                 <div class="form-group">
                     <label>Comentarios sobre mi compra (opcional)</label>
-                    <textarea rows="3" id="comentariosCompra" placeholder="Ej: el inmueble está ubicado en Bogotá, necesito crédito por el 80%, tengo la cuota inicial ahorrada..."></textarea>
+                    <textarea rows="3" id="comentariosCompra" placeholder="Ej: el inmueble está ubicado en Bogotá, necesito crédito por el 70%, la persona jurídica requiere estudio financiero..."></textarea>
                 </div>
-
                 <button type="submit">Enviar mi proceso de compra por WhatsApp</button>
                 <small>Al enviar, un asesor QRP2P revisará tu información y te contactará para ayudarte con el crédito y la documentación necesaria.</small>
             </div>
@@ -400,150 +424,170 @@
     </footer>
 
     <script>
-        // Mostrar/ocultar sección de arras
+        // Lógica mostrar/ocultar arras
         const arrasSi = document.getElementById('arrasSi');
         const arrasNo = document.getElementById('arrasNo');
         const arrasSection = document.getElementById('arrasSection');
-
-        function toggleArras() {
-            if (arrasSi.checked) {
-                arrasSection.style.display = 'block';
-            } else {
-                arrasSection.style.display = 'none';
-            }
-        }
+        function toggleArras() { arrasSection.style.display = arrasSi.checked ? 'block' : 'none'; }
         arrasSi.addEventListener('change', toggleArras);
         arrasNo.addEventListener('change', toggleArras);
         toggleArras();
 
-        // Agregar co-comprador
+        // Alternancia entre Persona Natural y Persona Jurídica en el comprador principal
+        const radioNatural = document.querySelector('input[name="tipoCompradorPrincipal"][value="natural"]');
+        const radioJuridica = document.querySelector('input[name="tipoCompradorPrincipal"][value="juridica"]');
+        const camposNatural = document.getElementById('camposNaturalPrincipal');
+        const camposJuridica = document.getElementById('camposJuridicaPrincipal');
+        const agregarCoBtn = document.getElementById('agregarCoComprador');
+        const avisoJuridico = document.getElementById('avisoJuridicoSinCo');
         const compradoresContainer = document.getElementById('compradoresContainer');
-        let coCompradorCount = 0;
 
-        document.getElementById('agregarCoComprador').addEventListener('click', function() {
-            coCompradorCount++;
-            const newComprador = document.createElement('div');
-            newComprador.className = 'comprador-card';
-            newComprador.innerHTML = `
-                <button type="button" class="eliminar-co">✖</button>
-                <h3 style="font-size: 1rem; margin-bottom: 1rem;">👥 Co-comprador ${coCompradorCount}</h3>
+        function toggleTipoComprador() {
+            const esJuridica = radioJuridica.checked;
+            if (esJuridica) {
+                camposNatural.style.display = 'none';
+                camposJuridica.style.display = 'block';
+                agregarCoBtn.style.display = 'none';
+                avisoJuridico.style.display = 'block';
+                // Remover todos los co-compradores existentes (si los hay) porque jurídica no admite copropietarios adicionales según la lógica del negocio
+                const extras = document.querySelectorAll('.comprador-card:not(#compradorPrincipalCard)');
+                extras.forEach(el => el.remove());
+            } else {
+                camposNatural.style.display = 'block';
+                camposJuridica.style.display = 'none';
+                agregarCoBtn.style.display = 'block';
+                avisoJuridico.style.display = 'none';
+            }
+        }
+        radioNatural.addEventListener('change', toggleTipoComprador);
+        radioJuridica.addEventListener('change', toggleTipoComprador);
+        toggleTipoComprador();
+
+        // Agregar co-comprador (solo personas naturales)
+        let coCount = 0;
+        agregarCoBtn.addEventListener('click', function() {
+            if (radioJuridica.checked) {
+                alert("No se pueden agregar co-compradores cuando el titular es una persona jurídica. La empresa es la única adquirente.");
+                return;
+            }
+            coCount++;
+            const newDiv = document.createElement('div');
+            newDiv.className = 'comprador-card';
+            newDiv.innerHTML = `
+                <button type="button" class="eliminar-item">✖</button>
+                <h3 style="font-size: 1rem; margin-bottom: 0.8rem;">👥 Co-comprador (Natural) ${coCount}</h3>
                 <div class="row-2">
-                    <div class="form-group"><label>Primer nombre *</label><input type="text" class="nombre1_co" required></div>
-                    <div class="form-group"><label>Segundo nombre (opcional)</label><input type="text" class="nombre2_co"></div>
+                    <div class="form-group"><label>Primer nombre *</label><input type="text" class="co_nombre1" required></div>
+                    <div class="form-group"><label>Segundo nombre</label><input type="text" class="co_nombre2"></div>
                 </div>
                 <div class="row-2">
-                    <div class="form-group"><label>Primer apellido *</label><input type="text" class="apellido1_co" required></div>
-                    <div class="form-group"><label>Segundo apellido *</label><input type="text" class="apellido2_co" required></div>
+                    <div class="form-group"><label>Primer apellido *</label><input type="text" class="co_apellido1" required></div>
+                    <div class="form-group"><label>Segundo apellido *</label><input type="text" class="co_apellido2" required></div>
                 </div>
                 <div class="row-2">
-                    <div class="form-group"><label>Estado civil *</label>
-                        <select class="estadoCivil_co" required>
-                            <option value="">Selecciona</option>
-                            <option value="Soltero(a)">Soltero(a)</option>
-                            <option value="Casado(a)">Casado(a)</option>
-                            <option value="Unión libre">Unión libre</option>
-                            <option value="Divorciado(a)">Divorciado(a)</option>
-                            <option value="Viudo(a)">Viudo(a)</option>
-                        </select>
-                    </div>
-                    <div class="form-group"><label>Tipo de documento *</label>
-                        <select class="tipoDoc_co" required>
-                            <option value="">Selecciona</option>
-                            <option value="Cédula de ciudadanía">Cédula de ciudadanía</option>
-                            <option value="Cédula de extranjería">Cédula de extranjería</option>
-                            <option value="Pasaporte">Pasaporte</option>
-                        </select>
-                    </div>
+                    <div class="form-group"><label>Estado civil *</label><select class="co_estadoCivil" required><option value="">Selecciona</option><option value="Soltero(a)">Soltero(a)</option><option value="Casado(a)">Casado(a)</option><option value="Unión libre">Unión libre</option><option value="Divorciado(a)">Divorciado(a)</option><option value="Viudo(a)">Viudo(a)</option></select></div>
+                    <div class="form-group"><label>Tipo documento *</label><select class="co_tipoDoc" required><option value="">Selecciona</option><option value="Cédula de ciudadanía">Cédula de ciudadanía</option><option value="Cédula de extranjería">Cédula de extranjería</option><option value="Pasaporte">Pasaporte</option></select></div>
                 </div>
                 <div class="row-2">
-                    <div class="form-group"><label>Número de documento *</label><input type="text" class="numDocumento_co" required></div>
-                    <div class="form-group"><label>Teléfono *</label><input type="tel" class="telefono_co" required></div>
+                    <div class="form-group"><label>Número documento *</label><input type="text" class="co_numDoc" required></div>
+                    <div class="form-group"><label>Teléfono *</label><input type="tel" class="co_telefono" required></div>
                 </div>
-                <div class="form-group"><label>Correo electrónico *</label><input type="email" class="email_co" required></div>
+                <div class="form-group"><label>Correo electrónico *</label><input type="email" class="co_email" required></div>
             `;
-            compradoresContainer.appendChild(newComprador);
-            
-            newComprador.querySelector('.eliminar-co').addEventListener('click', function() {
-                newComprador.remove();
-            });
+            compradoresContainer.appendChild(newDiv);
+            newDiv.querySelector('.eliminar-item').addEventListener('click', () => newDiv.remove());
         });
 
         // Envío del formulario por WhatsApp
         document.getElementById('compraForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
-            // Validar comprador principal
-            const principalNombre1 = document.querySelector('.nombre1').value.trim();
-            const principalApellido1 = document.querySelector('.apellido1').value.trim();
-            const principalApellido2 = document.querySelector('.apellido2').value.trim();
-            const principalTelefono = document.querySelector('.telefono').value.trim();
-            const principalEmail = document.querySelector('.email').value.trim();
-
-            if (!principalNombre1 || !principalApellido1 || !principalApellido2 || !principalTelefono || !principalEmail) {
-                alert('Por favor completa todos los campos obligatorios del comprador principal (*)');
-                return;
-            }
-
-            // Recolectar datos
-            const negocioConvencionado = document.querySelector('input[name="negocioConvencionado"]:checked')?.value || '';
-            const pagoArras = document.querySelector('input[name="pagoArras"]:checked')?.value || '';
-            
-            let arrasFinanciacion = [];
-            document.querySelectorAll('input[name="arrasFinancia"]:checked').forEach(cb => arrasFinanciacion.push(cb.value));
-            
-            let saldoFinanciacion = [];
-            document.querySelectorAll('input[name="saldoFinancia"]:checked').forEach(cb => saldoFinanciacion.push(cb.value));
-            
-            const valorOfertado = document.getElementById('valorOfertado').value;
-            const comentarios = document.getElementById('comentariosCompra').value;
-
-            // Datos comprador principal
-            const principalNombre2 = document.querySelector('.nombre2')?.value || '';
-            const principalEstadoCivil = document.querySelector('.estadoCivil').value;
-            const principalTipoDoc = document.querySelector('.tipoDoc').value;
-            const principalNumDoc = document.querySelector('.numDocumento').value;
-
+            const esJuridica = radioJuridica.checked;
             let mensaje = "🏠 *PROCESO DE COMPRA DE INMUEBLE - QRP2P*%0A";
             mensaje += "────────────────%0A";
             mensaje += "*INFORMACIÓN DE LA OFERTA*%0A";
-            mensaje += `Negocio convencionado: ${negocioConvencionado}%0A`;
+            const negocioConv = document.querySelector('input[name="negocioConvencionado"]:checked')?.value || '';
+            mensaje += `Negocio convencionado: ${negocioConv}%0A`;
+            const pagoArras = document.querySelector('input[name="pagoArras"]:checked')?.value || '';
             mensaje += `Pago de arras: ${pagoArras}%0A`;
-            if (pagoArras === 'Sí' && arrasFinanciacion.length) {
-                mensaje += `Financiación arras: ${arrasFinanciacion.join(', ')}%0A`;
+            if (pagoArras === 'Sí') {
+                let arrasRecursos = [];
+                document.querySelectorAll('input[name="arrasFinancia"]:checked').forEach(cb => arrasRecursos.push(cb.value));
+                if (arrasRecursos.length) mensaje += `Financiación arras: ${arrasRecursos.join(', ')}%0A`;
             }
-            mensaje += `Financiación saldo: ${saldoFinanciacion.join(', ') || 'No especificada'}%0A`;
+            let saldoRecursos = [];
+            document.querySelectorAll('input[name="saldoFinancia"]:checked').forEach(cb => saldoRecursos.push(cb.value));
+            mensaje += `Financiación saldo: ${saldoRecursos.join(', ') || 'No especificada'}%0A`;
+            const valorOfertado = document.getElementById('valorOfertado').value;
             mensaje += `Valor ofertado: COP$ ${parseFloat(valorOfertado).toLocaleString('es-CO')}%0A`;
             
-            mensaje += "%0A*COMPRADOR PRINCIPAL (YO)*%0A";
-            mensaje += `Nombre: ${principalNombre1} ${principalNombre2} ${principalApellido1} ${principalApellido2}%0A`;
-            mensaje += `Estado civil: ${principalEstadoCivil}%0A`;
-            mensaje += `Documento: ${principalTipoDoc} ${principalNumDoc}%0A`;
-            mensaje += `Teléfono: ${principalTelefono}%0A`;
-            mensaje += `Correo: ${principalEmail}%0A`;
-            
-            // Co-compradores
-            const coCompradores = document.querySelectorAll('.comprador-card:not(:first-child)');
-            if (coCompradores.length > 0) {
-                mensaje += "%0A*CO-COMPRADORES*%0A";
-                coCompradores.forEach((comp, idx) => {
-                    const nom1 = comp.querySelector('.nombre1_co')?.value || '';
-                    const nom2 = comp.querySelector('.nombre2_co')?.value || '';
-                    const ape1 = comp.querySelector('.apellido1_co')?.value || '';
-                    const ape2 = comp.querySelector('.apellido2_co')?.value || '';
-                    const estado = comp.querySelector('.estadoCivil_co')?.value || '';
-                    const tipoDoc = comp.querySelector('.tipoDoc_co')?.value || '';
-                    const numDoc = comp.querySelector('.numDocumento_co')?.value || '';
-                    const tel = comp.querySelector('.telefono_co')?.value || '';
-                    const emailCo = comp.querySelector('.email_co')?.value || '';
-                    mensaje += `\n👥 Co-comprador ${idx+1}: ${nom1} ${nom2} ${ape1} ${ape2}%0A`;
-                    mensaje += `   Estado civil: ${estado} | Doc: ${tipoDoc} ${numDoc}%0A`;
-                    mensaje += `   Tel: ${tel} | Email: ${emailCo}%0A`;
-                });
+            mensaje += "%0A*DATOS DEL COMPRADOR PRINCIPAL*%0A";
+            if (esJuridica) {
+                const razon = document.getElementById('juridicaRazon').value.trim();
+                const nit = document.getElementById('juridicaNit').value.trim();
+                const representante = document.getElementById('juridicaRepresentante').value.trim();
+                const telefonoJur = document.getElementById('juridicaTelefono').value.trim();
+                const emailJur = document.getElementById('juridicaEmail').value.trim();
+                if(!razon || !nit || !representante || !telefonoJur || !emailJur) {
+                    alert("Por favor completa todos los campos obligatorios de la persona jurídica (Razón social, NIT, Representante legal, Teléfono y Correo).");
+                    return;
+                }
+                mensaje += `Tipo: Persona Jurídica%0A`;
+                mensaje += `Razón social: ${razon}%0A`;
+                mensaje += `NIT: ${nit}%0A`;
+                mensaje += `Representante legal: ${representante}%0A`;
+                mensaje += `Teléfono: ${telefonoJur}%0A`;
+                mensaje += `Correo: ${emailJur}%0A`;
+            } else {
+                const nombre1 = document.getElementById('pNombre1').value.trim();
+                const nombre2 = document.getElementById('pNombre2').value.trim();
+                const apellido1 = document.getElementById('pApellido1').value.trim();
+                const apellido2 = document.getElementById('pApellido2').value.trim();
+                const estadoCivil = document.getElementById('pEstadoCivil').value;
+                const tipoDoc = document.getElementById('pTipoDoc').value;
+                const numDoc = document.getElementById('pNumDocumento').value.trim();
+                const telefono = document.getElementById('pTelefono').value.trim();
+                const email = document.getElementById('pEmail').value.trim();
+                if (!nombre1 || !apellido1 || !apellido2 || !estadoCivil || !tipoDoc || !numDoc || !telefono || !email) {
+                    alert("Completa todos los campos obligatorios del comprador principal (Persona Natural).");
+                    return;
+                }
+                mensaje += `Tipo: Persona Natural%0A`;
+                mensaje += `Nombre: ${nombre1} ${nombre2} ${apellido1} ${apellido2}%0A`;
+                mensaje += `Estado civil: ${estadoCivil}%0A`;
+                mensaje += `Documento: ${tipoDoc} ${numDoc}%0A`;
+                mensaje += `Teléfono: ${telefono}%0A`;
+                mensaje += `Correo: ${email}%0A`;
+            }
+
+            // Co-compradores solo si es natural
+            if (!esJuridica) {
+                const coCompradores = document.querySelectorAll('.comprador-card:not(#compradorPrincipalCard)');
+                if (coCompradores.length > 0) {
+                    mensaje += "%0A*CO-COMPRADORES (Personas Naturales)*%0A";
+                    coCompradores.forEach((comp, idx) => {
+                        const nom1 = comp.querySelector('.co_nombre1')?.value.trim() || '';
+                        const nom2 = comp.querySelector('.co_nombre2')?.value.trim() || '';
+                        const ape1 = comp.querySelector('.co_apellido1')?.value.trim() || '';
+                        const ape2 = comp.querySelector('.co_apellido2')?.value.trim() || '';
+                        const estado = comp.querySelector('.co_estadoCivil')?.value || '';
+                        const tipoDocCo = comp.querySelector('.co_tipoDoc')?.value || '';
+                        const numDocCo = comp.querySelector('.co_numDoc')?.value.trim() || '';
+                        const telCo = comp.querySelector('.co_telefono')?.value.trim() || '';
+                        const emailCo = comp.querySelector('.co_email')?.value.trim() || '';
+                        if (!nom1 || !ape1 || !ape2 || !estado || !tipoDocCo || !numDocCo || !telCo || !emailCo) {
+                            alert(`Por favor completa todos los campos del co-comprador ${idx+1}.`);
+                            return;
+                        }
+                        mensaje += `\n👥 Co-comprador ${idx+1}: ${nom1} ${nom2} ${ape1} ${ape2}%0A`;
+                        mensaje += `   Estado civil: ${estado} | Doc: ${tipoDocCo} ${numDocCo}%0A`;
+                        mensaje += `   Tel: ${telCo} | Email: ${emailCo}%0A`;
+                    });
+                }
             }
             
-            if (comentarios) {
-                mensaje += "%0A*COMENTARIOS*%0A" + comentarios + "%0A";
-            }
+            const comentarios = document.getElementById('comentariosCompra').value;
+            if (comentarios) mensaje += "%0A*COMENTARIOS*%0A" + comentarios + "%0A";
             
             mensaje += "────────────────%0A";
             mensaje += "📲 *Por favor contactarme para asesorarme en mi compra de inmueble*";
