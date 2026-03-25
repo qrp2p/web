@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="description" content="Únete a QRP2P como vendedor. Planes desde $200.000/año, dashboard completo, tienda online personalizada y 0% comisión por venta.">
+    <meta name="keywords" content="vendedor, tienda online, afiliación, ecommerce, QRP2P, planes vendedor">
+    <meta name="author" content="QRP2P">
+    <meta name="robots" content="index, follow">
+    <title>QRP2P | Registro de Vendedores</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background: #ffffff;
+            color: #111111;
+            line-height: 1.5;
+        }
+
+        /* Header */
+        .hero {
+            background: #000000;
+            color: #ffffff;
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.85;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* Planes */
+        .planes-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .plan-card {
+            border: 2px solid #e0e0e0;
+            border-radius: 24px;
+            padding: 1.8rem;
+            transition: all 0.3s ease;
+            background: #ffffff;
+        }
+
+        .plan-card:hover {
+            border-color: #000000;
+            transform: translateY(-4px);
+        }
+
+        .plan-card.popular {
+            border-color: #000000;
+            background: #fafafa;
+        }
+
+        .plan-tag {
+            display: inline-block;
+            background: #000000;
+            color: #ffffff;
+            padding: 0.2rem 1rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .plan-nombre {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-precio {
+            font-size: 2rem;
+            font-weight: 800;
+            margin: 1rem 0;
+        }
+
+        .plan-precio span {
+            font-size: 0.9rem;
+            font-weight: normal;
+            color: #666;
+        }
+
+        .plan-descripcion {
+            color: #555;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .plan-caracteristicas {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+
+        .plan-caracteristicas li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 0.85rem;
+        }
+
+        .plan-caracteristicas li::before {
+            content: "✓";
+            color: #000000;
+            font-weight: bold;
+        }
+
+        .btn-plan {
+            width: 100%;
+            background: #000000;
+            color: #ffffff;
+            border: none;
+            padding: 0.9rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 0.5rem;
+        }
+
+        .btn-plan:hover {
+            background: #333333;
+        }
+
+        .btn-plan-outline {
+            background: #ffffff;
+            color: #000000;
+            border: 2px solid #000000;
+        }
+
+        .btn-plan-outline:hover {
+            background: #f5f5f5;
+        }
+
+        /* Sección Funcionalidades */
+        .funcionalidades {
+            background: #f8f8f8;
+            border-radius: 24px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .funcionalidades h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 1.6rem;
+        }
+
+        .grid-funcionalidades {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .func-item {
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .func-item h4 {
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .func-item p {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        /* Formulario */
+        .form-section {
+            border: 1px solid #e0e0e0;
+            border-radius: 24px;
+            padding: 1.8rem;
+            margin-top: 2rem;
+        }
+
+        .form-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-section p {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            font-size: 0.85rem;
+            color: #111111;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #bbbbbb;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            background: #ffffff;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #000000;
+        }
+
+        .row-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .plan-seleccionado {
+            background: #f0f0f0;
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        button[type="submit"] {
+            background: #000000;
+            color: #ffffff;
+            border: none;
+            padding: 1rem;
+            width: 100%;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 40px;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        button[type="submit"]:hover {
+            background: #333333;
+        }
+
+        small {
+            display: block;
+            margin-top: 1rem;
+            font-size: 0.7rem;
+            color: #777;
+            text-align: center;
+        }
+
+        .radio-plan {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: #f8f8f8;
+            border-radius: 12px;
+        }
+
+        .radio-plan label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: normal;
+            margin-bottom: 0;
+            cursor: pointer;
+        }
+
+        .radio-plan input {
+            width: auto;
+        }
+
+        @media (max-width: 768px) {
+            .planes-container {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .row-2 {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+        }
+
+        footer {
+            background: #f8f8f8;
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid #e0e0e0;
+            margin-top: 2rem;
+            font-size: 0.8rem;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <h1>QRP2P · Vende sin límites</h1>
+        <p>Únete a nuestra red de vendedores, crea tu tienda online y vende con 0% de comisión. Dashboard completo, envíos nacionales e internacionales.</p>
+    </header>
+
+    <div class="container">
+        <!-- PLANES -->
+        <div class="planes-container">
+            <!-- Plan Básico -->
+            <div class="plan-card">
+                <div class="plan-tag">0% COMISIÓN</div>
+                <div class="plan-nombre">Plan Básico</div>
+                <div class="plan-precio">$200.000 <span>/ año</span></div>
+                <div class="plan-descripcion">Ideal para empezar tu tienda online sin pagar comisiones por venta.</div>
+                <ul class="plan-caracteristicas">
+                    <li>Dashboard completo de gestión</li>
+                    <li>Domicilios económicos en Colombia</li>
+                    <li>Envíos internacionales</li>
+                    <li>Tienda pública con URL única y QR estático</li>
+                    <li>Control de inventario en tiempo real</li>
+                    <li>Gestión completa de pedidos</li>
+                    <li>Subida de archivos descargables</li>
+                    <li>Hasta 6 imágenes por producto</li>
+                    <li>Configuración de envíos (peso, dimensiones)</li>
+                    <li>Categorización de productos</li>
+                    <li>Dashboard 100% responsivo</li>
+                    <li>Generación de guías de transporte</li>
+                    <li>Cambio de estado de pedidos</li>
+                    <li>1 usuario (vendedor principal)</li>
+                </ul>
+                <button class="btn-plan btn-plan-outline" onclick="seleccionarPlan('basico')">Seleccionar Plan Básico</button>
+            </div>
+
+            <!-- Plan Pro -->
+            <div class="plan-card popular">
+                <div class="plan-tag">MÁS FUNCIONALIDADES</div>
+                <div class="plan-nombre">Plan Pro</div>
+                <div class="plan-precio">$700.000 <span>/ año</span></div>
+                <div class="plan-descripcion">Todo lo del Plan Básico + herramientas empresariales avanzadas.</div>
+                <ul class="plan-caracteristicas">
+                    <li>✅ Todo lo incluido en el Plan Básico</li>
+                    <li>Servidor independiente</li>
+                    <li>Subdominio .qrp2p.com</li>
+                    <li>Integración con ERPs contables</li>
+                    <li>Integración con WMS de logística</li>
+                    <li>Pasarelas de pago: PayU, Wompi, Bold y más</li>
+                    <li>Múltiples usuarios (accesos ilimitados)</li>
+                    <li>Punto de venta (POS) integrado</li>
+                    <li>API para conectividad empresarial</li>
+                    <li>Soporte prioritario 24/7</li>
+                </ul>
+                <button class="btn-plan" onclick="seleccionarPlan('pro')">Seleccionar Plan Pro</button>
+            </div>
+        </div>
+
+        <!-- FUNCIONALIDADES DESTACADAS -->
+        <div class="funcionalidades">
+            <h2>🚀 Funcionalidades que te ayudarán a crecer</h2>
+            <div class="grid-funcionalidades">
+                <div class="func-item">
+                    <h4>📊 Dashboard Completo</h4>
+                    <p>Pedidos, productos, guías de transporte y más en un solo lugar</p>
+                </div>
+                <div class="func-item">
+                    <h4>🏪 Tienda Personalizada</h4>
+                    <p>URL única y QR estático para compartir tu tienda</p>
+                </div>
+                <div class="func-item">
+                    <h4>📦 Control de Inventario</h4>
+                    <p>Stock en tiempo real que se actualiza automáticamente</p>
+                </div>
+                <div class="func-item">
+                    <h4>🚚 Envíos Nacionales e Internacionales</h4>
+                    <p>Generación de guías para productos físicos</p>
+                </div>
+                <div class="func-item">
+                    <h4>📱 100% Responsivo</h4>
+                    <p>Gestiona tu tienda desde cualquier dispositivo</p>
+                </div>
+                <div class="func-item">
+                    <h4>💰 0% Comisión por Venta</h4>
+                    <p>Todo lo que vendes es para ti</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- PROCESO DE AFILIACIÓN -->
+        <div class="funcionalidades" style="background: #ffffff; border: 1px solid #e0e0e0;">
+            <h2>📋 Proceso de Afiliación</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; text-align: center;">
+                <div><strong>1.</strong> Paga tu afiliación anual</div>
+                <div><strong>2.</strong> Acceso inmediato al dashboard</div>
+                <div><strong>3.</strong> Configura tu tienda y carga productos</div>
+                <div><strong>4.</strong> Comienza a vender con envíos nacionales e internacionales</div>
+            </div>
+            <p style="text-align: center; margin-top: 1.5rem; font-size: 0.85rem;">El pago es anual y requiere renovación para continuar con el servicio. Comisión por venta: 0% para todo tipo de producto.</p>
+        </div>
+
+        <!-- FORMULARIO DE REGISTRO -->
+        <div class="form-section">
+            <h2>Regístrate como vendedor</h2>
+            <p>Completa el formulario y un asesor te contactará para finalizar tu afiliación.</p>
+
+            <form id="registroForm">
+                <div class="row-2">
+                    <div class="form-group">
+                        <label>Nombre de usuario *</label>
+                        <input type="text" id="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Correo electrónico *</label>
+                        <input type="email" id="email" required>
+                    </div>
+                </div>
+
+                <div class="row-2">
+                    <div class="form-group">
+                        <label>Nombre(s) *</label>
+                        <input type="text" id="nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Apellidos *</label>
+                        <input type="text" id="apellidos" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Nombre de la tienda *</label>
+                    <input type="text" id="tiendaNombre" required>
+                    <small style="margin-top: 0.2rem;">https://co.qrp2p.com/vendedor/[tu_tienda]</small>
+                </div>
+
+                <div class="row-2">
+                    <div class="form-group">
+                        <label>Dirección, línea 1 *</label>
+                        <input type="text" id="direccion1" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Dirección, línea 2</label>
+                        <input type="text" id="direccion2">
+                    </div>
+                </div>
+
+                <div class="row-2">
+                    <div class="form-group">
+                        <label>País *</label>
+                        <select id="pais" required>
+                            <option value="Colombia" selected>Colombia</option>
+                            <option value="Otro">Otro</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Ciudad/Pueblo *</label>
+                        <input type="text" id="ciudad" required>
+                    </div>
+                </div>
+
+                <div class="row-2">
+                    <div class="form-group">
+                        <label>Región/Provincia</label>
+                        <input type="text" id="region">
+                    </div>
+                    <div class="form-group">
+                        <label>Código postal *</label>
+                        <input type="text" id="codigoPostal" required>
+                    </div>
+                </div>
+
+                <div class="row-2">
+                    <div class="form-group">
+                        <label>Teléfono de la tienda *</label>
+                        <input type="tel" id="telefono" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Teléfono móvil (opcional)</label>
+                        <input type="tel" id="telefonoMovil">
+                    </div>
+                </div>
+
+                <div class="row-2">
+                    <div class="form-group">
+                        <label>Contraseña *</label>
+                        <input type="password" id="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Confirmar contraseña *</label>
+                        <input type="password" id="confirmPassword" required>
+                    </div>
+                </div>
+
+                <!-- Selección de plan -->
+                <div class="form-group">
+                    <label>Selecciona tu plan *</label>
+                    <div class="radio-plan" id="planSelector">
+                        <label><input type="radio" name="plan" value="basico" id="planBasico"> Plan Básico - $200.000/año</label>
+                        <label><input type="radio" name="plan" value="pro" id="planPro"> Plan Pro - $700.000/año</label>
+                    </div>
+                </div>
+
+                <div id="planDetalle" class="plan-seleccionado" style="display: none;"></div>
+
+                <div class="form-group">
+                    <label>Comentarios adicionales (opcional)</label>
+                    <textarea rows="2" id="comentarios" placeholder="Cuéntanos si necesitas integraciones específicas o tienes alguna pregunta..."></textarea>
+                </div>
+
+                <button type="submit">Enviar solicitud por WhatsApp</button>
+                <small>Al enviar, aceptas los términos y condiciones de QRP2P. Un asesor te contactará para confirmar tu afiliación y coordinar el pago.</small>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>QRP2P · Plataforma de ventas para emprendedores</p>
+        <p>📲 Asesoría: +57 3146824438 | ✉️ soporte@qrp2p.com</p>
+        <p>© 2025 QRP2P · Todos los derechos reservados</p>
+    </footer>
+
+    <script>
+        let planSeleccionado = null;
+
+        function seleccionarPlan(plan) {
+            planSeleccionado = plan;
+            const radioBasico = document.getElementById('planBasico');
+            const radioPro = document.getElementById('planPro');
+            
+            if (plan === 'basico') {
+                radioBasico.checked = true;
+                radioPro.checked = false;
+                document.getElementById('planDetalle').innerHTML = '✅ Plan seleccionado: <strong>Plan Básico</strong> - $200.000/año. Incluye dashboard completo, envíos nacionales e internacionales, tienda personalizada, 0% comisión.';
+            } else {
+                radioBasico.checked = false;
+                radioPro.checked = true;
+                document.getElementById('planDetalle').innerHTML = '✅ Plan seleccionado: <strong>Plan Pro</strong> - $700.000/año. Incluye todo del Básico + servidor independiente, subdominio, integración con ERPs, WMS, pasarelas de pago (PayU, Wompi, Bold), múltiples usuarios y punto de venta.';
+            }
+            document.getElementById('planDetalle').style.display = 'block';
+        }
+
+        // Escuchar cambios en los radio buttons
+        document.getElementById('planBasico').addEventListener('change', function() {
+            if (this.checked) seleccionarPlan('basico');
+        });
+        document.getElementById('planPro').addEventListener('change', function() {
+            if (this.checked) seleccionarPlan('pro');
+        });
+
+        // Envío del formulario
+        document.getElementById('registroForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Validar contraseñas
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            if (password !== confirmPassword) {
+                alert('Las contraseñas no coinciden. Por favor verifica.');
+                return;
+            }
+            if (password.length < 6) {
+                alert('La contraseña debe tener al menos 6 caracteres.');
+                return;
+            }
+
+            // Validar que haya un plan seleccionado
+            const plan = document.querySelector('input[name="plan"]:checked')?.value;
+            if (!plan) {
+                alert('Por favor selecciona un plan (Básico o Pro)');
+                return;
+            }
+
+            // Recolectar datos
+            const username = document.getElementById('username').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const nombre = document.getElementById('nombre').value.trim();
+            const apellidos = document.getElementById('apellidos').value.trim();
+            const tiendaNombre = document.getElementById('tiendaNombre').value.trim();
+            const direccion1 = document.getElementById('direccion1').value.trim();
+            const direccion2 = document.getElementById('direccion2').value.trim();
+            const pais = document.getElementById('pais').value;
+            const ciudad = document.getElementById('ciudad').value.trim();
+            const region = document.getElementById('region').value.trim();
+            const codigoPostal = document.getElementById('codigoPostal').value.trim();
+            const telefono = document.getElementById('telefono').value.trim();
+            const telefonoMovil = document.getElementById('telefonoMovil').value.trim();
+            const comentarios = document.getElementById('comentarios').value.trim();
+
+            // Validaciones básicas
+            if (!username || !email || !nombre || !apellidos || !tiendaNombre || !direccion1 || !ciudad || !codigoPostal || !telefono) {
+                alert('Por favor completa todos los campos obligatorios (*)');
+                return;
+            }
+
+            const planNombre = plan === 'basico' ? 'Plan Básico - $200.000/año' : 'Plan Pro - $700.000/año';
+            const planPrecio = plan === 'basico' ? '200.000' : '700.000';
+            const urlTienda = `https://co.qrp2p.com/vendedor/${tiendaNombre.toLowerCase().replace(/\s+/g, '-')}`;
+
+            // Construir mensaje para WhatsApp
+            let mensaje = "🏪 *NUEVO REGISTRO DE VENDEDOR - QRP2P*%0A";
+            mensaje += "────────────────%0A";
+            mensaje += "*DATOS DEL VENDEDOR*%0A";
+            mensaje += `Usuario: ${username}%0A`;
+            mensaje += `Nombre: ${nombre} ${apellidos}%0A`;
+            mensaje += `Correo: ${email}%0A`;
+            mensaje += `Teléfono: ${telefono}${telefonoMovil ? ' / ' + telefonoMovil : ''}%0A`;
+            
+            mensaje += "%0A*DATOS DE LA TIENDA*%0A";
+            mensaje += `Nombre tienda: ${tiendaNombre}%0A`;
+            mensaje += `URL personalizada: ${urlTienda}%0A`;
+            mensaje += `Dirección: ${direccion1}${direccion2 ? ', ' + direccion2 : ''}%0A`;
+            mensaje += `Ubicación: ${ciudad}, ${region ? region + ', ' : ''}${pais} - CP: ${codigoPostal}%0A`;
+            
+            mensaje += "%0A*PLAN SELECCIONADO*%0A";
+            mensaje += `${planNombre}%0A`;
+            
+            if (plan === 'pro') {
+                mensaje += "✅ Beneficios Pro adicionales:%0A";
+                mensaje += "• Servidor independiente%0A";
+                mensaje += "• Subdominio .qrp2p.com%0A";
+                mensaje += "• Integración con ERPs y WMS%0A";
+                mensaje += "• Pasarelas: PayU, Wompi, Bold%0A";
+                mensaje += "• Múltiples usuarios%0A";
+                mensaje += "• Punto de venta (POS)%0A";
+            }
+            
+            if (comentarios) {
+                mensaje += "%0A*COMENTARIOS*%0A" + comentarios + "%0A";
+            }
+            
+            mensaje += "────────────────%0A";
+            mensaje += "💰 *PAGO PENDIENTE:* COP$ ${planPrecio} anual%0A";
+            mensaje += "📲 *Contactar al vendedor para activar cuenta y enviar datos de pago*";
+            
+            const telefonoDestino = "573146824438";
+            const url = `https://wa.me/${telefonoDestino}?text=${encodeURIComponent(mensaje)}`;
+            window.open(url, '_blank');
+        });
+    </script>
+</body>
+</html>
