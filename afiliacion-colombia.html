@@ -251,6 +251,15 @@
             font-weight: bold;
         }
 
+        .badge-pro {
+            background: #000000;
+            color: #ffcc00;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 20px;
+            margin-left: 0.5rem;
+        }
+
         .btn-plan-select {
             width: 100%;
             background: #000000;
@@ -523,7 +532,7 @@
 
                 <!-- Plan Pro -->
                 <div class="plan-card popular">
-                    <div class="plan-tag">MÁS FUNCIONALIDADES</div>
+                    <div class="plan-tag">MÁS FUNCIONALIDADES <span class="badge-pro">PRO</span></div>
                     <div class="plan-nombre">Plan Pro</div>
                     <div class="plan-precio">$700.000 <span>/ año</span></div>
                     <div class="plan-descripcion">Todo lo del Plan Básico + herramientas empresariales avanzadas.</div>
@@ -538,6 +547,8 @@
                         <li>Punto de venta (POS) integrado</li>
                         <li>API para conectividad empresarial</li>
                         <li>Soporte prioritario 24/7</li>
+                        <li><strong>📢 Publicidad destacada</strong> - Mayor visibilidad en plataforma QRP2P</li>
+                        <li><strong>🚀 Promoción frecuente</strong> en redes sociales y campañas de marketing</li>
                     </ul>
                     <button class="btn-plan-select" onclick="seleccionarPlanDesdeInfo('pro')">Seleccionar Plan Pro</button>
                 </div>
@@ -570,6 +581,14 @@
                     <div class="func-item">
                         <h4>💰 0% Comisión por Venta</h4>
                         <p>Todo lo que vendes es para ti</p>
+                    </div>
+                    <div class="func-item">
+                        <h4>📢 Publicidad Destacada <span class="badge-pro" style="font-size: 0.6rem;">PRO</span></h4>
+                        <p>Mayor visibilidad para vendedores Pro en la plataforma</p>
+                    </div>
+                    <div class="func-item">
+                        <h4>🚀 Promoción en Redes <span class="badge-pro" style="font-size: 0.6rem;">PRO</span></h4>
+                        <p>Campañas frecuentes en redes sociales para tus productos</p>
                     </div>
                 </div>
             </div>
@@ -621,7 +640,7 @@
             } else {
                 radioBasico.checked = false;
                 radioPro.checked = true;
-                document.getElementById('planDetalle').innerHTML = '✅ Plan seleccionado: <strong>Plan Pro</strong> - $700.000/año. Incluye todo del Básico + servidor independiente, subdominio, integración con ERPs, WMS, pasarelas de pago (PayU, Wompi, Bold), múltiples usuarios y punto de venta.';
+                document.getElementById('planDetalle').innerHTML = '✅ Plan seleccionado: <strong>Plan Pro</strong> - $700.000/año. Incluye todo del Básico + servidor independiente, subdominio, integración con ERPs, WMS, pasarelas de pago (PayU, Wompi, Bold), múltiples usuarios, punto de venta, <strong>publicidad destacada y promoción frecuente en redes sociales</strong>.';
             }
             document.getElementById('planDetalle').style.display = 'block';
             
@@ -716,6 +735,8 @@
                 mensaje += "• Pasarelas: PayU, Wompi, Bold%0A";
                 mensaje += "• Múltiples usuarios%0A";
                 mensaje += "• Punto de venta (POS)%0A";
+                mensaje += "• 📢 Publicidad destacada en plataforma%0A";
+                mensaje += "• 🚀 Promoción frecuente en redes sociales%0A";
             }
             
             if (comentarios) {
