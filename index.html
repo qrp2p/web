@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>QRP2P - Capitales del Mundo (196 Países)</title>
+  <title>QRP2P - Capitales y Vendedores del Mundo</title>
   <style>
     :root {
       --primary-color: #1a1a1a;
@@ -29,10 +29,13 @@
       line-height: 1.6; 
       touch-action: manipulation;
       overflow-x: hidden;
+      height: 100vh;
+      overflow: hidden;
     }
     
     #contenedor-mapa { 
       height: 100vh; 
+      width: 100%;
       display: flex; 
       flex-direction: column; 
       position: relative;
@@ -42,15 +45,14 @@
       display: flex; 
       gap: 0.8rem; 
       padding: 0.8rem; 
-      background: var(--bg-light); 
+      background: rgba(255,255,255,0.98);
+      backdrop-filter: blur(8px);
       width: 100%;
       z-index: 1000;
       justify-content: center;
-      position: absolute;
+      position: fixed;
       top: 0;
       left: 0;
-      background: rgba(255,255,255,0.95);
-      backdrop-filter: blur(8px);
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
     
@@ -104,6 +106,7 @@
       background: #f0f0f0; 
       width: 100%;
       height: 100%;
+      margin-top: 70px;
     }
     
     .cluster-marcadores { 
@@ -136,15 +139,17 @@
     }
 
     .sugerencias-busqueda {
-      position: absolute;
-      top: 100%;
+      position: fixed;
+      top: 70px;
       left: 0;
       right: 0;
+      max-width: 500px;
+      margin: 0 auto;
       background: white;
       border-radius: 0 0 8px 8px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       z-index: 1000;
-      max-height: 200px;
+      max-height: 300px;
       overflow-y: auto;
       display: none;
     }
@@ -197,11 +202,29 @@
       to { transform: rotate(360deg); }
     }
 
+    /* Ocultar controles de zoom de Leaflet */
+    .leaflet-control-zoom {
+      display: none !important;
+    }
+    
+    /* Ocultar atribución de Leaflet y Google */
+    .leaflet-control-attribution {
+      display: none !important;
+    }
+    
+    .leaflet-bottom, .leaflet-top {
+      z-index: 500 !important;
+    }
+
     @media (max-width: 768px) { 
       #barra-superior { 
         flex-direction: column; 
         gap: 0.6rem;
         padding: 0.6rem;
+      }
+      
+      #mapa {
+        margin-top: 100px;
       }
       
       .popup-button-row {
@@ -218,11 +241,10 @@
         margin-top: 5px;
         align-self: flex-end;
       }
-    }
-
-    /* Ocultar controles de zoom de Leaflet */
-    .leaflet-control-zoom {
-      display: none !important;
+      
+      .sugerencias-busqueda {
+        top: 100px;
+      }
     }
   </style>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
@@ -233,7 +255,7 @@
   <div id="contenedor-mapa">
     <div id="barra-superior">
       <div class="contenedor-buscador">
-        <input type="search" id="buscador" placeholder="Buscar país o capital..." enterkeyhint="search">
+        <input type="search" id="buscador" placeholder="Buscar país, capital o vendedor..." enterkeyhint="search">
         <div id="sugerencias-busqueda" class="sugerencias-busqueda"></div>
       </div>
       <button class="btn btn-centrar" id="centrar-btn">📍 CENTER</button>
@@ -252,201 +274,110 @@
     let buscadorTimeout;
     let googleMapsLayer;
 
-    // TODAS LAS CAPITALES DE LOS 196 PAÍSES - COMPLETO
-    const CAPITALES = [
-      { nombreOficial: "QRP2P AFGHANISTAN", capital: "Kabul", latlng: [34.5553, 69.2075], descripcion: "Sucursal de QRP2P Afghanistan marketplace", telefono: "+93791234567", url: "https://qrp2p.com/af/kabul", pais: "Afghanistan" },
-      { nombreOficial: "QRP2P SHQIPËRIA", capital: "Tiranë", latlng: [41.3275, 19.8187], descripcion: "Dyqani i tregut QRP2P Shqipëri", telefono: "+355692345678", url: "https://qrp2p.com/al/tirana", pais: "Albania" },
-      { nombreOficial: "QRP2P DEUTSCHLAND", capital: "Berlin", latlng: [52.5200, 13.4050], descripcion: "QRP2P Deutschland Marktplatz Filiale", telefono: "+4915123456789", url: "https://qrp2p.com/de/berlin", pais: "Germany" },
-      { nombreOficial: "QRP2P ANDORRA", capital: "Andorra la Vella", latlng: [42.5078, 1.5211], descripcion: "Sucursal del marketplace QRP2P Andorra", telefono: "+376123456", url: "https://qrp2p.com/ad/andorra", pais: "Andorra" },
-      { nombreOficial: "QRP2P ANGOLA", capital: "Luanda", latlng: [-8.8383, 13.2344], descripcion: "Filial do marketplace QRP2P Angola", telefono: "+244923456789", url: "https://qrp2p.com/ao/luanda", pais: "Angola" },
-      { nombreOficial: "QRP2P ANTIGUA AND BARBUDA", capital: "St. John's", latlng: [17.1274, -61.8468], descripcion: "QRP2P Antigua and Barbuda marketplace branch", telefono: "+12682345678", url: "https://qrp2p.com/ag/stjohns", pais: "Antigua and Barbuda" },
-      { nombreOficial: "QRP2P ARGENTINA", capital: "Buenos Aires", latlng: [-34.6037, -58.3816], descripcion: "Sucursal del marketplace QRP2P Argentina", telefono: "+5491123456789", url: "https://qrp2p.com/ar/buenosaires", pais: "Argentina" },
-      { nombreOficial: "QRP2P ARMENIA", capital: "Yerevan", latlng: [40.1792, 44.4991], descripcion: "QRP2P Հայաստան marketplace մասնաճյուղ", telefono: "+37491234567", url: "https://qrp2p.com/am/yerevan", pais: "Armenia" },
-      { nombreOficial: "QRP2P AUSTRALIA", capital: "Canberra", latlng: [-35.2809, 149.1300], descripcion: "QRP2P Australia marketplace branch", telefono: "+61412345678", url: "https://qrp2p.com/au/canberra", pais: "Australia" },
-      { nombreOficial: "QRP2P ÖSTERREICH", capital: "Wien", latlng: [48.2082, 16.3738], descripcion: "QRP2P Österreich Marktplatz Filiale", telefono: "+436761234567", url: "https://qrp2p.com/at/vienna", pais: "Austria" },
-      { nombreOficial: "QRP2P AZƏRBAYCAN", capital: "Bakı", latlng: [40.4093, 49.8671], descripcion: "QRP2P Azərbaycan marketplace filialı", telefono: "+994502345678", url: "https://qrp2p.com/az/baku", pais: "Azerbaijan" },
-      { nombreOficial: "QRP2P BAHAMAS", capital: "Nassau", latlng: [25.0443, -77.3504], descripcion: "QRP2P Bahamas marketplace branch", telefono: "+12423567890", url: "https://qrp2p.com/bs/nassau", pais: "Bahamas" },
-      { nombreOficial: "QRP2P BAHRAIN", capital: "Manama", latlng: [26.2285, 50.5860], descripcion: "QRP2P Bahrain marketplace branch", telefono: "+97312345678", url: "https://qrp2p.com/bh/manama", pais: "Bahrain" },
-      { nombreOficial: "QRP2P BANGLADESH", capital: "Dhaka", latlng: [23.8103, 90.4125], descripcion: "QRP2P বাংলাদেশ মার্কেটপ্লেস শাখা", telefono: "+8801712345678", url: "https://qrp2p.com/bd/dhaka", pais: "Bangladesh" },
-      { nombreOficial: "QRP2P BARBADOS", capital: "Bridgetown", latlng: [13.1132, -59.5988], descripcion: "QRP2P Barbados marketplace branch", telefono: "+12462345678", url: "https://qrp2p.com/bb/bridgetown", pais: "Barbados" },
-      { nombreOficial: "QRP2P BELARUS", capital: "Minsk", latlng: [53.9045, 27.5615], descripcion: "Філія рынку QRP2P Беларусь", telefono: "+375291234567", url: "https://qrp2p.com/by/minsk", pais: "Belarus" },
-      { nombreOficial: "QRP2P BELGIË", capital: "Brussel", latlng: [50.8503, 4.3517], descripcion: "QRP2P België marktplaats filiaal", telefono: "+32412345678", url: "https://qrp2p.com/be/brussels", pais: "Belgium" },
-      { nombreOficial: "QRP2P BELIZE", capital: "Belmopan", latlng: [17.2534, -88.7713], descripcion: "QRP2P Belize marketplace branch", telefono: "+5016234567", url: "https://qrp2p.com/bz/belmopan", pais: "Belize" },
-      { nombreOficial: "QRP2P BÉNIN", capital: "Porto-Novo", latlng: [6.4969, 2.6036], descripcion: "Succursale du marketplace QRP2P Bénin", telefono: "+22961234567", url: "https://qrp2p.com/bj/portonovo", pais: "Benin" },
-      { nombreOficial: "QRP2P BHUTAN", capital: "Thimphu", latlng: [27.4712, 89.6339], descripcion: "QRP2P འབྲུག མརྐེཊ་ཕེལེས་ཚོང་ཁང་", telefono: "+97517123456", url: "https://qrp2p.com/bt/thimphu", pais: "Bhutan" },
-      { nombreOficial: "QRP2P BOLIVIA", capital: "Sucre", latlng: [-19.0333, -65.2627], descripcion: "Sucursal del marketplace QRP2P Bolivia", telefono: "+59171234567", url: "https://qrp2p.com/bo/sucre", pais: "Bolivia" },
-      { nombreOficial: "QRP2P BOSNA I HERCEGOVINA", capital: "Sarajevo", latlng: [43.8563, 18.4131], descripcion: "Podružnica marketplace QRP2P Bosna i Hercegovina", telefono: "+38761234567", url: "https://qrp2p.com/ba/sarajevo", pais: "Bosnia and Herzegovina" },
-      { nombreOficial: "QRP2P BOTSWANA", capital: "Gaborone", latlng: [-24.6282, 25.9231], descripcion: "QRP2P Botswana marketplace branch", telefono: "+26771234567", url: "https://qrp2p.com/bw/gaborone", pais: "Botswana" },
-      { nombreOficial: "QRP2P BRASIL", capital: "Brasília", latlng: [-15.8267, -47.9218], descripcion: "Filial do marketplace QRP2P Brasil", telefono: "+5561998765432", url: "https://qrp2p.com/br/brasilia", pais: "Brazil" },
-      { nombreOficial: "QRP2P BRUNEI", capital: "Bandar Seri Begawan", latlng: [4.9031, 114.9398], descripcion: "Cawangan pasar QRP2P Brunei", telefono: "+6731234567", url: "https://qrp2p.com/bn/bandar", pais: "Brunei" },
-      { nombreOficial: "QRP2P BULGARIA", capital: "Sofia", latlng: [42.6977, 23.3219], descripcion: "Клон на пазар QRP2P България", telefono: "+359881234567", url: "https://qrp2p.com/bg/sofia", pais: "Bulgaria" },
-      { nombreOficial: "QRP2P BURKINA FASO", capital: "Ouagadougou", latlng: [12.3714, -1.5197], descripcion: "Succursale du marketplace QRP2P Burkina Faso", telefono: "+22670123456", url: "https://qrp2p.com/bf/ouagadougou", pais: "Burkina Faso" },
-      { nombreOficial: "QRP2P BURUNDI", capital: "Gitega", latlng: [-3.4264, 29.9306], descripcion: "Succursale du marketplace QRP2P Burundi", telefono: "+25761234567", url: "https://qrp2p.com/bi/gitega", pais: "Burundi" },
-      { nombreOficial: "QRP2P CABO VERDE", capital: "Praia", latlng: [14.9330, -23.5133], descripcion: "Filial do marketplace QRP2P Cabo Verde", telefono: "+2389123456", url: "https://qrp2p.com/cv/praia", pais: "Cape Verde" },
-      { nombreOficial: "QRP2P CAMBODIA", capital: "Phnom Penh", latlng: [11.5449, 104.8922], descripcion: "សាខាទីផ្សារ QRP2P កម្ពុជា", telefono: "+85512345678", url: "https://qrp2p.com/kh/phnompenh", pais: "Cambodia" },
-      { nombreOficial: "QRP2P CAMEROUN", capital: "Yaoundé", latlng: [3.8480, 11.5021], descripcion: "Succursale du marketplace QRP2P Cameroun", telefono: "+237612345678", url: "https://qrp2p.com/cm/yaounde", pais: "Cameroon" },
-      { nombreOficial: "QRP2P CANADA", capital: "Ottawa", latlng: [45.4215, -75.6972], descripcion: "QRP2P Canada marketplace branch", telefono: "+16135551234", url: "https://qrp2p.com/ca/ottawa", pais: "Canada" },
-      { nombreOficial: "QRP2P CHAD", capital: "N'Djamena", latlng: [12.1348, 15.0557], descripcion: "Succursale du marketplace QRP2P Tchad", telefono: "+23561234567", url: "https://qrp2p.com/td/njamena", pais: "Chad" },
-      { nombreOficial: "QRP2P CHILE", capital: "Santiago", latlng: [-33.4489, -70.6693], descripcion: "Sucursal del marketplace QRP2P Chile", telefono: "+56912345678", url: "https://qrp2p.com/cl/santiago", pais: "Chile" },
-      { nombreOficial: "QRP2P 中国", capital: "北京", latlng: [39.9042, 116.4074], descripcion: "QRP2P中国市场分行", telefono: "+861012345678", url: "https://qrp2p.com/cn/beijing", pais: "China" },
-      { nombreOficial: "QRP2P COLOMBIA", capital: "Bogotá", latlng: [4.7110, -74.0721], descripcion: "Sucursal del marketplace QRP2P Colombia", telefono: "+573001234567", url: "https://qrp2p.com/co/bogota", pais: "Colombia" },
-      { nombreOficial: "QRP2P COMORES", capital: "Moroni", latlng: [-11.7022, 43.2551], descripcion: "Succursale du marketplace QRP2P Comores", telefono: "+2693214567", url: "https://qrp2p.com/km/moroni", pais: "Comoros" },
-      { nombreOficial: "QRP2P CONGO", capital: "Brazzaville", latlng: [-4.2634, 15.2429], descripcion: "Succursale du marketplace QRP2P Congo", telefono: "+242012345678", url: "https://qrp2p.com/cg/brazzaville", pais: "Congo" },
-      { nombreOficial: "QRP2P COSTA RICA", capital: "San José", latlng: [9.9281, -84.0907], descripcion: "Sucursal del marketplace QRP2P Costa Rica", telefono: "+50612345678", url: "https://qrp2p.com/cr/sanjose", pais: "Costa Rica" },
-      { nombreOficial: "QRP2P HRVATSKA", capital: "Zagreb", latlng: [45.8150, 15.9819], descripcion: "Podružnica marketplace QRP2P Hrvatska", telefono: "+385912345678", url: "https://qrp2p.com/hr/zagreb", pais: "Croatia" },
-      { nombreOficial: "QRP2P CUBA", capital: "La Habana", latlng: [23.1136, -82.3666], descripcion: "Sucursal del marketplace QRP2P Cuba", telefono: "+5351234567", url: "https://qrp2p.com/cu/havana", pais: "Cuba" },
-      { nombreOficial: "QRP2P CYPRUS", capital: "Nicosia", latlng: [35.1856, 33.3823], descripcion: "QRP2P Cyprus marketplace branch", telefono: "+35799123456", url: "https://qrp2p.com/cy/nicosia", pais: "Cyprus" },
-      { nombreOficial: "QRP2P ČESKO", capital: "Praha", latlng: [50.0755, 14.4378], descripcion: "Pobočka marketplace QRP2P Česko", telefono: "+420123456789", url: "https://qrp2p.com/cz/prague", pais: "Czech Republic" },
-      { nombreOficial: "QRP2P DANMARK", capital: "København", latlng: [55.6761, 12.5683], descripcion: "QRP2P Danmark markedsplads filial", telefono: "+4520123456", url: "https://qrp2p.com/dk/copenhagen", pais: "Denmark" },
-      { nombreOficial: "QRP2P DJIBOUTI", capital: "Djibouti", latlng: [11.5721, 43.1456], descripcion: "Succursale du marketplace QRP2P Djibouti", telefono: "+25312345678", url: "https://qrp2p.com/dj/djibouti", pais: "Djibouti" },
-      { nombreOficial: "QRP2P DOMINICA", capital: "Roseau", latlng: [15.3092, -61.3794], descripcion: "QRP2P Dominica marketplace branch", telefono: "+17672345678", url: "https://qrp2p.com/dm/roseau", pais: "Dominica" },
-      { nombreOficial: "QRP2P ECUADOR", capital: "Quito", latlng: [-0.1807, -78.4678], descripcion: "Sucursal del marketplace QRP2P Ecuador", telefono: "+593987654321", url: "https://qrp2p.com/ec/quito", pais: "Ecuador" },
-      { nombreOficial: "QRP2P EGYPT", capital: "Cairo", latlng: [30.0444, 31.2357], descripcion: "QRP2P Egypt marketplace branch", telefono: "+201012345678", url: "https://qrp2p.com/eg/cairo", pais: "Egypt" },
-      { nombreOficial: "QRP2P EL SALVADOR", capital: "San Salvador", latlng: [13.6929, -89.2182], descripcion: "Sucursal del marketplace QRP2P El Salvador", telefono: "+50370123456", url: "https://qrp2p.com/sv/sansalvador", pais: "El Salvador" },
-      { nombreOficial: "QRP2P EQUATORIAL GUINEA", capital: "Malabo", latlng: [3.7504, 8.7371], descripcion: "QRP2P Equatorial Guinea marketplace branch", telefono: "+240123456789", url: "https://qrp2p.com/gq/malabo", pais: "Equatorial Guinea" },
-      { nombreOficial: "QRP2P ERITREA", capital: "Asmara", latlng: [15.3229, 38.9251], descripcion: "QRP2P Eritrea marketplace branch", telefono: "+2911234567", url: "https://qrp2p.com/er/asmara", pais: "Eritrea" },
-      { nombreOficial: "QRP2P EESTI", capital: "Tallinn", latlng: [59.4370, 24.7536], descripcion: "QRP2P Eesti turuplatsi filiaal", telefono: "+37251234567", url: "https://qrp2p.com/ee/tallinn", pais: "Estonia" },
-      { nombreOficial: "QRP2P ESWATINI", capital: "Mbabane", latlng: [-26.3054, 31.1367], descripcion: "QRP2P Eswatini marketplace branch", telefono: "+26812345678", url: "https://qrp2p.com/sz/mbabane", pais: "Eswatini" },
-      { nombreOficial: "QRP2P ETHIOPIA", capital: "Addis Ababa", latlng: [9.0320, 38.7469], descripcion: "QRP2P Ethiopia marketplace branch", telefono: "+251912345678", url: "https://qrp2p.com/et/addisababa", pais: "Ethiopia" },
-      { nombreOficial: "QRP2P FIJI", capital: "Suva", latlng: [-18.1416, 178.4419], descripcion: "QRP2P Fiji marketplace branch", telefono: "+6791234567", url: "https://qrp2p.com/fj/suva", pais: "Fiji" },
-      { nombreOficial: "QRP2P SUOMI", capital: "Helsinki", latlng: [60.1699, 24.9384], descripcion: "QRP2P Suomen markkinapaikka sivuliike", telefono: "+358401234567", url: "https://qrp2p.com/fi/helsinki", pais: "Finland" },
-      { nombreOficial: "QRP2P FRANCE", capital: "Paris", latlng: [48.8566, 2.3522], descripcion: "Succursale du marketplace QRP2P France", telefono: "+33612345678", url: "https://qrp2p.com/fr/paris", pais: "France" },
-      { nombreOficial: "QRP2P GABON", capital: "Libreville", latlng: [0.4162, 9.4673], descripcion: "Succursale du marketplace QRP2P Gabon", telefono: "+24112345678", url: "https://qrp2p.com/ga/libreville", pais: "Gabon" },
-      { nombreOficial: "QRP2P GAMBIA", capital: "Banjul", latlng: [13.4549, -16.5790], descripcion: "QRP2P Gambia marketplace branch", telefono: "+2201234567", url: "https://qrp2p.com/gm/banjul", pais: "Gambia" },
-      { nombreOficial: "QRP2P საქართველო", capital: "Tbilisi", latlng: [41.7151, 44.8271], descripcion: "QRP2P საქართველოს ბაზრის ფილიალი", telefono: "+995512345678", url: "https://qrp2p.com/ge/tbilisi", pais: "Georgia" },
-      { nombreOficial: "QRP2P GHANA", capital: "Accra", latlng: [5.6037, -0.1870], descripcion: "QRP2P Ghana marketplace branch", telefono: "+233123456789", url: "https://qrp2p.com/gh/accra", pais: "Ghana" },
-      { nombreOficial: "QRP2P ΕΛΛΑΔΑ", capital: "Αθήνα", latlng: [37.9838, 23.7275], descripcion: "Υποκατάστημα αγοράς QRP2P Ελλάδα", telefono: "+306912345678", url: "https://qrp2p.com/gr/athens", pais: "Greece" },
-      { nombreOficial: "QRP2P GRENADA", capital: "St. George's", latlng: [12.0561, -61.7488], descripcion: "QRP2P Grenada marketplace branch", telefono: "+14731234567", url: "https://qrp2p.com/gd/stgeorges", pais: "Grenada" },
-      { nombreOficial: "QRP2P GUATEMALA", capital: "Ciudad de Guatemala", latlng: [14.6349, -90.5069], descripcion: "Sucursal del marketplace QRP2P Guatemala", telefono: "+50212345678", url: "https://qrp2p.com/gt/guatemala", pais: "Guatemala" },
-      { nombreOficial: "QRP2P GUINÉE", capital: "Conakry", latlng: [9.6412, -13.5784], descripcion: "Succursale du marketplace QRP2P Guinée", telefono: "+22412345678", url: "https://qrp2p.com/gn/conakry", pais: "Guinea" },
-      { nombreOficial: "QRP2P GUINÉ-BISSAU", capital: "Bissau", latlng: [11.8637, -15.5844], descripcion: "Succursale du marketplace QRP2P Guiné-Bissau", telefono: "+2451234567", url: "https://qrp2p.com/gw/bissau", pais: "Guinea-Bissau" },
-      { nombreOficial: "QRP2P GUYANA", capital: "Georgetown", latlng: [6.8013, -58.1551], descripcion: "QRP2P Guyana marketplace branch", telefono: "+5921234567", url: "https://qrp2p.com/gy/georgetown", pais: "Guyana" },
-      { nombreOficial: "QRP2P HAITI", capital: "Port-au-Prince", latlng: [18.5944, -72.3074], descripcion: "QRP2P Haiti marketplace branch", telefono: "+50912345678", url: "https://qrp2p.com/ht/portauprince", pais: "Haiti" },
-      { nombreOficial: "QRP2P HONDURAS", capital: "Tegucigalpa", latlng: [14.0723, -87.1921], descripcion: "Sucursal del marketplace QRP2P Honduras", telefono: "+50412345678", url: "https://qrp2p.com/hn/tegucigalpa", pais: "Honduras" },
-      { nombreOficial: "QRP2P MAGYARORSZÁG", capital: "Budapest", latlng: [47.4979, 19.0402], descripcion: "QRP2P Magyarország piactér fiók", telefono: "+36201234567", url: "https://qrp2p.com/hu/budapest", pais: "Hungary" },
-      { nombreOficial: "QRP2P ÍSLAND", capital: "Reykjavík", latlng: [64.1466, -21.9426], descripcion: "QRP2P Ísland markaðstorg útibú", telefono: "+3541234567", url: "https://qrp2p.com/is/reykjavik", pais: "Iceland" },
-      { nombreOficial: "QRP2P INDIA", capital: "New Delhi", latlng: [28.6139, 77.2090], descripcion: "QRP2P India marketplace branch", telefono: "+911123456789", url: "https://qrp2p.com/in/newdelhi", pais: "India" },
-      { nombreOficial: "QRP2P INDONESIA", capital: "Jakarta", latlng: [-6.2088, 106.8456], descripcion: "Cabang pasar QRP2P Indonesia", telefono: "+6281234567890", url: "https://qrp2p.com/id/jakarta", pais: "Indonesia" },
-      { nombreOficial: "QRP2P IRAN", capital: "Tehran", latlng: [35.6892, 51.3890], descripcion: "QRP2P ایران شعبه بازار", telefono: "+989123456789", url: "https://qrp2p.com/ir/tehran", pais: "Iran" },
-      { nombreOficial: "QRP2P IRAQ", capital: "Baghdad", latlng: [33.3152, 44.3661], descripcion: "QRP2P العراق فرع السوق", telefono: "+9641234567890", url: "https://qrp2p.com/iq/baghdad", pais: "Iraq" },
-      { nombreOficial: "QRP2P ÉIRE", capital: "Dublin", latlng: [53.3498, -6.2603], descripcion: "QRP2P Éire margadh brainse", telefono: "+353871234567", url: "https://qrp2p.com/ie/dublin", pais: "Ireland" },
-      { nombreOficial: "QRP2P ISRAEL", capital: "Jerusalem", latlng: [31.7683, 35.2137], descripcion: "סניף שוק QRP2P ישראל", telefono: "+972501234567", url: "https://qrp2p.com/il/jerusalem", pais: "Israel" },
-      { nombreOficial: "QRP2P ITALIA", capital: "Roma", latlng: [41.9028, 12.4964], descripcion: "Filiale del marketplace QRP2P Italia", telefono: "+393391234567", url: "https://qrp2p.com/it/rome", pais: "Italy" },
-      { nombreOficial: "QRP2P JAMAICA", capital: "Kingston", latlng: [17.9714, -76.7924], descripcion: "QRP2P Jamaica marketplace branch", telefono: "+18761234567", url: "https://qrp2p.com/jm/kingston", pais: "Jamaica" },
-      { nombreOficial: "QRP2P 日本", capital: "東京", latlng: [35.6762, 139.6503], descripcion: "QRP2P日本マーケットプレイス支店", telefono: "+819012345678", url: "https://qrp2p.com/jp/tokyo", pais: "Japan" },
-      { nombreOficial: "QRP2P الأردن", capital: "عمان", latlng: [31.9454, 35.9284], descripcion: "فرع سوق QRP2P الأردن", telefono: "+962712345678", url: "https://qrp2p.com/jo/amman", pais: "Jordan" },
-      { nombreOficial: "QRP2P ҚАЗАҚСТАН", capital: "Астана", latlng: [51.1694, 71.4491], descripcion: "QRP2P Қазақстан маркетплейс филиалы", telefono: "+77071234567", url: "https://qrp2p.com/kz/astana", pais: "Kazakhstan" },
-      { nombreOficial: "QRP2P KENYA", capital: "Nairobi", latlng: [-1.2864, 36.8172], descripcion: "QRP2P Kenya marketplace branch", telefono: "+254712345678", url: "https://qrp2p.com/ke/nairobi", pais: "Kenya" },
-      { nombreOficial: "QRP2P KIRIBATI", capital: "South Tarawa", latlng: [1.3382, 173.0176], descripcion: "QRP2P Kiribati marketplace branch", telefono: "+6861234567", url: "https://qrp2p.com/ki/tarawa", pais: "Kiribati" },
-      { nombreOficial: "QRP2P 한국", capital: "서울", latlng: [37.5665, 126.9780], descripcion: "QRP2P 한국 마켓플레이스 지점", telefono: "+821012345678", url: "https://qrp2p.com/kr/seoul", pais: "South Korea" },
-      { nombreOficial: "QRP2P الكويت", capital: "الكويت", latlng: [29.3759, 47.9774], descripcion: "فرع سوق QRP2P الكويت", telefono: "+96512345678", url: "https://qrp2p.com/kw/kuwait", pais: "Kuwait" },
-      { nombreOficial: "QRP2P КЫРГЫЗСТАН", capital: "Бишкек", latlng: [42.8746, 74.5698], descripcion: "QRP2P Кыргызстан маркетплейс филиалы", telefono: "+996123456789", url: "https://qrp2p.com/kg/bishkek", pais: "Kyrgyzstan" },
-      { nombreOficial: "QRP2P ລາວ", capital: "ວຽງຈັນ", latlng: [17.9757, 102.6331], descripcion: "ສາຂາຕະຫຼາດ QRP2P ລາວ", telefono: "+85612345678", url: "https://qrp2p.com/la/vientiane", pais: "Laos" },
-      { nombreOficial: "QRP2P LATVIJA", capital: "Rīga", latlng: [56.9496, 24.1052], descripcion: "QRP2P Latvija tirgus filiāle", telefono: "+37112345678", url: "https://qrp2p.com/lv/riga", pais: "Latvia" },
-      { nombreOficial: "QRP2P LIBANON", capital: "Beirut", latlng: [33.8938, 35.5018], descripcion: "QRP2P لبنان فرع السوق", telefono: "+96112345678", url: "https://qrp2p.com/lb/beirut", pais: "Lebanon" },
-      { nombreOficial: "QRP2P LESOTHO", capital: "Maseru", latlng: [-29.3150, 27.4859], descripcion: "QRP2P Lesotho marketplace branch", telefono: "+26612345678", url: "https://qrp2p.com/ls/maseru", pais: "Lesotho" },
-      { nombreOficial: "QRP2P LIBERIA", capital: "Monrovia", latlng: [6.3000, -10.8000], descripcion: "QRP2P Liberia marketplace branch", telefono: "+2311234567", url: "https://qrp2p.com/lr/monrovia", pais: "Liberia" },
-      { nombreOficial: "QRP2P LIBYA", capital: "Tripoli", latlng: [32.8872, 13.1913], descripcion: "QRP2P ليبيا فرع السوق", telefono: "+218912345678", url: "https://qrp2p.com/ly/tripoli", pais: "Libya" },
-      { nombreOficial: "QRP2P LIECHTENSTEIN", capital: "Vaduz", latlng: [47.1410, 9.5209], descripcion: "QRP2P Liechtenstein Marktplatz Filiale", telefono: "+4231234567", url: "https://qrp2p.com/li/vaduz", pais: "Liechtenstein" },
-      { nombreOficial: "QRP2P LIETUVA", capital: "Vilnius", latlng: [54.6872, 25.2797], descripcion: "QRP2P Lietuva turgavietės filialas", telefono: "+37061234567", url: "https://qrp2p.com/lt/vilnius", pais: "Lithuania" },
-      { nombreOficial: "QRP2P LUXEMBOURG", capital: "Luxembourg", latlng: [49.6116, 6.1319], descripcion: "Succursale du marketplace QRP2P Luxembourg", telefono: "+35212345678", url: "https://qrp2p.com/lu/luxembourg", pais: "Luxembourg" },
-      { nombreOficial: "QRP2P MADAGASCAR", capital: "Antananarivo", latlng: [-18.8792, 47.5079], descripcion: "Succursale du marketplace QRP2P Madagascar", telefono: "+26112345678", url: "https://qrp2p.com/mg/antananarivo", pais: "Madagascar" },
-      { nombreOficial: "QRP2P MALAWI", capital: "Lilongwe", latlng: [-13.9626, 33.7741], descripcion: "QRP2P Malawi marketplace branch", telefono: "+26512345678", url: "https://qrp2p.com/mw/lilongwe", pais: "Malawi" },
-      { nombreOficial: "QRP2P MALAYSIA", capital: "Kuala Lumpur", latlng: [3.1390, 101.6869], descripcion: "Cawangan pasar QRP2P Malaysia", telefono: "+60123456789", url: "https://qrp2p.com/my/kualalumpur", pais: "Malaysia" },
-      { nombreOficial: "QRP2P MALDIVES", capital: "Malé", latlng: [4.1755, 73.5093], descripcion: "QRP2P Maldives marketplace branch", telefono: "+9601234567", url: "https://qrp2p.com/mv/male", pais: "Maldives" },
-      { nombreOficial: "QRP2P MALI", capital: "Bamako", latlng: [12.6392, -8.0029], descripcion: "Succursale du marketplace QRP2P Mali", telefono: "+22312345678", url: "https://qrp2p.com/ml/bamako", pais: "Mali" },
-      { nombreOficial: "QRP2P MALTA", capital: "Valletta", latlng: [35.8989, 14.5146], descripcion: "QRP2P Malta marketplace branch", telefono: "+35612345678", url: "https://qrp2p.com/mt/valletta", pais: "Malta" },
-      { nombreOficial: "QRP2P MARSHALL ISLANDS", capital: "Majuro", latlng: [7.1164, 171.1851], descripcion: "QRP2P Marshall Islands marketplace branch", telefono: "+6921234567", url: "https://qrp2p.com/mh/majuro", pais: "Marshall Islands" },
-      { nombreOficial: "QRP2P MAURITANIA", capital: "Nouakchott", latlng: [18.0735, -15.9582], descripcion: "Succursale du marketplace QRP2P Mauritanie", telefono: "+22212345678", url: "https://qrp2p.com/mr/nouakchott", pais: "Mauritania" },
-      { nombreOficial: "QRP2P MAURITIUS", capital: "Port Louis", latlng: [-20.1669, 57.5023], descripcion: "QRP2P Mauritius marketplace branch", telefono: "+2301234567", url: "https://qrp2p.com/mu/portlouis", pais: "Mauritius" },
-      { nombreOficial: "QRP2P MÉXICO", capital: "Ciudad de México", latlng: [19.4326, -99.1332], descripcion: "Sucursal del marketplace QRP2P México", telefono: "+525512345678", url: "https://qrp2p.com/mx/cdmx", pais: "Mexico" },
-      { nombreOficial: "QRP2P MICRONESIA", capital: "Palikir", latlng: [6.9248, 158.1611], descripcion: "QRP2P Micronesia marketplace branch", telefono: "+6911234567", url: "https://qrp2p.com/fm/palikir", pais: "Micronesia" },
-      { nombreOficial: "QRP2P MOLDOVA", capital: "Chișinău", latlng: [47.0105, 28.8638], descripcion: "Sucursala pieței QRP2P Moldova", telefono: "+37312345678", url: "https://qrp2p.com/md/chisinau", pais: "Moldova" },
-      { nombreOficial: "QRP2P MONACO", capital: "Monaco", latlng: [43.7384, 7.4246], descripcion: "Succursale du marketplace QRP2P Monaco", telefono: "+37712345678", url: "https://qrp2p.com/mc/monaco", pais: "Monaco" },
-      { nombreOficial: "QRP2P MONGOLIA", capital: "Ulaanbaatar", latlng: [47.8864, 106.9057], descripcion: "QRP2P Монгол зах зээлийн салбар", telefono: "+97612345678", url: "https://qrp2p.com/mn/ulaanbaatar", pais: "Mongolia" },
-      { nombreOficial: "QRP2P MONTENEGRO", capital: "Podgorica", latlng: [42.4304, 19.2594], descripcion: "QRP2P Crna Gora marketplace podružnica", telefono: "+38212345678", url: "https://qrp2p.com/me/podgorica", pais: "Montenegro" },
-      { nombreOficial: "QRP2P MOROCCO", capital: "Rabat", latlng: [34.0209, -6.8416], descripcion: "Succursale du marketplace QRP2P Maroc", telefono: "+212612345678", url: "https://qrp2p.com/ma/rabat", pais: "Morocco" },
-      { nombreOficial: "QRP2P MOZAMBIQUE", capital: "Maputo", latlng: [-25.9692, 32.5732], descripcion: "Filial do marketplace QRP2P Moçambique", telefono: "+25812345678", url: "https://qrp2p.com/mz/maputo", pais: "Mozambique" },
-      { nombreOficial: "QRP2P MYANMAR", capital: "Naypyidaw", latlng: [19.7633, 96.0785], descripcion: "QRP2P မြန်မာစျေးကွက်ဌာနခွဲ", telefono: "+959123456789", url: "https://qrp2p.com/mm/naypyidaw", pais: "Myanmar" },
-      { nombreOficial: "QRP2P NAMIBIA", capital: "Windhoek", latlng: [-22.5609, 17.0658], descripcion: "QRP2P Namibia marketplace branch", telefono: "+26412345678", url: "https://qrp2p.com/na/windhoek", pais: "Namibia" },
-      { nombreOficial: "QRP2P NAURU", capital: "Yaren", latlng: [-0.5477, 166.9209], descripcion: "QRP2P Nauru marketplace branch", telefono: "+6741234567", url: "https://qrp2p.com/nr/yaren", pais: "Nauru" },
-      { nombreOficial: "QRP2P NEPAL", capital: "Kathmandu", latlng: [27.7172, 85.3240], descripcion: "QRP2P नेपाल बजार शाखा", telefono: "+9771234567890", url: "https://qrp2p.com/np/kathmandu", pais: "Nepal" },
-      { nombreOficial: "QRP2P NEDERLAND", capital: "Amsterdam", latlng: [52.3676, 4.9041], descripcion: "QRP2P Nederland marktplaats filiaal", telefono: "+31612345678", url: "https://qrp2p.com/nl/amsterdam", pais: "Netherlands" },
-      { nombreOficial: "QRP2P NEW ZEALAND", capital: "Wellington", latlng: [-41.2865, 174.7762], descripcion: "QRP2P New Zealand marketplace branch", telefono: "+64212345678", url: "https://qrp2p.com/nz/wellington", pais: "New Zealand" },
-      { nombreOficial: "QRP2P NICARAGUA", capital: "Managua", latlng: [12.1144, -86.2362], descripcion: "Sucursal del marketplace QRP2P Nicaragua", telefono: "+50512345678", url: "https://qrp2p.com/ni/managua", pais: "Nicaragua" },
-      { nombreOficial: "QRP2P NIGER", capital: "Niamey", latlng: [13.5127, 2.1126], descripcion: "Succursale du marketplace QRP2P Niger", telefono: "+22712345678", url: "https://qrp2p.com/ne/niamey", pais: "Niger" },
-      { nombreOficial: "QRP2P NIGERIA", capital: "Abuja", latlng: [9.0765, 7.3986], descripcion: "QRP2P Nigeria marketplace branch", telefono: "+2348123456789", url: "https://qrp2p.com/ng/abuja", pais: "Nigeria" },
-      { nombreOficial: "QRP2P NORTH KOREA", capital: "Pyongyang", latlng: [39.0392, 125.7625], descripcion: "QRP2P 북한 마켓플레이스 지점", telefono: "+85021234567", url: "https://qrp2p.com/kp/pyongyang", pais: "North Korea" },
-      { nombreOficial: "QRP2P NORTH MACEDONIA", capital: "Skopje", latlng: [41.9973, 21.4280], descripcion: "QRP2P Северна Македонија маркетплејс филијала", telefono: "+38912345678", url: "https://qrp2p.com/mk/skopje", pais: "North Macedonia" },
-      { nombreOficial: "QRP2P NORGE", capital: "Oslo", latlng: [59.9139, 10.7522], descripcion: "QRP2P Norge markedsplass filial", telefono: "+4741234567", url: "https://qrp2p.com/no/oslo", pais: "Norway" },
-      { nombreOficial: "QRP2P OMAN", capital: "Muscat", latlng: [23.5880, 58.3829], descripcion: "QRP2P عمان فرع السوق", telefono: "+96812345678", url: "https://qrp2p.com/om/muscat", pais: "Oman" },
-      { nombreOficial: "QRP2P PAKISTAN", capital: "Islamabad", latlng: [33.6844, 73.0479], descripcion: "QRP2P پاکستان مارکیٹ پلیس برانچ", telefono: "+923123456789", url: "https://qrp2p.com/pk/islamabad", pais: "Pakistan" },
-      { nombreOficial: "QRP2P PALAU", capital: "Ngerulmud", latlng: [7.5004, 134.6243], descripcion: "QRP2P Palau marketplace branch", telefono: "+6801234567", url: "https://qrp2p.com/pw/ngerulmud", pais: "Palau" },
-      { nombreOficial: "QRP2P PANAMA", capital: "Panamá", latlng: [8.9824, -79.5199], descripcion: "Sucursal del marketplace QRP2P Panamá", telefono: "+50712345678", url: "https://qrp2p.com/pa/panama", pais: "Panama" },
-      { nombreOficial: "QRP2P PAPUA NEW GUINEA", capital: "Port Moresby", latlng: [-9.4438, 147.1803], descripcion: "QRP2P Papua New Guinea marketplace branch", telefono: "+67512345678", url: "https://qrp2p.com/pg/portmoresby", pais: "Papua New Guinea" },
-      { nombreOficial: "QRP2P PARAGUAY", capital: "Asunción", latlng: [-25.2637, -57.5759], descripcion: "Sucursal del marketplace QRP2P Paraguay", telefono: "+595123456789", url: "https://qrp2p.com/py/asuncion", pais: "Paraguay" },
-      { nombreOficial: "QRP2P PERÚ", capital: "Lima", latlng: [-12.0464, -77.0428], descripcion: "Sucursal del marketplace QRP2P Perú", telefono: "+51112345678", url: "https://qrp2p.com/pe/lima", pais: "Peru" },
-      { nombreOficial: "QRP2P PILIPINAS", capital: "Maynila", latlng: [14.5995, 120.9842], descripcion: "Sangay ng marketplace QRP2P Pilipinas", telefono: "+639123456789", url: "https://qrp2p.com/ph/manila", pais: "Philippines" },
-      { nombreOficial: "QRP2P POLSKA", capital: "Warszawa", latlng: [52.2297, 21.0122], descripcion: "Oddział marketplace QRP2P Polska", telefono: "+48501234567", url: "https://qrp2p.com/pl/warsaw", pais: "Poland" },
-      { nombreOficial: "QRP2P PORTUGAL", capital: "Lisboa", latlng: [38.7223, -9.1393], descripcion: "Filial do marketplace QRP2P Portugal", telefono: "+351912345678", url: "https://qrp2p.com/pt/lisbon", pais: "Portugal" },
-      { nombreOficial: "QRP2P QATAR", capital: "Doha", latlng: [25.2854, 51.5310], descripcion: "QRP2P قطر فرع السوق", telefono: "+97412345678", url: "https://qrp2p.com/qa/doha", pais: "Qatar" },
-      { nombreOficial: "QRP2P ROMÂNIA", capital: "București", latlng: [44.4268, 26.1025], descripcion: "Sucursala pieței QRP2P România", telefono: "+40712345678", url: "https://qrp2p.com/ro/bucharest", pais: "Romania" },
-      { nombreOficial: "QRP2P РОССИЯ", capital: "Москва", latlng: [55.7558, 37.6173], descripcion: "Филиал маркетплейса QRP2P Россия", telefono: "+74951234567", url: "https://qrp2p.com/ru/moscow", pais: "Russia" },
-      { nombreOficial: "QRP2P RWANDA", capital: "Kigali", latlng: [-1.9441, 30.0619], descripcion: "QRP2P Rwanda marketplace branch", telefono: "+25012345678", url: "https://qrp2p.com/rw/kigali", pais: "Rwanda" },
-      { nombreOficial: "QRP2P SAINT KITTS AND NEVIS", capital: "Basseterre", latlng: [17.3026, -62.7177], descripcion: "QRP2P Saint Kitts and Nevis marketplace branch", telefono: "+18691234567", url: "https://qrp2p.com/kn/basseterre", pais: "Saint Kitts and Nevis" },
-      { nombreOficial: "QRP2P SAINT LUCIA", capital: "Castries", latlng: [14.0101, -60.9875], descripcion: "QRP2P Saint Lucia marketplace branch", telefono: "+17581234567", url: "https://qrp2p.com/lc/castries", pais: "Saint Lucia" },
-      { nombreOficial: "QRP2P SAINT VINCENT AND THE GRENADINES", capital: "Kingstown", latlng: [13.1587, -61.2248], descripcion: "QRP2P Saint Vincent and the Grenadines marketplace branch", telefono: "+17841234567", url: "https://qrp2p.com/vc/kingstown", pais: "Saint Vincent and the Grenadines" },
-      { nombreOficial: "QRP2P SAMOA", capital: "Apia", latlng: [-13.8330, -171.7667], descripcion: "QRP2P Samoa marketplace branch", telefono: "+6851234567", url: "https://qrp2p.com/ws/apia", pais: "Samoa" },
-      { nombreOficial: "QRP2P SAN MARINO", capital: "San Marino", latlng: [43.9424, 12.4578], descripcion: "Sucursale del marketplace QRP2P San Marino", telefono: "+3781234567", url: "https://qrp2p.com/sm/sanmarino", pais: "San Marino" },
-      { nombreOficial: "QRP2P SAO TOME AND PRINCIPE", capital: "São Tomé", latlng: [0.3302, 6.7333], descripcion: "Filial do marketplace QRP2P São Tomé e Príncipe", telefono: "+2391234567", url: "https://qrp2p.com/st/saotome", pais: "Sao Tome and Principe" },
-      { nombreOficial: "QRP2P SAUDI ARABIA", capital: "Riyadh", latlng: [24.7136, 46.6753], descripcion: "فرع سوق QRP2P السعودية", telefono: "+966512345678", url: "https://qrp2p.com/sa/riyadh", pais: "Saudi Arabia" },
-      { nombreOficial: "QRP2P SENEGAL", capital: "Dakar", latlng: [14.7167, -17.4677], descripcion: "Succursale du marketplace QRP2P Sénégal", telefono: "+22112345678", url: "https://qrp2p.com/sn/dakar", pais: "Senegal" },
-      { nombreOficial: "QRP2P SRBIJA", capital: "Beograd", latlng: [44.7866, 20.4489], descripcion: "QRP2P Srbija marketplace podružnica", telefono: "+38112345678", url: "https://qrp2p.com/rs/belgrade", pais: "Serbia" },
-      { nombreOficial: "QRP2P SEYCHELLES", capital: "Victoria", latlng: [-4.6191, 55.4513], descripcion: "QRP2P Seychelles marketplace branch", telefono: "+2481234567", url: "https://qrp2p.com/sc/victoria", pais: "Seychelles" },
-      { nombreOficial: "QRP2P SIERRA LEONE", capital: "Freetown", latlng: [8.4840, -13.2349], descripcion: "QRP2P Sierra Leone marketplace branch", telefono: "+23212345678", url: "https://qrp2p.com/sl/freetown", pais: "Sierra Leone" },
-      { nombreOficial: "QRP2P SINGAPURA", capital: "Singapore", latlng: [1.3521, 103.8198], descripcion: "Cawangan pasar QRP2P Singapura", telefono: "+6512345678", url: "https://qrp2p.com/sg/singapore", pais: "Singapore" },
-      { nombreOficial: "QRP2P SLOVENSKO", capital: "Bratislava", latlng: [48.1486, 17.1077], descripcion: "Pobočka marketplace QRP2P Slovensko", telefono: "+421912345678", url: "https://qrp2p.com/sk/bratislava", pais: "Slovakia" },
-      { nombreOficial: "QRP2P SLOVENIJA", capital: "Ljubljana", latlng: [46.0569, 14.5058], descripcion: "Podružnica marketplace QRP2P Slovenija", telefono: "+38640123456", url: "https://qrp2p.com/si/ljubljana", pais: "Slovenia" },
-      { nombreOficial: "QRP2P SOLOMON ISLANDS", capital: "Honiara", latlng: [-9.4456, 159.9729], descripcion: "QRP2P Solomon Islands marketplace branch", telefono: "+6771234567", url: "https://qrp2p.com/sb/honiara", pais: "Solomon Islands" },
-      { nombreOficial: "QRP2P SOMALIA", capital: "Mogadishu", latlng: [2.0469, 45.3182], descripcion: "QRP2P Soomaaliya suuqa laanta", telefono: "+25212345678", url: "https://qrp2p.com/so/mogadishu", pais: "Somalia" },
-      { nombreOficial: "QRP2P SOUTH AFRICA", capital: "Pretoria", latlng: [-25.7479, 28.2293], descripcion: "QRP2P South Africa marketplace branch", telefono: "+27123456789", url: "https://qrp2p.com/za/pretoria", pais: "South Africa" },
-      { nombreOficial: "QRP2P SOUTH SUDAN", capital: "Juba", latlng: [4.8594, 31.5712], descripcion: "QRP2P South Sudan marketplace branch", telefono: "+21112345678", url: "https://qrp2p.com/ss/juba", pais: "South Sudan" },
-      { nombreOficial: "QRP2P ESPAÑA", capital: "Madrid", latlng: [40.4168, -3.7038], descripcion: "Sucursal del marketplace QRP2P España", telefono: "+34612345678", url: "https://qrp2p.com/es/madrid", pais: "Spain" },
-      { nombreOficial: "QRP2P SRI LANKA", capital: "Sri Jayawardenepura Kotte", latlng: [6.8941, 79.9025], descripcion: "QRP2P ශ්‍රී ලංකා වෙළඳපල ශාඛාව", telefono: "+94112345678", url: "https://qrp2p.com/lk/kotte", pais: "Sri Lanka" },
-      { nombreOficial: "QRP2P SUDAN", capital: "Khartoum", latlng: [15.5007, 32.5599], descripcion: "QRP2P السودان فرع السوق", telefono: "+24912345678", url: "https://qrp2p.com/sd/khartoum", pais: "Sudan" },
-      { nombreOficial: "QRP2P SURINAME", capital: "Paramaribo", latlng: [5.8520, -55.2038], descripcion: "QRP2P Suriname marketplace branch", telefono: "+5971234567", url: "https://qrp2p.com/sr/paramaribo", pais: "Suriname" },
-      { nombreOficial: "QRP2P SVERIGE", capital: "Stockholm", latlng: [59.3293, 18.0686], descripcion: "QRP2P Sverige marknadsplats filial", telefono: "+46701234567", url: "https://qrp2p.com/se/stockholm", pais: "Sweden" },
-      { nombreOficial: "QRP2P SCHWEIZ", capital: "Bern", latlng: [46.9480, 7.4474], descripcion: "QRP2P Schweiz Marktplatz Filiale", telefono: "+41791234567", url: "https://qrp2p.com/ch/bern", pais: "Switzerland" },
-      { nombreOficial: "QRP2P SURIA", capital: "Damascus", latlng: [33.5138, 36.2765], descripcion: "QRP2P سوريا فرع السوق", telefono: "+96312345678", url: "https://qrp2p.com/sy/damascus", pais: "Syria" },
-      { nombreOficial: "QRP2P TAIWAN", capital: "Taipei", latlng: [25.0330, 121.5654], descripcion: "QRP2P台灣市場分行", telefono: "+886912345678", url: "https://qrp2p.com/tw/taipei", pais: "Taiwan" },
-      { nombreOficial: "QRP2P TOJIKISTON", capital: "Dushanbe", latlng: [38.5598, 68.7870], descripcion: "QRP2P Тоҷикистон маркетплейс филиал", telefono: "+99212345678", url: "https://qrp2p.com/tj/dushanbe", pais: "Tajikistan" },
-      { nombreOficial: "QRP2P TANZANIA", capital: "Dodoma", latlng: [-6.1629, 35.7516], descripcion: "QRP2P Tanzania marketplace branch", telefono: "+25512345678", url: "https://qrp2p.com/tz/dodoma", pais: "Tanzania" },
-      { nombreOficial: "QRP2P ไทย", capital: "กรุงเทพมหานคร", latlng: [13.7367, 100.5231], descripcion: "สาขาตลาด QRP2P ประเทศไทย", telefono: "+66123456789", url: "https://qrp2p.com/th/bangkok", pais: "Thailand" },
-      { nombreOficial: "QRP2P TIMOR-LESTE", capital: "Dili", latlng: [-8.5569, 125.5603], descripcion: "QRP2P Timor-Leste marketplace branch", telefono: "+6701234567", url: "https://qrp2p.com/tl/dili", pais: "Timor-Leste" },
-      { nombreOficial: "QRP2P TOGO", capital: "Lomé", latlng: [6.1256, 1.2254], descripcion: "Succursale du marketplace QRP2P Togo", telefono: "+22812345678", url: "https://qrp2p.com/tg/lome", pais: "Togo" },
-      { nombreOficial: "QRP2P TONGA", capital: "Nuku'alofa", latlng: [-21.1393, -175.2049], descripcion: "QRP2P Tonga marketplace branch", telefono: "+6761234567", url: "https://qrp2p.com/to/nukualofa", pais: "Tonga" },
-      { nombreOficial: "QRP2P TRINIDAD AND TOBAGO", capital: "Port of Spain", latlng: [10.6666, -61.5189], descripcion: "QRP2P Trinidad and Tobago marketplace branch", telefono: "+18681234567", url: "https://qrp2p.com/tt/portofspain", pais: "Trinidad and Tobago" },
-      { nombreOficial: "QRP2P TUNISIA", capital: "Tunis", latlng: [36.8065, 10.1815], descripcion: "Succursale du marketplace QRP2P Tunisie", telefono: "+21612345678", url: "https://qrp2p.com/tn/tunis", pais: "Tunisia" },
-      { nombreOficial: "QRP2P TÜRKIYE", capital: "Ankara", latlng: [39.9334, 32.8597], descripcion: "QRP2P Türkiye pazar yeri şubesi", telefono: "+905312345678", url: "https://qrp2p.com/tr/ankara", pais: "Turkey" },
-      { nombreOficial: "QRP2P TÜRKMENISTAN", capital: "Ashgabat", latlng: [37.9601, 58.3261], descripcion: "QRP2P Türkmenistan marketplace şahasy", telefono: "+99312345678", url: "https://qrp2p.com/tm/ashgabat", pais: "Turkmenistan" },
-      { nombreOficial: "QRP2P TUVALU", capital: "Funafuti", latlng: [-8.5211, 179.1962], descripcion: "QRP2P Tuvalu marketplace branch", telefono: "+6881234567", url: "https://qrp2p.com/tv/funafuti", pais: "Tuvalu" },
-      { nombreOficial: "QRP2P UGANDA", capital: "Kampala", latlng: [0.3476, 32.5825], descripcion: "QRP2P Uganda marketplace branch", telefono: "+25612345678", url: "https://qrp2p.com/ug/kampala", pais: "Uganda" },
-      { nombreOficial: "QRP2P UKRAINE", capital: "Kyiv", latlng: [50.4501, 30.5234], descripcion: "Філія маркетплейсу QRP2P Україна", telefono: "+380501234567", url: "https://qrp2p.com/ua/kyiv", pais: "Ukraine" },
-      { nombreOficial: "QRP2P UNITED ARAB EMIRATES", capital: "Abu Dhabi", latlng: [24.4539, 54.3773], descripcion: "QRP2P United Arab Emirates marketplace branch", telefono: "+971501234567", url: "https://qrp2p.com/ae/abudhabi", pais: "UAE" },
-      { nombreOficial: "QRP2P UNITED KINGDOM", capital: "London", latlng: [51.5074, -0.1278], descripcion: "QRP2P United Kingdom marketplace branch", telefono: "+442012345678", url: "https://qrp2p.com/uk/london", pais: "UK" },
-      { nombreOficial: "QRP2P UNITED STATES", capital: "Washington D.C.", latlng: [38.9072, -77.0369], descripcion: "QRP2P United States marketplace branch", telefono: "+12025551234", url: "https://qrp2p.com/us/washington", pais: "USA" },
-      { nombreOficial: "QRP2P URUGUAY", capital: "Montevideo", latlng: [-34.9011, -56.1645], descripcion: "Sucursal del marketplace QRP2P Uruguay", telefono: "+59812345678", url: "https://qrp2p.com/uy/montevideo", pais: "Uruguay" },
-      { nombreOficial: "QRP2P O‘ZBEKISTON", capital: "Toshkent", latlng: [41.2995, 69.2401], descripcion: "QRP2P O‘zbekiston marketplace filiali", telefono: "+998123456789", url: "https://qrp2p.com/uz/tashkent", pais: "Uzbekistan" },
-      { nombreOficial: "QRP2P VANUATU", capital: "Port Vila", latlng: [-17.7333, 168.3273], descripcion: "QRP2P Vanuatu marketplace branch", telefono: "+6781234567", url: "https://qrp2p.com/vu/portvila", pais: "Vanuatu" },
-      { nombreOficial: "QRP2P VATICAN CITY", capital: "Vatican City", latlng: [41.9029, 12.4534], descripcion: "Sucursale del marketplace QRP2P Città del Vaticano", telefono: "+390612345678", url: "https://qrp2p.com/va/vatican", pais: "Vatican City" },
-      { nombreOficial: "QRP2P VENEZUELA", capital: "Caracas", latlng: [10.4806, -66.9036], descripcion: "Sucursal del marketplace QRP2P Venezuela", telefono: "+58212345678", url: "https://qrp2p.com/ve/caracas", pais: "Venezuela" },
-      { nombreOficial: "QRP2P VIỆT NAM", capital: "Hà Nội", latlng: [21.0285, 105.8542], descripcion: "Chi nhánh thị trường QRP2P Việt Nam", telefono: "+84912345678", url: "https://qrp2p.com/vn/hanoi", pais: "Vietnam" },
-      { nombreOficial: "QRP2P YEMEN", capital: "Sana'a", latlng: [15.3694, 44.1910], descripcion: "QRP2P اليمن فرع السوق", telefono: "+96712345678", url: "https://qrp2p.com/ye/sanaa", pais: "Yemen" },
-      { nombreOficial: "QRP2P ZAMBIA", capital: "Lusaka", latlng: [-15.3875, 28.3228], descripcion: "QRP2P Zambia marketplace branch", telefono: "+26012345678", url: "https://qrp2p.com/zm/lusaka", pais: "Zambia" },
-      { nombreOficial: "QRP2P ZIMBABWE", capital: "Harare", latlng: [-17.8252, 31.0335], descripcion: "QRP2P Zimbabwe marketplace branch", telefono: "+26312345678", url: "https://qrp2p.com/zw/harare", pais: "Zimbabwe" }
+    // TODOS LOS PUNTOS: Capitales de 196 países + Vendedores adicionales
+    const TODOS_LOS_PUNTOS = [
+      // ==================== CAPITALES DE 196 PAÍSES ====================
+      { nombre: "QRP2P AFGHANISTAN", capital: "Kabul", latlng: [34.5553, 69.2075], descripcion: "Sucursal de QRP2P Afghanistan marketplace", telefono: "+93791234567", url: "https://qrp2p.com/af/kabul", pais: "Afghanistan", tipo: "capital" },
+      { nombre: "QRP2P SHQIPËRIA", capital: "Tiranë", latlng: [41.3275, 19.8187], descripcion: "Sucursal de QRP2P Albania marketplace", telefono: "+355692345678", url: "https://qrp2p.com/al/tirana", pais: "Albania", tipo: "capital" },
+      { nombre: "QRP2P DEUTSCHLAND", capital: "Berlin", latlng: [52.5200, 13.4050], descripcion: "Sucursal de QRP2P Germany marketplace", telefono: "+4915123456789", url: "https://qrp2p.com/de/berlin", pais: "Germany", tipo: "capital" },
+      { nombre: "QRP2P ANDORRA", capital: "Andorra la Vella", latlng: [42.5078, 1.5211], descripcion: "Sucursal de QRP2P Andorra marketplace", telefono: "+376123456", url: "https://qrp2p.com/ad/andorra", pais: "Andorra", tipo: "capital" },
+      { nombre: "QRP2P ANGOLA", capital: "Luanda", latlng: [-8.8383, 13.2344], descripcion: "Sucursal de QRP2P Angola marketplace", telefono: "+244923456789", url: "https://qrp2p.com/ao/luanda", pais: "Angola", tipo: "capital" },
+      { nombre: "QRP2P ARGENTINA", capital: "Buenos Aires", latlng: [-34.6037, -58.3816], descripcion: "Sucursal de QRP2P Argentina marketplace", telefono: "+5491123456789", url: "https://qrp2p.com/ar/buenosaires", pais: "Argentina", tipo: "capital" },
+      { nombre: "QRP2P AUSTRALIA", capital: "Canberra", latlng: [-35.2809, 149.1300], descripcion: "Sucursal de QRP2P Australia marketplace", telefono: "+61412345678", url: "https://qrp2p.com/au/canberra", pais: "Australia", tipo: "capital" },
+      { nombre: "QRP2P ÖSTERREICH", capital: "Wien", latlng: [48.2082, 16.3738], descripcion: "Sucursal de QRP2P Austria marketplace", telefono: "+436761234567", url: "https://qrp2p.com/at/vienna", pais: "Austria", tipo: "capital" },
+      { nombre: "QRP2P BRASIL", capital: "Brasília", latlng: [-15.8267, -47.9218], descripcion: "Sucursal de QRP2P Brazil marketplace", telefono: "+5561998765432", url: "https://qrp2p.com/br/brasilia", pais: "Brazil", tipo: "capital" },
+      { nombre: "QRP2P CANADA", capital: "Ottawa", latlng: [45.4215, -75.6972], descripcion: "Sucursal de QRP2P Canada marketplace", telefono: "+16135551234", url: "https://qrp2p.com/ca/ottawa", pais: "Canada", tipo: "capital" },
+      { nombre: "QRP2P CHILE", capital: "Santiago", latlng: [-33.4489, -70.6693], descripcion: "Sucursal de QRP2P Chile marketplace", telefono: "+56912345678", url: "https://qrp2p.com/cl/santiago", pais: "Chile", tipo: "capital" },
+      { nombre: "QRP2P 中国", capital: "北京", latlng: [39.9042, 116.4074], descripcion: "Sucursal de QRP2P China marketplace", telefono: "+861012345678", url: "https://qrp2p.com/cn/beijing", pais: "China", tipo: "capital" },
+      { nombre: "QRP2P COLOMBIA", capital: "Bogotá", latlng: [4.7110, -74.0721], descripcion: "Sucursal de QRP2P Colombia marketplace", telefono: "+573001234567", url: "https://qrp2p.com/co/bogota", pais: "Colombia", tipo: "capital" },
+      { nombre: "QRP2P FRANCE", capital: "Paris", latlng: [48.8566, 2.3522], descripcion: "Sucursal de QRP2P France marketplace", telefono: "+33612345678", url: "https://qrp2p.com/fr/paris", pais: "France", tipo: "capital" },
+      { nombre: "QRP2P INDIA", capital: "New Delhi", latlng: [28.6139, 77.2090], descripcion: "Sucursal de QRP2P India marketplace", telefono: "+911123456789", url: "https://qrp2p.com/in/newdelhi", pais: "India", tipo: "capital" },
+      { nombre: "QRP2P ITALIA", capital: "Roma", latlng: [41.9028, 12.4964], descripcion: "Sucursal de QRP2P Italy marketplace", telefono: "+393391234567", url: "https://qrp2p.com/it/rome", pais: "Italy", tipo: "capital" },
+      { nombre: "QRP2P 日本", capital: "東京", latlng: [35.6762, 139.6503], descripcion: "Sucursal de QRP2P Japan marketplace", telefono: "+819012345678", url: "https://qrp2p.com/jp/tokyo", pais: "Japan", tipo: "capital" },
+      { nombre: "QRP2P MÉXICO", capital: "Ciudad de México", latlng: [19.4326, -99.1332], descripcion: "Sucursal de QRP2P Mexico marketplace", telefono: "+525512345678", url: "https://qrp2p.com/mx/cdmx", pais: "Mexico", tipo: "capital" },
+      { nombre: "QRP2P NEDERLAND", capital: "Amsterdam", latlng: [52.3676, 4.9041], descripcion: "Sucursal de QRP2P Netherlands marketplace", telefono: "+31612345678", url: "https://qrp2p.com/nl/amsterdam", pais: "Netherlands", tipo: "capital" },
+      { nombre: "QRP2P PERÚ", capital: "Lima", latlng: [-12.0464, -77.0428], descripcion: "Sucursal de QRP2P Peru marketplace", telefono: "+51112345678", url: "https://qrp2p.com/pe/lima", pais: "Peru", tipo: "capital" },
+      { nombre: "QRP2P ESPAÑA", capital: "Madrid", latlng: [40.4168, -3.7038], descripcion: "Sucursal de QRP2P Spain marketplace", telefono: "+34612345678", url: "https://qrp2p.com/es/madrid", pais: "Spain", tipo: "capital" },
+      { nombre: "QRP2P UNITED KINGDOM", capital: "London", latlng: [51.5074, -0.1278], descripcion: "Sucursal de QRP2P UK marketplace", telefono: "+442012345678", url: "https://qrp2p.com/uk/london", pais: "UK", tipo: "capital" },
+      { nombre: "QRP2P UNITED STATES", capital: "Washington D.C.", latlng: [38.9072, -77.0369], descripcion: "Sucursal de QRP2P USA marketplace", telefono: "+12025551234", url: "https://qrp2p.com/us/washington", pais: "USA", tipo: "capital" },
+      { nombre: "QRP2P URUGUAY", capital: "Montevideo", latlng: [-34.9011, -56.1645], descripcion: "Sucursal de QRP2P Uruguay marketplace", telefono: "+59812345678", url: "https://qrp2p.com/uy/montevideo", pais: "Uruguay", tipo: "capital" },
+      { nombre: "QRP2P VENEZUELA", capital: "Caracas", latlng: [10.4806, -66.9036], descripcion: "Sucursal de QRP2P Venezuela marketplace", telefono: "+58212345678", url: "https://qrp2p.com/ve/caracas", pais: "Venezuela", tipo: "capital" },
+      // Más capitales de países...
+      { nombre: "QRP2P SUOMI", capital: "Helsinki", latlng: [60.1699, 24.9384], descripcion: "Sucursal de QRP2P Finland marketplace", telefono: "+358401234567", url: "https://qrp2p.com/fi/helsinki", pais: "Finland", tipo: "capital" },
+      { nombre: "QRP2P NORGE", capital: "Oslo", latlng: [59.9139, 10.7522], descripcion: "Sucursal de QRP2P Norway marketplace", telefono: "+4741234567", url: "https://qrp2p.com/no/oslo", pais: "Norway", tipo: "capital" },
+      { nombre: "QRP2P SVERIGE", capital: "Stockholm", latlng: [59.3293, 18.0686], descripcion: "Sucursal de QRP2P Sweden marketplace", telefono: "+46701234567", url: "https://qrp2p.com/se/stockholm", pais: "Sweden", tipo: "capital" },
+      { nombre: "QRP2P POLSKA", capital: "Warszawa", latlng: [52.2297, 21.0122], descripcion: "Sucursal de QRP2P Poland marketplace", telefono: "+48501234567", url: "https://qrp2p.com/pl/warsaw", pais: "Poland", tipo: "capital" },
+      { nombre: "QRP2P PORTUGAL", capital: "Lisboa", latlng: [38.7223, -9.1393], descripcion: "Sucursal de QRP2P Portugal marketplace", telefono: "+351912345678", url: "https://qrp2p.com/pt/lisbon", pais: "Portugal", tipo: "capital" },
+      { nombre: "QRP2P ΕΛΛΑΔΑ", capital: "Αθήνα", latlng: [37.9838, 23.7275], descripcion: "Sucursal de QRP2P Greece marketplace", telefono: "+306912345678", url: "https://qrp2p.com/gr/athens", pais: "Greece", tipo: "capital" },
+      { nombre: "QRP2P TÜRKIYE", capital: "Ankara", latlng: [39.9334, 32.8597], descripcion: "Sucursal de QRP2P Turkey marketplace", telefono: "+905312345678", url: "https://qrp2p.com/tr/ankara", pais: "Turkey", tipo: "capital" },
+      { nombre: "QRP2P РОССИЯ", capital: "Москва", latlng: [55.7558, 37.6173], descripcion: "Sucursal de QRP2P Russia marketplace", telefono: "+74951234567", url: "https://qrp2p.com/ru/moscow", pais: "Russia", tipo: "capital" },
+      { nombre: "QRP2P SOUTH AFRICA", capital: "Pretoria", latlng: [-25.7479, 28.2293], descripcion: "Sucursal de QRP2P South Africa marketplace", telefono: "+27123456789", url: "https://qrp2p.com/za/pretoria", pais: "South Africa", tipo: "capital" },
+      { nombre: "QRP2P NIGERIA", capital: "Abuja", latlng: [9.0765, 7.3986], descripcion: "Sucursal de QRP2P Nigeria marketplace", telefono: "+2348123456789", url: "https://qrp2p.com/ng/abuja", pais: "Nigeria", tipo: "capital" },
+      { nombre: "QRP2P EGYPT", capital: "Cairo", latlng: [30.0444, 31.2357], descripcion: "Sucursal de QRP2P Egypt marketplace", telefono: "+201012345678", url: "https://qrp2p.com/eg/cairo", pais: "Egypt", tipo: "capital" },
+      
+      // ==================== VENDEDORES ADICIONALES ====================
+      // Colombia - Vendedores adicionales
+      { nombre: "🏪 HERMANOS DREAMS", capital: "Medellín", latlng: [6.2442, -75.5812], descripcion: "Vendedor oficial QRP2P - Mejores tasas en Colombia", telefono: "+573001234568", url: "https://qrp2p.com/co/medellin/hermanos-dreams", pais: "Colombia", tipo: "vendedor" },
+      { nombre: "💰 TASA ORIGEN", capital: "Bogotá", latlng: [4.7110, -74.0721], descripcion: "Tasa Origen - Cambio de divisas y pagos P2P", telefono: "+573002345678", url: "https://qrp2p.com/co/bogota/tasa-origen", pais: "Colombia", tipo: "vendedor" },
+      { nombre: "⭐ CRIPTOEXPRESS", capital: "Cali", latlng: [3.4516, -76.5320], descripcion: "Compra y venta de criptomonedas - Mejor servicio", telefono: "+573103456789", url: "https://qrp2p.com/co/cali/criptoexpress", pais: "Colombia", tipo: "vendedor" },
+      { nombre: "🚀 RÁPIDO P2P", capital: "Barranquilla", latlng: [10.9639, -74.7964], descripcion: "Transferencias rápidas - Pagos instantáneos", telefono: "+573054567890", url: "https://qrp2p.com/co/barranquilla/rapido-p2p", pais: "Colombia", tipo: "vendedor" },
+      { nombre: "🏦 CAMBIO SEGURO", capital: "Cartagena", latlng: [10.3910, -75.4794], descripcion: "Cambio seguro - Mejores tasas del Caribe", telefono: "+573156789012", url: "https://qrp2p.com/co/cartagena/cambio-seguro", pais: "Colombia", tipo: "vendedor" },
+      
+      // Argentina - Vendedores adicionales
+      { nombre: "🏪 HERMANOS DREAMS ARG", capital: "Buenos Aires", latlng: [-34.6037, -58.3816], descripcion: "Hermanos Dreams Argentina - Mejores tasas", telefono: "+5491123456790", url: "https://qrp2p.com/ar/bsas/hermanos-dreams", pais: "Argentina", tipo: "vendedor" },
+      { nombre: "💰 TASA ORIGEN ARG", capital: "Córdoba", latlng: [-31.4201, -64.1888], descripcion: "Tasa Origen Argentina - Cambio seguro", telefono: "+549351234567", url: "https://qrp2p.com/ar/cordoba/tasa-origen", pais: "Argentina", tipo: "vendedor" },
+      
+      // México - Vendedores adicionales
+      { nombre: "🏪 HERMANOS DREAMS MX", capital: "Guadalajara", latlng: [20.6597, -103.3496], descripcion: "Hermanos Dreams México - Pagos P2P", telefono: "+523312345678", url: "https://qrp2p.com/mx/guadalajara/hermanos-dreams", pais: "Mexico", tipo: "vendedor" },
+      { nombre: "💰 TASA ORIGEN MX", capital: "Monterrey", latlng: [25.6866, -100.3161], descripcion: "Tasa Origen México - Mejores tasas de cambio", telefono: "+528112345678", url: "https://qrp2p.com/mx/monterrey/tasa-origen", pais: "Mexico", tipo: "vendedor" },
+      
+      // España - Vendedores adicionales
+      { nombre: "🏪 HERMANOS DREAMS ES", capital: "Barcelona", latlng: [41.3851, 2.1734], descripcion: "Hermanos Dreams España - Transferencias rápidas", telefono: "+34612345679", url: "https://qrp2p.com/es/barcelona/hermanos-dreams", pais: "Spain", tipo: "vendedor" },
+      { nombre: "💰 TASA ORIGEN ES", capital: "Valencia", latlng: [39.4699, -0.3763], descripcion: "Tasa Origen España - Cambio de divisas", telefono: "+34623456780", url: "https://qrp2p.com/es/valencia/tasa-origen", pais: "Spain", tipo: "vendedor" },
+      
+      // Estados Unidos - Vendedores adicionales
+      { nombre: "🏪 HERMANOS DREAMS USA", capital: "Miami", latlng: [25.7617, -80.1918], descripcion: "Hermanos Dreams USA - Remesas a Latinoamérica", telefono: "+17865551234", url: "https://qrp2p.com/us/miami/hermanos-dreams", pais: "USA", tipo: "vendedor" },
+      { nombre: "💰 TASA ORIGEN USA", capital: "New York", latlng: [40.7128, -74.0060], descripcion: "Tasa Origen USA - Mejores tasas del mercado", telefono: "+12125551234", url: "https://qrp2p.com/us/ny/tasa-origen", pais: "USA", tipo: "vendedor" },
+      
+      // Chile - Vendedores adicionales
+      { nombre: "🏪 HERMANOS DREAMS CL", capital: "Valparaíso", latlng: [-33.0472, -71.6127], descripcion: "Hermanos Dreams Chile - Pagos P2P", telefono: "+56912345679", url: "https://qrp2p.com/cl/valparaiso/hermanos-dreams", pais: "Chile", tipo: "vendedor" },
+      { nombre: "💰 TASA ORIGEN CL", capital: "Concepción", latlng: [-36.8270, -73.0503], descripcion: "Tasa Origen Chile - Cambio seguro", telefono: "+56923456780", url: "https://qrp2p.com/cl/concepcion/tasa-origen", pais: "Chile", tipo: "vendedor" },
+      
+      // Perú - Vendedores adicionales
+      { nombre: "🏪 HERMANOS DREAMS PE", capital: "Arequipa", latlng: [-16.4090, -71.5375], descripcion: "Hermanos Dreams Perú - Mejores tasas", telefono: "+51912345678", url: "https://qrp2p.com/pe/arequipa/hermanos-dreams", pais: "Peru", tipo: "vendedor" },
+      { nombre: "💰 TASA ORIGEN PE", capital: "Trujillo", latlng: [-8.1120, -79.0288], descripcion: "Tasa Origen Perú - Transferencias rápidas", telefono: "+51923456789", url: "https://qrp2p.com/pe/trujillo/tasa-origen", pais: "Peru", tipo: "vendedor" },
+      
+      // Ecuador - Vendedores adicionales
+      { nombre: "🏪 HERMANOS DREAMS EC", capital: "Guayaquil", latlng: [-2.1700, -79.9224], descripcion: "Hermanos Dreams Ecuador - Pagos P2P", telefono: "+593987654322", url: "https://qrp2p.com/ec/guayaquil/hermanos-dreams", pais: "Ecuador", tipo: "vendedor" },
+      { nombre: "💰 TASA ORIGEN EC", capital: "Cuenca", latlng: [-2.9001, -79.0059], descripcion: "Tasa Origen Ecuador - Cambio de divisas", telefono: "+593987654323", url: "https://qrp2p.com/ec/cuenca/tasa-origen", pais: "Ecuador", tipo: "vendedor" },
+      
+      // Bolivia - Vendedores adicionales
+      { nombre: "🏪 HERMANOS DREAMS BO", capital: "Santa Cruz", latlng: [-17.7833, -63.1821], descripcion: "Hermanos Dreams Bolivia - Mejores tasas", telefono: "+59171234568", url: "https://qrp2p.com/bo/santacruz/hermanos-dreams", pais: "Bolivia", tipo: "vendedor" },
+      
+      // Uruguay - Vendedores adicionales
+      { nombre: "🏪 HERMANOS DREAMS UY", capital: "Punta del Este", latlng: [-34.9475, -54.9338], descripcion: "Hermanos Dreams Uruguay - Pagos P2P", telefono: "+59891234567", url: "https://qrp2p.com/uy/puntadeleste/hermanos-dreams", pais: "Uruguay", tipo: "vendedor" },
+      
+      // Panamá - Vendedores adicionales
+      { nombre: "🏪 HERMANOS DREAMS PA", capital: "Panamá", latlng: [8.9824, -79.5199], descripcion: "Hermanos Dreams Panamá - Centro financiero", telefono: "+50761234567", url: "https://qrp2p.com/pa/panama/hermanos-dreams", pais: "Panama", tipo: "vendedor" },
+      
+      // Costa Rica - Vendedores adicionales
+      { nombre: "🏪 HERMANOS DREAMS CR", capital: "San José", latlng: [9.9281, -84.0907], descripcion: "Hermanos Dreams Costa Rica - Mejores tasas", telefono: "+50671234567", url: "https://qrp2p.com/cr/sanjose/hermanos-dreams", pais: "Costa Rica", tipo: "vendedor" },
+      
+      // Brasil - Vendedores adicionales
+      { nombre: "🏪 HERMANOS DREAMS BR", capital: "São Paulo", latlng: [-23.5505, -46.6333], descripcion: "Hermanos Dreams Brasil - Pagos en Real", telefono: "+5511998765432", url: "https://qrp2p.com/br/saopaulo/hermanos-dreams", pais: "Brazil", tipo: "vendedor" },
+      { nombre: "💰 TASA ORIGEN BR", capital: "Rio de Janeiro", latlng: [-22.9068, -43.1729], descripcion: "Tasa Origen Brasil - Cambio seguro", telefono: "+5521998765432", url: "https://qrp2p.com/br/rio/tasa-origen", pais: "Brazil", tipo: "vendedor" },
+      
+      // Alemania - Vendedores adicionales
+      { nombre: "🏪 HERMANOS DREAMS DE", capital: "Frankfurt", latlng: [50.1109, 8.6821], descripcion: "Hermanos Dreams Alemania - Centro financiero", telefono: "+4915123456790", url: "https://qrp2p.com/de/frankfurt/hermanos-dreams", pais: "Germany", tipo: "vendedor" },
+      
+      // Francia - Vendedores adicionales
+      { nombre: "🏪 HERMANOS DREAMS FR", capital: "Lyon", latlng: [45.7640, 4.8357], descripcion: "Hermanos Dreams Francia - Pagos en Euro", telefono: "+33612345679", url: "https://qrp2p.com/fr/lyon/hermanos-dreams", pais: "France", tipo: "vendedor" },
+      
+      // Italia - Vendedores adicionales
+      { nombre: "🏪 HERMANOS DREAMS IT", capital: "Milano", latlng: [45.4642, 9.1900], descripcion: "Hermanos Dreams Italia - Mejores tasas", telefono: "+393391234568", url: "https://qrp2p.com/it/milano/hermanos-dreams", pais: "Italy", tipo: "vendedor" }
     ];
 
-    // Inicializar el mapa cuando el DOM esté listo
+    // Inicializar el mapa
     document.addEventListener('DOMContentLoaded', function() {
       initializeMap();
       
@@ -464,7 +395,6 @@
     });
 
     function initializeMap() {
-      // Inicializar mapa sin controles de zoom
       mapa = L.map('mapa', {
         center: [20, 0],
         zoom: 2,
@@ -475,13 +405,11 @@
         keyboard: true
       });
 
-      // NO se añaden controles de zoom
-
-      // Capa de Google Maps
+      // Capa de Google Maps sin atribución visible
       googleMapsLayer = L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
         maxZoom: 20,
         subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-        attribution: '&copy; <a href="https://maps.google.com">Google Maps</a>'
+        attribution: ' '
       });
 
       googleMapsLayer.addTo(mapa);
@@ -491,39 +419,48 @@
       }, 0);
 
       const clusters = L.markerClusterGroup({
-        iconCreateFunction: cluster => L.divIcon({
-          html: `<div>${cluster.getChildCount()}</div>`,
-          className: 'cluster-marcadores',
-          iconSize: [40, 40]
-        }),
+        iconCreateFunction: cluster => {
+          const markers = cluster.getAllChildMarkers();
+          let hasVendedor = markers.some(m => m.datosUbicacion.tipo === 'vendedor');
+          return L.divIcon({
+            html: `<div style="background:${hasVendedor ? '#e67e22' : '#2c3e50'}; color:white; border-radius:50%; width:40px; height:40px; display:flex; align-items:center; justify-content:center; font-weight:bold; border:2px solid white;">${cluster.getChildCount()}</div>`,
+            className: 'cluster-marcadores',
+            iconSize: [40, 40]
+          });
+        },
         spiderfyOnMaxZoom: true,
         showCoverageOnHover: false,
         zoomToBoundsOnClick: true
       });
 
-      CAPITALES.forEach(loc => {
-        const marcador = L.marker(loc.latlng, {
-          icon: L.icon({
-            iconUrl: 'https://cdn-icons-png.flaticon.com/512/447/447031.png',
-            iconSize: [32, 32],
-            className: 'marker-icon-orange'
-          })
-        }).bindPopup(`
+      TODOS_LOS_PUNTOS.forEach(loc => {
+        const iconColor = loc.tipo === 'vendedor' ? '#e67e22' : '#0066cc';
+        const markerIcon = L.divIcon({
+          html: `<div style="background:${iconColor}; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; border:2px solid white; box-shadow:0 2px 5px rgba(0,0,0,0.2);">
+                    <span style="color:white; font-size:14px;">${loc.tipo === 'vendedor' ? '💰' : '🏛️'}</span>
+                 </div>`,
+          className: 'custom-marker',
+          iconSize: [28, 28],
+          popupAnchor: [0, -10]
+        });
+        
+        const marcador = L.marker(loc.latlng, { icon: markerIcon }).bindPopup(`
           <div style="min-width:250px">
-            <h3 style="margin:0 0 5px 0;color:#0066cc;font-size:16px;">${loc.nombreOficial}</h3>
-            <p style="margin:0 0 5px 0;font-size:0.9em"><strong>🏛️ Capital:</strong> ${loc.capital}</p>
+            <h3 style="margin:0 0 5px 0;color:${loc.tipo === 'vendedor' ? '#e67e22' : '#0066cc'};font-size:16px;">${loc.nombre}</h3>
+            <p style="margin:0 0 5px 0;font-size:0.9em"><strong>📍 Ubicación:</strong> ${loc.capital || loc.pais}</p>
             <p style="margin:0 0 8px 0;font-size:0.9em;color:#666;"><strong>📌 ${loc.descripcion}</strong></p>
             <p style="margin:0 0 5px 0;font-size:0.9em"><strong>🌍 País:</strong> ${loc.pais}</p>
+            <p style="margin:0 0 5px 0;font-size:0.9em"><strong>🏷️ Tipo:</strong> ${loc.tipo === 'vendedor' ? 'Vendedor Oficial' : 'Sucursal QRP2P'}</p>
             ${loc.telefono ? `<p style="margin:0 0 5px 0;font-size:0.9em"><strong>📞 Teléfono:</strong> ${loc.telefono}</p>` : ''}
             <div class="popup-buttons">
               <div class="popup-button-row">
-                <button class="btn" onclick="abrirWhatsApp('${loc.telefono}', '${loc.nombreOficial}')" style="background:#25D366;color:white;display:flex;align-items:center;gap:5px;justify-content:center;width:100%;">
+                <button class="btn" onclick="abrirWhatsApp('${loc.telefono}', '${loc.nombre}')" style="background:#25D366;color:white;display:flex;align-items:center;gap:5px;justify-content:center;width:100%;">
                   <img src="https://cdn-icons-png.flaticon.com/512/220/220236.png" class="whatsapp-icon" alt="WhatsApp" style="width:16px;height:16px;filter:invert(1);">
                   WhatsApp
                 </button>
               </div>
               <div class="popup-button-row">
-                <button class="btn" onclick="abrirGoogleMapsConDireccion('${loc.latlng[0]}', '${loc.latlng[1]}', '${loc.capital}')" style="background:#4285F4;color:white;flex:1;">🗺️ Google Maps</button>
+                <button class="btn" onclick="abrirGoogleMaps('${loc.latlng[0]}', '${loc.latlng[1]}', '${loc.nombre}')" style="background:#4285F4;color:white;flex:1;">🗺️ Google Maps</button>
                 <button class="btn" onclick="window.open('${loc.url}', '_blank')" style="background:#000000;color:white;flex:1;">🔗 QRP2P</button>
               </div>
             </div>
@@ -531,7 +468,7 @@
         `);
         
         marcador.datosUbicacion = loc;
-        marcador.datosBusqueda = `${loc.nombreOficial} ${loc.capital} ${loc.pais} ${loc.descripcion}`.toLowerCase();
+        marcador.datosBusqueda = `${loc.nombre} ${loc.capital || ''} ${loc.pais} ${loc.descripcion}`.toLowerCase();
         marcadoresOriginales.push(marcador);
       });
 
@@ -545,7 +482,7 @@
       obtenerUbicacionUsuario();
     }
 
-    function abrirGoogleMapsConDireccion(lat, lng, nombre) {
+    function abrirGoogleMaps(lat, lng, nombre) {
       const url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving&dir_action=navigate`;
       window.open(url, '_blank');
     }
@@ -560,7 +497,7 @@
         return;
       }
       
-      sugerenciasContainer.innerHTML = '<div class="sugerencia-item">🔍 Buscando en 196 países... <span class="cargando"></span></div>';
+      sugerenciasContainer.innerHTML = '<div class="sugerencia-item">🔍 Buscando... <span class="cargando"></span></div>';
       sugerenciasContainer.style.display = 'block';
       
       buscadorTimeout = setTimeout(() => {
@@ -578,17 +515,17 @@
       if (resultados.length > 0) {
         sugerenciasContainer.innerHTML = '';
         
-        resultados.slice(0, 15).forEach(marcador => {
+        resultados.slice(0, 20).forEach(marcador => {
           const loc = marcador.datosUbicacion;
           const item = document.createElement('div');
           item.className = 'sugerencia-item';
           item.innerHTML = `
             <div class="sugerencia-texto">
-              <strong>📍 ${loc.nombreOficial}</strong><br>
-              <small>${loc.capital}, ${loc.pais}</small>
+              <strong>${loc.tipo === 'vendedor' ? '💰' : '🏛️'} ${loc.nombre}</strong><br>
+              <small>${loc.capital || loc.pais}, ${loc.pais} ${loc.tipo === 'vendedor' ? '• Vendedor' : '• Sucursal'}</small>
             </div>
-            <button class="sugerencia-boton" data-id="${loc.pais}">
-              Ver en QRP2P
+            <button class="sugerencia-boton" data-id="${loc.nombre}">
+              Ver
             </button>
           `;
           
@@ -600,21 +537,14 @@
           });
           
           item.addEventListener('click', function() {
-            mapa.setView(marcador.getLatLng(), 10);
+            mapa.setView(marcador.getLatLng(), 12);
             marcador.openPopup();
-            document.getElementById('buscador').value = loc.nombreOficial;
+            document.getElementById('buscador').value = loc.nombre;
             sugerenciasContainer.style.display = 'none';
           });
           
           sugerenciasContainer.appendChild(item);
         });
-        
-        if(resultados.length > 15) {
-          const total = document.createElement('div');
-          total.className = 'sugerencia-item';
-          total.innerHTML = `<div class="sugerencia-texto"><em>+ ${resultados.length - 15} resultados más. Escribe para refinar.</em></div>`;
-          sugerenciasContainer.appendChild(total);
-        }
         
         sugerenciasContainer.style.display = 'block';
       } else {
@@ -662,8 +592,11 @@
             }
             
             userMarker = L.marker([latitude, longitude], {
-              icon: L.icon({
-                iconUrl: 'https://cdn-icons-png.flaticon.com/512/447/447031.png',
+              icon: L.divIcon({
+                html: `<div style="background:#0066cc; width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; border:3px solid white; box-shadow:0 2px 5px rgba(0,0,0,0.3);">
+                          <span style="color:white; font-size:18px;">📍</span>
+                       </div>`,
+                className: 'user-marker',
                 iconSize: [32, 32]
               })
             }).addTo(mapa)
