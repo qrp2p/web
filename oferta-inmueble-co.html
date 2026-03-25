@@ -114,12 +114,6 @@
             gap: 1rem;
         }
 
-        .row-3 {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 1rem;
-        }
-
         .radio-group {
             display: flex;
             gap: 1.5rem;
@@ -168,21 +162,6 @@
             color: #333;
         }
 
-        .total-box {
-            background: #f0f0f0;
-            border: 1px solid #cccccc;
-            border-radius: 12px;
-            padding: 1rem;
-            margin: 1rem 0;
-            text-align: center;
-        }
-
-        .total-box span {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #000000;
-        }
-
         button {
             background: #000000;
             color: #ffffff;
@@ -222,21 +201,6 @@
             text-align: center;
         }
 
-        hr {
-            margin: 1rem 0;
-            border: none;
-            border-top: 1px solid #eeeeee;
-        }
-
-        .badge {
-            background: #f0f0f0;
-            padding: 0.2rem 0.6rem;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: normal;
-            margin-left: 0.5rem;
-        }
-
         .eliminar-co {
             position: absolute;
             top: 10px;
@@ -265,7 +229,7 @@
         }
 
         @media (max-width: 768px) {
-            .row-2, .row-3 {
+            .row-2 {
                 grid-template-columns: 1fr;
                 gap: 0.8rem;
             }
@@ -299,7 +263,7 @@
         <form id="compraForm">
             <!-- SECCIÓN 1: INFORMACIÓN DE LA OFERTA -->
             <div class="section">
-                <div class="section-title">📋 Información de la oferta</div>
+                <div class="section-title">📋 Información de mi oferta</div>
                 
                 <div class="form-group">
                     <label>¿Es un negocio convencionado?</label>
@@ -312,7 +276,7 @@
                 <div class="section-subtitle">💰 Arras y financiación</div>
                 
                 <div class="form-group">
-                    <label>¿Se hará pago de arras?</label>
+                    <label>¿Voy a hacer pago de arras?</label>
                     <div class="radio-group">
                         <label><input type="radio" name="pagoArras" value="Sí" id="arrasSi"> Sí</label>
                         <label><input type="radio" name="pagoArras" value="No" id="arrasNo" checked> No</label>
@@ -321,7 +285,7 @@
 
                 <div id="arrasSection" style="display: none;">
                     <div class="form-group">
-                        <label>Forma de financiación de las Arras</label>
+                        <label>¿Con qué recursos voy a pagar las arras?</label>
                         <div class="checkbox-group">
                             <label><input type="checkbox" name="arrasFinancia" value="Recursos propios"> Recursos propios</label>
                             <label><input type="checkbox" name="arrasFinancia" value="Cesantías"> Cesantías</label>
@@ -330,7 +294,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Forma de financiación del saldo</label>
+                    <label>¿Cómo voy a financiar el saldo?</label>
                     <div class="checkbox-group">
                         <label><input type="checkbox" name="saldoFinancia" value="Recursos propios"> Recursos propios</label>
                         <label><input type="checkbox" name="saldoFinancia" value="Crédito"> Crédito hipotecario</label>
@@ -338,24 +302,9 @@
                     </div>
                 </div>
 
-                <div class="info-box">
-                    ℹ️ <strong>Tarifa DdC (Derechos de Compra):</strong> No aplica para este proceso.
-                </div>
-
-                <div class="row-2">
-                    <div class="form-group">
-                        <label>Valor ofertado (COP$) *</label>
-                        <input type="number" id="valorOfertado" value="213000000" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Comisión (%)</label>
-                        <input type="number" id="comisionPorcentaje" value="3" step="0.1">
-                        <small style="margin-top: 0.2rem;">Porcentaje de comisión acordado</small>
-                    </div>
-                </div>
-
-                <div class="total-box">
-                    Comisión estimada: <span id="comisionValor">$ 6.390.000</span>
+                <div class="form-group">
+                    <label>Valor ofertado por el inmueble (COP$) *</label>
+                    <input type="number" id="valorOfertado" value="213000000" required>
                 </div>
             </div>
 
@@ -434,7 +383,7 @@
             <div class="section">
                 <div class="section-title">📄 Información adicional</div>
                 <div class="form-group">
-                    <label>Comentarios sobre la compra (opcional)</label>
+                    <label>Comentarios sobre mi compra (opcional)</label>
                     <textarea rows="3" id="comentariosCompra" placeholder="Ej: el inmueble está ubicado en Bogotá, necesito crédito por el 80%, tengo la cuota inicial ahorrada..."></textarea>
                 </div>
 
@@ -466,22 +415,6 @@
         arrasSi.addEventListener('change', toggleArras);
         arrasNo.addEventListener('change', toggleArras);
         toggleArras();
-
-        // Calcular comisión automáticamente
-        const valorOfertadoInput = document.getElementById('valorOfertado');
-        const comisionPorcentajeInput = document.getElementById('comisionPorcentaje');
-        const comisionValorSpan = document.getElementById('comisionValor');
-
-        function calcularComision() {
-            let valor = parseFloat(valorOfertadoInput.value) || 0;
-            let porcentaje = parseFloat(comisionPorcentajeInput.value) || 0;
-            let comision = (valor * porcentaje) / 100;
-            comisionValorSpan.innerText = '$ ' + comision.toLocaleString('es-CO');
-        }
-
-        valorOfertadoInput.addEventListener('input', calcularComision);
-        comisionPorcentajeInput.addEventListener('input', calcularComision);
-        calcularComision();
 
         // Agregar co-comprador
         const compradoresContainer = document.getElementById('compradoresContainer');
@@ -562,8 +495,6 @@
             document.querySelectorAll('input[name="saldoFinancia"]:checked').forEach(cb => saldoFinanciacion.push(cb.value));
             
             const valorOfertado = document.getElementById('valorOfertado').value;
-            const comisionPorcentaje = document.getElementById('comisionPorcentaje').value;
-            const comisionValor = (parseFloat(valorOfertado) * parseFloat(comisionPorcentaje) / 100).toLocaleString('es-CO');
             const comentarios = document.getElementById('comentariosCompra').value;
 
             // Datos comprador principal
@@ -582,7 +513,6 @@
             }
             mensaje += `Financiación saldo: ${saldoFinanciacion.join(', ') || 'No especificada'}%0A`;
             mensaje += `Valor ofertado: COP$ ${parseFloat(valorOfertado).toLocaleString('es-CO')}%0A`;
-            mensaje += `Comisión: ${comisionPorcentaje}% (COP$ ${comisionValor})%0A`;
             
             mensaje += "%0A*COMPRADOR PRINCIPAL (YO)*%0A";
             mensaje += `Nombre: ${principalNombre1} ${principalNombre2} ${principalApellido1} ${principalApellido2}%0A`;
