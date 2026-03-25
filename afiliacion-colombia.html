@@ -26,12 +26,12 @@
         .hero {
             background: #000000;
             color: #ffffff;
-            padding: 2.5rem 1.5rem;
+            padding: 2rem 1.5rem;
             text-align: center;
         }
 
         .hero h1 {
-            font-size: 2rem;
+            font-size: 1.8rem;
             margin-bottom: 0.5rem;
             font-weight: 700;
         }
@@ -45,166 +45,24 @@
 
         /* Container */
         .container {
-            max-width: 1300px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 2rem 1.5rem;
         }
 
-        /* Planes */
-        .planes-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: 2.5rem;
-        }
-
-        .plan-card {
-            border: 2px solid #e0e0e0;
-            border-radius: 24px;
-            padding: 1.8rem;
-            transition: all 0.3s ease;
-            background: #ffffff;
-        }
-
-        .plan-card:hover {
-            border-color: #000000;
-            transform: translateY(-4px);
-        }
-
-        .plan-card.popular {
-            border-color: #000000;
-            background: #fafafa;
-        }
-
-        .plan-tag {
-            display: inline-block;
-            background: #000000;
-            color: #ffffff;
-            padding: 0.2rem 1rem;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .plan-nombre {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .plan-precio {
-            font-size: 2rem;
-            font-weight: 800;
-            margin: 1rem 0;
-        }
-
-        .plan-precio span {
-            font-size: 0.9rem;
-            font-weight: normal;
-            color: #666;
-        }
-
-        .plan-descripcion {
-            color: #555;
-            margin-bottom: 1.5rem;
-            font-size: 0.9rem;
-        }
-
-        .plan-caracteristicas {
-            list-style: none;
-            margin: 1.5rem 0;
-        }
-
-        .plan-caracteristicas li {
-            padding: 0.5rem 0;
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            border-bottom: 1px solid #f0f0f0;
-            font-size: 0.85rem;
-        }
-
-        .plan-caracteristicas li::before {
-            content: "✓";
-            color: #000000;
-            font-weight: bold;
-        }
-
-        .btn-plan {
-            width: 100%;
-            background: #000000;
-            color: #ffffff;
-            border: none;
-            padding: 0.9rem;
-            font-size: 1rem;
-            font-weight: 600;
-            border-radius: 40px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            margin-top: 0.5rem;
-        }
-
-        .btn-plan:hover {
-            background: #333333;
-        }
-
-        .btn-plan-outline {
-            background: #ffffff;
-            color: #000000;
+        /* Formulario - PRIMERO */
+        .form-section {
             border: 2px solid #000000;
-        }
-
-        .btn-plan-outline:hover {
-            background: #f5f5f5;
-        }
-
-        /* Sección Funcionalidades */
-        .funcionalidades {
-            background: #f8f8f8;
             border-radius: 24px;
             padding: 2rem;
-            margin: 2rem 0;
-        }
-
-        .funcionalidades h2 {
-            text-align: center;
-            margin-bottom: 2rem;
-            font-size: 1.6rem;
-        }
-
-        .grid-funcionalidades {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .func-item {
-            text-align: center;
-            padding: 1rem;
-        }
-
-        .func-item h4 {
-            margin-bottom: 0.5rem;
-            font-size: 1rem;
-        }
-
-        .func-item p {
-            font-size: 0.8rem;
-            color: #666;
-        }
-
-        /* Formulario */
-        .form-section {
-            border: 1px solid #e0e0e0;
-            border-radius: 24px;
-            padding: 1.8rem;
-            margin-top: 2rem;
+            margin-bottom: 2.5rem;
+            background: #ffffff;
         }
 
         .form-section h2 {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             margin-bottom: 0.5rem;
+            color: #000000;
         }
 
         .form-section p {
@@ -232,51 +90,19 @@
             font-size: 0.95rem;
             font-family: inherit;
             background: #ffffff;
+            transition: all 0.2s ease;
         }
 
-        input:focus, select:focus {
+        input:focus, select:focus, textarea:focus {
             outline: none;
             border-color: #000000;
+            box-shadow: 0 0 0 2px rgba(0,0,0,0.05);
         }
 
         .row-2 {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1rem;
-        }
-
-        .plan-seleccionado {
-            background: #f0f0f0;
-            border-radius: 12px;
-            padding: 1rem;
-            margin: 1rem 0;
-            text-align: center;
-            font-weight: 600;
-        }
-
-        button[type="submit"] {
-            background: #000000;
-            color: #ffffff;
-            border: none;
-            padding: 1rem;
-            width: 100%;
-            font-size: 1.1rem;
-            font-weight: 700;
-            border-radius: 40px;
-            cursor: pointer;
-            margin-top: 1rem;
-        }
-
-        button[type="submit"]:hover {
-            background: #333333;
-        }
-
-        small {
-            display: block;
-            margin-top: 1rem;
-            font-size: 0.7rem;
-            color: #777;
-            text-align: center;
         }
 
         .radio-plan {
@@ -287,6 +113,7 @@
             padding: 1rem;
             background: #f8f8f8;
             border-radius: 12px;
+            flex-wrap: wrap;
         }
 
         .radio-plan label {
@@ -302,24 +129,241 @@
             width: auto;
         }
 
+        .plan-seleccionado {
+            background: #f0f0f0;
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: center;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        button[type="submit"] {
+            background: #000000;
+            color: #ffffff;
+            border: none;
+            padding: 1rem;
+            width: 100%;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 40px;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        button[type="submit"]:hover {
+            background: #333333;
+            transform: translateY(-1px);
+        }
+
+        small {
+            display: block;
+            margin-top: 1rem;
+            font-size: 0.7rem;
+            color: #777;
+            text-align: center;
+        }
+
+        /* Sección de información - DESPUÉS */
+        .info-section {
+            margin-top: 2rem;
+        }
+
+        .planes-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .plan-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 20px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            background: #ffffff;
+        }
+
+        .plan-card:hover {
+            border-color: #000000;
+            transform: translateY(-2px);
+        }
+
+        .plan-card.popular {
+            border: 2px solid #000000;
+            background: #fafafa;
+        }
+
+        .plan-tag {
+            display: inline-block;
+            background: #000000;
+            color: #ffffff;
+            padding: 0.2rem 1rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .plan-nombre {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-precio {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin: 1rem 0;
+        }
+
+        .plan-precio span {
+            font-size: 0.8rem;
+            font-weight: normal;
+            color: #666;
+        }
+
+        .plan-descripcion {
+            color: #555;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+        }
+
+        .plan-caracteristicas {
+            list-style: none;
+            margin: 1rem 0;
+        }
+
+        .plan-caracteristicas li {
+            padding: 0.4rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 0.8rem;
+        }
+
+        .plan-caracteristicas li::before {
+            content: "✓";
+            color: #000000;
+            font-weight: bold;
+        }
+
+        .btn-plan-select {
+            width: 100%;
+            background: #000000;
+            color: #ffffff;
+            border: none;
+            padding: 0.7rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 40px;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn-plan-select:hover {
+            background: #333333;
+        }
+
+        .funcionalidades {
+            background: #f8f8f8;
+            border-radius: 20px;
+            padding: 1.8rem;
+            margin: 2rem 0;
+        }
+
+        .funcionalidades h3 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .grid-funcionalidades {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.2rem;
+        }
+
+        .func-item {
+            text-align: center;
+            padding: 0.8rem;
+        }
+
+        .func-item h4 {
+            margin-bottom: 0.3rem;
+            font-size: 0.9rem;
+        }
+
+        .func-item p {
+            font-size: 0.75rem;
+            color: #666;
+        }
+
+        .proceso {
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .proceso h3 {
+            margin-bottom: 1rem;
+        }
+
+        .pasos {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .paso {
+            text-align: center;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .paso .numero {
+            background: #000000;
+            color: #ffffff;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
         @media (max-width: 768px) {
-            .planes-container {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
             .row-2 {
                 grid-template-columns: 1fr;
                 gap: 0.8rem;
             }
+            .planes-container {
+                grid-template-columns: 1fr;
+                gap: 1.2rem;
+            }
             .hero h1 {
-                font-size: 1.5rem;
+                font-size: 1.4rem;
+            }
+            .form-section {
+                padding: 1.2rem;
             }
         }
 
         footer {
             background: #f8f8f8;
             text-align: center;
-            padding: 2rem;
+            padding: 1.5rem;
             border-top: 1px solid #e0e0e0;
             margin-top: 2rem;
             font-size: 0.8rem;
@@ -331,106 +375,14 @@
 
     <header class="hero">
         <h1>QRP2P · Vende sin límites</h1>
-        <p>Únete a nuestra red de vendedores, crea tu tienda online y vende con 0% de comisión. Dashboard completo, envíos nacionales e internacionales.</p>
+        <p>Crea tu tienda online, vende con 0% comisión y accede a todas las herramientas que necesitas para crecer.</p>
     </header>
 
     <div class="container">
-        <!-- PLANES -->
-        <div class="planes-container">
-            <!-- Plan Básico -->
-            <div class="plan-card">
-                <div class="plan-tag">0% COMISIÓN</div>
-                <div class="plan-nombre">Plan Básico</div>
-                <div class="plan-precio">$200.000 <span>/ año</span></div>
-                <div class="plan-descripcion">Ideal para empezar tu tienda online sin pagar comisiones por venta.</div>
-                <ul class="plan-caracteristicas">
-                    <li>Dashboard completo de gestión</li>
-                    <li>Domicilios económicos en Colombia</li>
-                    <li>Envíos internacionales</li>
-                    <li>Tienda pública con URL única y QR estático</li>
-                    <li>Control de inventario en tiempo real</li>
-                    <li>Gestión completa de pedidos</li>
-                    <li>Subida de archivos descargables</li>
-                    <li>Hasta 6 imágenes por producto</li>
-                    <li>Configuración de envíos (peso, dimensiones)</li>
-                    <li>Categorización de productos</li>
-                    <li>Dashboard 100% responsivo</li>
-                    <li>Generación de guías de transporte</li>
-                    <li>Cambio de estado de pedidos</li>
-                    <li>1 usuario (vendedor principal)</li>
-                </ul>
-                <button class="btn-plan btn-plan-outline" onclick="seleccionarPlan('basico')">Seleccionar Plan Básico</button>
-            </div>
-
-            <!-- Plan Pro -->
-            <div class="plan-card popular">
-                <div class="plan-tag">MÁS FUNCIONALIDADES</div>
-                <div class="plan-nombre">Plan Pro</div>
-                <div class="plan-precio">$700.000 <span>/ año</span></div>
-                <div class="plan-descripcion">Todo lo del Plan Básico + herramientas empresariales avanzadas.</div>
-                <ul class="plan-caracteristicas">
-                    <li>✅ Todo lo incluido en el Plan Básico</li>
-                    <li>Servidor independiente</li>
-                    <li>Subdominio .qrp2p.com</li>
-                    <li>Integración con ERPs contables</li>
-                    <li>Integración con WMS de logística</li>
-                    <li>Pasarelas de pago: PayU, Wompi, Bold y más</li>
-                    <li>Múltiples usuarios (accesos ilimitados)</li>
-                    <li>Punto de venta (POS) integrado</li>
-                    <li>API para conectividad empresarial</li>
-                    <li>Soporte prioritario 24/7</li>
-                </ul>
-                <button class="btn-plan" onclick="seleccionarPlan('pro')">Seleccionar Plan Pro</button>
-            </div>
-        </div>
-
-        <!-- FUNCIONALIDADES DESTACADAS -->
-        <div class="funcionalidades">
-            <h2>🚀 Funcionalidades que te ayudarán a crecer</h2>
-            <div class="grid-funcionalidades">
-                <div class="func-item">
-                    <h4>📊 Dashboard Completo</h4>
-                    <p>Pedidos, productos, guías de transporte y más en un solo lugar</p>
-                </div>
-                <div class="func-item">
-                    <h4>🏪 Tienda Personalizada</h4>
-                    <p>URL única y QR estático para compartir tu tienda</p>
-                </div>
-                <div class="func-item">
-                    <h4>📦 Control de Inventario</h4>
-                    <p>Stock en tiempo real que se actualiza automáticamente</p>
-                </div>
-                <div class="func-item">
-                    <h4>🚚 Envíos Nacionales e Internacionales</h4>
-                    <p>Generación de guías para productos físicos</p>
-                </div>
-                <div class="func-item">
-                    <h4>📱 100% Responsivo</h4>
-                    <p>Gestiona tu tienda desde cualquier dispositivo</p>
-                </div>
-                <div class="func-item">
-                    <h4>💰 0% Comisión por Venta</h4>
-                    <p>Todo lo que vendes es para ti</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- PROCESO DE AFILIACIÓN -->
-        <div class="funcionalidades" style="background: #ffffff; border: 1px solid #e0e0e0;">
-            <h2>📋 Proceso de Afiliación</h2>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; text-align: center;">
-                <div><strong>1.</strong> Paga tu afiliación anual</div>
-                <div><strong>2.</strong> Acceso inmediato al dashboard</div>
-                <div><strong>3.</strong> Configura tu tienda y carga productos</div>
-                <div><strong>4.</strong> Comienza a vender con envíos nacionales e internacionales</div>
-            </div>
-            <p style="text-align: center; margin-top: 1.5rem; font-size: 0.85rem;">El pago es anual y requiere renovación para continuar con el servicio. Comisión por venta: 0% para todo tipo de producto.</p>
-        </div>
-
-        <!-- FORMULARIO DE REGISTRO -->
+        <!-- FORMULARIO DE REGISTRO - PRIMERO -->
         <div class="form-section">
-            <h2>Regístrate como vendedor</h2>
-            <p>Completa el formulario y un asesor te contactará para finalizar tu afiliación.</p>
+            <h2>📝 Regístrate como vendedor</h2>
+            <p>Completa el formulario y un asesor te contactará para activar tu cuenta.</p>
 
             <form id="registroForm">
                 <div class="row-2">
@@ -539,6 +491,113 @@
                 <small>Al enviar, aceptas los términos y condiciones de QRP2P. Un asesor te contactará para confirmar tu afiliación y coordinar el pago.</small>
             </form>
         </div>
+
+        <!-- INFORMACIÓN DETALLADA - DESPUÉS -->
+        <div class="info-section">
+            <!-- PLANES DETALLADOS -->
+            <div class="planes-container">
+                <!-- Plan Básico -->
+                <div class="plan-card">
+                    <div class="plan-tag">0% COMISIÓN</div>
+                    <div class="plan-nombre">Plan Básico</div>
+                    <div class="plan-precio">$200.000 <span>/ año</span></div>
+                    <div class="plan-descripcion">Ideal para empezar tu tienda online sin pagar comisiones por venta.</div>
+                    <ul class="plan-caracteristicas">
+                        <li>Dashboard completo de gestión</li>
+                        <li>Domicilios económicos en Colombia</li>
+                        <li>Envíos internacionales</li>
+                        <li>Tienda pública con URL única y QR estático</li>
+                        <li>Control de inventario en tiempo real</li>
+                        <li>Gestión completa de pedidos</li>
+                        <li>Subida de archivos descargables</li>
+                        <li>Hasta 6 imágenes por producto</li>
+                        <li>Configuración de envíos (peso, dimensiones)</li>
+                        <li>Categorización de productos</li>
+                        <li>Dashboard 100% responsivo</li>
+                        <li>Generación de guías de transporte</li>
+                        <li>Cambio de estado de pedidos</li>
+                        <li>1 usuario (vendedor principal)</li>
+                    </ul>
+                    <button class="btn-plan-select" onclick="seleccionarPlanDesdeInfo('basico')">Seleccionar Plan Básico</button>
+                </div>
+
+                <!-- Plan Pro -->
+                <div class="plan-card popular">
+                    <div class="plan-tag">MÁS FUNCIONALIDADES</div>
+                    <div class="plan-nombre">Plan Pro</div>
+                    <div class="plan-precio">$700.000 <span>/ año</span></div>
+                    <div class="plan-descripcion">Todo lo del Plan Básico + herramientas empresariales avanzadas.</div>
+                    <ul class="plan-caracteristicas">
+                        <li>✅ Todo lo incluido en el Plan Básico</li>
+                        <li>Servidor independiente</li>
+                        <li>Subdominio .qrp2p.com</li>
+                        <li>Integración con ERPs contables</li>
+                        <li>Integración con WMS de logística</li>
+                        <li>Pasarelas de pago: PayU, Wompi, Bold y más</li>
+                        <li>Múltiples usuarios (accesos ilimitados)</li>
+                        <li>Punto de venta (POS) integrado</li>
+                        <li>API para conectividad empresarial</li>
+                        <li>Soporte prioritario 24/7</li>
+                    </ul>
+                    <button class="btn-plan-select" onclick="seleccionarPlanDesdeInfo('pro')">Seleccionar Plan Pro</button>
+                </div>
+            </div>
+
+            <!-- FUNCIONALIDADES DESTACADAS -->
+            <div class="funcionalidades">
+                <h3>🚀 Funcionalidades que te ayudarán a crecer</h3>
+                <div class="grid-funcionalidades">
+                    <div class="func-item">
+                        <h4>📊 Dashboard Completo</h4>
+                        <p>Pedidos, productos, guías de transporte y más en un solo lugar</p>
+                    </div>
+                    <div class="func-item">
+                        <h4>🏪 Tienda Personalizada</h4>
+                        <p>URL única y QR estático para compartir tu tienda</p>
+                    </div>
+                    <div class="func-item">
+                        <h4>📦 Control de Inventario</h4>
+                        <p>Stock en tiempo real que se actualiza automáticamente</p>
+                    </div>
+                    <div class="func-item">
+                        <h4>🚚 Envíos Nacionales e Internacionales</h4>
+                        <p>Generación de guías para productos físicos</p>
+                    </div>
+                    <div class="func-item">
+                        <h4>📱 100% Responsivo</h4>
+                        <p>Gestiona tu tienda desde cualquier dispositivo</p>
+                    </div>
+                    <div class="func-item">
+                        <h4>💰 0% Comisión por Venta</h4>
+                        <p>Todo lo que vendes es para ti</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROCESO DE AFILIACIÓN -->
+            <div class="proceso">
+                <h3>📋 Proceso de Afiliación</h3>
+                <div class="pasos">
+                    <div class="paso">
+                        <div class="numero">1</div>
+                        <p><strong>Paga tu afiliación</strong><br>anual</p>
+                    </div>
+                    <div class="paso">
+                        <div class="numero">2</div>
+                        <p><strong>Acceso inmediato</strong><br>al dashboard</p>
+                    </div>
+                    <div class="paso">
+                        <div class="numero">3</div>
+                        <p><strong>Configura tu tienda</strong><br>y carga productos</p>
+                    </div>
+                    <div class="paso">
+                        <div class="numero">4</div>
+                        <p><strong>Comienza a vender</strong><br>con envíos nacionales e internacionales</p>
+                    </div>
+                </div>
+                <p style="margin-top: 1.5rem; font-size: 0.8rem;">El pago es anual y requiere renovación para continuar con el servicio. Comisión por venta: 0% para todo tipo de producto.</p>
+            </div>
+        </div>
     </div>
 
     <footer>
@@ -565,6 +624,13 @@
                 document.getElementById('planDetalle').innerHTML = '✅ Plan seleccionado: <strong>Plan Pro</strong> - $700.000/año. Incluye todo del Básico + servidor independiente, subdominio, integración con ERPs, WMS, pasarelas de pago (PayU, Wompi, Bold), múltiples usuarios y punto de venta.';
             }
             document.getElementById('planDetalle').style.display = 'block';
+            
+            // Scroll suave al formulario
+            document.querySelector('.form-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function seleccionarPlanDesdeInfo(plan) {
+            seleccionarPlan(plan);
         }
 
         // Escuchar cambios en los radio buttons
@@ -657,7 +723,7 @@
             }
             
             mensaje += "────────────────%0A";
-            mensaje += "💰 *PAGO PENDIENTE:* COP$ ${planPrecio} anual%0A";
+            mensaje += `💰 *PAGO PENDIENTE:* COP$ ${planPrecio} anual%0A`;
             mensaje += "📲 *Contactar al vendedor para activar cuenta y enviar datos de pago*";
             
             const telefonoDestino = "573146824438";
