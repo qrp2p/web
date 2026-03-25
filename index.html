@@ -2,20 +2,21 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>QRP2P Global | Mapa Interactivo - Vendedores Verificados en Todo el Mundo</title>
-  <meta name="description" content="QRP2P Global - Encuentra vendedores verificados en cualquier parte del mundo. Mapa interactivo con ubicación en tiempo real. Marketplace confiable global.">
-  <meta name="keywords" content="QRP2P, mapa global, vendedores verificados, marketplace, compras online, ubicación en tiempo real">
-  <meta name="author" content="QRP2P Marketplace">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://qrp2p.com/mapa-global">
-  <meta property="og:title" content="QRP2P Global | Mapa Interactivo">
-  <meta property="og:description" content="Encuentra vendedores verificados QRP2P en todo el mundo">
-  <meta property="og:type" content="website">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="theme-color" content="#000000">
-  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QRP2P - Mapa Global</title>
   <style>
+    :root {
+      --primary-color: #1a1a1a;
+      --secondary-color: #333;
+      --accent-color: #0066cc;
+      --text-color: #333;
+      --light-text: #fff;
+      --bg-light: #f8f8f8;
+      --border-radius: 8px;
+      --box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      --transition: all 0.3s ease;
+    }
+    
     * { 
       margin: 0; 
       padding: 0; 
@@ -23,12 +24,11 @@
     }
     
     body { 
-      font-family: 'Segoe UI', Roboto, sans-serif; 
-      color: #333; 
+      font-family: 'Roboto', sans-serif; 
+      color: var(--text-color); 
       line-height: 1.6; 
       touch-action: manipulation;
-      overflow: hidden;
-      height: 100vh;
+      overflow-x: hidden;
     }
     
     #contenedor-mapa { 
@@ -42,618 +42,827 @@
       display: flex; 
       gap: 0.8rem; 
       padding: 0.8rem; 
-      background: rgba(255,255,255,0.95);
-      backdrop-filter: blur(10px);
+      background: var(--bg-light); 
       width: 100%;
       z-index: 1000;
       justify-content: center;
-      flex-wrap: wrap;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      position: relative;
-    }
-    
-    .contenedor-buscador {
-      position: relative;
-      flex: 1;
-      max-width: 500px;
     }
     
     #buscador { 
-      width: 100%;
-      padding: 0.7rem 1.2rem; 
+      flex: 1; 
+      max-width: 500px;
+      padding: 0.6rem 1.2rem; 
       border: 1px solid #ddd; 
-      border-radius: 40px; 
-      font-size: 15px;
-      transition: all 0.3s ease;
-      outline: none;
+      border-radius: 24px; 
+      appearance: none; 
+      font-size: 16px;
+      transition: var(--transition);
     }
     
     #buscador:focus {
       outline: none;
-      border-color: #0066cc;
+      border-color: var(--accent-color);
       box-shadow: 0 0 0 2px rgba(0,102,204,0.2);
     }
     
     .btn { 
       background: #000000;
       color: #ffffff;
-      padding: 0.7rem 1.5rem; 
-      border-radius: 40px; 
-      font-weight: 600;
-      transition: all 0.3s ease;
+      padding: 0.6rem 1.2rem; 
+      border-radius: 24px; 
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
       border: none;
       cursor: pointer;
+      white-space: nowrap;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      font-size: 0.9rem;
+      gap: 5px;
+      border: 1px solid #333;
     }
     
     .btn:hover {
       background: #333333;
-      transform: scale(1.02);
+      transform: translateY(-1px);
     }
     
     .btn-centrar {
       background-color: #000000;
+      color: #ffffff;
+    }
+    
+    .btn-marketplace {
+      background-color: #000000;
+      color: #ffffff;
     }
     
     #mapa { 
       flex: 1; 
+      background: #f0f0f0; 
       width: 100%;
-      background: #e8e8e8;
     }
     
-    /* Notificación */
-    .notificacion {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #1a1a1a;
+    .cluster-marcadores { 
+      background: rgba(40,40,40,0.7); 
+      border-radius: 50%; 
       color: white;
-      padding: 12px 20px;
-      border-radius: 12px;
-      font-size: 0.85rem;
-      z-index: 2000;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
       display: flex;
       align-items: center;
-      gap: 12px;
-      animation: slideIn 0.3s ease;
-      max-width: 320px;
-      border-left: 4px solid #00ff88;
+      justify-content: center;
+      font-weight: bold;
     }
     
-    .notificacion button {
-      background: rgba(255,255,255,0.2);
-      border: none;
-      color: white;
-      padding: 4px 10px;
-      border-radius: 20px;
-      cursor: pointer;
-      font-size: 0.7rem;
+    .whatsapp-icon {
+      width: 16px;
+      height: 16px;
+      filter: invert(1);
     }
-    
-    @keyframes slideIn {
-      from {
-        opacity: 0;
-        transform: translateX(50px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
+
+    .popup-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 10px;
     }
-    
-    /* Sugerencias de búsqueda */
+
+    .popup-button-row {
+      display: flex;
+      gap: 8px;
+      justify-content: space-between;
+    }
+
     .sugerencias-busqueda {
       position: absolute;
       top: 100%;
       left: 0;
       right: 0;
       background: white;
-      border-radius: 0 0 16px 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      border-radius: 0 0 8px 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       z-index: 1000;
-      max-height: 250px;
+      max-height: 200px;
       overflow-y: auto;
       display: none;
-      margin-top: 5px;
     }
-    
+
     .sugerencia-item {
-      padding: 12px 16px;
+      padding: 10px 15px;
       cursor: pointer;
       border-bottom: 1px solid #eee;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      transition: background 0.2s;
     }
-    
+
     .sugerencia-item:hover {
       background-color: #f5f5f5;
     }
-    
+
     .sugerencia-texto {
       flex: 1;
     }
-    
-    .sugerencia-texto strong {
-      color: #0066cc;
-    }
-    
+
     .sugerencia-boton {
       margin-left: 10px;
-      padding: 6px 14px;
-      background-color: #000000;
+      padding: 5px 10px;
+      background-color: #9b59b6;
       color: white;
       border: none;
-      border-radius: 20px;
+      border-radius: 4px;
       cursor: pointer;
       font-size: 12px;
-      transition: all 0.2s;
     }
-    
-    .sugerencia-boton:hover {
-      background-color: #333;
+
+    .contenedor-buscador {
+      position: relative;
+      flex: 1;
+      max-width: 500px;
     }
-    
+
     .cargando {
       display: inline-block;
-      width: 18px;
-      height: 18px;
-      border: 2px solid rgba(0,0,0,.2);
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255,255,255,.3);
       border-radius: 50%;
-      border-top-color: #000;
-      animation: spin 0.8s linear infinite;
-      margin-left: 10px;
+      border-top-color: #fff;
+      animation: spin 1s ease-in-out infinite;
     }
-    
+
+    .gm-style .gm-style-iw-c {
+      border-radius: 8px;
+      padding: 10px;
+    }
+
+    .gm-style .gm-style-iw-d {
+      overflow: auto !important;
+    }
+
+    .gm-ui-hover-effect {
+      top: 8px !important;
+      right: 8px !important;
+    }
+
+    .map-type-selector {
+      position: absolute;
+      bottom: 20px;
+      left: 10px;
+      z-index: 1000;
+      background: white;
+      padding: 8px 12px;
+      border-radius: 4px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      display: flex;
+      gap: 10px;
+    }
+
+    .map-type-btn {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      background: #f1f1f1;
+      transition: background 0.3s;
+    }
+
+    .map-type-btn.active {
+      background: #0066cc;
+      color: white;
+    }
+
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
-    
-    /* Controles de mapa */
-    .map-controls {
-      position: absolute;
-      bottom: 20px;
-      left: 20px;
-      z-index: 1000;
-      background: white;
-      border-radius: 40px;
-      padding: 5px;
-      display: flex;
-      gap: 5px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    }
-    
-    .map-type-btn {
-      padding: 8px 16px;
-      border: none;
-      border-radius: 30px;
-      cursor: pointer;
-      font-size: 13px;
-      background: #f0f0f0;
-      transition: all 0.2s;
-      font-weight: 500;
-    }
-    
-    .map-type-btn.active {
-      background: #000000;
-      color: white;
-    }
-    
-    .location-badge {
-      position: absolute;
-      bottom: 20px;
-      right: 20px;
-      z-index: 1000;
-      background: rgba(0,0,0,0.7);
-      backdrop-filter: blur(8px);
-      padding: 6px 12px;
-      border-radius: 30px;
-      font-size: 0.7rem;
-      color: white;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      pointer-events: none;
-    }
-    
+
     @media (max-width: 768px) { 
       #barra-superior { 
         flex-direction: column; 
-        gap: 0.5rem;
-        padding: 0.6rem;
+        gap: 0.6rem;
       }
       
-      .btn {
-        padding: 0.6rem 1rem;
-        font-size: 0.8rem;
+      .popup-button-row {
+        flex-direction: column;
       }
-      
+
       .sugerencia-item {
         flex-direction: column;
         align-items: flex-start;
-        gap: 8px;
       }
-      
+
       .sugerencia-boton {
         margin-left: 0;
+        margin-top: 5px;
         align-self: flex-end;
       }
-      
-      .notificacion {
-        bottom: 70px;
-        right: 10px;
-        left: 10px;
-        max-width: none;
-      }
-      
-      .map-controls {
+
+      .map-type-selector {
         bottom: 10px;
-        left: 10px;
-      }
-      
-      .map-type-btn {
-        padding: 5px 12px;
-        font-size: 11px;
+        left: 5px;
+        flex-direction: column;
+        gap: 5px;
       }
     }
   </style>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
 </head>
 <body>
   <div id="contenedor-mapa">
     <div id="barra-superior">
       <div class="contenedor-buscador">
-        <input type="search" id="buscador" placeholder="🔍 BUSCAR CIUDAD, PAÍS O LUGAR EN EL MUNDO..." enterkeyhint="search">
+        <input type="search" id="buscador" placeholder="BUSCAR EN TODO EL MUNDO" enterkeyhint="search">
         <div id="sugerencias-busqueda" class="sugerencias-busqueda"></div>
       </div>
-      <button class="btn btn-centrar" id="centrar-btn">📍 CENTER</button>
+      <button class="btn btn-centrar" id="centrar-btn">CENTRAR</button>
+      <button class="btn btn-marketplace" id="marketplace-btn" onclick="window.open('https://qrp2p.com/shop', '_blank')">VER QRP2P MARKETPLACE</button>
     </div>
     <div id="mapa"></div>
-    <div class="map-controls">
-      <button class="map-type-btn active" id="map-btn">🗺️ Mapa</button>
-      <button class="map-type-btn" id="satellite-btn">🛰️ Satélite</button>
-    </div>
-    <div class="location-badge">
-      <span>📍</span> QRP2P Global | Vendedores verificados
+    <div class="map-type-selector">
+      <button class="map-type-btn active" id="map-btn">Mapa</button>
+      <button class="map-type-btn" id="satellite-btn">Satélite</button>
     </div>
   </div>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-  
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
   <script>
     // Variables globales
     let mapa;
-    let userMarker = null;
+    let userMarker;
+    let marcadoresOriginales = [];
     let destinoMarker = null;
     let buscadorTimeout;
-    let marcadoresGlobales = [];
-    let clusterGroup;
+    let googleMapsLayer;
+    let googleSatelliteLayer;
     let currentLayer;
-    let googleStreets;
-    let googleSatellite;
-    
-    // Datos de vendedores QRP2P alrededor del mundo
-    const VENDEDORES_GLOBALES = [
-      { id: "bogota", nombre: "QRP2P Bogotá", direccion: "Carrera 7 # 72-41, Bogotá, Colombia", lat: 4.6486, lng: -74.0609, pais: "Colombia", telefono: "+573001234567", url: "https://bogota.qrp2p.com" },
-      { id: "medellin", nombre: "QRP2P Medellín", direccion: "Calle 10 # 40-20, El Poblado, Medellín", lat: 6.2150, lng: -75.5670, pais: "Colombia", telefono: "+573004567890", url: "https://medellin.qrp2p.com" },
-      { id: "cali", nombre: "QRP2P Cali", direccion: "Calle 12 # 4-67, Centro, Cali", lat: 3.4516, lng: -76.5320, pais: "Colombia", telefono: "+573128765432", url: "https://cali.qrp2p.com" },
-      { id: "cdmx", nombre: "QRP2P CDMX", direccion: "Av. Insurgentes Sur 123, Roma Norte", lat: 19.4326, lng: -99.1332, pais: "México", telefono: "+525512345678", url: "https://cdmx.qrp2p.com" },
-      { id: "guadalajara", nombre: "QRP2P Guadalajara", direccion: "Av. Vallarta 2345, Guadalajara", lat: 20.6597, lng: -103.3496, pais: "México", telefono: "+523312345678", url: "https://guadalajara.qrp2p.com" },
-      { id: "bsas", nombre: "QRP2P Buenos Aires", direccion: "Av. Corrientes 1234, Buenos Aires", lat: -34.6037, lng: -58.3816, pais: "Argentina", telefono: "+541112345678", url: "https://bsas.qrp2p.com" },
-      { id: "santiago", nombre: "QRP2P Santiago", direccion: "Av. Providencia 1234, Santiago", lat: -33.4489, lng: -70.6693, pais: "Chile", telefono: "+562212345678", url: "https://santiago.qrp2p.com" },
-      { id: "lima", nombre: "QRP2P Lima", direccion: "Av. Larco 456, Miraflores", lat: -12.1194, lng: -77.0257, pais: "Perú", telefono: "+51112345678", url: "https://lima.qrp2p.com" },
-      { id: "madrid", nombre: "QRP2P Madrid", direccion: "Gran Vía 123, Madrid", lat: 40.4168, lng: -3.7038, pais: "España", telefono: "+34911234567", url: "https://madrid.qrp2p.com" },
-      { id: "miami", nombre: "QRP2P Miami", direccion: "123 Brickell Ave, Miami", lat: 25.7617, lng: -80.1918, pais: "USA", telefono: "+17865551234", url: "https://miami.qrp2p.com" },
-      { id: "ny", nombre: "QRP2P Nueva York", direccion: "350 5th Ave, New York", lat: 40.7128, lng: -74.0060, pais: "USA", telefono: "+12125551234", url: "https://ny.qrp2p.com" },
-      { id: "sp", nombre: "QRP2P São Paulo", direccion: "Av. Paulista 1000, São Paulo", lat: -23.5505, lng: -46.6333, pais: "Brasil", telefono: "+551112345678", url: "https://saopaulo.qrp2p.com" },
-      { id: "london", nombre: "QRP2P Londres", direccion: "Oxford St 123, London", lat: 51.5074, lng: -0.1278, pais: "UK", telefono: "+442012345678", url: "https://london.qrp2p.com" },
-      { id: "paris", nombre: "QRP2P París", direccion: "Champs-Élysées 123, Paris", lat: 48.8566, lng: 2.3522, pais: "Francia", telefono: "+33112345678", url: "https://paris.qrp2p.com" },
-      { id: "tokyo", nombre: "QRP2P Tokio", direccion: "Shibuya 1-1-1, Tokyo", lat: 35.6762, lng: 139.6503, pais: "Japón", telefono: "+81312345678", url: "https://tokyo.qrp2p.com" }
+
+    // Datos de ubicaciones - Globales
+    const UBICACIONES = [
+      // Colombia
+      { 
+        "id": "salento-centro",
+        "nombre": "QRP2P Salento Centro", 
+        "direccion": "Carrera 6 # 5-20, Plaza Principal, Salento, Quindío, Colombia", 
+        "latlng": [4.637740, -75.569091], 
+        "url": "https://qrp2p.com/afiliado/salento",
+        "telefono": "+573128765432",
+        "horario": "Lunes a Domingo: 7am-7pm",
+        "servicios": "Pagos P2P, Envíos, Retiros",
+        "pais": "Colombia",
+        "tipo": "socio"
+      },
+      { 
+        "id": "oficina-salento",
+        "nombre": "QRP2P Oficina Salento", 
+        "direccion": "Carrera 6 #3-46 frente al hotel, Salento, Quindío, Colombia", 
+        "latlng": [4.638141, -75.568914], 
+        "url": "https://qrp2p.com/shop",
+        "telefono": "+573146824438",
+        "horario": "Lunes a Domingo: 8am-8pm",
+        "servicios": "Oficina principal QRP2P",
+        "pais": "Colombia",
+        "tipo": "socio"
+      },
+      // México
+      { 
+        "id": "mexico-cdmx",
+        "nombre": "QRP2P Ciudad de México", 
+        "direccion": "Av. Reforma 222, Juárez, Cuauhtémoc, CDMX", 
+        "latlng": [19.4326, -99.1332], 
+        "url": "https://qrp2p.com/mx/cdmx",
+        "telefono": "+525555123456",
+        "horario": "Lunes a Viernes: 9am-6pm",
+        "servicios": "Pagos P2P, Transferencias",
+        "pais": "México",
+        "tipo": "socio"
+      },
+      // Argentina
+      { 
+        "id": "argentina-ba",
+        "nombre": "QRP2P Buenos Aires", 
+        "direccion": "Av. Corrientes 1234, CABA, Buenos Aires", 
+        "latlng": [-34.6037, -58.3816], 
+        "url": "https://qrp2p.com/ar/buenosaires",
+        "telefono": "+541112345678",
+        "horario": "Lunes a Viernes: 9am-7pm",
+        "servicios": "Pagos P2P, Envíos",
+        "pais": "Argentina",
+        "tipo": "socio"
+      },
+      // España
+      { 
+        "id": "espana-madrid",
+        "nombre": "QRP2P Madrid", 
+        "direccion": "Calle Gran Vía 45, Madrid", 
+        "latlng": [40.4168, -3.7038], 
+        "url": "https://qrp2p.com/es/madrid",
+        "telefono": "+34911234567",
+        "horario": "Lunes a Viernes: 9am-8pm",
+        "servicios": "Pagos P2P, Cambio de divisas",
+        "pais": "España",
+        "tipo": "socio"
+      },
+      // Estados Unidos
+      { 
+        "id": "usa-miami",
+        "nombre": "QRP2P Miami", 
+        "direccion": "1688 Meridian Ave, Miami Beach, FL", 
+        "latlng": [25.7907, -80.1300], 
+        "url": "https://qrp2p.com/us/miami",
+        "telefono": "+17865551234",
+        "horario": "Lunes a Sábado: 10am-8pm",
+        "servicios": "Pagos P2P, Remesas",
+        "pais": "USA",
+        "tipo": "socio"
+      },
+      // Chile
+      { 
+        "id": "chile-santiago",
+        "nombre": "QRP2P Santiago", 
+        "direccion": "Av. Providencia 1234, Santiago", 
+        "latlng": [-33.4489, -70.6693], 
+        "url": "https://qrp2p.com/cl/santiago",
+        "telefono": "+56221234567",
+        "horario": "Lunes a Viernes: 9am-6pm",
+        "servicios": "Pagos P2P, Transferencias",
+        "pais": "Chile",
+        "tipo": "socio"
+      },
+      // Perú
+      { 
+        "id": "peru-lima",
+        "nombre": "QRP2P Lima", 
+        "direccion": "Av. Larco 1234, Miraflores, Lima", 
+        "latlng": [-12.1194, -77.0345], 
+        "url": "https://qrp2p.com/pe/lima",
+        "telefono": "+5111234567",
+        "horario": "Lunes a Viernes: 9am-7pm",
+        "servicios": "Pagos P2P, Envíos",
+        "pais": "Perú",
+        "tipo": "socio"
+      },
+      // Ecuador
+      { 
+        "id": "ecuador-quito",
+        "nombre": "QRP2P Quito", 
+        "direccion": "Av. Amazonas N24-123, Quito", 
+        "latlng": [-0.1807, -78.4678], 
+        "url": "https://qrp2p.com/ec/quito",
+        "telefono": "+59321234567",
+        "horario": "Lunes a Viernes: 8am-6pm",
+        "servicios": "Pagos P2P, Retiros",
+        "pais": "Ecuador",
+        "tipo": "socio"
+      },
+      // Bolivia
+      { 
+        "id": "bolivia-santacruz",
+        "nombre": "QRP2P Santa Cruz", 
+        "direccion": "Av. San Martín 456, Santa Cruz", 
+        "latlng": [-17.7833, -63.1821], 
+        "url": "https://qrp2p.com/bo/santacruz",
+        "telefono": "+59131234567",
+        "horario": "Lunes a Viernes: 9am-6pm",
+        "servicios": "Pagos P2P",
+        "pais": "Bolivia",
+        "tipo": "socio"
+      },
+      // Uruguay
+      { 
+        "id": "uruguay-montevideo",
+        "nombre": "QRP2P Montevideo", 
+        "direccion": "Av. 18 de Julio 1234, Montevideo", 
+        "latlng": [-34.9011, -56.1645], 
+        "url": "https://qrp2p.com/uy/montevideo",
+        "telefono": "+59821234567",
+        "horario": "Lunes a Viernes: 9am-6pm",
+        "servicios": "Pagos P2P",
+        "pais": "Uruguay",
+        "tipo": "socio"
+      },
+      // Panamá
+      { 
+        "id": "panama-ciudad",
+        "nombre": "QRP2P Panamá", 
+        "direccion": "Calle 50, San Francisco, Panamá", 
+        "latlng": [8.9824, -79.5199], 
+        "url": "https://qrp2p.com/pa/panama",
+        "telefono": "+5072123456",
+        "horario": "Lunes a Viernes: 8am-5pm",
+        "servicios": "Pagos P2P",
+        "pais": "Panamá",
+        "tipo": "socio"
+      },
+      // Costa Rica
+      { 
+        "id": "costarica-sanjose",
+        "nombre": "QRP2P San José", 
+        "direccion": "Av. Central, San José", 
+        "latlng": [9.9281, -84.0907], 
+        "url": "https://qrp2p.com/cr/sanjose",
+        "telefono": "+50621234567",
+        "horario": "Lunes a Viernes: 8am-5pm",
+        "servicios": "Pagos P2P",
+        "pais": "Costa Rica",
+        "tipo": "socio"
+      }
     ];
-    
-    // Lista de países y ciudades para búsqueda
-    const LUGARES_MUNDO = [
-      "Bogotá, Colombia", "Medellín, Colombia", "Cali, Colombia", "Barranquilla, Colombia", "Cartagena, Colombia",
-      "Ciudad de México, México", "Guadalajara, México", "Monterrey, México", "Cancún, México",
-      "Buenos Aires, Argentina", "Córdoba, Argentina", "Rosario, Argentina",
-      "Santiago, Chile", "Valparaíso, Chile", "Concepción, Chile",
-      "Lima, Perú", "Arequipa, Perú", "Trujillo, Perú",
-      "Madrid, España", "Barcelona, España", "Valencia, España", "Sevilla, España",
-      "Miami, USA", "Nueva York, USA", "Los Ángeles, USA", "Chicago, USA", "Houston, USA",
-      "São Paulo, Brasil", "Río de Janeiro, Brasil", "Brasilia, Brasil", "Salvador, Brasil",
-      "Londres, UK", "París, Francia", "Berlín, Alemania", "Roma, Italia", "Ámsterdam, Países Bajos",
-      "Tokio, Japón", "Seúl, Corea del Sur", "Pekín, China", "Shanghái, China", "Sídney, Australia",
-      "Moscú, Rusia", "Estambul, Turquía", "El Cairo, Egipto", "Ciudad del Cabo, Sudáfrica"
-    ];
-    
-    // Coordenadas de lugares famosos
-    const COORDENADAS_LUGARES = {
-      "Bogotá, Colombia": [4.6486, -74.0609],
-      "Medellín, Colombia": [6.2150, -75.5670],
-      "Cali, Colombia": [3.4516, -76.5320],
-      "Ciudad de México, México": [19.4326, -99.1332],
-      "Buenos Aires, Argentina": [-34.6037, -58.3816],
-      "Santiago, Chile": [-33.4489, -70.6693],
-      "Lima, Perú": [-12.1194, -77.0257],
-      "Madrid, España": [40.4168, -3.7038],
-      "Miami, USA": [25.7617, -80.1918],
-      "Nueva York, USA": [40.7128, -74.0060],
-      "São Paulo, Brasil": [-23.5505, -46.6333],
-      "Londres, UK": [51.5074, -0.1278],
-      "París, Francia": [48.8566, 2.3522],
-      "Tokio, Japón": [35.6762, 139.6503],
-      "Sídney, Australia": [-33.8688, 151.2093]
-    };
-    
-    // Mostrar notificación
-    function mostrarNotificacion(mensaje, tipo = "info") {
-      const notifDiv = document.createElement('div');
-      notifDiv.className = 'notificacion';
-      notifDiv.style.borderLeftColor = tipo === "success" ? "#00ff88" : "#ff6b6b";
-      notifDiv.innerHTML = `
-        <span>${mensaje}</span>
-        <button onclick="this.parentElement.remove()">✕</button>
-      `;
-      document.body.appendChild(notifDiv);
-      setTimeout(() => {
-        if (notifDiv.parentElement) notifDiv.remove();
-      }, 5000);
-    }
-    
-    // Inicializar mapa
-    function initMap() {
-      mapa = L.map('mapa').setView([20, 0], 2);
+
+    // Inicializar el mapa cuando el DOM esté listo
+    document.addEventListener('DOMContentLoaded', function() {
+      initializeMap();
       
-      // Capas de Google Maps
-      googleStreets = L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
-        maxZoom: 20,
-        subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-        attribution: '&copy; Google Maps | QRP2P Global'
+      // Evento para el botón centrar
+      document.getElementById('centrar-btn').addEventListener('click', centrarMapa);
+      
+      // Eventos para cambiar tipo de mapa
+      document.getElementById('map-btn').addEventListener('click', function() {
+        switchToMapView();
       });
       
-      googleSatellite = L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
-        maxZoom: 20,
-        subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-        attribution: '&copy; Google Maps | QRP2P Global'
+      document.getElementById('satellite-btn').addEventListener('click', function() {
+        switchToSatelliteView();
       });
       
-      currentLayer = googleStreets;
-      currentLayer.addTo(mapa);
-      
-      // Cluster de marcadores
-      clusterGroup = L.markerClusterGroup({
-        iconCreateFunction: function(cluster) {
-          return L.divIcon({
-            html: `<div style="background:#000;color:#fff;border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-weight:bold;border:2px solid #fff;">${cluster.getChildCount()}</div>`,
-            iconSize: [36, 36]
-          });
-        }
-      });
-      
-      // Agregar marcadores de vendedores
-      VENDEDORES_GLOBALES.forEach(vendedor => {
-        const marker = L.marker([vendedor.lat, vendedor.lng], {
-          icon: L.divIcon({
-            html: `<div style="background:#0066cc;color:white;border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:14px;border:2px solid white;">📍</div>`,
-            iconSize: [30, 30]
-          })
-        }).bindPopup(`
-          <div style="min-width:220px; padding:5px;">
-            <h3 style="margin:0 0 5px 0; color:#0066cc;">${vendedor.nombre}</h3>
-            <p style="margin:0 0 5px 0;">📍 ${vendedor.direccion}</p>
-            <p style="margin:0 0 5px 0;">🌎 ${vendedor.pais}</p>
-            <p style="margin:0 0 8px 0;">📞 ${vendedor.telefono}</p>
-            <a href="${vendedor.url}" target="_blank" style="display:inline-block;background:#000;color:#fff;padding:8px 16px;border-radius:30px;text-decoration:none;font-size:0.8rem;">🏪 Ver tienda</a>
-          </div>
-        `);
-        clusterGroup.addLayer(marker);
-      });
-      
-      mapa.addLayer(clusterGroup);
-      
-      // Controles de mapa
-      document.getElementById('map-btn').addEventListener('click', () => {
-        mapa.removeLayer(currentLayer);
-        currentLayer = googleStreets;
-        currentLayer.addTo(mapa);
-        document.getElementById('map-btn').classList.add('active');
-        document.getElementById('satellite-btn').classList.remove('active');
-      });
-      
-      document.getElementById('satellite-btn').addEventListener('click', () => {
-        mapa.removeLayer(currentLayer);
-        currentLayer = googleSatellite;
-        currentLayer.addTo(mapa);
-        document.getElementById('satellite-btn').classList.add('active');
-        document.getElementById('map-btn').classList.remove('active');
-      });
-      
-      // Botón CENTER - Geolocalización
-      document.getElementById('centrar-btn').addEventListener('click', () => {
-        obtenerUbicacionUsuario();
-      });
-      
-      // Buscador
+      // Eventos para el buscador
       const searchInput = document.getElementById('buscador');
       searchInput.addEventListener('input', handleSearchInput);
-      searchInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-          buscarLugar(searchInput.value);
-        }
-      });
+      searchInput.addEventListener('keydown', handleSearchKeydown);
       
       // Cerrar sugerencias al hacer clic fuera
-      document.addEventListener('click', (e) => {
+      document.addEventListener('click', function(e) {
         if (!e.target.closest('.contenedor-buscador')) {
           document.getElementById('sugerencias-busqueda').style.display = 'none';
         }
       });
-      
-      // Intentar obtener ubicación automáticamente al cargar
+    });
+
+    function initializeMap() {
+      // Inicializar mapa con vista centrada global (América)
+      mapa = L.map('mapa', {
+        center: [20, -80],
+        zoom: 3,
+        zoomControl: false
+      });
+
+      // Añadir control de zoom
+      L.control.zoom({ position: 'bottomright' }).addTo(mapa);
+
+      // Crear capas de Google Maps
+      googleMapsLayer = L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+        maxZoom: 20,
+        subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+        attribution: '&copy; <a href="https://maps.google.com">Google Maps</a>'
+      });
+
+      googleSatelliteLayer = L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+        maxZoom: 20,
+        subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+        attribution: '&copy; <a href="https://maps.google.com">Google Maps</a>'
+      });
+
+      // Inicialmente usar la vista de mapa
+      currentLayer = googleMapsLayer;
+      currentLayer.addTo(mapa);
+
+      // Asegurar que el mapa ocupe todo el espacio disponible
       setTimeout(() => {
-        obtenerUbicacionUsuario();
-      }, 500);
-    }
-    
-    // Obtener ubicación del usuario (GEOLOCALIZACIÓN FUNCIONAL)
-    function obtenerUbicacionUsuario() {
-      mostrarNotificacion("📍 Obteniendo tu ubicación...", "info");
-      
-      if (!navigator.geolocation) {
-        mostrarNotificacion("❌ Tu navegador no soporta geolocalización", "error");
-        return;
-      }
-      
-      navigator.geolocation.getCurrentPosition(
-        function(posicion) {
-          const lat = posicion.coords.latitude;
-          const lng = posicion.coords.longitude;
-          
-          // Eliminar marcador anterior
-          if (userMarker) {
-            mapa.removeLayer(userMarker);
-          }
-          
-          // Crear marcador de usuario
-          userMarker = L.marker([lat, lng], {
-            icon: L.divIcon({
-              html: `<div style="background:#00ff88;color:#000;border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:18px;border:3px solid white;box-shadow:0 0 0 2px #00ff88;">📍</div>`,
-              iconSize: [36, 36]
-            })
-          }).addTo(mapa).bindPopup(`
-            <div style="text-align:center;">
-              <strong style="color:#00ff88;">¡Tú estás aquí!</strong><br>
-              <small>QRP2P Global - Vendedores verificados cerca de ti</small>
+        mapa.invalidateSize();
+      }, 0);
+
+      // Sistema de marcadores con clusters
+      const clusters = L.markerClusterGroup({
+        iconCreateFunction: cluster => L.divIcon({
+          html: `<div>${cluster.getChildCount()}</div>`,
+          className: 'cluster-marcadores',
+          iconSize: [40, 40]
+        }),
+        spiderfyOnMaxZoom: true,
+        showCoverageOnHover: false,
+        zoomToBoundsOnClick: true
+      });
+
+      // Crear marcadores para todas las ubicaciones globales
+      UBICACIONES.forEach(loc => {
+        const marcador = L.marker(loc.latlng, {
+          icon: L.icon({
+            iconUrl: 'https://cdn-icons-png.flaticon.com/512/447/447031.png',
+            iconSize: [32, 32],
+            className: 'marker-icon-orange'
+          })
+        }).bindPopup(`
+          <div style="min-width:220px">
+            <h3 style="margin:0 0 5px 0;color:var(--accent-color)">${loc.nombre}</h3>
+            <p style="margin:0 0 8px 0;font-size:0.9em">${loc.direccion}</p>
+            <p style="margin:0 0 5px 0;font-size:0.9em"><strong>País:</strong> ${loc.pais}</p>
+            ${loc.telefono ? `<p style="margin:0 0 5px 0;font-size:0.9em"><strong>Teléfono:</strong> ${loc.telefono}</p>` : ''}
+            ${loc.horario ? `<p style="margin:0 0 5px 0;font-size:0.9em"><strong>Horario:</strong> ${loc.horario}</p>` : ''}
+            ${loc.servicios ? `<p style="margin:0 0 8px 0;font-size:0.9em"><strong>Servicios:</strong> ${loc.servicios}</p>` : ''}
+            <div class="popup-buttons">
+              <div class="popup-button-row">
+                <button class="btn btn-whatsapp" onclick="abrirWhatsApp('${loc.telefono}', '${loc.nombre}')">
+                  <img src="https://cdn-icons-png.flaticon.com/512/220/220236.png" class="whatsapp-icon" alt="WhatsApp">
+                  WhatsApp
+                </button>
+              </div>
+              <div class="popup-button-row">
+                <button class="btn btn-ruta" onclick="abrirGoogleMapsConDireccion('${loc.latlng[0]}', '${loc.latlng[1]}', '${loc.nombre}')">Google Maps</button>
+                <button class="btn btn-info" onclick="window.open('${loc.url}', '_blank')">Ver tienda QRP2P</button>
+              </div>
             </div>
-          `);
-          
-          // Centrar mapa en la ubicación
-          mapa.setView([lat, lng], 13);
-          userMarker.openPopup();
-          
-          // Obtener nombre de la ciudad
-          fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=10&addressdetails=1`)
-            .then(res => res.json())
-            .then(data => {
-              const ciudad = data.address?.city || data.address?.town || data.address?.village || "tu ubicación";
-              const pais = data.address?.country || "";
-              mostrarNotificacion(`📍 Ubicación encontrada: ${ciudad}${pais ? `, ${pais}` : ''}`, "success");
-            })
-            .catch(() => {
-              mostrarNotificacion(`📍 Ubicación encontrada (${lat.toFixed(4)}, ${lng.toFixed(4)})`, "success");
-            });
-        },
-        function(error) {
-          let mensaje = "";
-          switch(error.code) {
-            case error.PERMISSION_DENIED:
-              mensaje = "❌ Permiso denegado. Activa la ubicación en la configuración de tu navegador.";
-              break;
-            case error.POSITION_UNAVAILABLE:
-              mensaje = "❌ Información de ubicación no disponible.";
-              break;
-            case error.TIMEOUT:
-              mensaje = "❌ Tiempo de espera agotado. Intenta de nuevo.";
-              break;
-            default:
-              mensaje = "❌ No se pudo obtener tu ubicación.";
-          }
-          mostrarNotificacion(mensaje, "error");
-          // Vista global si no se obtiene ubicación
-          mapa.setView([20, 0], 2);
-        },
-        {
-          enableHighAccuracy: true,
-          timeout: 15000,
-          maximumAge: 0
-        }
-      );
+          </div>
+        `);
+        
+        // Guardar todos los datos de la ubicación en el marcador
+        marcador.datosUbicacion = loc;
+        marcador.datosBusqueda = `${loc.nombre} ${loc.direccion} ${loc.pais} ${loc.telefono || ''} ${loc.servicios || ''}`.toLowerCase();
+        marcadoresOriginales.push(marcador);
+      });
+
+      // Añadir marcadores al mapa
+      clusters.addLayers(marcadoresOriginales);
+      mapa.addLayer(clusters);
+
+      // Ajustar vista para mostrar todos los marcadores si hay muchos
+      if(marcadoresOriginales.length > 0) {
+        mapa.fitBounds(clusters.getBounds().pad(0.2));
+      }
+
+      // Solicitar ubicación al cargar la página
+      obtenerUbicacionUsuario();
     }
-    
-    // Manejar búsqueda en tiempo real
+
+    // Función para cambiar a vista de mapa
+    function switchToMapView() {
+      mapa.removeLayer(currentLayer);
+      currentLayer = googleMapsLayer;
+      currentLayer.addTo(mapa);
+      
+      document.getElementById('map-btn').classList.add('active');
+      document.getElementById('satellite-btn').classList.remove('active');
+    }
+
+    // Función para cambiar a vista de satélite
+    function switchToSatelliteView() {
+      mapa.removeLayer(currentLayer);
+      currentLayer = googleSatelliteLayer;
+      currentLayer.addTo(mapa);
+      
+      document.getElementById('satellite-btn').classList.add('active');
+      document.getElementById('map-btn').classList.remove('active');
+    }
+
+    // Función para abrir Google Maps con una dirección específica
+    function abrirGoogleMapsConDireccion(lat, lng, nombre) {
+      const url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving&dir_action=navigate`;
+      window.open(url, '_blank');
+    }
+
+    // Función para manejar la búsqueda
     function handleSearchInput(e) {
       clearTimeout(buscadorTimeout);
       const termino = e.target.value.trim();
-      const sugerenciasDiv = document.getElementById('sugerencias-busqueda');
+      const sugerenciasContainer = document.getElementById('sugerencias-busqueda');
       
       if (termino.length < 2) {
-        sugerenciasDiv.style.display = 'none';
+        sugerenciasContainer.style.display = 'none';
         return;
       }
       
-      sugerenciasDiv.innerHTML = '<div class="sugerencia-item">🔍 Buscando... <span class="cargando"></span></div>';
-      sugerenciasDiv.style.display = 'block';
+      sugerenciasContainer.innerHTML = '<div class="sugerencia-item">Buscando en todo el mundo... <span class="cargando"></span></div>';
+      sugerenciasContainer.style.display = 'block';
       
       buscadorTimeout = setTimeout(() => {
-        const resultados = LUGARES_MUNDO.filter(lugar => 
-          lugar.toLowerCase().includes(termino.toLowerCase())
+        buscarGlobal(termino);
+      }, 300);
+    }
+
+    // Función para búsqueda global (ciudades principales)
+    function buscarGlobal(consulta) {
+      const sugerenciasContainer = document.getElementById('sugerencias-busqueda');
+      
+      // Primero buscar en puntos locales (QRP2P)
+      const resultadosLocales = buscarEnPuntosLocales(consulta);
+      if (resultadosLocales) {
+        return;
+      }
+      
+      // Ciudades principales del mundo para búsqueda
+      setTimeout(() => {
+        sugerenciasContainer.innerHTML = '';
+        
+        const ciudadesGlobales = [
+          { name: "Nueva York", lat: 40.7128, lng: -74.0060, pais: "EE.UU.", url: "https://qrp2p.com/global/newyork" },
+          { name: "Londres", lat: 51.5074, lng: -0.1278, pais: "Reino Unido", url: "https://qrp2p.com/global/london" },
+          { name: "París", lat: 48.8566, lng: 2.3522, pais: "Francia", url: "https://qrp2p.com/global/paris" },
+          { name: "Tokio", lat: 35.6762, lng: 139.6503, pais: "Japón", url: "https://qrp2p.com/global/tokyo" },
+          { name: "Sídney", lat: -33.8688, lng: 151.2093, pais: "Australia", url: "https://qrp2p.com/global/sydney" },
+          { name: "São Paulo", lat: -23.5505, lng: -46.6333, pais: "Brasil", url: "https://qrp2p.com/global/saopaulo" },
+          { name: "Ciudad de México", lat: 19.4326, lng: -99.1332, pais: "México", url: "https://qrp2p.com/mx/cdmx" },
+          { name: "Buenos Aires", lat: -34.6037, lng: -58.3816, pais: "Argentina", url: "https://qrp2p.com/ar/buenosaires" },
+          { name: "Madrid", lat: 40.4168, lng: -3.7038, pais: "España", url: "https://qrp2p.com/es/madrid" },
+          { name: "Miami", lat: 25.7617, lng: -80.1918, pais: "EE.UU.", url: "https://qrp2p.com/us/miami" },
+          { name: "Santiago", lat: -33.4489, lng: -70.6693, pais: "Chile", url: "https://qrp2p.com/cl/santiago" },
+          { name: "Lima", lat: -12.0464, lng: -77.0428, pais: "Perú", url: "https://qrp2p.com/pe/lima" },
+          { name: "Bogotá", lat: 4.7110, lng: -74.0721, pais: "Colombia", url: "https://qrp2p.com/co/bogota" },
+          { name: "Medellín", lat: 6.2442, lng: -75.5812, pais: "Colombia", url: "https://qrp2p.com/co/medellin" },
+          { name: "Cali", lat: 3.4516, lng: -76.5320, pais: "Colombia", url: "https://qrp2p.com/co/cali" },
+          { name: "Barranquilla", lat: 10.9639, lng: -74.7964, pais: "Colombia", url: "https://qrp2p.com/co/barranquilla" },
+          { name: "Cartagena", lat: 10.3910, lng: -75.4794, pais: "Colombia", url: "https://qrp2p.com/co/cartagena" },
+          { name: "Quito", lat: -0.1807, lng: -78.4678, pais: "Ecuador", url: "https://qrp2p.com/ec/quito" },
+          { name: "Guayaquil", lat: -2.1700, lng: -79.9224, pais: "Ecuador", url: "https://qrp2p.com/ec/guayaquil" },
+          { name: "Santa Cruz", lat: -17.7833, lng: -63.1821, pais: "Bolivia", url: "https://qrp2p.com/bo/santacruz" },
+          { name: "Montevideo", lat: -34.9011, lng: -56.1645, pais: "Uruguay", url: "https://qrp2p.com/uy/montevideo" },
+          { name: "Panamá", lat: 8.9824, lng: -79.5199, pais: "Panamá", url: "https://qrp2p.com/pa/panama" },
+          { name: "San José", lat: 9.9281, lng: -84.0907, pais: "Costa Rica", url: "https://qrp2p.com/cr/sanjose" }
+        ];
+        
+        const termino = consulta.toLowerCase();
+        const resultados = ciudadesGlobales.filter(ciudad => 
+          ciudad.name.toLowerCase().includes(termino) || 
+          ciudad.pais.toLowerCase().includes(termino)
         );
         
         if (resultados.length > 0) {
-          sugerenciasDiv.innerHTML = '';
-          resultados.slice(0, 8).forEach(lugar => {
-            const coords = COORDENADAS_LUGARES[lugar] || [0, 0];
+          resultados.forEach(lugar => {
             const item = document.createElement('div');
             item.className = 'sugerencia-item';
+            
             item.innerHTML = `
               <div class="sugerencia-texto">
-                <strong>📍 ${lugar}</strong>
+                <strong>🌍 ${lugar.name}</strong><br>
+                <small>${lugar.pais}</small>
               </div>
-              <button class="sugerencia-boton" data-lat="${coords[0]}" data-lng="${coords[1]}" data-nombre="${lugar}">
-                Ver en mapa
+              <button class="sugerencia-boton" data-lat="${lugar.lat}" data-lng="${lugar.lng}" data-nombre="${lugar.name}" data-url="${lugar.url}">
+                Ver en QRP2P
               </button>
             `;
             
             const boton = item.querySelector('.sugerencia-boton');
-            boton.addEventListener('click', (e) => {
+            boton.addEventListener('click', function(e) {
               e.stopPropagation();
-              const lat = parseFloat(boton.dataset.lat);
-              const lng = parseFloat(boton.dataset.lng);
-              const nombre = boton.dataset.nombre;
-              
-              mapa.setView([lat, lng], 10);
-              
-              if (destinoMarker) mapa.removeLayer(destinoMarker);
-              destinoMarker = L.marker([lat, lng]).addTo(mapa)
-                .bindPopup(`<strong>📍 ${nombre}</strong><br><small>Vendedores QRP2P disponibles</small>`);
-              destinoMarker.openPopup();
-              
-              document.getElementById('buscador').value = nombre;
-              sugerenciasDiv.style.display = 'none';
+              const url = this.getAttribute('data-url');
+              window.open(url, '_blank');
+              sugerenciasContainer.style.display = 'none';
             });
             
-            sugerenciasDiv.appendChild(item);
+            item.addEventListener('click', function() {
+              const lat = parseFloat(boton.getAttribute('data-lat'));
+              const lng = parseFloat(boton.getAttribute('data-lng'));
+              const nombre = boton.getAttribute('data-nombre');
+              
+              const latlng = [lat, lng];
+              mapa.setView(latlng, 12);
+              
+              if (destinoMarker) {
+                mapa.removeLayer(destinoMarker);
+              }
+              destinoMarker = L.marker(latlng, {
+                icon: L.icon({
+                  iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png',
+                  iconSize: [32, 32]
+                })
+              }).addTo(mapa)
+                .bindPopup(`<strong>${nombre}</strong><br><p>Próximamente en QRP2P</p><button onclick="window.open('https://qrp2p.com/global/${nombre.toLowerCase().replace(/ /g, '')}', '_blank')" style="background:#9b59b6;color:white;border:none;padding:5px 10px;border-radius:4px;cursor:pointer;margin-top:5px;">Ver más</button>`);
+              
+              destinoMarker.openPopup();
+              document.getElementById('buscador').value = nombre;
+              sugerenciasContainer.style.display = 'none';
+            });
+            
+            sugerenciasContainer.appendChild(item);
           });
+          sugerenciasContainer.style.display = 'block';
         } else {
-          sugerenciasDiv.innerHTML = '<div class="sugerencia-item">❌ No se encontraron resultados para: ' + termino + '</div>';
+          sugerenciasContainer.innerHTML = '<div class="sugerencia-item">No se encontraron resultados para: ' + consulta + '</div>';
+          sugerenciasContainer.style.display = 'block';
         }
-      }, 300);
+      }, 500);
     }
-    
-    function buscarLugar(termino) {
-      const lugarEncontrado = LUGARES_MUNDO.find(l => l.toLowerCase().includes(termino.toLowerCase()));
-      if (lugarEncontrado && COORDENADAS_LUGARES[lugarEncontrado]) {
-        const [lat, lng] = COORDENADAS_LUGARES[lugarEncontrado];
-        mapa.setView([lat, lng], 10);
-        if (destinoMarker) mapa.removeLayer(destinoMarker);
-        destinoMarker = L.marker([lat, lng]).addTo(mapa)
-          .bindPopup(`<strong>📍 ${lugarEncontrado}</strong>`);
-        destinoMarker.openPopup();
-        mostrarNotificacion(`📍 Mostrando: ${lugarEncontrado}`, "success");
+
+    // Función para buscar en los puntos QRP2P
+    function buscarEnPuntosLocales(consulta) {
+      const sugerenciasContainer = document.getElementById('sugerencias-busqueda');
+      const termino = consulta.toLowerCase();
+      const resultados = marcadoresOriginales.filter(m => 
+        m.datosBusqueda.includes(termino)
+      );
+      
+      if (resultados.length > 0) {
+        sugerenciasContainer.innerHTML = '';
+        
+        resultados.forEach(marcador => {
+          const loc = marcador.datosUbicacion;
+          const item = document.createElement('div');
+          item.className = 'sugerencia-item';
+          item.innerHTML = `
+            <div class="sugerencia-texto">
+              <strong>📍 ${loc.nombre}</strong><br>
+              <small>${loc.direccion}, ${loc.pais}</small>
+            </div>
+            <button class="sugerencia-boton" data-id="${loc.id}">
+              QRP2P
+            </button>
+          `;
+          
+          const boton = item.querySelector('.sugerencia-boton');
+          boton.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const id = this.getAttribute('data-id');
+            const punto = UBICACIONES.find(p => p.id === id);
+            if (punto && punto.url) {
+              window.open(punto.url, '_blank');
+            }
+            sugerenciasContainer.style.display = 'none';
+          });
+          
+          item.addEventListener('click', function() {
+            mapa.setView(marcador.getLatLng(), 15);
+            marcador.openPopup();
+            document.getElementById('buscador').value = loc.nombre;
+            sugerenciasContainer.style.display = 'none';
+          });
+          
+          sugerenciasContainer.appendChild(item);
+        });
+        sugerenciasContainer.style.display = 'block';
+        return true;
+      }
+      return false;
+    }
+
+    // Función para manejar teclas en el buscador
+    function handleSearchKeydown(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const termino = document.getElementById('buscador').value.trim();
+        if (termino) {
+          buscarGlobal(termino);
+        }
       }
     }
-    
-    // Iniciar
-    document.addEventListener('DOMContentLoaded', initMap);
+
+    // Función para abrir WhatsApp
+    function abrirWhatsApp(telefono, nombre) {
+      if (!telefono) {
+        window.open('https://qrp2p.com/contacto', '_blank');
+        return;
+      }
+      const numeroLimpio = telefono.replace(/\D/g, '');
+      const mensaje = `Hola ${nombre}, me interesa conocer más sobre QRP2P en tu ubicación.`;
+      window.open(`https://wa.me/${numeroLimpio}?text=${encodeURIComponent(mensaje)}`, '_blank');
+    }
+
+    // Función para centrar el mapa en la ubicación actual
+    function centrarMapa() {
+      if (userMarker) {
+        mapa.setView(userMarker.getLatLng(), 15);
+      } else {
+        obtenerUbicacionUsuario();
+      }
+    }
+
+    // Función para obtener ubicación del usuario
+    function obtenerUbicacionUsuario() {
+      return new Promise((resolve, reject) => {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              const { latitude, longitude } = position.coords;
+              
+              if (userMarker) {
+                mapa.removeLayer(userMarker);
+              }
+              
+              userMarker = L.marker([latitude, longitude], {
+                icon: L.icon({
+                  iconUrl: 'https://cdn-icons-png.flaticon.com/512/447/447031.png',
+                  iconSize: [32, 32]
+                })
+              }).addTo(mapa)
+                .bindPopup('📍 Tu ubicación actual');
+                
+              mapa.setView([latitude, longitude], 13);
+              resolve();
+            },
+            (error) => {
+              console.log(`Error: ${error.message}`);
+              mapa.setView([20, -80], 3);
+              reject();
+            },
+            { enableHighAccuracy: true }
+          );
+        } else {
+          console.log("Geolocalización no soportada");
+          mapa.setView([20, -80], 3);
+          reject();
+        }
+      });
+    }
   </script>
 </body>
 </html>
