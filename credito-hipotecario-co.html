@@ -353,53 +353,53 @@
             <!-- Columna del formulario -->
             <div class="form-section">
                 <h2>Solicita tu crédito</h2>
-                <p>Completa el formulario y un ejecutivo QRP2P te contactará con la mejor propuesta.</p>
+                <p>Completa el formulario y un asesor QRP2P te contactará con la mejor propuesta para ti.</p>
 
                 <form id="creditForm">
                     <!-- Acerca del cliente -->
-                    <div style="margin-bottom: 1rem; font-weight: 700; border-left: 3px solid black; padding-left: 0.6rem;">Información personal</div>
+                    <div style="margin-bottom: 1rem; font-weight: 700; border-left: 3px solid black; padding-left: 0.6rem;">Mis datos personales</div>
                     
                     <div class="row-2">
                         <div class="form-group">
-                            <label>Primer nombre *</label>
+                            <label>Mi primer nombre *</label>
                             <input type="text" id="primerNombre" required>
                         </div>
                         <div class="form-group">
-                            <label>Segundo nombre (opcional)</label>
+                            <label>Mi segundo nombre (opcional)</label>
                             <input type="text" id="segundoNombre">
                         </div>
                     </div>
 
                     <div class="row-2">
                         <div class="form-group">
-                            <label>Primer apellido *</label>
+                            <label>Mi primer apellido *</label>
                             <input type="text" id="primerApellido" required>
                         </div>
                         <div class="form-group">
-                            <label>Segundo apellido *</label>
+                            <label>Mi segundo apellido *</label>
                             <input type="text" id="segundoApellido" required>
                         </div>
                     </div>
 
                     <div class="row-2">
                         <div class="form-group">
-                            <label>Teléfono de contacto *</label>
+                            <label>Mi teléfono de contacto *</label>
                             <input type="tel" id="telefono" placeholder="3001234567" required>
                         </div>
                         <div class="form-group">
-                            <label>Teléfono internacional (opcional)</label>
+                            <label>Mi teléfono internacional (opcional)</label>
                             <input type="tel" id="telefonoInt" placeholder="+1 234 567 8900">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label>Correo electrónico *</label>
+                        <label>Mi correo electrónico *</label>
                         <input type="email" id="email" required>
                     </div>
 
                     <div class="row-2">
                         <div class="form-group">
-                            <label>Tipo de documento *</label>
+                            <label>Mi tipo de documento *</label>
                             <select id="tipoDoc" required>
                                 <option value="">Selecciona</option>
                                 <option value="Cédula de ciudadanía">Cédula de ciudadanía</option>
@@ -409,28 +409,28 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Número de documento *</label>
+                            <label>Mi número de documento *</label>
                             <input type="text" id="numDoc" required>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label>¿Tiene segundo solicitante?</label>
+                        <label>¿Voy a solicitar el crédito con otra persona?</label>
                         <div class="radio-group">
-                            <label><input type="radio" name="segundoSolicitante" value="Sí"> Sí</label>
-                            <label><input type="radio" name="segundoSolicitante" value="No" checked> No</label>
+                            <label><input type="radio" name="segundoSolicitante" value="Sí"> Sí, voy con un codeudor o co-solicitante</label>
+                            <label><input type="radio" name="segundoSolicitante" value="No" checked> No, solo yo</label>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label>Comentarios sobre la necesidad del cliente</label>
-                        <textarea rows="2" id="comentarios" placeholder="Ej: desea comprar casa en Bogotá, estrato 3, presupuesto hasta $200M"></textarea>
+                        <label>Comentarios adicionales (opcional)</label>
+                        <textarea rows="2" id="comentarios" placeholder="Ej: estoy interesado en comprar casa en Bogotá, estrato 3, presupuesto hasta $200M"></textarea>
                     </div>
 
-                    <div style="margin: 1rem 0 0.8rem 0; font-weight: 700; border-left: 3px solid black; padding-left: 0.6rem;">Acerca de sus ingresos</div>
+                    <div style="margin: 1rem 0 0.8rem 0; font-weight: 700; border-left: 3px solid black; padding-left: 0.6rem;">Mis ingresos</div>
 
                     <div class="form-group">
-                        <label>Actividad económica *</label>
+                        <label>Mi actividad económica *</label>
                         <select id="actividad" required>
                             <option value="Asalariado">Asalariado</option>
                             <option value="Independiente">Independiente</option>
@@ -440,32 +440,24 @@
 
                     <div class="row-2">
                         <div class="form-group">
-                            <label>Ingresos (COP$) *</label>
+                            <label>Mis ingresos mensuales (COP$) *</label>
                             <input type="number" id="ingresos" placeholder="3.000.000" required>
                         </div>
                         <div class="form-group">
-                            <label>Ingresos extra (COP$)</label>
+                            <label>Mis ingresos extra mensuales (COP$)</label>
                             <input type="number" id="ingresosExtra" placeholder="1.000.000">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label>¿Declara renta?</label>
+                        <label>¿Declaro renta?</label>
                         <div class="radio-group">
                             <label><input type="radio" name="declaraRenta" value="Sí"> Sí</label>
                             <label><input type="radio" name="declaraRenta" value="No" checked> No</label>
                         </div>
                     </div>
 
-                    <div style="margin: 1rem 0 0.8rem 0; font-weight: 700; border-left: 3px solid black; padding-left: 0.6rem;">Acerca del inmueble</div>
-
-                    <div class="form-group">
-                        <label>¿Es inmueble habi?</label>
-                        <div class="radio-group">
-                            <label><input type="radio" name="inmuebleHabi" value="Sí"> Sí</label>
-                            <label><input type="radio" name="inmuebleHabi" value="No" checked> No</label>
-                        </div>
-                    </div>
+                    <div style="margin: 1rem 0 0.8rem 0; font-weight: 700; border-left: 3px solid black; padding-left: 0.6rem;">Información del inmueble que quiero comprar</div>
 
                     <div class="row-2">
                         <div class="form-group">
@@ -473,21 +465,21 @@
                             <input type="number" id="valorInmueble" placeholder="150.000.000" required>
                         </div>
                         <div class="form-group">
-                            <label>Valor del crédito a solicitar (COP$) *</label>
+                            <label>Valor del crédito que necesito (COP$) *</label>
                             <input type="number" id="valorCredito" placeholder="100.000.000" required>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label>¿El cliente cuenta con recursos para la cuota inicial?</label>
+                        <label>¿Cuento con los recursos para la cuota inicial?</label>
                         <div class="radio-group">
-                            <label><input type="radio" name="cuotaInicial" value="Sí"> Sí</label>
-                            <label><input type="radio" name="cuotaInicial" value="No" checked> No</label>
+                            <label><input type="radio" name="cuotaInicial" value="Sí"> Sí, ya tengo el dinero para la cuota inicial</label>
+                            <label><input type="radio" name="cuotaInicial" value="No" checked> No, necesito opciones de financiamiento</label>
                         </div>
                     </div>
 
-                    <button type="submit">Enviar por WhatsApp</button>
-                    <small>Al enviar, aceptas que un asesor QRP2P se contacte contigo para ofrecerte opciones de crédito hipotecario.</small>
+                    <button type="submit">Enviar mi solicitud por WhatsApp</button>
+                    <small>Al enviar, aceptas que un asesor QRP2P se contacte contigo para ofrecerte las mejores opciones de crédito hipotecario sin costo.</small>
                 </form>
             </div>
         </div>
@@ -522,7 +514,7 @@
 
     <footer>
         <p>QRP2P · Conectamos personas con las mejores opciones de crédito hipotecario en Colombia.</p>
-        <p>📍 Oficina virtual · Línea de atención: +57 3146824438</p>
+        <p>📍 Asesoría sin costo · Línea de atención: +57 3146824438</p>
         <p>© 2025 QRP2P · Todos los derechos reservados</p>
     </footer>
 
@@ -546,7 +538,6 @@
             const ingresos = document.getElementById('ingresos').value;
             const ingresosExtra = document.getElementById('ingresosExtra').value;
             const declaraRenta = document.querySelector('input[name="declaraRenta"]:checked')?.value || '';
-            const inmuebleHabi = document.querySelector('input[name="inmuebleHabi"]:checked')?.value || '';
             const valorInmueble = document.getElementById('valorInmueble').value;
             const valorCredito = document.getElementById('valorCredito').value;
             const cuotaInicial = document.querySelector('input[name="cuotaInicial"]:checked')?.value || '';
@@ -557,30 +548,29 @@
                 return;
             }
 
-            // Construir mensaje para WhatsApp
-            let mensaje = "📋 *NUEVA SOLICITUD DE CRÉDITO - QRP2P*%0A";
+            // Construir mensaje para WhatsApp (en primera persona)
+            let mensaje = "🏠 *NUEVA SOLICITUD DE CRÉDITO - QRP2P*%0A";
             mensaje += "────────────────%0A";
-            mensaje += "*INFORMACIÓN PERSONAL*%0A";
+            mensaje += "*MIS DATOS PERSONALES*%0A";
             mensaje += `Nombre: ${primerNombre} ${segundoNombre ? segundoNombre + ' ' : ''}${primerApellido} ${segundoApellido}%0A`;
             mensaje += `Teléfono: ${telefono}${telefonoInt ? ' / ' + telefonoInt : ''}%0A`;
             mensaje += `Correo: ${email}%0A`;
             mensaje += `Documento: ${tipoDoc} ${numDoc}%0A`;
-            mensaje += `¿Segundo solicitante?: ${segundoSolicitante}%0A`;
+            mensaje += `¿Solicito con otra persona?: ${segundoSolicitante}%0A`;
             if (comentarios) mensaje += `Comentarios: ${comentarios}%0A`;
             
-            mensaje += "%0A*INGRESOS*%0A";
+            mensaje += "%0A*MIS INGRESOS*%0A";
             mensaje += `Actividad: ${actividad}%0A`;
-            mensaje += `Ingresos: COP$ ${Number(ingresos).toLocaleString('es-CO')}%0A`;
+            mensaje += `Ingresos mensuales: COP$ ${Number(ingresos).toLocaleString('es-CO')}%0A`;
             if (ingresosExtra) mensaje += `Ingresos extra: COP$ ${Number(ingresosExtra).toLocaleString('es-CO')}%0A`;
-            mensaje += `Declara renta: ${declaraRenta}%0A`;
+            mensaje += `Declaro renta: ${declaraRenta}%0A`;
             
-            mensaje += "%0A*INMUEBLE Y CRÉDITO*%0A";
-            mensaje += `¿Inmueble habi?: ${inmuebleHabi}%0A`;
-            mensaje += `Valor inmueble: COP$ ${Number(valorInmueble).toLocaleString('es-CO')}%0A`;
-            mensaje += `Crédito solicitado: COP$ ${Number(valorCredito).toLocaleString('es-CO')}%0A`;
-            mensaje += `Recursos para cuota inicial: ${cuotaInicial}%0A`;
+            mensaje += "%0A*INFORMACIÓN DEL INMUEBLE*%0A";
+            mensaje += `Valor del inmueble: COP$ ${Number(valorInmueble).toLocaleString('es-CO')}%0A`;
+            mensaje += `Crédito que necesito: COP$ ${Number(valorCredito).toLocaleString('es-CO')}%0A`;
+            mensaje += `Cuento con cuota inicial: ${cuotaInicial}%0A`;
             mensaje += "────────────────%0A";
-            mensaje += "📲 *Contactar al cliente lo antes posible*";
+            mensaje += "📲 *Por favor contactarme para asesorarme con mi crédito hipotecario*";
 
             // Número de WhatsApp (sin el + ni espacios)
             const telefonoDestino = "573146824438";
