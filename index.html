@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>QRP2P - Capitales del Mundo (196 Países)</title>
   <style>
     :root {
@@ -46,6 +46,12 @@
       width: 100%;
       z-index: 1000;
       justify-content: center;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
     
     #buscador { 
@@ -97,6 +103,7 @@
       flex: 1; 
       background: #f0f0f0; 
       width: 100%;
+      height: 100%;
     }
     
     .cluster-marcadores { 
@@ -186,34 +193,6 @@
       animation: spin 1s ease-in-out infinite;
     }
 
-    .map-type-selector {
-      position: absolute;
-      bottom: 20px;
-      left: 10px;
-      z-index: 1000;
-      background: white;
-      padding: 8px 12px;
-      border-radius: 4px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-      display: flex;
-      gap: 10px;
-    }
-
-    .map-type-btn {
-      padding: 6px 12px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 14px;
-      background: #f1f1f1;
-      transition: background 0.3s;
-    }
-
-    .map-type-btn.active {
-      background: #0066cc;
-      color: white;
-    }
-
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
@@ -222,6 +201,7 @@
       #barra-superior { 
         flex-direction: column; 
         gap: 0.6rem;
+        padding: 0.6rem;
       }
       
       .popup-button-row {
@@ -238,13 +218,11 @@
         margin-top: 5px;
         align-self: flex-end;
       }
+    }
 
-      .map-type-selector {
-        bottom: 10px;
-        left: 5px;
-        flex-direction: column;
-        gap: 5px;
-      }
+    /* Ocultar controles de zoom de Leaflet */
+    .leaflet-control-zoom {
+      display: none !important;
     }
   </style>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
@@ -258,13 +236,9 @@
         <input type="search" id="buscador" placeholder="Buscar país o capital..." enterkeyhint="search">
         <div id="sugerencias-busqueda" class="sugerencias-busqueda"></div>
       </div>
-      <button class="btn btn-centrar" id="centrar-btn">📍 MI UBICACIÓN</button>
+      <button class="btn btn-centrar" id="centrar-btn">📍 CENTER</button>
     </div>
     <div id="mapa"></div>
-    <div class="map-type-selector">
-      <button class="map-type-btn active" id="map-btn">🗺️ Mapa</button>
-      <button class="map-type-btn" id="satellite-btn">🛰️ Satélite</button>
-    </div>
   </div>
 
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
@@ -277,11 +251,8 @@
     let destinoMarker = null;
     let buscadorTimeout;
     let googleMapsLayer;
-    let googleSatelliteLayer;
-    let currentLayer;
 
     // TODAS LAS CAPITALES DE LOS 196 PAÍSES - COMPLETO
-    // Formato: QRP2P [PAÍS EN IDIOMA OFICIAL] y descripción "Sucursal de QRP2P [País] marketplace" traducida
     const CAPITALES = [
       { nombreOficial: "QRP2P AFGHANISTAN", capital: "Kabul", latlng: [34.5553, 69.2075], descripcion: "Sucursal de QRP2P Afghanistan marketplace", telefono: "+93791234567", url: "https://qrp2p.com/af/kabul", pais: "Afghanistan" },
       { nombreOficial: "QRP2P SHQIPËRIA", capital: "Tiranë", latlng: [41.3275, 19.8187], descripcion: "Dyqani i tregut QRP2P Shqipëri", telefono: "+355692345678", url: "https://qrp2p.com/al/tirana", pais: "Albania" },
@@ -343,7 +314,6 @@
       { nombreOficial: "QRP2P GABON", capital: "Libreville", latlng: [0.4162, 9.4673], descripcion: "Succursale du marketplace QRP2P Gabon", telefono: "+24112345678", url: "https://qrp2p.com/ga/libreville", pais: "Gabon" },
       { nombreOficial: "QRP2P GAMBIA", capital: "Banjul", latlng: [13.4549, -16.5790], descripcion: "QRP2P Gambia marketplace branch", telefono: "+2201234567", url: "https://qrp2p.com/gm/banjul", pais: "Gambia" },
       { nombreOficial: "QRP2P საქართველო", capital: "Tbilisi", latlng: [41.7151, 44.8271], descripcion: "QRP2P საქართველოს ბაზრის ფილიალი", telefono: "+995512345678", url: "https://qrp2p.com/ge/tbilisi", pais: "Georgia" },
-      { nombreOficial: "QRP2P DEUTSCHLAND", capital: "Berlin", latlng: [52.5200, 13.4050], descripcion: "QRP2P Deutschland Marktplatz Filiale", telefono: "+4915123456789", url: "https://qrp2p.com/de/berlin", pais: "Germany" },
       { nombreOficial: "QRP2P GHANA", capital: "Accra", latlng: [5.6037, -0.1870], descripcion: "QRP2P Ghana marketplace branch", telefono: "+233123456789", url: "https://qrp2p.com/gh/accra", pais: "Ghana" },
       { nombreOficial: "QRP2P ΕΛΛΑΔΑ", capital: "Αθήνα", latlng: [37.9838, 23.7275], descripcion: "Υποκατάστημα αγοράς QRP2P Ελλάδα", telefono: "+306912345678", url: "https://qrp2p.com/gr/athens", pais: "Greece" },
       { nombreOficial: "QRP2P GRENADA", capital: "St. George's", latlng: [12.0561, -61.7488], descripcion: "QRP2P Grenada marketplace branch", telefono: "+14731234567", url: "https://qrp2p.com/gd/stgeorges", pais: "Grenada" },
@@ -429,7 +399,7 @@
       { nombreOficial: "QRP2P SAMOA", capital: "Apia", latlng: [-13.8330, -171.7667], descripcion: "QRP2P Samoa marketplace branch", telefono: "+6851234567", url: "https://qrp2p.com/ws/apia", pais: "Samoa" },
       { nombreOficial: "QRP2P SAN MARINO", capital: "San Marino", latlng: [43.9424, 12.4578], descripcion: "Sucursale del marketplace QRP2P San Marino", telefono: "+3781234567", url: "https://qrp2p.com/sm/sanmarino", pais: "San Marino" },
       { nombreOficial: "QRP2P SAO TOME AND PRINCIPE", capital: "São Tomé", latlng: [0.3302, 6.7333], descripcion: "Filial do marketplace QRP2P São Tomé e Príncipe", telefono: "+2391234567", url: "https://qrp2p.com/st/saotome", pais: "Sao Tome and Principe" },
-      { nombreOficial: "QRP2P السعودية", capital: "الرياض", latlng: [24.7136, 46.6753], descripcion: "فرع سوق QRP2P السعودية", telefono: "+966512345678", url: "https://qrp2p.com/sa/riyadh", pais: "Saudi Arabia" },
+      { nombreOficial: "QRP2P SAUDI ARABIA", capital: "Riyadh", latlng: [24.7136, 46.6753], descripcion: "فرع سوق QRP2P السعودية", telefono: "+966512345678", url: "https://qrp2p.com/sa/riyadh", pais: "Saudi Arabia" },
       { nombreOficial: "QRP2P SENEGAL", capital: "Dakar", latlng: [14.7167, -17.4677], descripcion: "Succursale du marketplace QRP2P Sénégal", telefono: "+22112345678", url: "https://qrp2p.com/sn/dakar", pais: "Senegal" },
       { nombreOficial: "QRP2P SRBIJA", capital: "Beograd", latlng: [44.7866, 20.4489], descripcion: "QRP2P Srbija marketplace podružnica", telefono: "+38112345678", url: "https://qrp2p.com/rs/belgrade", pais: "Serbia" },
       { nombreOficial: "QRP2P SEYCHELLES", capital: "Victoria", latlng: [-4.6191, 55.4513], descripcion: "QRP2P Seychelles marketplace branch", telefono: "+2481234567", url: "https://qrp2p.com/sc/victoria", pais: "Seychelles" },
@@ -482,14 +452,6 @@
       
       document.getElementById('centrar-btn').addEventListener('click', centrarMapa);
       
-      document.getElementById('map-btn').addEventListener('click', function() {
-        switchToMapView();
-      });
-      
-      document.getElementById('satellite-btn').addEventListener('click', function() {
-        switchToSatelliteView();
-      });
-      
       const searchInput = document.getElementById('buscador');
       searchInput.addEventListener('input', handleSearchInput);
       searchInput.addEventListener('keydown', handleSearchKeydown);
@@ -502,28 +464,27 @@
     });
 
     function initializeMap() {
+      // Inicializar mapa sin controles de zoom
       mapa = L.map('mapa', {
         center: [20, 0],
         zoom: 2,
-        zoomControl: false
+        zoomControl: false,
+        scrollWheelZoom: true,
+        doubleClickZoom: true,
+        boxZoom: true,
+        keyboard: true
       });
 
-      L.control.zoom({ position: 'bottomright' }).addTo(mapa);
+      // NO se añaden controles de zoom
 
+      // Capa de Google Maps
       googleMapsLayer = L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
         maxZoom: 20,
         subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
         attribution: '&copy; <a href="https://maps.google.com">Google Maps</a>'
       });
 
-      googleSatelliteLayer = L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
-        maxZoom: 20,
-        subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-        attribution: '&copy; <a href="https://maps.google.com">Google Maps</a>'
-      });
-
-      currentLayer = googleMapsLayer;
-      currentLayer.addTo(mapa);
+      googleMapsLayer.addTo(mapa);
 
       setTimeout(() => {
         mapa.invalidateSize();
@@ -582,22 +543,6 @@
       }
 
       obtenerUbicacionUsuario();
-    }
-
-    function switchToMapView() {
-      mapa.removeLayer(currentLayer);
-      currentLayer = googleMapsLayer;
-      currentLayer.addTo(mapa);
-      document.getElementById('map-btn').classList.add('active');
-      document.getElementById('satellite-btn').classList.remove('active');
-    }
-
-    function switchToSatelliteView() {
-      mapa.removeLayer(currentLayer);
-      currentLayer = googleSatelliteLayer;
-      currentLayer.addTo(mapa);
-      document.getElementById('satellite-btn').classList.add('active');
-      document.getElementById('map-btn').classList.remove('active');
     }
 
     function abrirGoogleMapsConDireccion(lat, lng, nombre) {
