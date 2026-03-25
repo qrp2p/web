@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="description" content="Completa tu proceso de compra de inmueble con QRP2P. Ingresa la información de la oferta, financiación y tus datos como comprador para recibir asesoría personalizada.">
+    <meta name="keywords" content="compra de inmueble, oferta, crédito hipotecario, arras, QRP2P, comprador">
+    <meta name="author" content="QRP2P">
+    <meta name="robots" content="index, follow">
+    <title>QRP2P | Proceso de Compra de Inmueble</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background: #ffffff;
+            color: #111111;
+            line-height: 1.5;
+        }
+
+        /* Header */
+        .hero {
+            background: #000000;
+            color: #ffffff;
+            padding: 2rem 1.5rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.85;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* Secciones */
+        .section {
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #000000;
+            border-left: 4px solid #000000;
+            padding-left: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333333;
+            margin: 1rem 0 1rem 0;
+            border-bottom: 1px solid #dddddd;
+            padding-bottom: 0.4rem;
+        }
+
+        /* Formulario */
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            font-size: 0.85rem;
+            color: #111111;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #bbbbbb;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            background: #ffffff;
+            transition: all 0.2s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #000000;
+            box-shadow: 0 0 0 2px rgba(0,0,0,0.05);
+        }
+
+        .row-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .row-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            margin-top: 0.3rem;
+            flex-wrap: wrap;
+        }
+
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-weight: normal;
+            margin-bottom: 0;
+        }
+
+        .radio-group input {
+            width: auto;
+        }
+
+        .checkbox-group {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            margin-top: 0.3rem;
+            flex-wrap: wrap;
+        }
+
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-weight: normal;
+        }
+
+        .checkbox-group input {
+            width: auto;
+        }
+
+        .info-box {
+            background: #f5f5f5;
+            border-left: 3px solid #000000;
+            padding: 0.8rem 1rem;
+            margin: 0.8rem 0;
+            font-size: 0.85rem;
+            color: #333;
+        }
+
+        .total-box {
+            background: #f0f0f0;
+            border: 1px solid #cccccc;
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        .total-box span {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #000000;
+        }
+
+        button {
+            background: #000000;
+            color: #ffffff;
+            border: none;
+            padding: 1rem 1.5rem;
+            width: 100%;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 1rem;
+        }
+
+        button:hover {
+            background: #333333;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: #ffffff;
+            color: #000000;
+            border: 1px solid #000000;
+            margin-top: 0;
+        }
+
+        .btn-secondary:hover {
+            background: #f5f5f5;
+            transform: translateY(-1px);
+        }
+
+        small {
+            display: block;
+            margin-top: 1rem;
+            font-size: 0.7rem;
+            color: #777777;
+            text-align: center;
+        }
+
+        hr {
+            margin: 1rem 0;
+            border: none;
+            border-top: 1px solid #eeeeee;
+        }
+
+        .badge {
+            background: #f0f0f0;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: normal;
+            margin-left: 0.5rem;
+        }
+
+        .eliminar-co {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: #999;
+            width: auto;
+            padding: 0.2rem 0.5rem;
+            margin: 0;
+        }
+
+        .eliminar-co:hover {
+            color: #000000;
+            background: none;
+        }
+
+        .comprador-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 16px;
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        @media (max-width: 768px) {
+            .row-2, .row-3 {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+            .section {
+                padding: 1.2rem;
+            }
+            .hero h1 {
+                font-size: 1.4rem;
+            }
+        }
+
+        footer {
+            background: #f8f8f8;
+            text-align: center;
+            padding: 1.5rem;
+            border-top: 1px solid #e0e0e0;
+            margin-top: 2rem;
+            font-size: 0.8rem;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <h1>QRP2P · Proceso de Compra de Inmueble</h1>
+        <p>Completa la información de tu oferta y tus datos como comprador. Un asesor te contactará para ayudarte con el crédito y la documentación.</p>
+    </header>
+
+    <div class="container">
+        <form id="compraForm">
+            <!-- SECCIÓN 1: INFORMACIÓN DE LA OFERTA -->
+            <div class="section">
+                <div class="section-title">📋 Información de la oferta</div>
+                
+                <div class="form-group">
+                    <label>¿Es un negocio convencionado?</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="negocioConvencionado" value="Sí"> Sí</label>
+                        <label><input type="radio" name="negocioConvencionado" value="No" checked> No</label>
+                    </div>
+                </div>
+
+                <div class="section-subtitle">💰 Arras y financiación</div>
+                
+                <div class="form-group">
+                    <label>¿Se hará pago de arras?</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="pagoArras" value="Sí" id="arrasSi"> Sí</label>
+                        <label><input type="radio" name="pagoArras" value="No" id="arrasNo" checked> No</label>
+                    </div>
+                </div>
+
+                <div id="arrasSection" style="display: none;">
+                    <div class="form-group">
+                        <label>Forma de financiación de las Arras</label>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" name="arrasFinancia" value="Recursos propios"> Recursos propios</label>
+                            <label><input type="checkbox" name="arrasFinancia" value="Cesantías"> Cesantías</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Forma de financiación del saldo</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="saldoFinancia" value="Recursos propios"> Recursos propios</label>
+                        <label><input type="checkbox" name="saldoFinancia" value="Crédito"> Crédito hipotecario</label>
+                        <label><input type="checkbox" name="saldoFinancia" value="Cesantías"> Cesantías</label>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    ℹ️ <strong>Tarifa DdC (Derechos de Compra):</strong> No aplica para este proceso.
+                </div>
+
+                <div class="row-2">
+                    <div class="form-group">
+                        <label>Valor ofertado (COP$) *</label>
+                        <input type="number" id="valorOfertado" value="213000000" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Comisión (%)</label>
+                        <input type="number" id="comisionPorcentaje" value="3" step="0.1">
+                        <small style="margin-top: 0.2rem;">Porcentaje de comisión acordado</small>
+                    </div>
+                </div>
+
+                <div class="total-box">
+                    Comisión estimada: <span id="comisionValor">$ 6.390.000</span>
+                </div>
+            </div>
+
+            <!-- SECCIÓN 2: COMPRADORES (Persona Natural - Primera Persona) -->
+            <div class="section">
+                <div class="section-title">👤 Mis datos como comprador</div>
+                <p style="margin-bottom: 1rem; font-size: 0.9rem; color: #555;">Completa tu información. Si vas a comprar con otra persona, también puedes agregar sus datos.</p>
+
+                <div id="compradoresContainer">
+                    <!-- Comprador principal (persona natural) -->
+                    <div class="comprador-card">
+                        <h3 style="font-size: 1rem; margin-bottom: 1rem;">📌 Comprador principal (Yo)</h3>
+                        <div class="row-2">
+                            <div class="form-group">
+                                <label>Mi primer nombre *</label>
+                                <input type="text" class="nombre1" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Mi segundo nombre (opcional)</label>
+                                <input type="text" class="nombre2">
+                            </div>
+                        </div>
+                        <div class="row-2">
+                            <div class="form-group">
+                                <label>Mi primer apellido *</label>
+                                <input type="text" class="apellido1" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Mi segundo apellido *</label>
+                                <input type="text" class="apellido2" required>
+                            </div>
+                        </div>
+                        <div class="row-2">
+                            <div class="form-group">
+                                <label>Mi estado civil *</label>
+                                <select class="estadoCivil" required>
+                                    <option value="">Selecciona</option>
+                                    <option value="Soltero(a)">Soltero(a)</option>
+                                    <option value="Casado(a)">Casado(a)</option>
+                                    <option value="Unión libre">Unión libre</option>
+                                    <option value="Divorciado(a)">Divorciado(a)</option>
+                                    <option value="Viudo(a)">Viudo(a)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Mi tipo de documento *</label>
+                                <select class="tipoDoc" required>
+                                    <option value="">Selecciona</option>
+                                    <option value="Cédula de ciudadanía">Cédula de ciudadanía</option>
+                                    <option value="Cédula de extranjería">Cédula de extranjería</option>
+                                    <option value="Pasaporte">Pasaporte</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row-2">
+                            <div class="form-group">
+                                <label>Mi número de documento *</label>
+                                <input type="text" class="numDocumento" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Mi teléfono de contacto *</label>
+                                <input type="tel" class="telefono" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Mi correo electrónico *</label>
+                            <input type="email" class="email" required>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" id="agregarCoComprador" class="btn-secondary" style="width: 100%;">+ Agregar co-comprador (persona natural)</button>
+            </div>
+
+            <!-- SECCIÓN 3: INFORMACIÓN ADICIONAL Y ENVÍO -->
+            <div class="section">
+                <div class="section-title">📄 Información adicional</div>
+                <div class="form-group">
+                    <label>Comentarios sobre la compra (opcional)</label>
+                    <textarea rows="3" id="comentariosCompra" placeholder="Ej: el inmueble está ubicado en Bogotá, necesito crédito por el 80%, tengo la cuota inicial ahorrada..."></textarea>
+                </div>
+
+                <button type="submit">Enviar mi proceso de compra por WhatsApp</button>
+                <small>Al enviar, un asesor QRP2P revisará tu información y te contactará para ayudarte con el crédito y la documentación necesaria.</small>
+            </div>
+        </form>
+    </div>
+
+    <footer>
+        <p>QRP2P · Te acompañamos en todo tu proceso de compra de inmueble</p>
+        <p>📲 Asesoría sin costo · +57 3146824438</p>
+        <p>© 2025 QRP2P · Todos los derechos reservados</p>
+    </footer>
+
+    <script>
+        // Mostrar/ocultar sección de arras
+        const arrasSi = document.getElementById('arrasSi');
+        const arrasNo = document.getElementById('arrasNo');
+        const arrasSection = document.getElementById('arrasSection');
+
+        function toggleArras() {
+            if (arrasSi.checked) {
+                arrasSection.style.display = 'block';
+            } else {
+                arrasSection.style.display = 'none';
+            }
+        }
+        arrasSi.addEventListener('change', toggleArras);
+        arrasNo.addEventListener('change', toggleArras);
+        toggleArras();
+
+        // Calcular comisión automáticamente
+        const valorOfertadoInput = document.getElementById('valorOfertado');
+        const comisionPorcentajeInput = document.getElementById('comisionPorcentaje');
+        const comisionValorSpan = document.getElementById('comisionValor');
+
+        function calcularComision() {
+            let valor = parseFloat(valorOfertadoInput.value) || 0;
+            let porcentaje = parseFloat(comisionPorcentajeInput.value) || 0;
+            let comision = (valor * porcentaje) / 100;
+            comisionValorSpan.innerText = '$ ' + comision.toLocaleString('es-CO');
+        }
+
+        valorOfertadoInput.addEventListener('input', calcularComision);
+        comisionPorcentajeInput.addEventListener('input', calcularComision);
+        calcularComision();
+
+        // Agregar co-comprador
+        const compradoresContainer = document.getElementById('compradoresContainer');
+        let coCompradorCount = 0;
+
+        document.getElementById('agregarCoComprador').addEventListener('click', function() {
+            coCompradorCount++;
+            const newComprador = document.createElement('div');
+            newComprador.className = 'comprador-card';
+            newComprador.innerHTML = `
+                <button type="button" class="eliminar-co">✖</button>
+                <h3 style="font-size: 1rem; margin-bottom: 1rem;">👥 Co-comprador ${coCompradorCount}</h3>
+                <div class="row-2">
+                    <div class="form-group"><label>Primer nombre *</label><input type="text" class="nombre1_co" required></div>
+                    <div class="form-group"><label>Segundo nombre (opcional)</label><input type="text" class="nombre2_co"></div>
+                </div>
+                <div class="row-2">
+                    <div class="form-group"><label>Primer apellido *</label><input type="text" class="apellido1_co" required></div>
+                    <div class="form-group"><label>Segundo apellido *</label><input type="text" class="apellido2_co" required></div>
+                </div>
+                <div class="row-2">
+                    <div class="form-group"><label>Estado civil *</label>
+                        <select class="estadoCivil_co" required>
+                            <option value="">Selecciona</option>
+                            <option value="Soltero(a)">Soltero(a)</option>
+                            <option value="Casado(a)">Casado(a)</option>
+                            <option value="Unión libre">Unión libre</option>
+                            <option value="Divorciado(a)">Divorciado(a)</option>
+                            <option value="Viudo(a)">Viudo(a)</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label>Tipo de documento *</label>
+                        <select class="tipoDoc_co" required>
+                            <option value="">Selecciona</option>
+                            <option value="Cédula de ciudadanía">Cédula de ciudadanía</option>
+                            <option value="Cédula de extranjería">Cédula de extranjería</option>
+                            <option value="Pasaporte">Pasaporte</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row-2">
+                    <div class="form-group"><label>Número de documento *</label><input type="text" class="numDocumento_co" required></div>
+                    <div class="form-group"><label>Teléfono *</label><input type="tel" class="telefono_co" required></div>
+                </div>
+                <div class="form-group"><label>Correo electrónico *</label><input type="email" class="email_co" required></div>
+            `;
+            compradoresContainer.appendChild(newComprador);
+            
+            newComprador.querySelector('.eliminar-co').addEventListener('click', function() {
+                newComprador.remove();
+            });
+        });
+
+        // Envío del formulario por WhatsApp
+        document.getElementById('compraForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Validar comprador principal
+            const principalNombre1 = document.querySelector('.nombre1').value.trim();
+            const principalApellido1 = document.querySelector('.apellido1').value.trim();
+            const principalApellido2 = document.querySelector('.apellido2').value.trim();
+            const principalTelefono = document.querySelector('.telefono').value.trim();
+            const principalEmail = document.querySelector('.email').value.trim();
+
+            if (!principalNombre1 || !principalApellido1 || !principalApellido2 || !principalTelefono || !principalEmail) {
+                alert('Por favor completa todos los campos obligatorios del comprador principal (*)');
+                return;
+            }
+
+            // Recolectar datos
+            const negocioConvencionado = document.querySelector('input[name="negocioConvencionado"]:checked')?.value || '';
+            const pagoArras = document.querySelector('input[name="pagoArras"]:checked')?.value || '';
+            
+            let arrasFinanciacion = [];
+            document.querySelectorAll('input[name="arrasFinancia"]:checked').forEach(cb => arrasFinanciacion.push(cb.value));
+            
+            let saldoFinanciacion = [];
+            document.querySelectorAll('input[name="saldoFinancia"]:checked').forEach(cb => saldoFinanciacion.push(cb.value));
+            
+            const valorOfertado = document.getElementById('valorOfertado').value;
+            const comisionPorcentaje = document.getElementById('comisionPorcentaje').value;
+            const comisionValor = (parseFloat(valorOfertado) * parseFloat(comisionPorcentaje) / 100).toLocaleString('es-CO');
+            const comentarios = document.getElementById('comentariosCompra').value;
+
+            // Datos comprador principal
+            const principalNombre2 = document.querySelector('.nombre2')?.value || '';
+            const principalEstadoCivil = document.querySelector('.estadoCivil').value;
+            const principalTipoDoc = document.querySelector('.tipoDoc').value;
+            const principalNumDoc = document.querySelector('.numDocumento').value;
+
+            let mensaje = "🏠 *PROCESO DE COMPRA DE INMUEBLE - QRP2P*%0A";
+            mensaje += "────────────────%0A";
+            mensaje += "*INFORMACIÓN DE LA OFERTA*%0A";
+            mensaje += `Negocio convencionado: ${negocioConvencionado}%0A`;
+            mensaje += `Pago de arras: ${pagoArras}%0A`;
+            if (pagoArras === 'Sí' && arrasFinanciacion.length) {
+                mensaje += `Financiación arras: ${arrasFinanciacion.join(', ')}%0A`;
+            }
+            mensaje += `Financiación saldo: ${saldoFinanciacion.join(', ') || 'No especificada'}%0A`;
+            mensaje += `Valor ofertado: COP$ ${parseFloat(valorOfertado).toLocaleString('es-CO')}%0A`;
+            mensaje += `Comisión: ${comisionPorcentaje}% (COP$ ${comisionValor})%0A`;
+            
+            mensaje += "%0A*COMPRADOR PRINCIPAL (YO)*%0A";
+            mensaje += `Nombre: ${principalNombre1} ${principalNombre2} ${principalApellido1} ${principalApellido2}%0A`;
+            mensaje += `Estado civil: ${principalEstadoCivil}%0A`;
+            mensaje += `Documento: ${principalTipoDoc} ${principalNumDoc}%0A`;
+            mensaje += `Teléfono: ${principalTelefono}%0A`;
+            mensaje += `Correo: ${principalEmail}%0A`;
+            
+            // Co-compradores
+            const coCompradores = document.querySelectorAll('.comprador-card:not(:first-child)');
+            if (coCompradores.length > 0) {
+                mensaje += "%0A*CO-COMPRADORES*%0A";
+                coCompradores.forEach((comp, idx) => {
+                    const nom1 = comp.querySelector('.nombre1_co')?.value || '';
+                    const nom2 = comp.querySelector('.nombre2_co')?.value || '';
+                    const ape1 = comp.querySelector('.apellido1_co')?.value || '';
+                    const ape2 = comp.querySelector('.apellido2_co')?.value || '';
+                    const estado = comp.querySelector('.estadoCivil_co')?.value || '';
+                    const tipoDoc = comp.querySelector('.tipoDoc_co')?.value || '';
+                    const numDoc = comp.querySelector('.numDocumento_co')?.value || '';
+                    const tel = comp.querySelector('.telefono_co')?.value || '';
+                    const emailCo = comp.querySelector('.email_co')?.value || '';
+                    mensaje += `\n👥 Co-comprador ${idx+1}: ${nom1} ${nom2} ${ape1} ${ape2}%0A`;
+                    mensaje += `   Estado civil: ${estado} | Doc: ${tipoDoc} ${numDoc}%0A`;
+                    mensaje += `   Tel: ${tel} | Email: ${emailCo}%0A`;
+                });
+            }
+            
+            if (comentarios) {
+                mensaje += "%0A*COMENTARIOS*%0A" + comentarios + "%0A";
+            }
+            
+            mensaje += "────────────────%0A";
+            mensaje += "📲 *Por favor contactarme para asesorarme en mi compra de inmueble*";
+            
+            const telefonoDestino = "573146824438";
+            const url = `https://wa.me/${telefonoDestino}?text=${encodeURIComponent(mensaje)}`;
+            window.open(url, '_blank');
+        });
+    </script>
+</body>
+</html>
