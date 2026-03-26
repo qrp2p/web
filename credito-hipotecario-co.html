@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <meta name="description" content="Solicita tu crédito hipotecario en QRP2P. Múltiples opciones bancarias, facilidades de pago y estudio rápido. Completa el formulario y te asesoramos sin costo.">
-    <meta name="keywords" content="crédito hipotecario, compra de vivienda, préstamo para casa, financiamiento inmobiliario, QRP2P, crédito en Colombia">
+    <meta name="keywords" content="crédito hipotecario, compra de vivienda, préstamo para casa, financiamiento inmobiliario, QRP2P, crédito en Colombia, leasing habitacional, crédito para reportados, compra de cartera">
     <meta name="author" content="QRP2P">
     <meta name="robots" content="index, follow">
-    <title>QRP2P | Solicita tu Crédito Hipotecario</title>
+    <title>QRP2P | Solicita tu Crédito Hipotecario - Todas las Opciones</title>
     <style>
         * {
             margin: 0;
@@ -98,6 +98,12 @@
             border-radius: 12px;
             padding: 1.2rem;
             margin-bottom: 1.2rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
 
         .info-card h4 {
@@ -127,6 +133,13 @@
             font-size: 0.85rem;
             font-weight: 500;
             color: #111111;
+            transition: all 0.2s ease;
+        }
+
+        .bank-tag:hover {
+            background: #000000;
+            color: #ffffff;
+            border-color: #000000;
         }
 
         .benefit-list {
@@ -147,6 +160,18 @@
             color: #000000;
             font-weight: bold;
             font-size: 1.1rem;
+        }
+
+        /* Badges y etiquetas */
+        .badge {
+            display: inline-block;
+            background: #000000;
+            color: white;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            margin-left: 0.5rem;
+            vertical-align: middle;
         }
 
         /* Formulario */
@@ -210,6 +235,7 @@
             gap: 1.5rem;
             align-items: center;
             margin-top: 0.3rem;
+            flex-wrap: wrap;
         }
 
         .radio-group label {
@@ -276,6 +302,60 @@
             font-style: italic;
         }
 
+        /* Nueva sección de opciones expandidas */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1.5rem;
+        }
+
+        .option-item {
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 1rem 1.2rem;
+            transition: all 0.2s ease;
+        }
+
+        .option-item:hover {
+            border-color: #000000;
+            transform: translateY(-2px);
+        }
+
+        .option-item strong {
+            display: block;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: #000000;
+        }
+
+        .option-item p {
+            font-size: 0.85rem;
+            color: #555555;
+            margin: 0;
+        }
+
+        .highlight-box {
+            background: #000000;
+            color: white;
+            padding: 1.2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin: 1.5rem 0;
+        }
+
+        .highlight-box p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        .highlight-box a {
+            color: white;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
         @media (max-width: 640px) {
             .hero h1 {
                 font-size: 1.6rem;
@@ -286,6 +366,11 @@
             }
             .info-section, .form-section {
                 padding: 1.2rem;
+            }
+            .radio-group {
+                gap: 0.8rem;
+                flex-direction: column;
+                align-items: flex-start;
             }
         }
     </style>
@@ -341,6 +426,18 @@
                         <li>Independientes con capacidad de pago demostrable</li>
                         <li>Pensionados con estabilidad comprobada</li>
                         <li>Compra de vivienda nueva, usada o construcción</li>
+                        <li>Personas con historial crediticio no perfecto <span class="badge">Te asesoramos</span></li>
+                    </ul>
+                </div>
+
+                <!-- NUEVA SECCIÓN: Alternativas especiales -->
+                <div class="info-card">
+                    <h4>🔓 Alternativas para todos los perfiles</h4>
+                    <ul class="benefit-list">
+                        <li><strong>¿Has estado reportado?</strong> Te orientamos para mejorar tu historial y acceder al crédito</li>
+                        <li><strong>Independientes sin declaración de renta:</strong> Opciones flexibles con otros comprobantes</li>
+                        <li><strong>Codeudor o co-solicitante:</strong> Fortalece tu solicitud y aumenta aprobación</li>
+                        <li><strong>Crédito con subsidio:</strong> Accede a Mi Casa Ya y cajas de compensación</li>
                     </ul>
                 </div>
 
@@ -422,9 +519,19 @@
                         </div>
                     </div>
 
+                    <!-- Nuevo campo: situación en centrales de riesgo -->
+                    <div class="form-group">
+                        <label>¿Has estado reportado en centrales de riesgo (Datacrédito, CIFIN)?</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="reportado" value="Sí, actualmente"> Sí, actualmente</label>
+                            <label><input type="radio" name="reportado" value="Sí, pero ya estoy al día"> Sí, pero ya estoy al día</label>
+                            <label><input type="radio" name="reportado" value="No, nunca" checked> No, nunca</label>
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <label>Comentarios adicionales (opcional)</label>
-                        <textarea rows="2" id="comentarios" placeholder="Ej: estoy interesado en comprar casa en Bogotá, estrato 3, presupuesto hasta $200M"></textarea>
+                        <textarea rows="2" id="comentarios" placeholder="Ej: estoy interesado en comprar casa en Bogotá, estrato 3, presupuesto hasta $200M. También me interesa leasing habitacional."></textarea>
                     </div>
 
                     <div style="margin: 1rem 0 0.8rem 0; font-weight: 700; border-left: 3px solid black; padding-left: 0.6rem;">Mis ingresos</div>
@@ -510,6 +617,53 @@
                 <p style="margin-top: 0.5rem; font-size: 0.9rem;">Compra de cartera hipotecaria para mejorar condiciones.</p>
             </div>
         </div>
+
+        <!-- NUEVA SECCIÓN: Más alternativas ampliadas (leasing, traslado, subsidios, etc) -->
+        <div style="margin: 2rem 0 1rem;">
+            <h3 style="font-size: 1.5rem; text-align: center;">🌟 Alternativas que tenemos para ti</h3>
+        </div>
+
+        <div class="options-grid">
+            <div class="option-item">
+                <strong>📄 Leasing habitacional</strong>
+                <p>Disfruta de tu vivienda con cuotas más bajas y opción de compra al final. Ideal si buscas menor cuota inicial.</p>
+            </div>
+            <div class="option-item">
+                <strong>🔄 Traslado de hipoteca</strong>
+                <p>Mejora la tasa de tu crédito actual y reduce tu cuota mensual. Compra de cartera con condiciones preferenciales.</p>
+            </div>
+            <div class="option-item">
+                <strong>🏠 Crédito con subsidio familiar</strong>
+                <p>Accede a programas como Mi Casa Ya y cajas de compensación. Te ayudamos a tramitarlo.</p>
+            </div>
+            <div class="option-item">
+                <strong>👥 Crédito con codeudor</strong>
+                <p>Fortalece tu perfil financiero y aumenta tus posibilidades de aprobación si tus ingresos no son suficientes.</p>
+            </div>
+            <div class="option-item">
+                <strong>🔓 Opciones para independientes</strong>
+                <p>Soluciones a la medida si tus ingresos no son fijos o declaras renta. Evaluamos extractos y contratos.</p>
+            </div>
+            <div class="option-item">
+                <strong>🚫 Sin historia crediticia perfecta</strong>
+                <p>Evaluamos tu situación actual, no solo tu pasado. Incluso si has estado reportado, te asesoramos para encontrar una opción viable.</p>
+            </div>
+            <div class="option-item">
+                <strong>💳 Abono a capital sin penalización</strong>
+                <p>Reduce tu deuda más rápido cuando tus ingresos lo permitan. Sin cobros adicionales.</p>
+            </div>
+            <div class="option-item">
+                <strong>🔄 Deja de pagar arriendo</strong>
+                <p>Convierte tu cuota de arriendo en inversión propia. Cuota similar o menor a tu arriendo actual.</p>
+            </div>
+        </div>
+
+        <!-- CTA adicional -->
+        <div class="highlight-box">
+            <p>✨ <strong>¿Listo para dejar de pagar arriendo y tener tu casa propia?</strong> ✨<br>
+            Completa el formulario y te contactamos con las opciones disponibles para ti.<br>
+            📲 <a href="#" id="ctaLink">Da clic aquí o escríbenos directo por WhatsApp</a></p>
+        </div>
     </div>
 
     <footer>
@@ -533,6 +687,7 @@
             const tipoDoc = document.getElementById('tipoDoc').value;
             const numDoc = document.getElementById('numDoc').value.trim();
             const segundoSolicitante = document.querySelector('input[name="segundoSolicitante"]:checked')?.value || '';
+            const reportado = document.querySelector('input[name="reportado"]:checked')?.value || '';
             const comentarios = document.getElementById('comentarios').value.trim();
             const actividad = document.getElementById('actividad').value;
             const ingresos = document.getElementById('ingresos').value;
@@ -548,7 +703,7 @@
                 return;
             }
 
-            // Construir mensaje para WhatsApp (en primera persona)
+            // Construir mensaje para WhatsApp
             let mensaje = "🏠 *NUEVA SOLICITUD DE CRÉDITO - QRP2P*%0A";
             mensaje += "────────────────%0A";
             mensaje += "*MIS DATOS PERSONALES*%0A";
@@ -557,6 +712,7 @@
             mensaje += `Correo: ${email}%0A`;
             mensaje += `Documento: ${tipoDoc} ${numDoc}%0A`;
             mensaje += `¿Solicito con otra persona?: ${segundoSolicitante}%0A`;
+            mensaje += `Situación en centrales de riesgo: ${reportado}%0A`;
             if (comentarios) mensaje += `Comentarios: ${comentarios}%0A`;
             
             mensaje += "%0A*MIS INGRESOS*%0A";
@@ -570,13 +726,21 @@
             mensaje += `Crédito que necesito: COP$ ${Number(valorCredito).toLocaleString('es-CO')}%0A`;
             mensaje += `Cuento con cuota inicial: ${cuotaInicial}%0A`;
             mensaje += "────────────────%0A";
-            mensaje += "📲 *Por favor contactarme para asesorarme con mi crédito hipotecario*";
+            mensaje += "📲 *Por favor contactarme para asesorarme con mi crédito hipotecario. Me interesan todas las opciones: leasing, subsidios, crédito con codeudor, y alternativas si he estado reportado.*";
 
-            // Número de WhatsApp (sin el + ni espacios)
+            // Número de WhatsApp
             const telefonoDestino = "573146824438";
             const url = `https://wa.me/${telefonoDestino}?text=${mensaje}`;
             
             window.open(url, '_blank');
+        });
+
+        // CTA link también envía a WhatsApp con mensaje predefinido
+        document.getElementById('ctaLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            const mensajeRapido = "Hola, estoy interesado en las opciones de crédito hipotecario, especialmente en dejar de pagar arriendo y conocer alternativas para mi perfil. ¿Pueden asesorarme?";
+            const telefonoDestino = "573146824438";
+            window.open(`https://wa.me/${telefonoDestino}?text=${encodeURIComponent(mensajeRapido)}`, '_blank');
         });
     </script>
 </body>
