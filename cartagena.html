@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Mapa - Contraentrega Cartagena | Vendedores Verificados Bolívar - Costa Caribe</title>
+  <style>
+    :root {
+      --primary-color: #1a1a1a;
+      --secondary-color: #333;
+      --accent-color: #0066cc;
+      --text-color: #333;
+      --light-text: #fff;
+      --bg-light: #f8f8f8;
+      --border-radius: 8px;
+      --box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      --transition: all 0.3s ease;
+    }
+    
+    * { 
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box; 
+    }
+    
+    body { 
+      font-family: 'Roboto', sans-serif; 
+      color: var(--text-color); 
+      line-height: 1.6; 
+      touch-action: manipulation;
+      overflow-x: hidden;
+    }
+    
+    #contenedor-mapa { 
+      height: 100vh; 
+      display: flex; 
+      flex-direction: column; 
+      position: relative;
+    }
+    
+    #barra-superior { 
+      display: flex; 
+      gap: 0.8rem; 
+      padding: 0.8rem; 
+      background: var(--bg-light); 
+      width: 100%;
+      z-index: 1000;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .contenedor-buscador {
+      position: relative;
+      flex: 1;
+      max-width: 500px;
+    }
+    
+    #buscador { 
+      width: 100%;
+      padding: 0.6rem 1.2rem; 
+      border: 1px solid #ddd; 
+      border-radius: 24px; 
+      appearance: none; 
+      font-size: 16px;
+      transition: var(--transition);
+    }
+    
+    #buscador:focus {
+      outline: none;
+      border-color: var(--accent-color);
+      box-shadow: 0 0 0 2px rgba(0,102,204,0.2);
+    }
+    
+    .btn { 
+      background: #000000;
+      color: #ffffff;
+      padding: 0.6rem 1.2rem; 
+      border-radius: 24px; 
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      border: 1px solid #333;
+      font-family: inherit;
+    }
+    
+    .btn:hover {
+      background: #333333;
+      transform: translateY(-1px);
+    }
+    
+    .btn-centrar {
+      background-color: #000000;
+      color: #ffffff;
+    }
+    
+    .btn-registro {
+      background-color: #000000;
+      color: #ffffff;
+    }
+    
+    .botones-secundarios {
+      display: flex;
+      gap: 0.8rem;
+      justify-content: center;
+    }
+    
+    #mapa { 
+      flex: 1; 
+      background: #f0f0f0; 
+      width: 100%;
+    }
+    
+    .notificacion-alerta {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      background: #ff6b6b;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      z-index: 2000;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      animation: slideInRight 0.3s ease;
+      max-width: 280px;
+    }
+    
+    .notificacion-alerta button {
+      background: white;
+      color: #ff6b6b;
+      border: none;
+      padding: 4px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 0.75rem;
+    }
+    
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    .cluster-marcadores { 
+      background: rgba(40,40,40,0.7); 
+      border-radius: 50%; 
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+    
+    .whatsapp-icon {
+      width: 16px;
+      height: 16px;
+      filter: invert(1);
+    }
+
+    .popup-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .popup-button-row {
+      display: flex;
+      gap: 8px;
+      justify-content: space-between;
+    }
+
+    .sugerencias-busqueda {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: white;
+      border-radius: 0 0 8px 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      z-index: 1000;
+      max-height: 200px;
+      overflow-y: auto;
+      display: none;
+    }
+
+    .sugerencia-item {
+      padding: 10px 15px;
+      cursor: pointer;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .sugerencia-item:hover {
+      background-color: #f5f5f5;
+    }
+
+    .sugerencia-texto {
+      flex: 1;
+    }
+
+    .sugerencia-boton {
+      margin-left: 10px;
+      padding: 5px 10px;
+      background-color: #000000;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .cargando {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(0,0,0,.3);
+      border-radius: 50%;
+      border-top-color: #000;
+      animation: spin 1s ease-in-out infinite;
+    }
+
+    .gm-style .gm-style-iw-c {
+      border-radius: 8px;
+      padding: 10px;
+    }
+
+    .gm-style .gm-style-iw-d {
+      overflow: auto !important;
+    }
+
+    .gm-ui-hover-effect {
+      top: 8px !important;
+      right: 8px !important;
+    }
+
+    .map-type-selector {
+      position: absolute;
+      bottom: 20px;
+      left: 10px;
+      z-index: 1000;
+      background: white;
+      padding: 8px 12px;
+      border-radius: 4px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      display: flex;
+      gap: 10px;
+    }
+
+    .map-type-btn {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      background: #f1f1f1;
+      transition: background 0.3s;
+    }
+
+    .map-type-btn.active {
+      background: #0066cc;
+      color: white;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 768px) { 
+      #barra-superior { 
+        flex-direction: column; 
+        gap: 0.6rem;
+      }
+      
+      .botones-secundarios {
+        flex-direction: column;
+        gap: 0.6rem;
+      }
+      
+      .popup-button-row {
+        flex-direction: column;
+      }
+
+      .sugerencia-item {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .sugerencia-boton {
+        margin-left: 0;
+        margin-top: 5px;
+        align-self: flex-end;
+      }
+
+      .map-type-selector {
+        bottom: 10px;
+        left: 5px;
+        flex-direction: column;
+        gap: 5px;
+      }
+      
+      .notificacion-alerta {
+        bottom: 70px;
+        right: 10px;
+        left: 10px;
+        max-width: none;
+        font-size: 0.75rem;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
+</head>
+<body>
+  <div id="contenedor-mapa">
+    <div id="barra-superior">
+      <div class="contenedor-buscador">
+        <input type="search" id="buscador" placeholder="BUSCAR EN CARTAGENA DE INDIAS" enterkeyhint="search">
+        <div id="sugerencias-busqueda" class="sugerencias-busqueda"></div>
+      </div>
+      <div class="botones-secundarios">
+        <button class="btn btn-centrar" id="centrar-btn">CENTRAR</button>
+        <button class="btn btn-registro" id="registro-btn" onclick="window.open('https://qrp2p.com/afiliacion-colombia', '_blank')">REGISTRO</button>
+      </div>
+    </div>
+    <div id="mapa"></div>
+    <div class="map-type-selector">
+      <button class="map-type-btn active" id="map-btn">Mapa</button>
+      <button class="map-type-btn" id="satellite-btn">Satélite</button>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+  <script>
+    // Variables globales
+    let mapa;
+    let userMarker;
+    let marcadoresOriginales = [];
+    let destinoMarker = null;
+    let buscadorTimeout;
+    let googleMapsLayer;
+    let googleSatelliteLayer;
+    let currentLayer;
+    let notificacionActual = null;
+
+    // Datos de ubicaciones - CARTAGENA DE INDIAS, BOLÍVAR (La Heroica)
+    const UBICACIONES = [
+      { 
+        "id": "cartagena-centro",
+        "nombre": "QRContraentrega Cartagena Centro", 
+        "direccion": "Calle 35 # 10-45, Centro Histórico, Cartagena de Indias, Bolívar, Colombia", 
+        "latlng": [10.4234, -75.5520], 
+        "url": "https://cartagena.qrcontraentrega.com/afiliado/",
+        "telefono": "+573105678901",
+        "horario": "Lunes a Domingo: 8am-8pm",
+        "servicios": "Pagos contraentrega, envíos nacionales a toda la Costa Caribe",
+        "pais": "Colombia",
+        "tipo": "socio"
+      },
+      { 
+        "id": "cartagena-bocagrande",
+        "nombre": "Contraentrega Cartagena Bocagrande", 
+        "direccion": "Carrera 2 # 8-125, Bocagrande, Cartagena de Indias, Bolívar", 
+        "latlng": [10.4005, -75.5622], 
+        "url": "https://cartagena-bocagrande.qrcontraentrega.com",
+        "telefono": "+573122334455",
+        "horario": "Lunes a Sábado: 9am-7pm",
+        "servicios": "Recogida de paquetes, zona turística exclusiva",
+        "pais": "Colombia",
+        "tipo": "socio"
+      },
+      { 
+        "id": "cartagena-castillogrande",
+        "nombre": "Contraentrega Cartagena Castillo Grande", 
+        "direccion": "Carrera 1 # 10-78, Castillo Grande, Cartagena, Bolívar", 
+        "latlng": [10.3935, -75.5682], 
+        "url": "https://cartagena-castillo.qrcontraentrega.com",
+        "telefono": "+573156789012",
+        "horario": "Lunes a Viernes: 8am-6pm, Sábados: 9am-2pm",
+        "servicios": "Envíos zona sur, puntos de encuentro",
+        "pais": "Colombia",
+        "tipo": "socio"
+      },
+      { 
+        "id": "cartagena-manga",
+        "nombre": "Contraentrega Cartagena Manga", 
+        "direccion": "Calle 27 # 16-34, Barrio Manga, Cartagena, Bolívar", 
+        "latlng": [10.4135, -75.5395], 
+        "url": "https://cartagena-manga.qrcontraentrega.com",
+        "telefono": "+573187654321",
+        "horario": "Lunes a Domingo: 8am-7pm",
+        "servicios": "Servicio express, zona residencial",
+        "pais": "Colombia",
+        "tipo": "socio"
+      },
+      { 
+        "id": "cartagena-crematorio",
+        "nombre": "Contraentrega Cartagena - Zona Industrial", 
+        "direccion": "Carrera 28 # 30-50, Parque Industrial, Cartagena, Bolívar", 
+        "latlng": [10.4455, -75.5085], 
+        "url": "https://cartagena-industrial.qrcontraentrega.com",
+        "telefono": "+573209876543",
+        "horario": "Lunes a Viernes: 8am-5pm",
+        "servicios": "Logística industrial, envíos empresariales",
+        "pais": "Colombia",
+        "tipo": "socio"
+      }
+    ];
+
+    // Límites aproximados del área de Cartagena (incluye zona insular costera)
+    const LIMITES_CARTAGENA = {
+      minLat: 10.3500,  // Sur (Pasacaballos / Mamonal)
+      maxLat: 10.4600,  // Norte (La Boquilla / Zona Norte)
+      minLng: -75.6000, // Oeste (Islas / Mar Caribe)
+      maxLng: -75.4800  // Este (Ternera / Canapote)
+    };
+
+    function estaEnCartagena(lat, lng) {
+      return (lat >= LIMITES_CARTAGENA.minLat && lat <= LIMITES_CARTAGENA.maxLat &&
+              lng >= LIMITES_CARTAGENA.minLng && lng <= LIMITES_CARTAGENA.maxLng);
+    }
+
+    function mostrarNotificacion(mensaje, tipo = 'warning') {
+      if (notificacionActual) {
+        notificacionActual.remove();
+      }
+      
+      const notificacion = document.createElement('div');
+      notificacion.className = 'notificacion-alerta';
+      notificacion.style.background = tipo === 'warning' ? '#ff6b6b' : '#4caf50';
+      notificacion.innerHTML = `
+        <span>⚠️ ${mensaje}</span>
+        <button onclick="this.parentElement.remove()">✕</button>
+      `;
+      document.body.appendChild(notificacion);
+      notificacionActual = notificacion;
+      
+      setTimeout(() => {
+        if (notificacionActual === notificacion) {
+          notificacion.remove();
+          notificacionActual = null;
+        }
+      }, 5000);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      initializeMap();
+      
+      document.getElementById('centrar-btn').addEventListener('click', centrarMapa);
+      
+      document.getElementById('map-btn').addEventListener('click', function() {
+        switchToMapView();
+      });
+      
+      document.getElementById('satellite-btn').addEventListener('click', function() {
+        switchToSatelliteView();
+      });
+      
+      const searchInput = document.getElementById('buscador');
+      searchInput.addEventListener('input', handleSearchInput);
+      searchInput.addEventListener('keydown', handleSearchKeydown);
+      
+      document.addEventListener('click', function(e) {
+        if (!e.target.closest('.contenedor-buscador')) {
+          document.getElementById('sugerencias-busqueda').style.display = 'none';
+        }
+      });
+    });
+
+    function initializeMap() {
+      mapa = L.map('mapa', {
+        center: [10.4234, -75.5520],
+        zoom: 13,
+        zoomControl: false
+      });
+
+      L.control.zoom({ position: 'bottomright' }).addTo(mapa);
+
+      googleMapsLayer = L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+        maxZoom: 20,
+        subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+        attribution: '&copy; <a href="https://maps.google.com">Google Maps</a>'
+      });
+
+      googleSatelliteLayer = L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+        maxZoom: 20,
+        subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+        attribution: '&copy; <a href="https://maps.google.com">Google Maps</a>'
+      });
+
+      currentLayer = googleMapsLayer;
+      currentLayer.addTo(mapa);
+
+      setTimeout(() => {
+        mapa.invalidateSize();
+      }, 100);
+
+      const clusters = L.markerClusterGroup({
+        iconCreateFunction: cluster => L.divIcon({
+          html: `<div>${cluster.getChildCount()}</div>`,
+          className: 'cluster-marcadores',
+          iconSize: [40, 40]
+        }),
+        spiderfyOnMaxZoom: true,
+        showCoverageOnHover: false,
+        zoomToBoundsOnClick: true
+      });
+
+      UBICACIONES.forEach(loc => {
+        const marcador = L.marker(loc.latlng, {
+          icon: L.icon({
+            iconUrl: 'https://cdn-icons-png.flaticon.com/512/447/447031.png',
+            iconSize: [32, 32],
+            className: 'marker-icon-orange'
+          })
+        }).bindPopup(`
+          <div style="min-width:240px">
+            <h3 style="margin:0 0 5px 0;color:#0066cc">${loc.nombre}</h3>
+            <p style="margin:0 0 8px 0;font-size:0.9em">📍 ${loc.direccion}</p>
+            <p style="margin:0 0 5px 0;font-size:0.9em"><strong>🌎 País:</strong> ${loc.pais}</p>
+            ${loc.telefono ? `<p style="margin:0 0 5px 0;font-size:0.9em"><strong>📞 Teléfono:</strong> ${loc.telefono}</p>` : ''}
+            ${loc.horario ? `<p style="margin:0 0 5px 0;font-size:0.9em"><strong>⏰ Horario:</strong> ${loc.horario}</p>` : ''}
+            ${loc.servicios ? `<p style="margin:0 0 8px 0;font-size:0.9em"><strong>✨ Servicios:</strong> ${loc.servicios}</p>` : ''}
+            <div class="popup-buttons">
+              <div class="popup-button-row">
+                <button class="btn btn-whatsapp" onclick="abrirWhatsApp('${loc.telefono}', '${loc.nombre}')" style="background:#25D366;color:white;border:none;padding:8px 12px;border-radius:8px;cursor:pointer;display:flex;align-items:center;gap:5px;width:100%;justify-content:center;">
+                  💬 WhatsApp
+                </button>
+              </div>
+              <div class="popup-button-row" style="gap:8px;margin-top:8px;">
+                <button class="btn btn-ruta" onclick="abrirGoogleMapsConDireccion('${loc.latlng[0]}', '${loc.latlng[1]}', '${loc.nombre}')" style="background:#0066cc;color:white;border:none;padding:8px 12px;border-radius:8px;cursor:pointer;flex:1;">🗺️ Google Maps</button>
+                <button class="btn btn-info" onclick="window.open('${loc.url}', '_blank')" style="background:#000000;color:white;border:none;padding:8px 12px;border-radius:8px;cursor:pointer;flex:1;">🏪 Ver tienda</button>
+              </div>
+            </div>
+          </div>
+        `);
+        
+        marcador.datosUbicacion = loc;
+        marcador.datosBusqueda = `${loc.nombre} ${loc.direccion} ${loc.pais} ${loc.telefono || ''} ${loc.servicios || ''}`.toLowerCase();
+        marcadoresOriginales.push(marcador);
+      });
+
+      clusters.addLayers(marcadoresOriginales);
+      mapa.addLayer(clusters);
+
+      if(marcadoresOriginales.length > 0) {
+        mapa.fitBounds(clusters.getBounds().pad(0.3));
+      }
+
+      obtenerUbicacionUsuario();
+    }
+
+    function switchToMapView() {
+      mapa.removeLayer(currentLayer);
+      currentLayer = googleMapsLayer;
+      currentLayer.addTo(mapa);
+      
+      document.getElementById('map-btn').classList.add('active');
+      document.getElementById('satellite-btn').classList.remove('active');
+    }
+
+    function switchToSatelliteView() {
+      mapa.removeLayer(currentLayer);
+      currentLayer = googleSatelliteLayer;
+      currentLayer.addTo(mapa);
+      
+      document.getElementById('satellite-btn').classList.add('active');
+      document.getElementById('map-btn').classList.remove('active');
+    }
+
+    function abrirGoogleMapsConDireccion(lat, lng, nombre) {
+      const url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving&dir_action=navigate`;
+      window.open(url, '_blank');
+    }
+
+    function handleSearchInput(e) {
+      clearTimeout(buscadorTimeout);
+      const termino = e.target.value.trim();
+      const sugerenciasContainer = document.getElementById('sugerencias-busqueda');
+      
+      if (termino.length < 2) {
+        sugerenciasContainer.style.display = 'none';
+        return;
+      }
+      
+      sugerenciasContainer.innerHTML = '<div class="sugerencia-item">🔍 Buscando en Cartagena... <span class="cargando"></span></div>';
+      sugerenciasContainer.style.display = 'block';
+      
+      buscadorTimeout = setTimeout(() => {
+        buscarEnCartagena(termino);
+      }, 300);
+    }
+
+    function buscarEnCartagena(consulta) {
+      const sugerenciasContainer = document.getElementById('sugerencias-busqueda');
+      const termino = consulta.toLowerCase();
+      
+      const resultadosLocales = marcadoresOriginales.filter(m => 
+        m.datosBusqueda.includes(termino)
+      );
+      
+      if (resultadosLocales.length > 0) {
+        sugerenciasContainer.innerHTML = '';
+        
+        resultadosLocales.forEach(marcador => {
+          const loc = marcador.datosUbicacion;
+          const item = document.createElement('div');
+          item.className = 'sugerencia-item';
+          item.innerHTML = `
+            <div class="sugerencia-texto">
+              <strong>📍 ${loc.nombre}</strong><br>
+              <small>${loc.direccion}</small>
+            </div>
+            <button class="sugerencia-boton" data-id="${loc.id}">
+              Ver tienda
+            </button>
+          `;
+          
+          const boton = item.querySelector('.sugerencia-boton');
+          boton.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const id = this.getAttribute('data-id');
+            const punto = UBICACIONES.find(p => p.id === id);
+            if (punto && punto.url) {
+              window.open(punto.url, '_blank');
+            }
+            sugerenciasContainer.style.display = 'none';
+          });
+          
+          item.addEventListener('click', function() {
+            mapa.setView(marcador.getLatLng(), 16);
+            marcador.openPopup();
+            document.getElementById('buscador').value = loc.nombre;
+            sugerenciasContainer.style.display = 'none';
+          });
+          
+          sugerenciasContainer.appendChild(item);
+        });
+        return;
+      }
+      
+      // Lugares turísticos y emblemáticos de Cartagena de Indias
+      const lugaresCartagena = [
+        { nombre: "Castillo San Felipe de Barajas", direccion: "Carrera 17, Cartagena", lat: 10.4225, lng: -75.5405, url: "https://www.castillosanfelipe.com" },
+        { nombre: "Torre del Reloj (Puerta del Reloj)", direccion: "Plaza de los Coches, Centro", lat: 10.4228, lng: -75.5502, url: "https://www.cartagena.gov.co" },
+        { nombre: "Plaza de la Aduana", direccion: "Centro Histórico, Cartagena", lat: 10.4220, lng: -75.5515, url: "https://www.cartagena.gov.co" },
+        { nombre: "Plaza de Bolívar", direccion: "Centro Histórico, Cartagena", lat: 10.4242, lng: -75.5512, url: "https://www.cartagena.gov.co" },
+        { nombre: "Museo Naval del Caribe", direccion: "Calle 33 # 3-45, Centro", lat: 10.4215, lng: -75.5535, url: "https://www.museonaval.com" },
+        { nombre: "Las Murallas de Cartagena", direccion: "Centro Histórico", lat: 10.4245, lng: -75.5498, url: "https://www.cartagena.gov.co" },
+        { nombre: "Bocagrande", direccion: "Bocagrande, Cartagena", lat: 10.4005, lng: -75.5622, url: "https://www.cartagenainfo.com" },
+        { nombre: "Playa de Bocagrande", direccion: "Carrera 1, Bocagrande", lat: 10.3995, lng: -75.5615, url: "https://www.cartagena.gov.co" },
+        { nombre: "Playa Castillo Grande", direccion: "Castillo Grande, Cartagena", lat: 10.3932, lng: -75.5678, url: "https://www.cartagena.gov.co" },
+        { nombre: "La Boquilla", direccion: "Zona Norte, Cartagena", lat: 10.4485, lng: -75.5625, url: "https://www.cartagena.gov.co" },
+        { nombre: "Islas del Rosario", direccion: "Archipiélago, Cartagena", lat: 10.1655, lng: -75.7515, url: "https://www.islasdelrosario.com" },
+        { nombre: "Centro Comercial La Serrezuela", direccion: "Calle 32 # 4-45, Centro", lat: 10.4205, lng: -75.5545, url: "https://www.laserrezuela.com" },
+        { nombre: "Centro Comercial Plaza Bocagrande", direccion: "Carrera 2 # 8-125, Bocagrande", lat: 10.4008, lng: -75.5620, url: "https://www.plazabocagrande.com" },
+        { nombre: "Palacio de la Inquisición", direccion: "Plaza de Bolívar, Centro", lat: 10.4238, lng: -75.5515, url: "https://www.museo.inquisicion.gov.co" },
+        { nombre: "Convento de la Popa", direccion: "Cerro de la Popa, Cartagena", lat: 10.4305, lng: -75.5355, url: "https://www.cartagena.gov.co" },
+        { nombre: "Café del Mar (Muralla)", direccion: "Centro Histórico", lat: 10.4255, lng: -75.5495, url: "https://www.cafedelmar.com" }
+      ];
+      
+      const resultadosLugares = lugaresCartagena.filter(lugar => 
+        lugar.nombre.toLowerCase().includes(termino) ||
+        lugar.direccion.toLowerCase().includes(termino)
+      );
+      
+      if (resultadosLugares.length > 0) {
+        sugerenciasContainer.innerHTML = '';
+        
+        resultadosLugares.forEach(lugar => {
+          const item = document.createElement('div');
+          item.className = 'sugerencia-item';
+          item.innerHTML = `
+            <div class="sugerencia-texto">
+              <strong>📍 ${lugar.nombre}</strong><br>
+              <small>${lugar.direccion}</small>
+            </div>
+            <button class="sugerencia-boton" data-lat="${lugar.lat}" data-lng="${lugar.lng}" data-nombre="${lugar.nombre}" data-url="${lugar.url}">
+              Ver ubicación
+            </button>
+          `;
+          
+          const boton = item.querySelector('.sugerencia-boton');
+          boton.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const lat = parseFloat(this.getAttribute('data-lat'));
+            const lng = parseFloat(this.getAttribute('data-lng'));
+            const nombre = this.getAttribute('data-nombre');
+            const url = this.getAttribute('data-url');
+            
+            mapa.setView([lat, lng], 15);
+            
+            if (destinoMarker) {
+              mapa.removeLayer(destinoMarker);
+            }
+            destinoMarker = L.marker([lat, lng], {
+              icon: L.icon({
+                iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png',
+                iconSize: [32, 32]
+              })
+            }).addTo(mapa)
+              .bindPopup(`<strong>${nombre}</strong><br><a href="${url}" target="_blank" style="display:inline-block;margin-top:8px;padding:5px 10px;background:#000;color:white;text-decoration:none;border-radius:5px;">Ver más información</a>`);
+            
+            destinoMarker.openPopup();
+            document.getElementById('buscador').value = nombre;
+            sugerenciasContainer.style.display = 'none';
+          });
+          
+          sugerenciasContainer.appendChild(item);
+        });
+      } else {
+        sugerenciasContainer.innerHTML = '<div class="sugerencia-item">❌ No se encontraron resultados para: ' + consulta + '<br><small>📍 Prueba con: Castillo San Felipe, Bocagrande, Murallas, Centro Histórico, La Popa, Rosario</small></div>';
+      }
+    }
+
+    function handleSearchKeydown(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const termino = document.getElementById('buscador').value.trim();
+        if (termino) {
+          buscarEnCartagena(termino);
+        }
+      }
+    }
+
+    function abrirWhatsApp(telefono, nombre) {
+      const numeroLimpio = telefono.replace(/\D/g, '');
+      const mensaje = `Hola ${nombre}, me interesa conocer más sobre sus servicios de contraentrega en Cartagena.`;
+      window.open(`https://wa.me/${numeroLimpio}?text=${encodeURIComponent(mensaje)}`, '_blank');
+    }
+
+    function centrarMapa() {
+      if (userMarker) {
+        const lat = userMarker.getLatLng().lat;
+        const lng = userMarker.getLatLng().lng;
+        
+        if (estaEnCartagena(lat, lng)) {
+          mapa.setView(userMarker.getLatLng(), 14);
+          userMarker.openPopup();
+        } else {
+          mostrarNotificacion("Servicio exclusivo para Cartagena. Estás fuera del área de cobertura.");
+          mapa.setView([10.4234, -75.5520], 13);
+        }
+      } else {
+        obtenerUbicacionUsuario();
+      }
+    }
+
+    function obtenerUbicacionUsuario() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const { latitude, longitude } = position.coords;
+            
+            if (userMarker) {
+              mapa.removeLayer(userMarker);
+            }
+            
+            if (estaEnCartagena(latitude, longitude)) {
+              userMarker = L.marker([latitude, longitude], {
+                icon: L.icon({
+                  iconUrl: 'https://cdn-icons-png.flaticon.com/512/447/447031.png',
+                  iconSize: [32, 32]
+                })
+              }).addTo(mapa)
+                .bindPopup('📍 ¡Tu ubicación actual en Cartagena de Indias!');
+              
+              mapa.setView([latitude, longitude], 14);
+              userMarker.openPopup();
+            } else {
+              mostrarNotificacion("Servicio exclusivo para Cartagena. Estás fuera del área de cobertura.");
+              mapa.setView([10.4234, -75.5520], 13);
+              
+              userMarker = L.marker([latitude, longitude], {
+                icon: L.icon({
+                  iconUrl: 'https://cdn-icons-png.flaticon.com/512/1828/1828843.png',
+                  iconSize: [32, 32]
+                })
+              }).addTo(mapa)
+                .bindPopup('⚠️ Fuera de Cartagena - Servicio no disponible');
+            }
+          },
+          (error) => {
+            console.log(`Error al obtener ubicación: ${error.message}`);
+            mapa.setView([10.4234, -75.5520], 13);
+          },
+          { enableHighAccuracy: true }
+        );
+      } else {
+        console.log("Tu navegador no soporta geolocalización.");
+        mapa.setView([10.4234, -75.5520], 13);
+      }
+    }
+  </script>
+</body>
+</html>
