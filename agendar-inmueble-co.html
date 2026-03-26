@@ -24,7 +24,7 @@
     }
 
     .container {
-      max-width: 720px;
+      max-width: 780px;
       margin: 0 auto;
       background: #ffffff;
       border: 1px solid #e5e5e5;
@@ -169,15 +169,36 @@
       border: 1px solid #ebebeb;
       border-radius: 24px;
       padding: 1rem;
-      margin: 1rem 0 1.5rem 0;
+      margin: 1rem 0 1rem 0;
       background: #fefefe;
+    }
+
+    .calendar-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
     }
 
     .month-year {
       font-weight: 600;
-      text-align: center;
-      margin-bottom: 1rem;
       font-size: 1.1rem;
+      text-align: center;
+    }
+
+    .nav-btn {
+      background: transparent;
+      border: 1px solid #ccc;
+      border-radius: 30px;
+      padding: 0.4rem 0.8rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: 0.2s;
+    }
+
+    .nav-btn:hover {
+      background: #f0f0f0;
+      border-color: #000;
     }
 
     .weekdays {
@@ -214,9 +235,14 @@
       border-color: #000;
     }
 
-    .day-cell:hover {
+    .day-cell.available:hover {
       border-color: #aaa;
       background: #f2f2f2;
+    }
+
+    .day-cell.other-month {
+      opacity: 0.3;
+      cursor: default;
     }
 
     .horarios-section {
@@ -318,7 +344,7 @@
       cursor: pointer;
     }
 
-    @media (max-width: 550px) {
+    @media (max-width: 600px) {
       body {
         padding: 0.8rem;
       }
@@ -330,16 +356,11 @@
         padding: 0.4rem 0;
       }
     }
-
-    hr {
-      margin: 1rem 0;
-      border-color: #eee;
-    }
   </style>
 </head>
 <body>
 
-<div class="container" id="app">
+<div class="container">
   <div class="header">
     <div class="logo-area">
       <div class="brand">QRP2P<span> .agenda</span></div>
@@ -390,11 +411,15 @@
     <button class="btn-next" id="nextToStep2">Siguiente →</button>
   </div>
 
-  <!-- STEP 2 - Fecha y horario -->
+  <!-- STEP 2 - Fecha y horario con calendario completo 2026-2027 -->
   <div id="step2Container" class="form-panel" style="display: none;">
     <div class="step-title">Selecciona fecha y horario</div>
     <div class="calendar-card">
-      <div class="month-year" id="monthYearDisplay">Marzo 2026</div>
+      <div class="calendar-nav">
+        <button class="nav-btn" id="prevMonthBtn">←</button>
+        <div class="month-year" id="monthYearDisplay"></div>
+        <button class="nav-btn" id="nextMonthBtn">→</button>
+      </div>
       <div class="weekdays">
         <span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span>
       </div>
@@ -408,7 +433,6 @@
       <label>Selecciona un horario (07:00 - 18:00)</label>
       <div id="horariosContainer" class="horarios-list"></div>
     </div>
-
     <button class="btn-submit" id="submitVisita">Agendar visita</button>
     <button class="btn-back" id="backToStep1">← Volver</button>
   </div>
@@ -429,107 +453,117 @@
 </div>
 
 <script>
-  // ==================== CALENDARIO MARZO 2026 - TODOS LOS DÍAS DISPONIBLES ====================
-  const targetYear = 2026;
-  const targetMonth = 2; // Marzo (0 = Enero, 2 = Marzo)
-  const firstDayOfMonth = new Date(targetYear, targetMonth, 1);
-  let startWeekday = firstDayOfMonth.getDay(); // 0 = Domingo
-  let offsetMonday = (startWeekday === 0 ? 6 : startWeekday - 1); // Ajuste para que Lunes sea el primer día
-  const daysInMonth = new Date(targetYear, targetMonth + 1, 0).getDate();
+  // ==================== CALENDARIO COMPLETO: ENERO 2026 - DICIEMBRE 2027 ====================
+  const START_YEAR = 2026;
+  const START_MONTH = 0; // Enero
+  const END_YEAR = 2027;
+  const END_MONTH = 11;  // Diciembre
   
-  // Generar días del calendario (solo días del mes actual, todos disponibles)
-  let calendarDays = [];
+  let currentYear = 2026;
+  let currentMonth = 2; // Marzo 2026 como mes inicial (para mostrar ejemplo)
+  let selectedDate = null;  // formato 'YYYY-MM-DD'
+  let selectedHorario = null;
   
-  // Días previos del mes anterior (para completar la primera semana)
-  const prevMonthDays = new Date(targetYear, targetMonth, 0).getDate();
-  for (let i = 0; i < offsetMonday; i++) {
-    let dayNum = prevMonthDays - offsetMonday + i + 1;
-    calendarDays.push({ day: dayNum, enabled: false, currentMonth: false, fullDate: null });
-  }
-  
-  // Días del mes actual (MARZO 2026 - TODOS DISPONIBLES)
-  for (let d = 1; d <= daysInMonth; d++) {
-    let fullDate = new Date(targetYear, targetMonth, d);
-    let dateStr = `${targetYear}-${String(targetMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    calendarDays.push({ 
-      day: d, 
-      enabled: true,  // TODOS LOS DÍAS DISPONIBLES
-      currentMonth: true, 
-      fullDate: fullDate, 
-      dateStr: dateStr 
-    });
-  }
-  
-  // Completar hasta 42 celdas (6 filas)
-  const remaining = 42 - calendarDays.length;
-  for (let i = 1; i <= remaining; i++) {
-    calendarDays.push({ day: i, enabled: false, currentMonth: false, fullDate: null });
-  }
-  
-  // ==================== HORARIOS DE 07:00 A 18:00 ====================
+  // Generar todos los horarios de 07:00 a 18:00 con medias horas
   const allHorarios = [];
   for (let h = 7; h <= 18; h++) {
     allHorarios.push(`${h.toString().padStart(2,'0')}:00`);
   }
-  // Agregar medias horas clave para más opciones
   const mediaHoras = ['07:30', '08:30', '09:30', '10:30', '11:30', '12:30', '13:30', '14:30', '15:30', '16:30', '17:30'];
   mediaHoras.forEach(slot => {
     if (!allHorarios.includes(slot)) allHorarios.push(slot);
   });
   allHorarios.sort((a,b) => a.localeCompare(b));
   
-  // Estado de la app
-  let selectedDate = null;
-  let selectedHorario = null;
-  
-  // Elementos DOM
-  const step1 = document.getElementById('step1Container');
-  const step2 = document.getElementById('step2Container');
-  const nextBtn = document.getElementById('nextToStep2');
-  const backBtn = document.getElementById('backToStep1');
-  const submitBtn = document.getElementById('submitVisita');
-  const daysGrid = document.getElementById('daysGrid');
-  const horariosContainer = document.getElementById('horariosContainer');
-  const openTermsModalBtn = document.getElementById('openTermsModal');
-  const termsModal = document.getElementById('termsModal');
-  const closeTermsModal = document.getElementById('closeTermsModal');
-  const acceptFromModal = document.getElementById('acceptFromModal');
-  const acceptTermsCheck = document.getElementById('acceptTerms');
-  const compraDirectaLink = document.getElementById('compraDirectaLink');
-  const stepBadge = document.getElementById('stepBadge');
-  const stepDescription = document.getElementById('stepDescription');
-  
-  // Validación paso 1
-  function validateStep1() {
-    let nombre = document.getElementById('nombreCliente').value.trim();
-    let telefono = document.getElementById('telefono').value.trim();
-    let conjunto = document.getElementById('conjunto').value.trim();
-    let termsChecked = acceptTermsCheck.checked;
+  // Función para obtener los días del mes actual (con días del mes anterior/siguiente para completar)
+  function getDaysForMonth(year, month) {
+    const firstDayOfMonth = new Date(year, month, 1);
+    let startWeekday = firstDayOfMonth.getDay(); // 0 = domingo
+    let offsetMonday = (startWeekday === 0 ? 6 : startWeekday - 1); // ajuste a lunes como primer día
     
-    if(!nombre) { alert("Por favor ingresa el nombre completo."); return false; }
-    if(!telefono) { alert("Por favor ingresa el teléfono."); return false; }
-    if(!conjunto) { alert("Por favor ingresa el nombre del conjunto."); return false; }
-    if(!termsChecked) { alert("Debes aceptar los términos y condiciones."); return false; }
-    return true;
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const prevMonthDays = new Date(year, month, 0).getDate();
+    
+    const daysArray = [];
+    
+    // Días del mes anterior
+    for (let i = 0; i < offsetMonday; i++) {
+      let dayNum = prevMonthDays - offsetMonday + i + 1;
+      let prevMonth = month - 1;
+      let prevYear = year;
+      if (prevMonth < 0) {
+        prevMonth = 11;
+        prevYear = year - 1;
+      }
+      daysArray.push({
+        day: dayNum,
+        enabled: false,
+        currentMonth: false,
+        fullDate: new Date(prevYear, prevMonth, dayNum),
+        dateStr: `${prevYear}-${String(prevMonth+1).padStart(2,'0')}-${String(dayNum).padStart(2,'0')}`,
+        isSelectable: false
+      });
+    }
+    
+    // Días del mes actual (TODOS DISPONIBLES)
+    for (let d = 1; d <= daysInMonth; d++) {
+      let fullDate = new Date(year, month, d);
+      let dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+      daysArray.push({
+        day: d,
+        enabled: true,
+        currentMonth: true,
+        fullDate: fullDate,
+        dateStr: dateStr,
+        isSelectable: true
+      });
+    }
+    
+    // Completar hasta 42 celdas (6 filas)
+    const remaining = 42 - daysArray.length;
+    for (let i = 1; i <= remaining; i++) {
+      let nextMonth = month + 1;
+      let nextYear = year;
+      if (nextMonth > 11) {
+        nextMonth = 0;
+        nextYear = year + 1;
+      }
+      daysArray.push({
+        day: i,
+        enabled: false,
+        currentMonth: false,
+        fullDate: new Date(nextYear, nextMonth, i),
+        dateStr: `${nextYear}-${String(nextMonth+1).padStart(2,'0')}-${String(i).padStart(2,'0')}`,
+        isSelectable: false
+      });
+    }
+    
+    return daysArray;
   }
   
-  // Renderizar calendario
+  let currentDays = [];
+  
   function renderCalendar() {
+    currentDays = getDaysForMonth(currentYear, currentMonth);
+    const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+    document.getElementById('monthYearDisplay').innerText = `${monthNames[currentMonth]} ${currentYear}`;
+    
+    const daysGrid = document.getElementById('daysGrid');
     daysGrid.innerHTML = '';
-    calendarDays.forEach((cell) => {
+    
+    currentDays.forEach((cell) => {
       const div = document.createElement('div');
       div.className = 'day-cell';
-      if(!cell.currentMonth) {
-        div.classList.add('disabled');
-        div.style.opacity = '0.3';
-        div.style.cursor = 'default';
+      if (!cell.isSelectable) {
+        div.classList.add('other-month');
       } else {
         div.classList.add('available');
       }
       div.innerText = cell.day;
       
-      if(cell.currentMonth && cell.enabled) {
+      if (cell.isSelectable) {
         div.addEventListener('click', () => {
+          // Quitar selección anterior
           document.querySelectorAll('.day-cell').forEach(el => el.classList.remove('selected'));
           div.classList.add('selected');
           selectedDate = cell.dateStr;
@@ -537,7 +571,7 @@
           selectedHorario = null;
           renderHorarios();
         });
-        if(selectedDate === cell.dateStr) {
+        if (selectedDate === cell.dateStr) {
           div.classList.add('selected');
         }
       }
@@ -545,9 +579,9 @@
     });
   }
   
-  // Renderizar horarios
   function renderHorarios() {
-    if(!selectedDate) {
+    const horariosContainer = document.getElementById('horariosContainer');
+    if (!selectedDate) {
       horariosContainer.innerHTML = '<div style="font-size:0.8rem; padding:0.5rem; color:#666;">📅 Primero selecciona una fecha en el calendario</div>';
       return;
     }
@@ -557,7 +591,7 @@
       const badge = document.createElement('span');
       badge.className = 'horario-badge';
       badge.innerText = slot;
-      if(selectedHorario === slot) badge.classList.add('selected');
+      if (selectedHorario === slot) badge.classList.add('selected');
       badge.addEventListener('click', () => {
         document.querySelectorAll('.horario-badge').forEach(b => b.classList.remove('selected'));
         badge.classList.add('selected');
@@ -565,6 +599,40 @@
       });
       horariosContainer.appendChild(badge);
     });
+  }
+  
+  function changeMonth(delta) {
+    let newMonth = currentMonth + delta;
+    let newYear = currentYear;
+    if (newMonth < 0) {
+      newMonth = 11;
+      newYear--;
+    } else if (newMonth > 11) {
+      newMonth = 0;
+      newYear++;
+    }
+    
+    // Limitar a 2026-2027
+    if (newYear < START_YEAR || (newYear === START_YEAR && newMonth < START_MONTH)) return;
+    if (newYear > END_YEAR || (newYear === END_YEAR && newMonth > END_MONTH)) return;
+    
+    currentYear = newYear;
+    currentMonth = newMonth;
+    renderCalendar();
+  }
+  
+  // Validación paso 1
+  function validateStep1() {
+    let nombre = document.getElementById('nombreCliente').value.trim();
+    let telefono = document.getElementById('telefono').value.trim();
+    let conjunto = document.getElementById('conjunto').value.trim();
+    let termsChecked = document.getElementById('acceptTerms').checked;
+    
+    if (!nombre) { alert("Por favor ingresa el nombre completo."); return false; }
+    if (!telefono) { alert("Por favor ingresa el teléfono."); return false; }
+    if (!conjunto) { alert("Por favor ingresa el nombre del conjunto."); return false; }
+    if (!termsChecked) { alert("Debes aceptar los términos y condiciones."); return false; }
+    return true;
   }
   
   // Construir mensaje para WhatsApp
@@ -578,7 +646,7 @@
     const direccion = document.getElementById('direccionInmueble').value.trim() || "Calle 88 sur # 88c - 89";
     
     let fechaLegible = "No seleccionada";
-    if(selectedDate) {
+    if (selectedDate) {
       const [year, month, day] = selectedDate.split('-');
       const fecha = new Date(year, month-1, day);
       fechaLegible = fecha.toLocaleDateString('es-ES', { year:'numeric', month:'long', day:'numeric' });
@@ -601,13 +669,12 @@
     return mensaje;
   }
   
-  // Enviar a WhatsApp
   function sendToWhatsApp() {
-    if(!selectedDate) {
+    if (!selectedDate) {
       alert("Por favor selecciona una fecha en el calendario.");
       return false;
     }
-    if(!selectedHorario) {
+    if (!selectedHorario) {
       alert("Por favor selecciona un horario de visita.");
       return false;
     }
@@ -617,18 +684,42 @@
     return true;
   }
   
+  // Elementos DOM
+  const step1 = document.getElementById('step1Container');
+  const step2 = document.getElementById('step2Container');
+  const nextBtn = document.getElementById('nextToStep2');
+  const backBtn = document.getElementById('backToStep1');
+  const submitBtn = document.getElementById('submitVisita');
+  const prevMonthBtn = document.getElementById('prevMonthBtn');
+  const nextMonthBtn = document.getElementById('nextMonthBtn');
+  const openTermsModalBtn = document.getElementById('openTermsModal');
+  const termsModal = document.getElementById('termsModal');
+  const closeTermsModal = document.getElementById('closeTermsModal');
+  const acceptFromModal = document.getElementById('acceptFromModal');
+  const acceptTermsCheck = document.getElementById('acceptTerms');
+  const compraDirectaLink = document.getElementById('compraDirectaLink');
+  const stepBadge = document.getElementById('stepBadge');
+  const stepDescription = document.getElementById('stepDescription');
+  
   // Eventos de navegación
   nextBtn.addEventListener('click', () => {
-    if(!validateStep1()) return;
+    if (!validateStep1()) return;
     
-    // Seleccionar fecha por defecto (el día actual o el primero disponible)
-    if(!selectedDate) {
+    // Seleccionar fecha por defecto si no hay ninguna seleccionada
+    if (!selectedDate) {
+      // Buscar el primer día disponible del mes actual (marzo 2026)
       const today = new Date();
       today.setHours(0,0,0,0);
-      // Buscar primer día de marzo 2026 que sea >= hoy o simplemente el 1 de marzo
-      for(let cell of calendarDays) {
-        if(cell.currentMonth && cell.fullDate) {
-          if(!selectedDate) {
+      for (let cell of currentDays) {
+        if (cell.isSelectable && cell.fullDate >= today) {
+          selectedDate = cell.dateStr;
+          break;
+        }
+      }
+      // Si no hay ninguna, tomar la primera disponible
+      if (!selectedDate) {
+        for (let cell of currentDays) {
+          if (cell.isSelectable) {
             selectedDate = cell.dateStr;
             break;
           }
@@ -657,6 +748,9 @@
     sendToWhatsApp();
   });
   
+  prevMonthBtn.addEventListener('click', () => changeMonth(-1));
+  nextMonthBtn.addEventListener('click', () => changeMonth(1));
+  
   // Modal de términos y condiciones
   function openModal() { termsModal.style.display = 'flex'; }
   function closeModal() { termsModal.style.display = 'none'; }
@@ -674,24 +768,13 @@
     window.open('https://qrp2p.com/oferta-inmueble-co', '_blank');
   });
   
-  // Inicializar
-  document.getElementById('monthYearDisplay').innerText = 'Marzo 2026';
-  
-  // Seleccionar fecha por defecto: 27 de marzo 2026 (ejemplo visual)
-  const defaultDate = '2026-03-27';
-  if(calendarDays.some(cell => cell.dateStr === defaultDate)) {
-    selectedDate = defaultDate;
-  } else {
-    for(let cell of calendarDays) {
-      if(cell.currentMonth) { selectedDate = cell.dateStr; break; }
-    }
-  }
-  
-  // Seleccionar horario por defecto: 08:00
+  // Inicializar calendario con marzo 2026 y seleccionar 27 de marzo como ejemplo
+  currentYear = 2026;
+  currentMonth = 2; // Marzo
+  selectedDate = '2026-03-27';
   selectedHorario = '08:00';
   
   renderCalendar();
-  renderHorarios();
 </script>
 </body>
 </html>
