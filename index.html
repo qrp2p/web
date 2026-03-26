@@ -152,11 +152,14 @@
             color: rgba(0, 0, 0, 0.5);
         }
         
+        /* Grid de 2 columnas con scroll horizontal */
         .cities-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 1.5rem;
             margin-top: 2rem;
+            overflow-x: auto;
+            padding-bottom: 1rem;
         }
         
         .city-card {
@@ -296,23 +299,7 @@
             font-size: 0.9rem;
         }
         
-        .breadcrumbs {
-            max-width: 1400px;
-            margin: 1rem auto;
-            padding: 0 1.5rem;
-            font-size: 0.85rem;
-            color: #666;
-        }
-        
-        .breadcrumbs a {
-            color: #666;
-            text-decoration: none;
-        }
-        
-        .breadcrumbs a:hover {
-            text-decoration: underline;
-            color: #000;
-        }
+        /* Eliminado el breadcrumbs */
         
         .country-count {
             text-align: center;
@@ -394,7 +381,11 @@
         @media (max-width: 768px) {
             .logo-container { max-width: 300px; }
             .tagline { font-size: 1rem; padding: 0 1rem; }
-            .cities-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+            .cities-grid { 
+                grid-template-columns: repeat(2, 1fr); 
+                gap: 1rem;
+                overflow-x: auto;
+            }
             .city-image { height: 120px; }
             .city-info { padding: 1rem; }
             .city-name { font-size: 1.1rem; }
@@ -405,7 +396,10 @@
         
         @media (max-width: 480px) {
             .logo-container { max-width: 250px; }
-            .cities-grid { grid-template-columns: 1fr; }
+            .cities-grid { 
+                grid-template-columns: repeat(2, 1fr);
+                overflow-x: auto;
+            }
             .footer-links { flex-direction: column; gap: 1rem; }
         }
         
@@ -440,11 +434,7 @@
         <div class="tagline">MARKETPLACE · 196 PAÍSES</div>
     </header>
     
-    <div class="breadcrumbs">
-        <a href="/">Home</a>
-        <span>›</span>
-        <span>Todos los países</span>
-    </div>
+    <!-- Eliminado el breadcrumbs -->
     
     <div class="container">
         <div class="search-container">
@@ -687,7 +677,7 @@
         // Ordenar alfabéticamente por nombre nativo
         countriesData.sort((a, b) => a.nativeName.localeCompare(b.nativeName));
         
-        // Actualizar el contador
+        // Actualizar el contador - se eliminó el texto de "resultados de búsqueda"
         document.getElementById('country-count').innerHTML = `🌍 ${countriesData.length} Países - Haz clic en cualquier tarjeta para ingresar al marketplace`;
         
         // Generar country tags para SEO
@@ -784,7 +774,8 @@
                 normalizeText(country.nativeDesc).includes(normalizedSearch)
             );
             renderCountries(filteredCountries);
-            document.getElementById('country-count').innerHTML = `🌍 ${filteredCountries.length} Países ${searchTerm ? '- Resultados de búsqueda' : '- Haz clic en cualquier tarjeta para ingresar'}`;
+            // Contador sin mensaje de "resultados de búsqueda"
+            document.getElementById('country-count').innerHTML = `🌍 ${filteredCountries.length} Países - Haz clic en cualquier tarjeta para ingresar al marketplace`;
             return filteredCountries.length > 0 ? filteredCountries[0] : null;
         }
         
