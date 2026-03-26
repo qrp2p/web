@@ -31,10 +31,8 @@
       border-radius: 28px;
       box-shadow: 0 12px 28px rgba(0, 0, 0, 0.03);
       overflow: hidden;
-      transition: all 0.2s ease;
     }
 
-    /* header minimal */
     .header {
       padding: 1.75rem 1.75rem 0.5rem 1.75rem;
       border-bottom: 1px solid #eeeeee;
@@ -99,7 +97,6 @@
       font-weight: 600;
     }
 
-    /* formulario */
     .form-panel {
       padding: 1.75rem;
     }
@@ -125,7 +122,7 @@
       color: #2c2c2c;
     }
 
-    input, select, textarea {
+    input, select {
       width: 100%;
       padding: 0.85rem 1rem;
       font-size: 1rem;
@@ -168,7 +165,6 @@
       font-weight: 500;
     }
 
-    /* calendario y horarios */
     .calendar-card {
       border: 1px solid #ebebeb;
       border-radius: 24px;
@@ -218,25 +214,28 @@
       border-color: #000;
     }
 
-    .day-cell.disabled {
-      color: #bbb;
-      cursor: not-allowed;
-      background: #fafafa;
-    }
-
-    .day-cell:not(.disabled):hover {
+    .day-cell:hover {
       border-color: #aaa;
       background: #f2f2f2;
     }
 
     .horarios-section {
-      margin-top: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .horarios-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+      max-height: 200px;
+      overflow-y: auto;
+      padding: 0.25rem;
     }
 
     .horario-badge {
       display: inline-block;
       padding: 0.5rem 1rem;
-      margin: 0.35rem;
       border: 1px solid #ccc;
       border-radius: 40px;
       font-size: 0.8rem;
@@ -251,22 +250,9 @@
       border-color: #000;
     }
 
-    .show-more-btn {
-      background: transparent;
-      border: none;
-      font-size: 0.75rem;
-      text-decoration: underline;
-      margin-top: 0.5rem;
-      cursor: pointer;
-      color: #2c2c2c;
-    }
-
-    .habi-capital-box {
-      background: #f8f8f8;
-      border-left: 3px solid #000;
-      padding: 1rem;
-      margin: 1.5rem 0;
-      border-radius: 16px;
+    .horario-badge:hover {
+      border-color: #000;
+      background: #f5f5f5;
     }
 
     .btn-next, .btn-submit {
@@ -280,7 +266,7 @@
       border-radius: 40px;
       cursor: pointer;
       transition: 0.2s;
-      margin-top: 0.5rem;
+      margin-top: 1rem;
     }
 
     .btn-next:hover, .btn-submit:hover {
@@ -297,6 +283,11 @@
       border-radius: 40px;
       font-weight: 500;
       cursor: pointer;
+    }
+
+    .btn-back:hover {
+      background: #f5f5f5;
+      border-color: #000;
     }
 
     .modal-terms {
@@ -344,11 +335,6 @@
       margin: 1rem 0;
       border-color: #eee;
     }
-    .error-msg {
-      color: #b00020;
-      font-size: 0.7rem;
-      margin-top: 0.3rem;
-    }
   </style>
 </head>
 <body>
@@ -365,36 +351,37 @@
     </div>
   </div>
 
-  <!-- STEP 1 -->
+  <!-- STEP 1 - Datos del cliente -->
   <div id="step1Container" class="form-panel">
     <div class="step-title">Agenda tu visita</div>
     <div class="form-group">
       <label>Nombre del cliente *</label>
-      <input type="text" id="nombreCliente" value="William Parra" placeholder="Nombre completo">
+      <input type="text" id="nombreCliente" placeholder="Ej: Juan Pérez" value="">
     </div>
     <div class="form-group">
       <label>Teléfono *</label>
-      <input type="tel" id="telefono" value="3215343562" placeholder="Número celular">
+      <input type="tel" id="telefono" placeholder="Ej: 3001234567" value="">
     </div>
     <div class="form-group">
       <label>Tipo de documento</label>
       <select id="tipoDoc">
-        <option value="Cédula ciudadanía">Cédula ciudadanía</option>
-        <option value="Cédula extranjería">Cédula extranjería</option>
+        <option value="Cédula de ciudadanía">Cédula de ciudadanía</option>
+        <option value="Cédula de extranjería">Cédula de extranjería</option>
         <option value="Pasaporte">Pasaporte</option>
+        <option value="NIT">NIT</option>
       </select>
     </div>
     <div class="form-group">
       <label>Documento</label>
-      <input type="text" id="documento" value="7535259" placeholder="Número de documento">
+      <input type="text" id="documento" placeholder="Número de documento" value="">
     </div>
     <div class="form-group">
       <label>Correo electrónico</label>
-      <input type="email" id="email" value="wpv@qrp2p.com" placeholder="correo@ejemplo.com">
+      <input type="email" id="email" placeholder="ejemplo@correo.com" value="">
     </div>
     <div class="form-group">
       <label>Nombre del conjunto *</label>
-      <input type="text" id="conjunto" value="PINO PARQUES DE BOGOTA" placeholder="Ej: Pórticos de Britalia">
+      <input type="text" id="conjunto" placeholder="Ej: Pórticos de Britalia" value="">
     </div>
     <div class="inline-checkbox">
       <input type="checkbox" id="acceptTerms">
@@ -403,11 +390,11 @@
     <button class="btn-next" id="nextToStep2">Siguiente →</button>
   </div>
 
-  <!-- STEP 2: fecha + horario + capital -->
+  <!-- STEP 2 - Fecha y horario -->
   <div id="step2Container" class="form-panel" style="display: none;">
-    <div class="step-title">Selecciona la fecha y horario</div>
+    <div class="step-title">Selecciona fecha y horario</div>
     <div class="calendar-card">
-      <div class="month-year" id="monthYearDisplay">marzo 2026</div>
+      <div class="month-year" id="monthYearDisplay">Marzo 2026</div>
       <div class="weekdays">
         <span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span>
       </div>
@@ -415,21 +402,11 @@
     </div>
     <div class="form-group">
       <label>Dirección del inmueble</label>
-      <input type="text" id="direccionInmueble" value="Calle 88 sur # 88c - 89" placeholder="Dirección">
+      <input type="text" id="direccionInmueble" placeholder="Calle 88 sur # 88c - 89" value="Calle 88 sur # 88c - 89">
     </div>
     <div class="horarios-section">
-      <label>Selecciona un horario</label>
+      <label>Selecciona un horario (07:00 - 18:00)</label>
       <div id="horariosContainer" class="horarios-list"></div>
-      <button id="showMoreHorarios" class="show-more-btn" style="display: none;">Mostrar más todo el horario hasta las 18</button>
-    </div>
-
-    <div class="habi-capital-box">
-      <p style="font-weight: 600; margin-bottom: 6px;">✨ ¡Ya llegó QRP2P Capital!</p>
-      <p style="font-size: 0.85rem;">Acepta y empieza a cerrar con el primer crédito hipotecario 100% digital. Si logramos la aprobación antes de la visita, tu cliente podrá ofertar de inmediato en cualquier inmueble de QRP2P. Además, tú te ganas el 1% del valor del crédito a la escritura.</p>
-      <div class="inline-checkbox" style="margin-top: 12px;">
-        <input type="checkbox" id="capitalContacto">
-        <label>Quiero que QRP2P Capital se contacte con mi cliente para gestionar la aprobación de crédito hipotecario.</label>
-      </div>
     </div>
 
     <button class="btn-submit" id="submitVisita">Agendar visita</button>
@@ -442,64 +419,69 @@
   <div class="modal-content">
     <span class="close-modal" id="closeTermsModal">&times;</span>
     <h3 style="margin-bottom: 1rem;">Términos y Condiciones</h3>
-    <p style="font-size: 0.9rem; line-height: 1.4;">1. La visita al inmueble está sujeta a disponibilidad de horarios y confirmación por parte de QRP2P.</p>
-    <p style="font-size: 0.9rem; line-height: 1.4;">2. Los datos personales serán tratados conforme a la política de privacidad de QRP2P, únicamente para la gestión de visitas y comunicación comercial.</p>
-    <p style="font-size: 0.9rem; line-height: 1.4;">3. Al agendar la visita, aceptas recibir información relacionada con el inmueble y servicios de crédito hipotecario de QRP2P Capital.</p>
-    <p style="font-size: 0.9rem; line-height: 1.4;">4. La opción de "Compra directa" redirige a un proceso externo de compraventa. QRP2P no se hace responsable por disponibilidad de unidades.</p>
-    <p style="font-size: 0.9rem; line-height: 1.4;">5. El usuario garantiza que la información suministrada es veraz y actualizada.</p>
-    <button id="acceptFromModal" style="margin-top: 1.2rem; background: black; color:white; border:none; padding: 0.5rem 1rem; border-radius: 30px; cursor:pointer;">Aceptar y cerrar</button>
+    <p style="font-size: 0.9rem; line-height: 1.4; margin-bottom: 0.75rem;"><strong>1. Visitas:</strong> La visita al inmueble está sujeta a disponibilidad de horarios y confirmación por parte de QRP2P.</p>
+    <p style="font-size: 0.9rem; line-height: 1.4; margin-bottom: 0.75rem;"><strong>2. Datos personales:</strong> Los datos serán tratados conforme a la política de privacidad de QRP2P, únicamente para gestión de visitas y comunicación comercial.</p>
+    <p style="font-size: 0.9rem; line-height: 1.4; margin-bottom: 0.75rem;"><strong>3. Aceptación:</strong> Al agendar, aceptas recibir información relacionada con el inmueble y servicios de QRP2P.</p>
+    <p style="font-size: 0.9rem; line-height: 1.4; margin-bottom: 0.75rem;"><strong>4. Compra directa:</strong> La opción de "Compra directa" redirige a un proceso externo de compraventa.</p>
+    <p style="font-size: 0.9rem; line-height: 1.4;"><strong>5. Veracidad:</strong> El usuario garantiza que la información suministrada es veraz y actualizada.</p>
+    <button id="acceptFromModal" style="margin-top: 1.5rem; background: black; color:white; border:none; padding: 0.7rem 1.5rem; border-radius: 30px; cursor:pointer; width: 100%; font-weight: 500;">Aceptar y cerrar</button>
   </div>
 </div>
 
 <script>
-  // ---------- DATOS DE CALENDARIO (marzo 2026) ----------
+  // ==================== CALENDARIO MARZO 2026 - TODOS LOS DÍAS DISPONIBLES ====================
   const targetYear = 2026;
-  const targetMonth = 2; // marzo = 2 (0-index)
+  const targetMonth = 2; // Marzo (0 = Enero, 2 = Marzo)
   const firstDayOfMonth = new Date(targetYear, targetMonth, 1);
-  const startWeekday = firstDayOfMonth.getDay(); // 0 domingo -> ajuste a Lunes primero
-  let offsetMonday = (startWeekday === 0 ? 6 : startWeekday - 1);
+  let startWeekday = firstDayOfMonth.getDay(); // 0 = Domingo
+  let offsetMonday = (startWeekday === 0 ? 6 : startWeekday - 1); // Ajuste para que Lunes sea el primer día
   const daysInMonth = new Date(targetYear, targetMonth + 1, 0).getDate();
-
-  // días previos (febrero)
-  const prevMonthDays = new Date(targetYear, targetMonth, 0).getDate();
+  
+  // Generar días del calendario (solo días del mes actual, todos disponibles)
   let calendarDays = [];
-
-  // llenar celdas: empezar Lunes
+  
+  // Días previos del mes anterior (para completar la primera semana)
+  const prevMonthDays = new Date(targetYear, targetMonth, 0).getDate();
   for (let i = 0; i < offsetMonday; i++) {
     let dayNum = prevMonthDays - offsetMonday + i + 1;
     calendarDays.push({ day: dayNum, enabled: false, currentMonth: false, fullDate: null });
   }
+  
+  // Días del mes actual (MARZO 2026 - TODOS DISPONIBLES)
   for (let d = 1; d <= daysInMonth; d++) {
     let fullDate = new Date(targetYear, targetMonth, d);
-    let isPast = false;
-    const today = new Date();
-    today.setHours(0,0,0,0);
-    if (fullDate < today) isPast = true;
-    calendarDays.push({ day: d, enabled: !isPast, currentMonth: true, fullDate: fullDate, dateStr: `${targetYear}-${String(targetMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}` });
+    let dateStr = `${targetYear}-${String(targetMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    calendarDays.push({ 
+      day: d, 
+      enabled: true,  // TODOS LOS DÍAS DISPONIBLES
+      currentMonth: true, 
+      fullDate: fullDate, 
+      dateStr: dateStr 
+    });
   }
-  // completar hasta 42 celdas (6 filas)
+  
+  // Completar hasta 42 celdas (6 filas)
   const remaining = 42 - calendarDays.length;
   for (let i = 1; i <= remaining; i++) {
     calendarDays.push({ day: i, enabled: false, currentMonth: false, fullDate: null });
   }
-
-  // Horarios base (de 07:00 a 18:00)
+  
+  // ==================== HORARIOS DE 07:00 A 18:00 ====================
   const allHorarios = [];
   for (let h = 7; h <= 18; h++) {
-    let hourStr = h.toString().padStart(2,'0') + ':00';
-    allHorarios.push(hourStr);
+    allHorarios.push(`${h.toString().padStart(2,'0')}:00`);
   }
-  // adicionales: medias horas populares (opcional)
-  const extraSlots = ['07:30','08:30','09:30','10:30','11:30','12:30','13:30','14:30','15:30','16:30','17:30'];
-  let finalHorariosSet = new Set(allHorarios);
-  extraSlots.forEach(slot => finalHorariosSet.add(slot));
-  let allSlotsArray = Array.from(finalHorariosSet).sort((a,b) => a.localeCompare(b));
-
+  // Agregar medias horas clave para más opciones
+  const mediaHoras = ['07:30', '08:30', '09:30', '10:30', '11:30', '12:30', '13:30', '14:30', '15:30', '16:30', '17:30'];
+  mediaHoras.forEach(slot => {
+    if (!allHorarios.includes(slot)) allHorarios.push(slot);
+  });
+  allHorarios.sort((a,b) => a.localeCompare(b));
+  
   // Estado de la app
-  let selectedDate = null;      // string '2026-03-XX'
+  let selectedDate = null;
   let selectedHorario = null;
-  let showFullHorarios = false;
-
+  
   // Elementos DOM
   const step1 = document.getElementById('step1Container');
   const step2 = document.getElementById('step2Container');
@@ -508,7 +490,6 @@
   const submitBtn = document.getElementById('submitVisita');
   const daysGrid = document.getElementById('daysGrid');
   const horariosContainer = document.getElementById('horariosContainer');
-  const showMoreBtn = document.getElementById('showMoreHorarios');
   const openTermsModalBtn = document.getElementById('openTermsModal');
   const termsModal = document.getElementById('termsModal');
   const closeTermsModal = document.getElementById('closeTermsModal');
@@ -517,56 +498,62 @@
   const compraDirectaLink = document.getElementById('compraDirectaLink');
   const stepBadge = document.getElementById('stepBadge');
   const stepDescription = document.getElementById('stepDescription');
-
-  // validación step1
+  
+  // Validación paso 1
   function validateStep1() {
     let nombre = document.getElementById('nombreCliente').value.trim();
     let telefono = document.getElementById('telefono').value.trim();
     let conjunto = document.getElementById('conjunto').value.trim();
     let termsChecked = acceptTermsCheck.checked;
+    
     if(!nombre) { alert("Por favor ingresa el nombre completo."); return false; }
     if(!telefono) { alert("Por favor ingresa el teléfono."); return false; }
     if(!conjunto) { alert("Por favor ingresa el nombre del conjunto."); return false; }
     if(!termsChecked) { alert("Debes aceptar los términos y condiciones."); return false; }
     return true;
   }
-
+  
+  // Renderizar calendario
   function renderCalendar() {
     daysGrid.innerHTML = '';
-    calendarDays.forEach((cell, idx) => {
+    calendarDays.forEach((cell) => {
       const div = document.createElement('div');
       div.className = 'day-cell';
-      if(!cell.enabled) div.classList.add('disabled');
+      if(!cell.currentMonth) {
+        div.classList.add('disabled');
+        div.style.opacity = '0.3';
+        div.style.cursor = 'default';
+      } else {
+        div.classList.add('available');
+      }
       div.innerText = cell.day;
+      
       if(cell.currentMonth && cell.enabled) {
-        div.style.cursor = 'pointer';
         div.addEventListener('click', () => {
-          if(!cell.enabled) return;
-          // quitar selección anterior
           document.querySelectorAll('.day-cell').forEach(el => el.classList.remove('selected'));
           div.classList.add('selected');
           selectedDate = cell.dateStr;
-          // al cambiar fecha, resetear horario seleccionado
+          // Resetear horario al cambiar fecha
           selectedHorario = null;
           renderHorarios();
         });
-        if(selectedDate === cell.dateStr) div.classList.add('selected');
-      } else {
-        div.style.cursor = 'default';
+        if(selectedDate === cell.dateStr) {
+          div.classList.add('selected');
+        }
       }
       daysGrid.appendChild(div);
     });
   }
-
+  
+  // Renderizar horarios
   function renderHorarios() {
     if(!selectedDate) {
-      horariosContainer.innerHTML = '<div style="font-size:0.8rem; padding:0.5rem;">Primero selecciona una fecha disponible</div>';
-      showMoreBtn.style.display = 'none';
+      horariosContainer.innerHTML = '<div style="font-size:0.8rem; padding:0.5rem; color:#666;">📅 Primero selecciona una fecha en el calendario</div>';
       return;
     }
-    let slotsToShow = showFullHorarios ? allSlotsArray : allSlotsArray.slice(0, 6);
+    
     horariosContainer.innerHTML = '';
-    slotsToShow.forEach(slot => {
+    allHorarios.forEach(slot => {
       const badge = document.createElement('span');
       badge.className = 'horario-badge';
       badge.innerText = slot;
@@ -578,20 +565,9 @@
       });
       horariosContainer.appendChild(badge);
     });
-    if(allSlotsArray.length > 6) {
-      showMoreBtn.style.display = 'block';
-      showMoreBtn.innerText = showFullHorarios ? "Mostrar menos" : "Mostrar más todo el horario hasta las 18";
-    } else {
-      showMoreBtn.style.display = 'none';
-    }
   }
-
-  function toggleShowMore() {
-    showFullHorarios = !showFullHorarios;
-    renderHorarios();
-  }
-
-  // construir texto completo para WhatsApp
+  
+  // Construir mensaje para WhatsApp
   function buildWhatsAppMessage() {
     const nombre = document.getElementById('nombreCliente').value.trim() || "No especificado";
     const telefono = document.getElementById('telefono').value.trim() || "No especificado";
@@ -600,18 +576,32 @@
     const email = document.getElementById('email').value.trim() || "No especificado";
     const conjunto = document.getElementById('conjunto').value.trim() || "No especificado";
     const direccion = document.getElementById('direccionInmueble').value.trim() || "Calle 88 sur # 88c - 89";
-    const capitalChecked = document.getElementById('capitalContacto').checked ? "Sí, acepto que QRP2P Capital contacte a mi cliente para crédito hipotecario." : "No desea contacto con QRP2P Capital.";
+    
     let fechaLegible = "No seleccionada";
     if(selectedDate) {
       const [year, month, day] = selectedDate.split('-');
-      const dateObj = new Date(year, month-1, day);
-      fechaLegible = dateObj.toLocaleDateString('es-ES', { year:'numeric', month:'long', day:'numeric' });
+      const fecha = new Date(year, month-1, day);
+      fechaLegible = fecha.toLocaleDateString('es-ES', { year:'numeric', month:'long', day:'numeric' });
     }
+    
     const horario = selectedHorario ? selectedHorario : "No seleccionado";
-    const mensaje = `*AGENDA DE VISITA - QRP2P*%0A%0A*Cliente:* ${nombre}%0A*Teléfono:* ${telefono}%0A*Tipo documento:* ${tipoDoc}%0A*Documento:* ${documento}%0A*Correo:* ${email}%0A*Conjunto:* ${conjunto}%0A*Dirección:* ${direccion}%0A%0A*Fecha seleccionada:* ${fechaLegible}%0A*Horario:* ${horario}%0A%0A*Opción de crédito:* ${capitalChecked}%0A%0A--- Visita agendada desde formulario web ---`;
+    
+    const mensaje = `*AGENDA DE VISITA - QRP2P*%0A%0A` +
+      `*Cliente:* ${nombre}%0A` +
+      `*Teléfono:* ${telefono}%0A` +
+      `*Tipo documento:* ${tipoDoc}%0A` +
+      `*Documento:* ${documento}%0A` +
+      `*Correo:* ${email}%0A` +
+      `*Conjunto:* ${conjunto}%0A` +
+      `*Dirección:* ${direccion}%0A%0A` +
+      `*Fecha seleccionada:* ${fechaLegible}%0A` +
+      `*Horario:* ${horario}%0A%0A` +
+      `--- Visita agendada desde formulario web QRP2P ---`;
+    
     return mensaje;
   }
-
+  
+  // Enviar a WhatsApp
   function sendToWhatsApp() {
     if(!selectedDate) {
       alert("Por favor selecciona una fecha en el calendario.");
@@ -626,21 +616,18 @@
     window.open(url, '_blank');
     return true;
   }
-
-  // Eventos navegación
+  
+  // Eventos de navegación
   nextBtn.addEventListener('click', () => {
     if(!validateStep1()) return;
-    // prellenar dirección fija pero editable
-    step1.style.display = 'none';
-    step2.style.display = 'block';
-    stepBadge.innerText = 'Paso 2 de 2';
-    stepDescription.innerText = 'Fecha y horario';
+    
+    // Seleccionar fecha por defecto (el día actual o el primero disponible)
     if(!selectedDate) {
-      // por defecto sugerir primer día disponible a partir de hoy dentro de marzo
-      const todayDate = new Date();
-      todayDate.setHours(0,0,0,0);
+      const today = new Date();
+      today.setHours(0,0,0,0);
+      // Buscar primer día de marzo 2026 que sea >= hoy o simplemente el 1 de marzo
       for(let cell of calendarDays) {
-        if(cell.enabled && cell.currentMonth && cell.fullDate && cell.fullDate >= todayDate) {
+        if(cell.currentMonth && cell.fullDate) {
           if(!selectedDate) {
             selectedDate = cell.dateStr;
             break;
@@ -648,25 +635,29 @@
         }
       }
     }
+    
+    step1.style.display = 'none';
+    step2.style.display = 'block';
+    stepBadge.innerText = 'Paso 2 de 2';
+    stepDescription.innerText = 'Fecha y horario';
+    
     renderCalendar();
     renderHorarios();
   });
-
+  
   backBtn.addEventListener('click', () => {
     step2.style.display = 'none';
     step1.style.display = 'block';
     stepBadge.innerText = 'Paso 1 de 2';
     stepDescription.innerText = 'Datos del cliente';
   });
-
+  
   submitBtn.addEventListener('click', (e) => {
     e.preventDefault();
     sendToWhatsApp();
   });
-
-  showMoreBtn.addEventListener('click', toggleShowMore);
-
-  // modal términos
+  
+  // Modal de términos y condiciones
   function openModal() { termsModal.style.display = 'flex'; }
   function closeModal() { termsModal.style.display = 'none'; }
   openTermsModalBtn.addEventListener('click', openModal);
@@ -676,34 +667,31 @@
     closeModal();
   });
   window.addEventListener('click', (e) => { if(e.target === termsModal) closeModal(); });
-
-  // compra directa
+  
+  // Compra directa
   compraDirectaLink.addEventListener('click', (e) => {
     e.preventDefault();
     window.open('https://qrp2p.com/oferta-inmueble-co', '_blank');
   });
-
-  // inicializar mes
-  document.getElementById('monthYearDisplay').innerText = 'marzo 2026';
-  renderCalendar();
-  // precargar si existe algún valor
-  const initialDate = new Date(2026, 2, 27);
-  const formattedInit = `2026-03-27`;
-  if(calendarDays.some(cell => cell.dateStr === formattedInit && cell.enabled)) {
-    selectedDate = formattedInit;
+  
+  // Inicializar
+  document.getElementById('monthYearDisplay').innerText = 'Marzo 2026';
+  
+  // Seleccionar fecha por defecto: 27 de marzo 2026 (ejemplo visual)
+  const defaultDate = '2026-03-27';
+  if(calendarDays.some(cell => cell.dateStr === defaultDate)) {
+    selectedDate = defaultDate;
   } else {
     for(let cell of calendarDays) {
-      if(cell.enabled && cell.currentMonth) { selectedDate = cell.dateStr; break; }
+      if(cell.currentMonth) { selectedDate = cell.dateStr; break; }
     }
   }
+  
+  // Seleccionar horario por defecto: 08:00
+  selectedHorario = '08:00';
+  
   renderCalendar();
   renderHorarios();
-  // valor por defecto horario
-  selectedHorario = "08:00";
-  renderHorarios();
-  // checkbox terms no inicialmente marcado pero mostramos valores prellenados
-  // Acepto términos no automático
-  // dejar datos pre-cargados
 </script>
 </body>
 </html>
