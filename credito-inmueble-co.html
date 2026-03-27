@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="description" content="Solicita tu crédito hipotecario en QRP2P. Múltiples opciones bancarias, facilidades de pago y estudio rápido. Completa el formulario y te asesoramos sin costo.">
+    <meta name="keywords" content="crédito hipotecario, compra de vivienda, préstamo para casa, financiamiento inmobiliario, QRP2P, crédito en Colombia, leasing habitacional, crédito para reportados, compra de cartera">
+    <meta name="author" content="QRP2P">
+    <meta name="robots" content="index, follow">
+    <title>QRP2P | Solicita tu Crédito Hipotecario - Todas las Opciones</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background: #ffffff;
+            color: #111111;
+            line-height: 1.5;
+        }
+
+        /* Header Hero Section */
+        .hero {
+            background: #000000;
+            color: #ffffff;
+            padding: 3rem 1.5rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.85;
+        }
+
+        .hero .highlight {
+            color: #cccccc;
+            font-weight: 600;
+        }
+
+        /* Container principal */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* Grid para información y formulario */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 992px) {
+            .grid-2 {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /* Sección de información de créditos */
+        .info-section {
+            background: #f5f5f5;
+            border: 1px solid #e0e0e0;
+            border-radius: 16px;
+            padding: 1.8rem;
+        }
+
+        .info-section h2 {
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            color: #000000;
+            border-bottom: 2px solid #000000;
+            display: inline-block;
+            padding-bottom: 0.3rem;
+        }
+
+        .info-section h3 {
+            font-size: 1.2rem;
+            margin: 1.5rem 0 0.8rem 0;
+            color: #222222;
+        }
+
+        .info-card {
+            background: #ffffff;
+            border: 1px solid #dddddd;
+            border-radius: 12px;
+            padding: 1.2rem;
+            margin-bottom: 1.2rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .info-card h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #000000;
+        }
+
+        .info-card p {
+            color: #333333;
+            font-size: 0.95rem;
+        }
+
+        .bank-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        .bank-tag {
+            background: #ffffff;
+            border: 1px solid #aaaaaa;
+            padding: 0.4rem 1rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #111111;
+            transition: all 0.2s ease;
+        }
+
+        .bank-tag:hover {
+            background: #000000;
+            color: #ffffff;
+            border-color: #000000;
+        }
+
+        .benefit-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .benefit-list li {
+            padding: 0.6rem 0;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .benefit-list li::before {
+            content: "✓";
+            color: #000000;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        /* Badges y etiquetas */
+        .badge {
+            display: inline-block;
+            background: #000000;
+            color: white;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            margin-left: 0.5rem;
+            vertical-align: middle;
+        }
+
+        /* Formulario */
+        .form-section {
+            background: #ffffff;
+            border: 1px solid #cccccc;
+            border-radius: 16px;
+            padding: 1.8rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .form-section h2 {
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+            color: #000000;
+        }
+
+        .form-section > p {
+            color: #555555;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            font-size: 0.85rem;
+            color: #111111;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #bbbbbb;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            background: #ffffff;
+            transition: all 0.2s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #000000;
+            box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
+        }
+
+        .row-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            margin-top: 0.3rem;
+            flex-wrap: wrap;
+        }
+
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-weight: normal;
+            margin-bottom: 0;
+        }
+
+        .radio-group input {
+            width: auto;
+        }
+
+        button {
+            background: #000000;
+            color: #ffffff;
+            border: none;
+            padding: 1rem 1.5rem;
+            width: 100%;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 1rem;
+        }
+
+        button:hover {
+            background: #333333;
+            transform: translateY(-1px);
+        }
+
+        small {
+            display: block;
+            margin-top: 1rem;
+            font-size: 0.7rem;
+            color: #777777;
+            text-align: center;
+        }
+
+        hr {
+            margin: 2rem 0;
+            border: none;
+            border-top: 1px solid #dddddd;
+        }
+
+        /* Footer */
+        footer {
+            background: #f8f8f8;
+            text-align: center;
+            padding: 2rem 1rem;
+            border-top: 1px solid #e0e0e0;
+            margin-top: 2rem;
+            font-size: 0.8rem;
+            color: #555555;
+        }
+
+        .testimonial {
+            background: #ffffff;
+            border-left: 3px solid #000000;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+        }
+
+        /* Nueva sección de opciones expandidas */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1.5rem;
+        }
+
+        .option-item {
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 1rem 1.2rem;
+            transition: all 0.2s ease;
+        }
+
+        .option-item:hover {
+            border-color: #000000;
+            transform: translateY(-2px);
+        }
+
+        .option-item strong {
+            display: block;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: #000000;
+        }
+
+        .option-item p {
+            font-size: 0.85rem;
+            color: #555555;
+            margin: 0;
+        }
+
+        .highlight-box {
+            background: #000000;
+            color: white;
+            padding: 1.2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin: 1.5rem 0;
+        }
+
+        .highlight-box p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        .highlight-box a {
+            color: white;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 640px) {
+            .hero h1 {
+                font-size: 1.6rem;
+            }
+            .row-2 {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+            .info-section, .form-section {
+                padding: 1.2rem;
+            }
+            .radio-group {
+                gap: 0.8rem;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <h1>QRP2P · Crédito Hipotecario</h1>
+        <p>Múltiples opciones bancarias, <span class="highlight">facilidades de pago</span> y estudio en <span class="highlight">tiempo récord</span>. Tu casa propia está más cerca.</p>
+    </header>
+
+    <div class="container">
+        <div class="grid-2">
+            <!-- Columna de información sobre créditos -->
+            <div class="info-section">
+                <h2>Tu crédito, a tu medida</h2>
+                <p style="margin: 0.8rem 0 1.2rem 0;">En QRP2P conectamos tu sueño con las mejores alternativas del mercado colombiano.</p>
+
+                <div class="info-card">
+                    <h4>🏦 Múltiples opciones financieras</h4>
+                    <p>Trabajamos con los principales bancos e instituciones financieras de Colombia para ofrecerte variedad de tasas y condiciones.</p>
+                    <div class="bank-list">
+                        <span class="bank-tag">Bancolombia</span>
+                        <span class="bank-tag">Davivienda</span>
+                        <span class="bank-tag">BBVA</span>
+                        <span class="bank-tag">Banco de Bogotá</span>
+                        <span class="bank-tag">Banco Caja Social</span>
+                        <span class="bank-tag">Av Villas</span>
+                        <span class="bank-tag">Scotiabank Colpatria</span>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h4>💰 Facilidades de pago</h4>
+                    <ul class="benefit-list">
+                        <li>Plazos desde 5 hasta 30 años</li>
+                        <li>Cuotas fijas en pesos colombianos</li>
+                        <li>Posibilidad de abonos extraordinarios sin penalización</li>
+                        <li>Tasas competitivas según tu perfil</li>
+                        <li>Financiación hasta el 80% del valor del inmueble</li>
+                    </ul>
+                </div>
+
+                <div class="info-card">
+                    <h4>⚡ Estudio rápido y sin costo</h4>
+                    <p>Evaluamos tu viabilidad crediticia en tiempo récord. Nuestros ejecutivos te acompañan desde la solicitud hasta el desembolso, incluso si aún no has elegido el inmueble.</p>
+                </div>
+
+                <div class="info-card">
+                    <h4>📋 ¿Para quiénes aplica?</h4>
+                    <ul class="benefit-list">
+                        <li>Asalariados con ingresos desde 1 SMLV</li>
+                        <li>Independientes con capacidad de pago demostrable</li>
+                        <li>Pensionados con estabilidad comprobada</li>
+                        <li>Compra de vivienda nueva, usada o construcción</li>
+                        <li>Personas con historial crediticio no perfecto <span class="badge">Te asesoramos</span></li>
+                    </ul>
+                </div>
+
+                <!-- NUEVA SECCIÓN: Alternativas especiales -->
+                <div class="info-card">
+                    <h4>🔓 Alternativas para todos los perfiles</h4>
+                    <ul class="benefit-list">
+                        <li><strong>¿Has estado reportado?</strong> Te orientamos para mejorar tu historial y acceder al crédito</li>
+                        <li><strong>Independientes sin declaración de renta:</strong> Opciones flexibles con otros comprobantes</li>
+                        <li><strong>Codeudor o co-solicitante:</strong> Fortalece tu solicitud y aumenta aprobación</li>
+                        <li><strong>Crédito con subsidio:</strong> Accede a Mi Casa Ya y cajas de compensación</li>
+                    </ul>
+                </div>
+
+                <div class="testimonial">
+                    “Gracias a QRP2P encontré el crédito ideal para mi apartamento. Me asesoraron en todo momento y en menos de una semana ya tenía la preaprobación.”
+                    <br>— Carlos M., Bogotá
+                </div>
+            </div>
+
+            <!-- Columna del formulario -->
+            <div class="form-section">
+                <h2>Solicita tu crédito</h2>
+                <p>Completa el formulario y un asesor QRP2P te contactará con la mejor propuesta para ti.</p>
+
+                <form id="creditForm">
+                    <!-- Acerca del cliente -->
+                    <div style="margin-bottom: 1rem; font-weight: 700; border-left: 3px solid black; padding-left: 0.6rem;">Mis datos personales</div>
+                    
+                    <div class="row-2">
+                        <div class="form-group">
+                            <label>Mi primer nombre *</label>
+                            <input type="text" id="primerNombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Mi segundo nombre (opcional)</label>
+                            <input type="text" id="segundoNombre">
+                        </div>
+                    </div>
+
+                    <div class="row-2">
+                        <div class="form-group">
+                            <label>Mi primer apellido *</label>
+                            <input type="text" id="primerApellido" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Mi segundo apellido *</label>
+                            <input type="text" id="segundoApellido" required>
+                        </div>
+                    </div>
+
+                    <div class="row-2">
+                        <div class="form-group">
+                            <label>Mi teléfono de contacto *</label>
+                            <input type="tel" id="telefono" placeholder="3001234567" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Mi teléfono internacional (opcional)</label>
+                            <input type="tel" id="telefonoInt" placeholder="+1 234 567 8900">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Mi correo electrónico *</label>
+                        <input type="email" id="email" required>
+                    </div>
+
+                    <div class="row-2">
+                        <div class="form-group">
+                            <label>Mi tipo de documento *</label>
+                            <select id="tipoDoc" required>
+                                <option value="">Selecciona</option>
+                                <option value="Cédula de ciudadanía">Cédula de ciudadanía</option>
+                                <option value="Cédula de extranjería">Cédula de extranjería</option>
+                                <option value="Pasaporte">Pasaporte</option>
+                                <option value="NIT">NIT</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Mi número de documento *</label>
+                            <input type="text" id="numDoc" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>¿Voy a solicitar el crédito con otra persona?</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="segundoSolicitante" value="Sí"> Sí, voy con un codeudor o co-solicitante</label>
+                            <label><input type="radio" name="segundoSolicitante" value="No" checked> No, solo yo</label>
+                        </div>
+                    </div>
+
+                    <!-- Nuevo campo: situación en centrales de riesgo -->
+                    <div class="form-group">
+                        <label>¿Has estado reportado en centrales de riesgo (Datacrédito, CIFIN)?</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="reportado" value="Sí, actualmente"> Sí, actualmente</label>
+                            <label><input type="radio" name="reportado" value="Sí, pero ya estoy al día"> Sí, pero ya estoy al día</label>
+                            <label><input type="radio" name="reportado" value="No, nunca" checked> No, nunca</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Comentarios adicionales (opcional)</label>
+                        <textarea rows="2" id="comentarios" placeholder="Ej: estoy interesado en comprar casa en Bogotá, estrato 3, presupuesto hasta $200M. También me interesa leasing habitacional."></textarea>
+                    </div>
+
+                    <div style="margin: 1rem 0 0.8rem 0; font-weight: 700; border-left: 3px solid black; padding-left: 0.6rem;">Mis ingresos</div>
+
+                    <div class="form-group">
+                        <label>Mi actividad económica *</label>
+                        <select id="actividad" required>
+                            <option value="Asalariado">Asalariado</option>
+                            <option value="Independiente">Independiente</option>
+                            <option value="Pensionado">Pensionado</option>
+                        </select>
+                    </div>
+
+                    <div class="row-2">
+                        <div class="form-group">
+                            <label>Mis ingresos mensuales (COP$) *</label>
+                            <input type="number" id="ingresos" placeholder="3.000.000" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Mis ingresos extra mensuales (COP$)</label>
+                            <input type="number" id="ingresosExtra" placeholder="1.000.000">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>¿Declaro renta?</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="declaraRenta" value="Sí"> Sí</label>
+                            <label><input type="radio" name="declaraRenta" value="No" checked> No</label>
+                        </div>
+                    </div>
+
+                    <div style="margin: 1rem 0 0.8rem 0; font-weight: 700; border-left: 3px solid black; padding-left: 0.6rem;">Información del inmueble que quiero comprar</div>
+
+                    <div class="row-2">
+                        <div class="form-group">
+                            <label>Valor del inmueble (COP$) *</label>
+                            <input type="number" id="valorInmueble" placeholder="150.000.000" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Valor del crédito que necesito (COP$) *</label>
+                            <input type="number" id="valorCredito" placeholder="100.000.000" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>¿Cuento con los recursos para la cuota inicial?</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="cuotaInicial" value="Sí"> Sí, ya tengo el dinero para la cuota inicial</label>
+                            <label><input type="radio" name="cuotaInicial" value="No" checked> No, necesito opciones de financiamiento</label>
+                        </div>
+                    </div>
+
+                    <button type="submit">Enviar mi solicitud por WhatsApp</button>
+                    <small>Al enviar, aceptas que un asesor QRP2P se contacte contigo para ofrecerte las mejores opciones de crédito hipotecario sin costo.</small>
+                </form>
+            </div>
+        </div>
+
+        <hr>
+
+        <!-- Sección adicional de información de créditos y posibilidades -->
+        <div style="text-align: center; margin: 1rem 0 2rem;">
+            <h3 style="font-size: 1.5rem;">Más opciones para tu futuro</h3>
+            <p style="max-width: 800px; margin: 0.5rem auto;">En QRP2P trabajamos con una red amplia de aliados financieros para ofrecerte alternativas que se adaptan a tus necesidades.</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem;">
+            <div style="border: 1px solid #ddd; padding: 1.2rem; border-radius: 12px;">
+                <strong>🏡 Vivienda nueva</strong>
+                <p style="margin-top: 0.5rem; font-size: 0.9rem;">Créditos para proyectos nuevos con tasas especiales y subsidios si aplicas.</p>
+            </div>
+            <div style="border: 1px solid #ddd; padding: 1.2rem; border-radius: 12px;">
+                <strong>🔨 Vivienda usada</strong>
+                <p style="margin-top: 0.5rem; font-size: 0.9rem;">Compra de inmuebles de segunda mano con financiación ágil.</p>
+            </div>
+            <div style="border: 1px solid #ddd; padding: 1.2rem; border-radius: 12px;">
+                <strong>🏗️ Construcción en terreno propio</strong>
+                <p style="margin-top: 0.5rem; font-size: 0.9rem;">Desembolsos por etapas para construir tu vivienda.</p>
+            </div>
+            <div style="border: 1px solid #ddd; padding: 1.2rem; border-radius: 12px;">
+                <strong>📈 Liberación de garantía</strong>
+                <p style="margin-top: 0.5rem; font-size: 0.9rem;">Compra de cartera hipotecaria para mejorar condiciones.</p>
+            </div>
+        </div>
+
+        <!-- NUEVA SECCIÓN: Más alternativas ampliadas (leasing, traslado, subsidios, etc) -->
+        <div style="margin: 2rem 0 1rem;">
+            <h3 style="font-size: 1.5rem; text-align: center;">🌟 Alternativas que tenemos para ti</h3>
+        </div>
+
+        <div class="options-grid">
+            <div class="option-item">
+                <strong>📄 Leasing habitacional</strong>
+                <p>Disfruta de tu vivienda con cuotas más bajas y opción de compra al final. Ideal si buscas menor cuota inicial.</p>
+            </div>
+            <div class="option-item">
+                <strong>🔄 Traslado de hipoteca</strong>
+                <p>Mejora la tasa de tu crédito actual y reduce tu cuota mensual. Compra de cartera con condiciones preferenciales.</p>
+            </div>
+            <div class="option-item">
+                <strong>🏠 Crédito con subsidio familiar</strong>
+                <p>Accede a programas como Mi Casa Ya y cajas de compensación. Te ayudamos a tramitarlo.</p>
+            </div>
+            <div class="option-item">
+                <strong>👥 Crédito con codeudor</strong>
+                <p>Fortalece tu perfil financiero y aumenta tus posibilidades de aprobación si tus ingresos no son suficientes.</p>
+            </div>
+            <div class="option-item">
+                <strong>🔓 Opciones para independientes</strong>
+                <p>Soluciones a la medida si tus ingresos no son fijos o declaras renta. Evaluamos extractos y contratos.</p>
+            </div>
+            <div class="option-item">
+                <strong>🚫 Sin historia crediticia perfecta</strong>
+                <p>Evaluamos tu situación actual, no solo tu pasado. Incluso si has estado reportado, te asesoramos para encontrar una opción viable.</p>
+            </div>
+            <div class="option-item">
+                <strong>💳 Abono a capital sin penalización</strong>
+                <p>Reduce tu deuda más rápido cuando tus ingresos lo permitan. Sin cobros adicionales.</p>
+            </div>
+            <div class="option-item">
+                <strong>🔄 Deja de pagar arriendo</strong>
+                <p>Convierte tu cuota de arriendo en inversión propia. Cuota similar o menor a tu arriendo actual.</p>
+            </div>
+        </div>
+
+        <!-- CTA adicional -->
+        <div class="highlight-box">
+            <p>✨ <strong>¿Listo para dejar de pagar arriendo y tener tu casa propia?</strong> ✨<br>
+            Completa el formulario y te contactamos con las opciones disponibles para ti.<br>
+            📲 <a href="#" id="ctaLink">Da clic aquí o escríbenos directo por WhatsApp</a></p>
+        </div>
+    </div>
+
+    <footer>
+        <p>QRP2P · Conectamos personas con las mejores opciones de crédito hipotecario en Colombia.</p>
+        <p>📍 Asesoría sin costo · Línea de atención: +57 3146824438</p>
+        <p>© 2025 QRP2P · Todos los derechos reservados</p>
+    </footer>
+
+    <script>
+        document.getElementById('creditForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Obtener valores
+            const primerNombre = document.getElementById('primerNombre').value.trim();
+            const segundoNombre = document.getElementById('segundoNombre').value.trim();
+            const primerApellido = document.getElementById('primerApellido').value.trim();
+            const segundoApellido = document.getElementById('segundoApellido').value.trim();
+            const telefono = document.getElementById('telefono').value.trim();
+            const telefonoInt = document.getElementById('telefonoInt').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const tipoDoc = document.getElementById('tipoDoc').value;
+            const numDoc = document.getElementById('numDoc').value.trim();
+            const segundoSolicitante = document.querySelector('input[name="segundoSolicitante"]:checked')?.value || '';
+            const reportado = document.querySelector('input[name="reportado"]:checked')?.value || '';
+            const comentarios = document.getElementById('comentarios').value.trim();
+            const actividad = document.getElementById('actividad').value;
+            const ingresos = document.getElementById('ingresos').value;
+            const ingresosExtra = document.getElementById('ingresosExtra').value;
+            const declaraRenta = document.querySelector('input[name="declaraRenta"]:checked')?.value || '';
+            const valorInmueble = document.getElementById('valorInmueble').value;
+            const valorCredito = document.getElementById('valorCredito').value;
+            const cuotaInicial = document.querySelector('input[name="cuotaInicial"]:checked')?.value || '';
+
+            // Validaciones básicas
+            if (!primerNombre || !primerApellido || !segundoApellido || !telefono || !email || !tipoDoc || !numDoc || !actividad || !ingresos || !valorInmueble || !valorCredito) {
+                alert('Por favor completa todos los campos obligatorios (*)');
+                return;
+            }
+
+            // Construir mensaje para WhatsApp
+            let mensaje = "🏠 *NUEVA SOLICITUD DE CRÉDITO - QRP2P*%0A";
+            mensaje += "────────────────%0A";
+            mensaje += "*MIS DATOS PERSONALES*%0A";
+            mensaje += `Nombre: ${primerNombre} ${segundoNombre ? segundoNombre + ' ' : ''}${primerApellido} ${segundoApellido}%0A`;
+            mensaje += `Teléfono: ${telefono}${telefonoInt ? ' / ' + telefonoInt : ''}%0A`;
+            mensaje += `Correo: ${email}%0A`;
+            mensaje += `Documento: ${tipoDoc} ${numDoc}%0A`;
+            mensaje += `¿Solicito con otra persona?: ${segundoSolicitante}%0A`;
+            mensaje += `Situación en centrales de riesgo: ${reportado}%0A`;
+            if (comentarios) mensaje += `Comentarios: ${comentarios}%0A`;
+            
+            mensaje += "%0A*MIS INGRESOS*%0A";
+            mensaje += `Actividad: ${actividad}%0A`;
+            mensaje += `Ingresos mensuales: COP$ ${Number(ingresos).toLocaleString('es-CO')}%0A`;
+            if (ingresosExtra) mensaje += `Ingresos extra: COP$ ${Number(ingresosExtra).toLocaleString('es-CO')}%0A`;
+            mensaje += `Declaro renta: ${declaraRenta}%0A`;
+            
+            mensaje += "%0A*INFORMACIÓN DEL INMUEBLE*%0A";
+            mensaje += `Valor del inmueble: COP$ ${Number(valorInmueble).toLocaleString('es-CO')}%0A`;
+            mensaje += `Crédito que necesito: COP$ ${Number(valorCredito).toLocaleString('es-CO')}%0A`;
+            mensaje += `Cuento con cuota inicial: ${cuotaInicial}%0A`;
+            mensaje += "────────────────%0A";
+            mensaje += "📲 *Por favor contactarme para asesorarme con mi crédito hipotecario. Me interesan todas las opciones: leasing, subsidios, crédito con codeudor, y alternativas si he estado reportado.*";
+
+            // Número de WhatsApp
+            const telefonoDestino = "573146824438";
+            const url = `https://wa.me/${telefonoDestino}?text=${mensaje}`;
+            
+            window.open(url, '_blank');
+        });
+
+        // CTA link también envía a WhatsApp con mensaje predefinido
+        document.getElementById('ctaLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            const mensajeRapido = "Hola, estoy interesado en las opciones de crédito hipotecario, especialmente en dejar de pagar arriendo y conocer alternativas para mi perfil. ¿Pueden asesorarme?";
+            const telefonoDestino = "573146824438";
+            window.open(`https://wa.me/${telefonoDestino}?text=${encodeURIComponent(mensajeRapido)}`, '_blank');
+        });
+    </script>
+</body>
+</html>
