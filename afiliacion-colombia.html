@@ -8,15 +8,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --color-blanco: #ffffff;
-            --color-negro: #111111;
-            --color-gris-claro: #f8f9fa;
-            --color-gris-medio: #e9ecef;
-            --color-gris-oscuro: #6c757d;
-            --color-verde: #25D366;
-            --color-dorado: #F5A623;
-            --color-rojo: #dc3545;
-            --color-azul: #007bff;
+            --blanco: #ffffff;
+            --negro: #000000;
+            --gris-95: #f5f5f5;
+            --gris-80: #e0e0e0;
+            --gris-60: #9e9e9e;
+            --gris-40: #6b6b6b;
+            --gris-20: #333333;
+            --verde: #25D366;
         }
         
         * {
@@ -27,22 +26,20 @@
         
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--color-blanco);
-            color: var(--color-negro);
+            background-color: var(--blanco);
+            color: var(--negro);
             line-height: 1.5;
             font-size: 16px;
         }
         
-        /* Header - minimalista sin logo */
+        /* Header */
         header {
-            background-color: var(--color-blanco);
-            border-bottom: 1px solid var(--color-gris-medio);
+            background-color: var(--blanco);
+            border-bottom: 1px solid var(--gris-80);
             padding: 1rem 0;
             position: sticky;
             top: 0;
             z-index: 100;
-            background-color: rgba(255,255,255,0.98);
-            backdrop-filter: blur(10px);
         }
         
         .header-container {
@@ -59,20 +56,16 @@
             font-weight: 700;
             letter-spacing: -0.5px;
             text-decoration: none;
-            color: var(--color-negro);
+            color: var(--negro);
         }
         
-        .logo span {
-            color: var(--color-dorado);
-        }
-        
-        /* Hero Section - minimalista */
+        /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            background-color: var(--blanco);
             text-align: center;
             padding: 4rem 1.5rem;
             margin-bottom: 2rem;
-            border-bottom: 1px solid var(--color-gris-medio);
+            border-bottom: 1px solid var(--gris-80);
         }
         
         .hero h1 {
@@ -80,18 +73,14 @@
             font-weight: 700;
             letter-spacing: -1px;
             margin-bottom: 1rem;
-            color: var(--color-negro);
-        }
-        
-        .hero h1 span {
-            color: var(--color-dorado);
+            color: var(--negro);
         }
         
         .hero p {
             font-size: 1.125rem;
             max-width: 700px;
             margin: 0 auto;
-            color: var(--color-gris-oscuro);
+            color: var(--gris-40);
             line-height: 1.6;
         }
         
@@ -102,28 +91,26 @@
             padding: 0 1.5rem 3rem;
         }
         
-        /* Plan Card - minimalista */
+        /* Plan Card */
         .plan-card {
-            border: 1px solid var(--color-gris-medio);
+            border: 1px solid var(--gris-80);
             border-radius: 24px;
             padding: 2rem;
             text-align: center;
             max-width: 500px;
             margin: 0 auto 3rem auto;
-            background: var(--color-blanco);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+            background: var(--blanco);
             transition: all 0.3s ease;
         }
         
         .plan-card:hover {
             box-shadow: 0 8px 30px rgba(0,0,0,0.05);
-            transform: translateY(-2px);
         }
         
         .plan-badge {
             display: inline-block;
-            background-color: var(--color-dorado);
-            color: var(--color-negro);
+            background-color: var(--negro);
+            color: var(--blanco);
             padding: 0.25rem 1rem;
             border-radius: 50px;
             font-size: 0.75rem;
@@ -146,95 +133,104 @@
         .plan-price span {
             font-size: 1rem;
             font-weight: 400;
-            color: var(--color-gris-oscuro);
+            color: var(--gris-40);
         }
         
         .plan-description {
-            color: var(--color-gris-oscuro);
+            color: var(--gris-40);
             font-size: 0.875rem;
         }
         
-        /* Sección de tipos de negocio - nueva */
+        /* Sección de tipos de negocio */
         .business-types {
-            background-color: var(--color-gris-claro);
+            background-color: var(--gris-95);
             border-radius: 24px;
             padding: 2rem;
             margin-bottom: 2rem;
             text-align: center;
+            border: 1px solid var(--gris-80);
         }
         
         .business-types h3 {
             font-size: 1.25rem;
             font-weight: 600;
             margin-bottom: 1.5rem;
-            color: var(--color-negro);
+            color: var(--negro);
         }
         
         .business-grid {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 1rem;
+            gap: 0.75rem;
         }
         
         .business-tag {
-            background-color: var(--color-blanco);
-            border: 1px solid var(--color-gris-medio);
+            background-color: var(--blanco);
+            border: 1px solid var(--gris-80);
             border-radius: 50px;
             padding: 0.5rem 1.25rem;
             font-size: 0.875rem;
             font-weight: 500;
-            color: var(--color-gris-oscuro);
+            color: var(--gris-20);
             transition: all 0.2s;
         }
         
         .business-tag:hover {
-            border-color: var(--color-dorado);
-            color: var(--color-dorado);
+            border-color: var(--negro);
+            background-color: var(--gris-95);
         }
         
         .business-tag i {
             margin-right: 0.5rem;
             font-size: 0.875rem;
+            color: var(--gris-40);
+        }
+        
+        .business-note {
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            color: var(--gris-40);
         }
         
         /* Features Grid */
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
             gap: 1rem;
             margin-top: 1rem;
         }
         
         .feature-item {
-            background-color: var(--color-gris-claro);
+            background-color: var(--gris-95);
             padding: 1rem 1.25rem;
             border-radius: 12px;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 0.75rem;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
         
         .feature-item:hover {
-            border-color: var(--color-gris-medio);
-            background-color: var(--color-blanco);
+            border-color: var(--gris-80);
+            background-color: var(--blanco);
         }
         
         .feature-item i {
-            color: var(--color-dorado);
+            color: var(--negro);
             font-size: 1.125rem;
             width: 24px;
+            margin-top: 0.125rem;
         }
         
         .feature-item i.fa-whatsapp {
-            color: var(--color-verde);
+            color: var(--verde);
         }
         
         .feature-item strong {
             font-weight: 600;
-            color: var(--color-negro);
+            color: var(--negro);
         }
         
         .section-title {
@@ -242,14 +238,14 @@
             font-weight: 600;
             margin: 1.5rem 0 1rem 0;
             padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--color-dorado);
+            border-bottom: 2px solid var(--negro);
             display: inline-block;
         }
         
-        /* Formulario minimalista */
+        /* Formulario */
         .affiliation-form {
-            background-color: var(--color-blanco);
-            border: 1px solid var(--color-gris-medio);
+            background-color: var(--blanco);
+            border: 1px solid var(--gris-80);
             border-radius: 24px;
             padding: 2rem;
             margin-top: 2rem;
@@ -267,15 +263,16 @@
         }
         
         .form-header p {
-            color: var(--color-gris-oscuro);
+            color: var(--gris-40);
             font-size: 0.875rem;
         }
         
         .form-section {
             margin-bottom: 1.5rem;
             padding: 1.25rem;
-            background-color: var(--color-gris-claro);
+            background-color: var(--gris-95);
             border-radius: 16px;
+            border: 1px solid var(--gris-80);
         }
         
         .form-section h3 {
@@ -285,10 +282,7 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-        }
-        
-        .form-section h3 i {
-            color: var(--color-dorado);
+            color: var(--negro);
         }
         
         .form-group {
@@ -300,24 +294,24 @@
             margin-bottom: 0.5rem;
             font-weight: 500;
             font-size: 0.875rem;
-            color: var(--color-gris-oscuro);
+            color: var(--gris-20);
         }
         
         .form-group input, .form-group select, .form-group textarea {
             width: 100%;
             padding: 0.75rem 1rem;
-            border: 1px solid var(--color-gris-medio);
+            border: 1px solid var(--gris-80);
             border-radius: 12px;
             font-family: 'Inter', sans-serif;
             font-size: 0.875rem;
             transition: all 0.2s;
-            background-color: var(--color-blanco);
+            background-color: var(--blanco);
         }
         
         .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-            border-color: var(--color-dorado);
+            border-color: var(--negro);
             outline: none;
-            box-shadow: 0 0 0 3px rgba(245,166,35,0.1);
+            box-shadow: 0 0 0 2px rgba(0,0,0,0.05);
         }
         
         .checkbox-group {
@@ -338,7 +332,7 @@
         
         .required-field::after {
             content: " *";
-            color: var(--color-rojo);
+            color: var(--gris-60);
         }
         
         .submit-btn {
@@ -357,14 +351,11 @@
             width: 100%;
             max-width: 300px;
             margin: 0 auto;
-        }
-        
-        .whatsapp-btn {
-            background-color: var(--color-verde);
+            background-color: var(--verde);
             color: white;
         }
         
-        .whatsapp-btn:hover {
+        .submit-btn:hover {
             background-color: #128C7E;
             transform: translateY(-1px);
         }
@@ -373,8 +364,8 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background-color: var(--color-negro);
-            color: var(--color-blanco);
+            background-color: var(--negro);
+            color: var(--blanco);
             padding: 12px 20px;
             border-radius: 12px;
             z-index: 1000;
@@ -385,26 +376,26 @@
         }
         
         .notification.error {
-            background-color: var(--color-rojo);
+            background-color: var(--gris-20);
         }
         
         .password-requirements {
             font-size: 0.7rem;
-            color: var(--color-gris-oscuro);
+            color: var(--gris-40);
             margin-top: 0.25rem;
         }
         
         .username-suggestion {
             font-size: 0.7rem;
-            color: var(--color-verde);
+            color: var(--gris-40);
             margin-top: 0.25rem;
         }
         
         footer {
-            background-color: var(--color-gris-claro);
+            background-color: var(--gris-95);
             padding: 2rem 1.5rem;
             margin-top: 3rem;
-            border-top: 1px solid var(--color-gris-medio);
+            border-top: 1px solid var(--gris-80);
         }
         
         .footer-content {
@@ -425,19 +416,19 @@
             font-size: 0.875rem;
             font-weight: 600;
             margin-bottom: 1rem;
-            color: var(--color-negro);
+            color: var(--negro);
         }
         
         .footer-section p, .footer-section a {
             font-size: 0.75rem;
-            color: var(--color-gris-oscuro);
+            color: var(--gris-40);
             text-decoration: none;
             display: block;
             margin-bottom: 0.5rem;
         }
         
         .footer-section a:hover {
-            color: var(--color-dorado);
+            color: var(--negro);
         }
         
         .social-icons {
@@ -454,9 +445,9 @@
             text-align: center;
             margin-top: 2rem;
             padding-top: 1rem;
-            border-top: 1px solid var(--color-gris-medio);
+            border-top: 1px solid var(--gris-80);
             font-size: 0.7rem;
-            color: var(--color-gris-oscuro);
+            color: var(--gris-40);
         }
         
         @media (max-width: 768px) {
@@ -476,10 +467,6 @@
                 padding: 1rem;
             }
             
-            .business-grid {
-                gap: 0.5rem;
-            }
-            
             .business-tag {
                 font-size: 0.75rem;
                 padding: 0.375rem 1rem;
@@ -490,25 +477,25 @@
 <body>
     <header>
         <div class="header-container">
-            <a href="#" class="logo">QRP2P <span>COLOMBIA</span></a>
+            <a href="#" class="logo">QRP2P COLOMBIA</a>
         </div>
     </header>
 
     <section class="hero">
-        <h1>Vendedor <span>Verificado</span></h1>
+        <h1>Vendedor Verificado</h1>
         <p>La plataforma todo en uno para vender cualquier tipo de producto o servicio. Sin complicaciones, sin comisiones ocultas.</p>
     </section>
 
     <div class="container">
         <!-- Plan Único -->
         <div class="plan-card">
-            <div class="plan-badge">⭐ VENDEDOR VERIFICADO ⭐</div>
+            <div class="plan-badge">VENDEDOR VERIFICADO</div>
             <h2>Plan Único</h2>
             <div class="plan-price">$200.000 <span>/ año</span></div>
-            <p class="plan-description">Acceso completo a todas las herramientas</p>
+            <p class="plan-description">Acceso completo a todas las herramientas del ecosistema QRP2P</p>
         </div>
 
-        <!-- Tipos de Negocio - IDEAL PARA TODO -->
+        <!-- Tipos de Negocio -->
         <div class="business-types">
             <h3><i class="fas fa-store"></i> Ideal para todo tipo de negocio</h3>
             <div class="business-grid">
@@ -525,18 +512,18 @@
                 <span class="business-tag"><i class="fas fa-cut"></i> Servicios profesionales</span>
                 <span class="business-tag"><i class="fas fa-utensils"></i> Restaurantes y catering</span>
             </div>
-            <p style="margin-top: 1rem; font-size: 0.8rem; color: var(--color-gris-oscuro);">✓ Productos físicos con logística integrada ✓ Productos digitales entrega inmediata ✓ Servicios con reservas y citas ✓ Inmuebles y vehículos con vitrina profesional</p>
+            <div class="business-note">✓ Productos físicos con logística integrada ✓ Productos digitales entrega inmediata ✓ Servicios con reservas y citas ✓ Inmuebles y vehículos con vitrina profesional</div>
         </div>
 
-        <!-- Beneficios completos -->
+        <!-- Beneficios -->
         <div class="features-grid">
             <div class="feature-item"><i class="fas fa-globe"></i> <span><strong>URL única + QR</strong> - tu tienda en un solo enlace: qrp2p.com/vendedor/tuusuario</span></div>
             <div class="feature-item"><i class="fas fa-tachometer-alt"></i> <span><strong>Dashboard todo en uno</strong> - gestiona compras, ventas, clientes, inventario y pedidos desde un solo lugar</span></div>
             <div class="feature-item"><i class="fas fa-tags"></i> <span><strong>Crea bonos de descuento</strong> personalizados para tus clientes</span></div>
             <div class="feature-item"><i class="fas fa-truck"></i> <span><strong>Logística integrada</strong> - genera guías de transporte automáticas. El cliente ve todas las opciones y paga directo</span></div>
             <div class="feature-item"><i class="fas fa-credit-card"></i> <span><strong>Múltiples medios de pago:</strong> tarjeta débito/crédito, PSE, Daviplata, Nequi, corresponsales bancarios (Éxito, Baloto, etc.)</span></div>
-            <div class="feature-item"><i class="fas fa-percent"></i> <span><strong>💰 10% de comisión</strong> para tarjetas, PSE, corresponsales y cuotas sin intereses</span></div>
-            <div class="feature-item"><i class="fas fa-handshake"></i> <span><strong>💰 Pago directo con vendedor = 0% COMISIÓN</strong> - tú y tu cliente acuerdan el pago, no pagas nada</span></div>
+            <div class="feature-item"><i class="fas fa-percent"></i> <span><strong>10% de comisión</strong> para tarjetas, PSE, corresponsales y cuotas sin intereses</span></div>
+            <div class="feature-item"><i class="fas fa-handshake"></i> <span><strong>Pago directo con vendedor = 0% COMISIÓN</strong> - tú y tu cliente acuerdan el pago, no pagas nada</span></div>
             <div class="feature-item"><i class="fas fa-map-marker-alt"></i> <span><strong>Visibilidad en el marketplace</strong> de vendedores verificados en Colombia - tráfico constante a tu tienda</span></div>
             <div class="feature-item"><i class="fas fa-chart-line"></i> <span><strong>Publicidad constante</strong> en redes sociales y medios alternativos</span></div>
             <div class="feature-item"><i class="fab fa-whatsapp"></i> <span><strong>Integración directa con WhatsApp</strong> - gestiona pedidos y cotizaciones</span></div>
@@ -559,7 +546,7 @@
                     <div class="form-group">
                         <label for="username" class="required-field">Nombre de usuario (para tu URL única)</label>
                         <input type="text" id="username" name="username" required placeholder="Ej: modaonlinebogota">
-                        <div class="username-suggestion" id="usernameSuggestion">Tu URL será: qrp2p.com/vendedor/[tu-usuario]</div>
+                        <div class="username-suggestion" id="usernameSuggestion">Tu URL será: qrp2p.com/vendedor/tu-usuario</div>
                     </div>
                     <div class="form-group">
                         <label for="password" class="required-field">Contraseña</label>
@@ -653,7 +640,7 @@
                 <div class="form-section">
                     <h3><i class="fas fa-palette"></i> Personalización</h3>
                     <div class="form-group">
-                        <label class="required-field">Color principal</label>
+                        <label class="required-field">Estilo de diseño</label>
                         <div class="checkbox-group">
                             <div class="checkbox-item">
                                 <input type="radio" id="colorWhite" name="colorPreference" value="Claro" required>
@@ -668,11 +655,11 @@
                 </div>
                 
                 <div class="form-group" style="text-align: center; margin-top: 1rem;">
-                    <p style="font-size: 0.75rem; color: var(--color-gris-oscuro);">Al enviar, aceptas los términos y condiciones del programa Vendedor Verificado.</p>
+                    <p style="font-size: 0.75rem; color: var(--gris-40);">Al enviar, aceptas los términos y condiciones del programa Vendedor Verificado.</p>
                 </div>
                 
-                <div class="submit-buttons" style="margin-top: 1.5rem;">
-                    <button type="button" class="submit-btn whatsapp-btn" id="submitWhatsApp">
+                <div style="margin-top: 1.5rem;">
+                    <button type="button" class="submit-btn" id="submitWhatsApp">
                         <i class="fab fa-whatsapp"></i> Enviar solicitud por WhatsApp
                     </button>
                 </div>
@@ -688,7 +675,7 @@
             </div>
             <div class="footer-section">
                 <h3>Contacto</h3>
-                <p><i class="fas fa-phone"></i> +57 3215343562</p>
+                <p><i class="fas fa-phone"></i> +57 3146824438</p>
                 <p><i class="fas fa-envelope"></i> colombia@qrp2p.com</p>
                 <div class="social-icons">
                     <a href="#"><i class="fab fa-whatsapp"></i></a>
@@ -722,7 +709,7 @@
             document.getElementById('submitWhatsApp').addEventListener('click', function() {
                 if (validateForm()) {
                     const message = generateWhatsAppMessage();
-                    window.open(`https://wa.me/573215343562?text=${encodeURIComponent(message)}`, '_blank');
+                    window.open(`https://wa.me/573146824438?text=${encodeURIComponent(message)}`, '_blank');
                 }
             });
             
@@ -733,9 +720,10 @@
                 requiredFields.forEach(field => {
                     if (!field.value.trim()) {
                         valid = false;
+                        field.style.borderColor = '#e0e0e0';
                         field.style.borderColor = 'red';
                         field.addEventListener('input', function() {
-                            this.style.borderColor = '';
+                            this.style.borderColor = '#e0e0e0';
                         });
                     }
                 });
@@ -749,7 +737,7 @@
                     document.getElementById('confirmPassword').style.borderColor = 'red';
                 }
                 
-                if (password.length < 6) {
+                if (password.length > 0 && password.length < 6) {
                     valid = false;
                     showNotification('La contraseña debe tener al menos 6 caracteres', true);
                 }
@@ -763,7 +751,7 @@
                 const colorSelected = document.querySelector('input[name="colorPreference"]:checked');
                 if (!colorSelected) {
                     valid = false;
-                    showNotification('Elige un color para el diseño', true);
+                    showNotification('Elige un estilo de diseño', true);
                 }
                 
                 if (!valid) {
@@ -801,6 +789,9 @@
                 const dept = document.getElementById('businessDepartment').value || '';
                 const description = document.getElementById('businessDescription').value || '';
                 const category = document.getElementById('businessCategory').value || '';
+                const idType = document.querySelector('input[name="idType"]:checked')?.value || '';
+                const idNumber = document.getElementById('idNumber').value || '';
+                const colorPref = document.querySelector('input[name="colorPreference"]:checked')?.value || '';
                 
                 let message = "*🚀 NUEVO REGISTRO VENDEDOR VERIFICADO - QRP2P COLOMBIA*%0A";
                 message += "────────────────────────────────%0A";
@@ -818,7 +809,7 @@
                 message += "────────────────────────────────%0A";
                 message += "*👤 REPRESENTANTE*%0A";
                 message += `📛 Nombre: ${legalName}%0A`;
-                message += `🆔 Documento: ${document.querySelector('input[name="idType"]:checked')?.value || ''} N° ${document.getElementById('idNumber').value || ''}%0A`;
+                message += `🆔 Documento: ${idType} N° ${idNumber}%0A`;
                 message += "────────────────────────────────%0A";
                 message += "*💎 PLAN: Vendedor Verificado - $200.000/año*%0A";
                 message += "────────────────────────────────%0A";
@@ -827,13 +818,15 @@
                 message += "✓ Cuotas sin intereses: 10%% sobre venta total%0A";
                 message += "✓ Pago directo con vendedor: 0%% COMISIÓN%0A";
                 message += "────────────────────────────────%0A";
-                message += "*✨ BENEFICIOS:*%0A";
-                message += "✓ Dashboard todo en uno (ventas, clientes, inventario)%0A";
+                message += "*✨ BENEFICIOS INCLUIDOS:*%0A";
+                message += "✓ Dashboard todo en uno (ventas, clientes, inventario, pedidos)%0A";
                 message += "✓ Creación de bonos de descuento%0A";
-                message += "✓ Logística integrada - guías de transporte%0A";
-                message += "✓ Visibilidad en marketplace de vendedores verificados%0A";
-                message += "✓ Publicidad constante en redes sociales%0A";
+                message += "✓ Logística integrada - generación de guías de transporte%0A";
+                message += "✓ Visibilidad en marketplace de vendedores verificados Colombia%0A";
+                message += "✓ Publicidad constante en redes sociales y medios alternativos%0A";
                 message += "✓ Ideal para: productos físicos, digitales, inmuebles, vehículos, reservas, servicios%0A";
+                message += "────────────────────────────────%0A";
+                message += `🎨 Estilo diseño: ${colorPref}%0A`;
                 message += "────────────────────────────────%0A";
                 message += "*💳 PAGO PENDIENTE:* COP$ 200.000 (anual)%0A";
                 message += "*📲 Contactar al vendedor para activar cuenta y enviar datos de pago*";
