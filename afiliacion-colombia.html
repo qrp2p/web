@@ -132,6 +132,14 @@
             color: var(--gris-40);
         }
         
+        .plan-price small {
+            font-size: 0.875rem;
+            font-weight: 400;
+            color: var(--gris-40);
+            display: block;
+            margin-top: 0.25rem;
+        }
+        
         .plan-description {
             color: var(--gris-40);
             font-size: 0.875rem;
@@ -225,6 +233,27 @@
         .feature-item strong {
             font-weight: 600;
             color: var(--negro);
+        }
+        
+        .payment-options {
+            background-color: var(--gris-95);
+            border-radius: 16px;
+            padding: 1.25rem;
+            margin: 1rem 0;
+            border: 1px solid var(--gris-80);
+        }
+        
+        .payment-options h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--negro);
+        }
+        
+        .payment-options p {
+            font-size: 0.8rem;
+            color: var(--gris-40);
+            margin-bottom: 0.5rem;
         }
         
         .affiliation-form {
@@ -471,15 +500,15 @@
 
     <section class="hero">
         <h1>Vendedor Verificado</h1>
-        <p>La plataforma todo en uno para vender cualquier tipo de producto o servicio. Sin complicaciones, sin comisiones ocultas.</p>
+        <p>La plataforma todo en uno para vender cualquier tipo de producto o servicio. Pago único de por vida, sin renovaciones anuales.</p>
     </section>
 
     <div class="container">
         <div class="plan-card">
             <div class="plan-badge">VENDEDOR VERIFICADO</div>
-            <h2>Plan Unico</h2>
-            <div class="plan-price">$200.000 <span>/ año</span></div>
-            <p class="plan-description">Acceso completo a todas las herramientas del ecosistema QRP2P</p>
+            <h2>Plan Unico - Pago de por Vida</h2>
+            <div class="plan-price">$200.000 <span>COP</span><small>Pago único, sin renovaciones</small></div>
+            <p class="plan-description">Acceso de por vida a todas las herramientas del ecosistema QRP2P</p>
         </div>
 
         <div class="business-types">
@@ -502,27 +531,31 @@
         </div>
 
         <div class="features-grid">
-            <div class="feature-item"><span><strong>URL única + QR</strong> - tu tienda en un solo enlace: qrp2p.com/vendedor/tuusuario</span></div>
+            <div class="feature-item"><span><strong>URL unica + QR</strong> - tu tienda en un solo enlace: qrp2p.com/vendedor/tuusuario</span></div>
             <div class="feature-item"><span><strong>Dashboard todo en uno</strong> - gestiona compras, ventas, clientes, inventario y pedidos desde un solo lugar</span></div>
             <div class="feature-item"><span><strong>Crea bonos de descuento</strong> personalizados para tus clientes</span></div>
-            <div class="feature-item"><span><strong>Logística integrada</strong> - genera guías de transporte automáticas</span></div>
-            <div class="feature-item"><span><strong>Múltiples medios de pago:</strong> tarjeta débito/crédito, PSE, Daviplata, Nequi, corresponsales bancarios</span></div>
-            <div class="feature-item"><span><strong>10% de comisión</strong> para tarjetas, PSE, corresponsales y cuotas sin intereses</span></div>
-            <div class="feature-item"><span><strong>Pago directo con vendedor = 0% COMISIÓN</strong></span></div>
+            <div class="feature-item"><span><strong>Logistica integrada</strong> - genera guias de transporte automaticas</span></div>
             <div class="feature-item"><span><strong>Visibilidad en el marketplace</strong> de vendedores verificados en Colombia</span></div>
             <div class="feature-item"><span><strong>Publicidad constante</strong> en redes sociales y medios alternativos</span></div>
-            <div class="feature-item"><span><strong>Integración directa con WhatsApp</strong> - gestiona pedidos y cotizaciones</span></div>
-            <div class="feature-item"><span><strong>Soporte prioritario 24/7</strong> y asesoría personalizada</span></div>
+            <div class="feature-item"><span><strong>Integracion directa con WhatsApp</strong> - gestiona pedidos y cotizaciones</span></div>
+            <div class="feature-item"><span><strong>Soporte prioritario 24/7</strong> y asesoria personalizada</span></div>
+            <div class="feature-item"><span><strong>Analisis y metricas</strong> para tomar mejores decisiones</span></div>
+        </div>
+
+        <div class="payment-options">
+            <h4>Opciones de pago para tus clientes</h4>
+            <p><strong>Pago en linea:</strong> Tarjeta debito/credito, PSE, Daviplata, Nequi, corresponsales bancarios (Exito, Baloto, etc.) - Comision del 10% por venta exitosa</p>
+            <p><strong>Pago en persona / Efectivo:</strong> El cliente paga al recibir el producto o en punto de encuentro - Sin comision para ti, manejas el pago directamente</p>
         </div>
 
         <div class="affiliation-form">
             <div class="form-header">
                 <h2>Activa tu cuenta como Vendedor Verificado</h2>
-                <p>Completa el formulario y comienza a vender en minutos</p>
+                <p>Pago unico de $200.000 COP de por vida. Completa el formulario y comienza a vender</p>
             </div>
             
             <form id="affiliationForm">
-                <input type="hidden" id="selectedPlan" name="selectedPlan" value="Vendedor Verificado - $200.000/año">
+                <input type="hidden" id="selectedPlan" name="selectedPlan" value="Vendedor Verificado - Pago Unico de por Vida $200.000 COP">
                 
                 <div class="form-section">
                     <h3>Datos de acceso a tu dashboard</h3>
@@ -679,7 +712,6 @@
             });
             
             function validateForm() {
-                let isValid = true;
                 let hasError = false;
                 
                 const username = document.getElementById('username');
@@ -858,14 +890,13 @@
                 message += `Nombre: ${legalName}\n`;
                 message += `Documento: ${idType} N° ${idNumber}\n`;
                 message += "────────────────────────────────\n";
-                message += `PLAN: Vendedor Verificado - $200.000/año\n`;
+                message += `PLAN: Vendedor Verificado - Pago Unico de por Vida $200.000 COP\n`;
                 message += "────────────────────────────────\n";
                 message += "COMISIONES:\n";
-                message += "- Tarjeta debito/credito, PSE, corresponsales: 10%\n";
-                message += "- Cuotas sin intereses: 10% sobre venta total\n";
-                message += "- Pago directo con vendedor: 0% COMISION\n";
+                message += "- Pago en linea (tarjeta, PSE, corresponsales): 10% por venta exitosa\n";
+                message += "- Pago en persona / efectivo: 0% comision\n";
                 message += "────────────────────────────────\n";
-                message += "PAGO PENDIENTE: COP$ 200.000 (anual)\n";
+                message += "PAGO PENDIENTE: COP$ 200.000 (unico, de por vida)\n";
                 message += "Contactar al vendedor para activar cuenta y enviar datos de pago";
                 
                 return message;
