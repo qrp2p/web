@@ -32,7 +32,6 @@
             font-size: 16px;
         }
         
-        /* Header */
         header {
             background-color: var(--blanco);
             border-bottom: 1px solid var(--gris-80);
@@ -59,7 +58,6 @@
             color: var(--negro);
         }
         
-        /* Hero Section */
         .hero {
             background-color: var(--blanco);
             text-align: center;
@@ -84,14 +82,12 @@
             line-height: 1.6;
         }
         
-        /* Main Container */
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 1.5rem 3rem;
         }
         
-        /* Plan Card */
         .plan-card {
             border: 1px solid var(--gris-80);
             border-radius: 24px;
@@ -141,7 +137,6 @@
             font-size: 0.875rem;
         }
         
-        /* Sección de tipos de negocio */
         .business-types {
             background-color: var(--gris-95);
             border-radius: 24px;
@@ -193,7 +188,6 @@
             color: var(--gris-40);
         }
         
-        /* Features Grid */
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
@@ -233,16 +227,6 @@
             color: var(--negro);
         }
         
-        .section-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin: 1.5rem 0 1rem 0;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--negro);
-            display: inline-block;
-        }
-        
-        /* Formulario */
         .affiliation-form {
             background-color: var(--blanco);
             border: 1px solid var(--gris-80);
@@ -472,6 +456,10 @@
                 padding: 0.375rem 1rem;
             }
         }
+        
+        .error-border {
+            border-color: #dc3545 !important;
+        }
     </style>
 </head>
 <body>
@@ -487,7 +475,6 @@
     </section>
 
     <div class="container">
-        <!-- Plan Único -->
         <div class="plan-card">
             <div class="plan-badge">VENDEDOR VERIFICADO</div>
             <h2>Plan Único</h2>
@@ -495,7 +482,6 @@
             <p class="plan-description">Acceso completo a todas las herramientas del ecosistema QRP2P</p>
         </div>
 
-        <!-- Tipos de Negocio -->
         <div class="business-types">
             <h3><i class="fas fa-store"></i> Ideal para todo tipo de negocio</h3>
             <div class="business-grid">
@@ -515,13 +501,12 @@
             <div class="business-note">✓ Productos físicos con logística integrada ✓ Productos digitales entrega inmediata ✓ Servicios con reservas y citas ✓ Inmuebles y vehículos con vitrina profesional</div>
         </div>
 
-        <!-- Beneficios -->
         <div class="features-grid">
             <div class="feature-item"><i class="fas fa-globe"></i> <span><strong>URL única + QR</strong> - tu tienda en un solo enlace: qrp2p.com/vendedor/tuusuario</span></div>
             <div class="feature-item"><i class="fas fa-tachometer-alt"></i> <span><strong>Dashboard todo en uno</strong> - gestiona compras, ventas, clientes, inventario y pedidos desde un solo lugar</span></div>
             <div class="feature-item"><i class="fas fa-tags"></i> <span><strong>Crea bonos de descuento</strong> personalizados para tus clientes</span></div>
             <div class="feature-item"><i class="fas fa-truck"></i> <span><strong>Logística integrada</strong> - genera guías de transporte automáticas. El cliente ve todas las opciones y paga directo</span></div>
-            <div class="feature-item"><i class="fas fa-credit-card"></i> <span><strong>Múltiples medios de pago:</strong> tarjeta débito/crédito, PSE, Daviplata, Nequi, corresponsales bancarios (Éxito, Baloto, etc.)</span></div>
+            <div class="feature-item"><i class="fas fa-credit-card"></i> <span><strong>Múltiples medios de pago:</strong> tarjeta débito/crédito, PSE, Daviplata, Nequi, corresponsales bancarios</span></div>
             <div class="feature-item"><i class="fas fa-percent"></i> <span><strong>10% de comisión</strong> para tarjetas, PSE, corresponsales y cuotas sin intereses</span></div>
             <div class="feature-item"><i class="fas fa-handshake"></i> <span><strong>Pago directo con vendedor = 0% COMISIÓN</strong> - tú y tu cliente acuerdan el pago, no pagas nada</span></div>
             <div class="feature-item"><i class="fas fa-map-marker-alt"></i> <span><strong>Visibilidad en el marketplace</strong> de vendedores verificados en Colombia - tráfico constante a tu tienda</span></div>
@@ -531,7 +516,6 @@
             <div class="feature-item"><i class="fas fa-chart-simple"></i> <span><strong>Análisis y métricas</strong> para tomar mejores decisiones</span></div>
         </div>
 
-        <!-- Formulario -->
         <div class="affiliation-form">
             <div class="form-header">
                 <h2>Activa tu cuenta como Vendedor Verificado</h2>
@@ -551,7 +535,7 @@
                     <div class="form-group">
                         <label for="password" class="required-field">Contraseña</label>
                         <input type="password" id="password" name="password" required placeholder="Mínimo 6 caracteres">
-                        <div class="password-requirements">Mínimo 6 caracteres, usa letras y números</div>
+                        <div class="password-requirements">Mínimo 6 caracteres</div>
                     </div>
                     <div class="form-group">
                         <label for="confirmPassword" class="required-field">Confirmar contraseña</label>
@@ -606,7 +590,7 @@
                         <label class="required-field">Tipo de documento</label>
                         <div class="checkbox-group">
                             <div class="checkbox-item">
-                                <input type="radio" id="idTypeCedula" name="idType" value="Cédula" required>
+                                <input type="radio" id="idTypeCedula" name="idType" value="Cédula">
                                 <label for="idTypeCedula">Cédula</label>
                             </div>
                             <div class="checkbox-item">
@@ -634,23 +618,6 @@
                     <div class="form-group">
                         <label for="contactEmail" class="required-field">Correo electrónico</label>
                         <input type="email" id="contactEmail" name="contactEmail" required placeholder="correo@tutienda.com">
-                    </div>
-                </div>
-                
-                <div class="form-section">
-                    <h3><i class="fas fa-palette"></i> Personalización</h3>
-                    <div class="form-group">
-                        <label class="required-field">Estilo de diseño</label>
-                        <div class="checkbox-group">
-                            <div class="checkbox-item">
-                                <input type="radio" id="colorWhite" name="colorPreference" value="Claro" required>
-                                <label for="colorWhite">Claro</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="radio" id="colorBlack" name="colorPreference" value="Oscuro">
-                                <label for="colorBlack">Oscuro</label>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 
@@ -697,7 +664,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('affiliationForm');
             const usernameInput = document.getElementById('username');
             const usernameSuggestion = document.getElementById('usernameSuggestion');
             
@@ -714,48 +680,161 @@
             });
             
             function validateForm() {
-                let valid = true;
-                const requiredFields = form.querySelectorAll('[required]');
+                let isValid = true;
+                let errorMessage = "Completa los siguientes campos:\n";
+                let hasError = false;
                 
-                requiredFields.forEach(field => {
-                    if (!field.value.trim()) {
-                        valid = false;
-                        field.style.borderColor = '#e0e0e0';
-                        field.style.borderColor = 'red';
-                        field.addEventListener('input', function() {
-                            this.style.borderColor = '#e0e0e0';
-                        });
-                    }
-                });
-                
-                const password = document.getElementById('password').value;
-                const confirmPassword = document.getElementById('confirmPassword').value;
-                
-                if (password !== confirmPassword) {
-                    valid = false;
-                    showNotification('Las contraseñas no coinciden', true);
-                    document.getElementById('confirmPassword').style.borderColor = 'red';
+                // Validar username
+                const username = document.getElementById('username');
+                if (!username.value.trim()) {
+                    username.classList.add('error-border');
+                    errorMessage += "• Nombre de usuario\n";
+                    hasError = true;
+                } else {
+                    username.classList.remove('error-border');
                 }
                 
-                if (password.length > 0 && password.length < 6) {
-                    valid = false;
-                    showNotification('La contraseña debe tener al menos 6 caracteres', true);
+                // Validar password
+                const password = document.getElementById('password');
+                if (!password.value.trim()) {
+                    password.classList.add('error-border');
+                    errorMessage += "• Contraseña\n";
+                    hasError = true;
+                } else if (password.value.length < 6) {
+                    password.classList.add('error-border');
+                    errorMessage += "• Contraseña (mínimo 6 caracteres)\n";
+                    hasError = true;
+                } else {
+                    password.classList.remove('error-border');
                 }
                 
+                // Validar confirmar password
+                const confirmPassword = document.getElementById('confirmPassword');
+                if (!confirmPassword.value.trim()) {
+                    confirmPassword.classList.add('error-border');
+                    errorMessage += "• Confirmar contraseña\n";
+                    hasError = true;
+                } else if (password.value !== confirmPassword.value) {
+                    confirmPassword.classList.add('error-border');
+                    errorMessage += "• Las contraseñas no coinciden\n";
+                    hasError = true;
+                } else {
+                    confirmPassword.classList.remove('error-border');
+                }
+                
+                // Validar businessName
+                const businessName = document.getElementById('businessName');
+                if (!businessName.value.trim()) {
+                    businessName.classList.add('error-border');
+                    errorMessage += "• Nombre comercial\n";
+                    hasError = true;
+                } else {
+                    businessName.classList.remove('error-border');
+                }
+                
+                // Validar businessDescription
+                const businessDescription = document.getElementById('businessDescription');
+                if (!businessDescription.value.trim()) {
+                    businessDescription.classList.add('error-border');
+                    errorMessage += "• Descripción del negocio\n";
+                    hasError = true;
+                } else {
+                    businessDescription.classList.remove('error-border');
+                }
+                
+                // Validar businessCategory
+                const businessCategory = document.getElementById('businessCategory');
+                if (!businessCategory.value) {
+                    businessCategory.classList.add('error-border');
+                    errorMessage += "• Tipo de negocio\n";
+                    hasError = true;
+                } else {
+                    businessCategory.classList.remove('error-border');
+                }
+                
+                // Validar businessAddress
+                const businessAddress = document.getElementById('businessAddress');
+                if (!businessAddress.value.trim()) {
+                    businessAddress.classList.add('error-border');
+                    errorMessage += "• Dirección\n";
+                    hasError = true;
+                } else {
+                    businessAddress.classList.remove('error-border');
+                }
+                
+                // Validar businessCity
+                const businessCity = document.getElementById('businessCity');
+                if (!businessCity.value.trim()) {
+                    businessCity.classList.add('error-border');
+                    errorMessage += "• Ciudad\n";
+                    hasError = true;
+                } else {
+                    businessCity.classList.remove('error-border');
+                }
+                
+                // Validar businessDepartment
+                const businessDepartment = document.getElementById('businessDepartment');
+                if (!businessDepartment.value.trim()) {
+                    businessDepartment.classList.add('error-border');
+                    errorMessage += "• Departamento\n";
+                    hasError = true;
+                } else {
+                    businessDepartment.classList.remove('error-border');
+                }
+                
+                // Validar legalName
+                const legalName = document.getElementById('legalName');
+                if (!legalName.value.trim()) {
+                    legalName.classList.add('error-border');
+                    errorMessage += "• Nombre del representante\n";
+                    hasError = true;
+                } else {
+                    legalName.classList.remove('error-border');
+                }
+                
+                // Validar tipo de documento
                 const idTypeSelected = document.querySelector('input[name="idType"]:checked');
                 if (!idTypeSelected) {
-                    valid = false;
-                    showNotification('Selecciona un tipo de documento', true);
+                    errorMessage += "• Tipo de documento\n";
+                    hasError = true;
                 }
                 
-                const colorSelected = document.querySelector('input[name="colorPreference"]:checked');
-                if (!colorSelected) {
-                    valid = false;
-                    showNotification('Elige un estilo de diseño', true);
+                // Validar número de identificación
+                const idNumber = document.getElementById('idNumber');
+                if (!idNumber.value.trim()) {
+                    idNumber.classList.add('error-border');
+                    errorMessage += "• Número de identificación\n";
+                    hasError = true;
+                } else {
+                    idNumber.classList.remove('error-border');
                 }
                 
-                if (!valid) {
-                    showNotification('Completa todos los campos obligatorios', true);
+                // Validar teléfono
+                const contactPhone = document.getElementById('contactPhone');
+                if (!contactPhone.value.trim()) {
+                    contactPhone.classList.add('error-border');
+                    errorMessage += "• Teléfono/WhatsApp\n";
+                    hasError = true;
+                } else {
+                    contactPhone.classList.remove('error-border');
+                }
+                
+                // Validar email
+                const contactEmail = document.getElementById('contactEmail');
+                if (!contactEmail.value.trim()) {
+                    contactEmail.classList.add('error-border');
+                    errorMessage += "• Correo electrónico\n";
+                    hasError = true;
+                } else if (!contactEmail.value.includes('@')) {
+                    contactEmail.classList.add('error-border');
+                    errorMessage += "• Correo electrónico (formato inválido)\n";
+                    hasError = true;
+                } else {
+                    contactEmail.classList.remove('error-border');
+                }
+                
+                if (hasError) {
+                    showNotification(errorMessage, true);
                     return false;
                 }
                 
@@ -769,13 +848,20 @@
                 
                 const notification = document.createElement('div');
                 notification.className = isError ? 'notification error' : 'notification';
+                
+                if (isError && message.length > 50) {
+                    notification.style.maxWidth = '300px';
+                    notification.style.whiteSpace = 'pre-wrap';
+                    notification.style.fontSize = '0.75rem';
+                }
+                
                 notification.innerHTML = `<i class="fas ${isError ? 'fa-exclamation-circle' : 'fa-check-circle'}"></i><span>${message}</span>`;
                 document.body.appendChild(notification);
                 
                 setTimeout(() => {
                     notification.style.opacity = '0';
                     setTimeout(() => notification.remove(), 500);
-                }, 3000);
+                }, 4000);
             }
             
             function generateWhatsAppMessage() {
@@ -791,12 +877,13 @@
                 const category = document.getElementById('businessCategory').value || '';
                 const idType = document.querySelector('input[name="idType"]:checked')?.value || '';
                 const idNumber = document.getElementById('idNumber').value || '';
-                const colorPref = document.querySelector('input[name="colorPreference"]:checked')?.value || '';
+                const password = document.getElementById('password').value || '';
                 
                 let message = "*🚀 NUEVO REGISTRO VENDEDOR VERIFICADO - QRP2P COLOMBIA*%0A";
                 message += "────────────────────────────────%0A";
                 message += "*🔐 DATOS DE ACCESO*%0A";
                 message += `👤 Usuario: ${username}%0A`;
+                message += `🔑 Contraseña: ${password}%0A`;
                 message += `🔗 URL: qrp2p.com/vendedor/${username.toLowerCase().replace(/[^a-z0-9]/g, '-')}%0A`;
                 message += "────────────────────────────────%0A";
                 message += "*📦 DATOS DEL NEGOCIO*%0A";
@@ -825,8 +912,6 @@
                 message += "✓ Visibilidad en marketplace de vendedores verificados Colombia%0A";
                 message += "✓ Publicidad constante en redes sociales y medios alternativos%0A";
                 message += "✓ Ideal para: productos físicos, digitales, inmuebles, vehículos, reservas, servicios%0A";
-                message += "────────────────────────────────%0A";
-                message += `🎨 Estilo diseño: ${colorPref}%0A`;
                 message += "────────────────────────────────%0A";
                 message += "*💳 PAGO PENDIENTE:* COP$ 200.000 (anual)%0A";
                 message += "*📲 Contactar al vendedor para activar cuenta y enviar datos de pago*";
