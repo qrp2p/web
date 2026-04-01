@@ -635,15 +635,15 @@
 
     <section class="hero">
         <h1>Vendedor Verificado</h1>
-        <p>La plataforma todo en uno para vender cualquier tipo de producto o servicio. Pago único de por vida, sin renovaciones anuales.</p>
+        <p>La plataforma todo en uno para vender cualquier tipo de producto o servicio. Pago anual de $200.000 COP, renovación cada año.</p>
     </section>
 
     <div class="container">
         <div class="plan-card">
             <div class="plan-badge">VENDEDOR VERIFICADO</div>
-            <h2>Plan Unico - Pago de por Vida</h2>
-            <div class="plan-price">$200.000 <span>COP</span><small>Pago único, sin renovaciones</small></div>
-            <p class="plan-description">Acceso de por vida a todas las herramientas del ecosistema QRP2P</p>
+            <h2>Plan Anual</h2>
+            <div class="plan-price">$200.000 <span>COP</span><small>por año - renovación anual</small></div>
+            <p class="plan-description">Acceso completo a todas las herramientas del ecosistema QRP2P durante 12 meses</p>
         </div>
 
         <div class="business-types">
@@ -686,11 +686,11 @@
         <div class="affiliation-form">
             <div class="form-header">
                 <h2>Activa tu cuenta como Vendedor Verificado</h2>
-                <p>Pago unico de $200.000 COP de por vida. Completa el formulario y comienza a vender</p>
+                <p>Pago anual de $200.000 COP. Completa el formulario y comienza a vender</p>
             </div>
             
             <form id="affiliationForm">
-                <input type="hidden" id="selectedPlan" name="selectedPlan" value="Vendedor Verificado - Pago Unico de por Vida $200.000 COP">
+                <input type="hidden" id="selectedPlan" name="selectedPlan" value="Vendedor Verificado - Pago Anual $200.000 COP">
                 
                 <div class="form-section">
                     <h3>Datos de acceso a tu dashboard</h3>
@@ -816,8 +816,8 @@
                 <h4>2. Registro y Cuenta</h4>
                 <p>El vendedor se compromete a proporcionar informacion veridica, completa y actualizada en el formulario de registro. QRP2P COLOMBIA se reserva el derecho de verificar la informacion proporcionada y de rechazar cualquier solicitud de registro que no cumpla con los requisitos establecidos.</p>
                 
-                <h4>3. Pago Unico de Registro</h4>
-                <p>El plan Vendedor Verificado tiene un costo unico de $200.000 COP. Este pago da derecho al vendedor a utilizar la plataforma de forma indefinida, sin renovaciones anuales. El pago debe realizarse antes de la activacion de la cuenta. Una vez realizado, no se realizan reembolsos.</p>
+                <h4>3. Pago Anual de Registro</h4>
+                <p>El plan Vendedor Verificado tiene un costo anual de $200.000 COP. Este pago da derecho al vendedor a utilizar la plataforma durante 12 meses. La renovacion debe realizarse antes de la fecha de vencimiento para mantener la cuenta activa. Una vez realizado el pago, no se realizan reembolsos.</p>
                 
                 <h4>4. Comisiones por Venta</h4>
                 <p>Por cada venta exitosa realizada a traves de los metodos de pago en linea (tarjeta debito/credito, PSE, Daviplata, Nequi, corresponsales bancarios), QRP2P COLOMBIA cobrara una comision del 10% sobre el valor total de la transaccion. Las ventas realizadas en efectivo o pago en persona no generan comision para la plataforma.</p>
@@ -832,7 +832,7 @@
                 <p><strong>QRP2P COLOMBIA se reserva el derecho de actualizar, modificar o cambiar estos terminos y condiciones en cualquier momento y sin previo aviso. Las modificaciones entraran en vigor inmediatamente despues de su publicacion en la plataforma. Es responsabilidad del vendedor revisar periodicamente los terminos para estar al tanto de cualquier cambio. El uso continuo de la plataforma despues de la publicacion de los cambios constituye la aceptacion de los nuevos terminos.</strong></p>
                 
                 <h4>8. Cancelacion y Suspension</h4>
-                <p>QRP2P COLOMBIA se reserva el derecho de suspender o cancelar la cuenta de cualquier vendedor que incumpla estos terminos, realice actividades fraudulentas, o genere quejas recurrentes por parte de compradores.</p>
+                <p>QRP2P COLOMBIA se reserva el derecho de suspender o cancelar la cuenta de cualquier vendedor que incumpla estos terminos, realice actividades fraudulentas, o genere quejas recurrentes por parte de compradores. En caso de cancelacion por incumplimiento, no se realizaran reembolsos.</p>
                 
                 <h4>9. Propiedad Intelectual</h4>
                 <p>La plataforma, su codigo, diseño, marca y contenido son propiedad exclusiva de QRP2P COLOMBIA. El vendedor no tiene derecho a copiar, modificar o distribuir ningun elemento de la plataforma sin autorizacion expresa.</p>
@@ -1117,13 +1117,13 @@
                 message += `Nombre: ${legalName}\n`;
                 message += `Documento: ${idType} N° ${idNumber}\n`;
                 message += "────────────────────────────────\n";
-                message += `PLAN: Vendedor Verificado - Pago Unico de por Vida $200.000 COP\n`;
+                message += `PLAN: Vendedor Verificado - Pago Anual $200.000 COP\n`;
                 message += "────────────────────────────────\n";
                 message += "COMISIONES:\n";
                 message += "- Pago en linea (tarjeta, PSE, corresponsales): 10% por venta exitosa\n";
                 message += "- Pago en persona / efectivo: 0% comision\n";
                 message += "────────────────────────────────\n";
-                message += "PAGO PENDIENTE: COP$ 200.000 (unico, de por vida)\n";
+                message += "PAGO PENDIENTE: COP$ 200.000 (anual)\n";
                 message += "Contactar al vendedor para activar cuenta y enviar datos de pago";
                 
                 return message;
