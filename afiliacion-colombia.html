@@ -184,12 +184,6 @@
             background-color: var(--gris-95);
         }
         
-        .business-tag i {
-            margin-right: 0.5rem;
-            font-size: 0.875rem;
-            color: var(--gris-40);
-        }
-        
         .business-note {
             margin-top: 1rem;
             font-size: 0.8rem;
@@ -224,10 +218,6 @@
             font-size: 1.125rem;
             width: 24px;
             margin-top: 0.125rem;
-        }
-        
-        .feature-item i.fa-whatsapp {
-            color: var(--verde);
         }
         
         .feature-item strong {
@@ -402,6 +392,151 @@
             font-size: 0.7rem;
             color: var(--gris-40);
             margin-top: 0.25rem;
+        }
+        
+        /* Terminos y Condiciones Modal */
+        .terms-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+        
+        .terms-modal.active {
+            display: flex;
+        }
+        
+        .terms-content {
+            background-color: var(--blanco);
+            max-width: 700px;
+            width: 100%;
+            max-height: 80vh;
+            border-radius: 24px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .terms-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--gris-80);
+            background-color: var(--blanco);
+        }
+        
+        .terms-header h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        
+        .terms-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gris-40);
+            transition: color 0.2s;
+        }
+        
+        .terms-close:hover {
+            color: var(--negro);
+        }
+        
+        .terms-body {
+            padding: 1.5rem;
+            overflow-y: auto;
+            flex: 1;
+        }
+        
+        .terms-body h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 1rem 0 0.5rem 0;
+            color: var(--negro);
+        }
+        
+        .terms-body h4:first-child {
+            margin-top: 0;
+        }
+        
+        .terms-body p {
+            font-size: 0.875rem;
+            color: var(--gris-40);
+            margin-bottom: 0.75rem;
+            line-height: 1.5;
+        }
+        
+        .terms-body ul {
+            margin: 0.5rem 0 1rem 1.5rem;
+        }
+        
+        .terms-body li {
+            font-size: 0.875rem;
+            color: var(--gris-40);
+            margin-bottom: 0.25rem;
+        }
+        
+        .terms-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--gris-80);
+            display: flex;
+            justify-content: flex-end;
+        }
+        
+        .terms-accept-btn {
+            background-color: var(--negro);
+            color: var(--blanco);
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .terms-accept-btn:hover {
+            background-color: var(--gris-20);
+        }
+        
+        .terms-link {
+            color: var(--negro);
+            text-decoration: underline;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .terms-link:hover {
+            color: var(--gris-40);
+        }
+        
+        .checkbox-accept {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        
+        .checkbox-accept input {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        
+        .checkbox-accept label {
+            font-size: 0.8rem;
+            color: var(--gris-20);
+            cursor: pointer;
         }
         
         footer {
@@ -653,8 +788,9 @@
                     </div>
                 </div>
                 
-                <div class="form-group" style="text-align: center; margin-top: 1rem;">
-                    <p style="font-size: 0.75rem; color: var(--gris-40);">Al enviar, aceptas los terminos y condiciones del programa Vendedor Verificado.</p>
+                <div class="checkbox-accept">
+                    <input type="checkbox" id="acceptTerms" required>
+                    <label for="acceptTerms">He leído y acepto los <span class="terms-link" id="openTermsModal">Términos y Condiciones</span> del programa Vendedor Verificado</label>
                 </div>
                 
                 <div style="margin-top: 1.5rem;">
@@ -663,6 +799,50 @@
                     </button>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <!-- Modal de Terminos y Condiciones -->
+    <div id="termsModal" class="terms-modal">
+        <div class="terms-content">
+            <div class="terms-header">
+                <h3>Terminos y Condiciones</h3>
+                <button class="terms-close" id="closeTermsModal">&times;</button>
+            </div>
+            <div class="terms-body">
+                <h4>1. Aceptacion de los Terminos</h4>
+                <p>Al registrarse como Vendedor Verificado en QRP2P COLOMBIA, el usuario acepta cumplir con todos los terminos y condiciones establecidos en este documento. Si no esta de acuerdo con alguno de los terminos, no debe completar el proceso de registro.</p>
+                
+                <h4>2. Registro y Cuenta</h4>
+                <p>El vendedor se compromete a proporcionar informacion veridica, completa y actualizada en el formulario de registro. QRP2P COLOMBIA se reserva el derecho de verificar la informacion proporcionada y de rechazar cualquier solicitud de registro que no cumpla con los requisitos establecidos.</p>
+                
+                <h4>3. Pago Unico de Registro</h4>
+                <p>El plan Vendedor Verificado tiene un costo unico de $200.000 COP. Este pago da derecho al vendedor a utilizar la plataforma de forma indefinida, sin renovaciones anuales. El pago debe realizarse antes de la activacion de la cuenta. Una vez realizado, no se realizan reembolsos.</p>
+                
+                <h4>4. Comisiones por Venta</h4>
+                <p>Por cada venta exitosa realizada a traves de los metodos de pago en linea (tarjeta debito/credito, PSE, Daviplata, Nequi, corresponsales bancarios), QRP2P COLOMBIA cobrara una comision del 10% sobre el valor total de la transaccion. Las ventas realizadas en efectivo o pago en persona no generan comision para la plataforma.</p>
+                
+                <h4>5. Responsabilidades del Vendedor</h4>
+                <p>El vendedor es el unico responsable por los productos o servicios ofrecidos, incluyendo su calidad, entrega, garantias, atencion al cliente y cualquier reclamacion relacionada. QRP2P COLOMBIA actua unicamente como plataforma tecnologica y no se hace responsable por transacciones entre vendedores y compradores.</p>
+                
+                <h4>6. Uso de la Plataforma</h4>
+                <p>El vendedor se compromete a utilizar la plataforma de manera etica y legal, respetando las leyes colombianas aplicables. Esta prohibido ofrecer productos ilegales, fraudulentos, o que infrinjan derechos de propiedad intelectual.</p>
+                
+                <h4>7. Modificacion de los Terminos</h4>
+                <p><strong>QRP2P COLOMBIA se reserva el derecho de actualizar, modificar o cambiar estos terminos y condiciones en cualquier momento y sin previo aviso. Las modificaciones entraran en vigor inmediatamente despues de su publicacion en la plataforma. Es responsabilidad del vendedor revisar periodicamente los terminos para estar al tanto de cualquier cambio. El uso continuo de la plataforma despues de la publicacion de los cambios constituye la aceptacion de los nuevos terminos.</strong></p>
+                
+                <h4>8. Cancelacion y Suspension</h4>
+                <p>QRP2P COLOMBIA se reserva el derecho de suspender o cancelar la cuenta de cualquier vendedor que incumpla estos terminos, realice actividades fraudulentas, o genere quejas recurrentes por parte de compradores.</p>
+                
+                <h4>9. Propiedad Intelectual</h4>
+                <p>La plataforma, su codigo, diseño, marca y contenido son propiedad exclusiva de QRP2P COLOMBIA. El vendedor no tiene derecho a copiar, modificar o distribuir ningun elemento de la plataforma sin autorizacion expresa.</p>
+                
+                <h4>10. Legislacion Aplicable</h4>
+                <p>Estos terminos se rigen por las leyes de la Republica de Colombia. Cualquier controversia sera sometida a los tribunales competentes de la ciudad de Bogota D.C., Colombia.</p>
+            </div>
+            <div class="terms-footer">
+                <button class="terms-accept-btn" id="acceptTermsBtn">Aceptar y Cerrar</button>
+            </div>
         </div>
     </div>
 
@@ -684,7 +864,7 @@
             </div>
             <div class="footer-section">
                 <h3>Enlaces</h3>
-                <a href="#">Terminos y condiciones</a>
+                <a href="#" class="terms-link" id="footerTermsLink">Terminos y condiciones</a>
                 <a href="#">Politica de privacidad</a>
                 <a href="#">Preguntas frecuentes</a>
             </div>
@@ -696,6 +876,39 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Elementos del modal de terminos
+            const termsModal = document.getElementById('termsModal');
+            const openTermsBtns = document.querySelectorAll('#openTermsModal, #footerTermsLink');
+            const closeTermsModal = document.getElementById('closeTermsModal');
+            const acceptTermsBtn = document.getElementById('acceptTermsBtn');
+            const acceptTermsCheckbox = document.getElementById('acceptTerms');
+            
+            // Abrir modal
+            openTermsBtns.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    termsModal.classList.add('active');
+                });
+            });
+            
+            // Cerrar modal con X
+            closeTermsModal.addEventListener('click', function() {
+                termsModal.classList.remove('active');
+            });
+            
+            // Cerrar modal con boton aceptar
+            acceptTermsBtn.addEventListener('click', function() {
+                termsModal.classList.remove('active');
+            });
+            
+            // Cerrar modal al hacer clic fuera del contenido
+            termsModal.addEventListener('click', function(e) {
+                if (e.target === termsModal) {
+                    termsModal.classList.remove('active');
+                }
+            });
+            
+            // URL suggestion
             const usernameInput = document.getElementById('username');
             const usernameSuggestion = document.getElementById('usernameSuggestion');
             
@@ -713,6 +926,15 @@
             
             function validateForm() {
                 let hasError = false;
+                
+                // Validar checkbox de terminos
+                if (!acceptTermsCheckbox.checked) {
+                    showNotification('Debes aceptar los Terminos y Condiciones', true);
+                    acceptTermsCheckbox.style.outline = '1px solid #dc3545';
+                    hasError = true;
+                } else {
+                    acceptTermsCheckbox.style.outline = '';
+                }
                 
                 const username = document.getElementById('username');
                 if (!username.value.trim()) {
@@ -803,6 +1025,7 @@
                 const idTypeSelected = document.querySelector('input[name="idType"]:checked');
                 if (!idTypeSelected) {
                     hasError = true;
+                    showNotification('Selecciona un tipo de documento', true);
                 }
                 
                 const idNumber = document.getElementById('idNumber');
@@ -833,7 +1056,11 @@
                 }
                 
                 if (hasError) {
-                    showNotification('Completa todos los campos obligatorios', true);
+                    if (!acceptTermsCheckbox.checked) {
+                        // ya mostramos el mensaje
+                    } else {
+                        showNotification('Completa todos los campos obligatorios', true);
+                    }
                     return false;
                 }
                 
