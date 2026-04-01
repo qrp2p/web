@@ -246,6 +246,16 @@
             margin-bottom: 0.5rem;
         }
         
+        .payment-options .highlight {
+            background-color: var(--gris-80);
+            padding: 0.5rem;
+            border-radius: 8px;
+            margin-top: 0.5rem;
+            text-align: center;
+            font-weight: 500;
+            color: var(--negro);
+        }
+        
         .affiliation-form {
             background-color: var(--blanco);
             border: 1px solid var(--gris-80);
@@ -475,16 +485,6 @@
             line-height: 1.5;
         }
         
-        .terms-body ul {
-            margin: 0.5rem 0 1rem 1.5rem;
-        }
-        
-        .terms-body li {
-            font-size: 0.875rem;
-            color: var(--gris-40);
-            margin-bottom: 0.25rem;
-        }
-        
         .terms-footer {
             padding: 1rem 1.5rem;
             border-top: 1px solid var(--gris-80);
@@ -666,7 +666,7 @@
         </div>
 
         <div class="features-grid">
-            <div class="feature-item"><span><strong>URL unica + QR</strong> - tu tienda en un solo enlace: qrp2p.com/vendedor/tuusuario</span></div>
+            <div class="feature-item"><span><strong>URL unica + QR</strong> - tu tienda en un solo enlace: co.qrp2p.com/vendedor/tuusuario</span></div>
             <div class="feature-item"><span><strong>Dashboard todo en uno</strong> - gestiona compras, ventas, clientes, inventario y pedidos desde un solo lugar</span></div>
             <div class="feature-item"><span><strong>Crea bonos de descuento</strong> personalizados para tus clientes</span></div>
             <div class="feature-item"><span><strong>Logistica integrada</strong> - genera guias de transporte automaticas</span></div>
@@ -678,9 +678,10 @@
         </div>
 
         <div class="payment-options">
-            <h4>Opciones de pago para tus clientes</h4>
-            <p><strong>Pago en linea:</strong> Tarjeta debito/credito, PSE, Daviplata, Nequi, corresponsales bancarios (Exito, Baloto, etc.) - Comision del 10% por venta exitosa</p>
-            <p><strong>Pago en persona / Efectivo:</strong> El cliente paga al recibir el producto o en punto de encuentro - Sin comision para ti, manejas el pago directamente</p>
+            <h4>Comisiones por venta</h4>
+            <p><strong>Pago en linea:</strong> Tarjeta debito/credito, PSE, Daviplata, Nequi, corresponsales bancarios (Exito, Baloto, etc.)</p>
+            <p><strong>Pago en efectivo / en persona:</strong> El cliente paga al recibir el producto o en punto de encuentro</p>
+            <div class="highlight">TODOS LOS METODOS DE PAGO generan una comision del 10% sobre el valor total de cada venta exitosa</div>
         </div>
 
         <div class="affiliation-form">
@@ -697,7 +698,7 @@
                     <div class="form-group">
                         <label for="username" class="required-field">Nombre de usuario (para tu URL unica)</label>
                         <input type="text" id="username" name="username" required placeholder="Ej: modaonlinebogota">
-                        <div class="username-suggestion" id="usernameSuggestion">Tu URL sera: qrp2p.com/vendedor/tu-usuario</div>
+                        <div class="username-suggestion" id="usernameSuggestion">Tu URL sera: co.qrp2p.com/vendedor/tu-usuario</div>
                     </div>
                     <div class="form-group">
                         <label for="password" class="required-field">Contraseña</label>
@@ -820,7 +821,7 @@
                 <p>El plan Vendedor Verificado tiene un costo anual de $200.000 COP. Este pago da derecho al vendedor a utilizar la plataforma durante 12 meses. La renovacion debe realizarse antes de la fecha de vencimiento para mantener la cuenta activa. Una vez realizado el pago, no se realizan reembolsos.</p>
                 
                 <h4>4. Comisiones por Venta</h4>
-                <p>Por cada venta exitosa realizada a traves de los metodos de pago en linea (tarjeta debito/credito, PSE, Daviplata, Nequi, corresponsales bancarios), QRP2P COLOMBIA cobrara una comision del 10% sobre el valor total de la transaccion. Las ventas realizadas en efectivo o pago en persona no generan comision para la plataforma.</p>
+                <p><strong>Todos los metodos de pago generan una comision del 10% sobre el valor total de cada venta exitosa.</strong> Esto incluye pagos en linea (tarjeta debito/credito, PSE, Daviplata, Nequi, corresponsales bancarios) y pagos en efectivo o en persona. La comision se calcula automaticamente y se descuenta antes de la liquidacion al vendedor.</p>
                 
                 <h4>5. Responsabilidades del Vendedor</h4>
                 <p>El vendedor es el unico responsable por los productos o servicios ofrecidos, incluyendo su calidad, entrega, garantias, atencion al cliente y cualquier reclamacion relacionada. QRP2P COLOMBIA actua unicamente como plataforma tecnologica y no se hace responsable por transacciones entre vendedores y compradores.</p>
@@ -908,13 +909,13 @@
                 }
             });
             
-            // URL suggestion
+            // URL suggestion con co.qrp2p.com
             const usernameInput = document.getElementById('username');
             const usernameSuggestion = document.getElementById('usernameSuggestion');
             
             usernameInput.addEventListener('input', function() {
                 const val = this.value.toLowerCase().replace(/[^a-z0-9]/g, '-');
-                usernameSuggestion.innerHTML = `Tu URL sera: <strong>qrp2p.com/vendedor/${val || 'tu-usuario'}</strong>`;
+                usernameSuggestion.innerHTML = `Tu URL sera: <strong>co.qrp2p.com/vendedor/${val || 'tu-usuario'}</strong>`;
             });
             
             document.getElementById('submitWhatsApp').addEventListener('click', function() {
@@ -1103,7 +1104,7 @@
                 message += "DATOS DE ACCESO\n";
                 message += `Usuario: ${username}\n`;
                 message += `Contraseña: ${password}\n`;
-                message += `URL: qrp2p.com/vendedor/${username.toLowerCase().replace(/[^a-z0-9]/g, '-')}\n`;
+                message += `URL: co.qrp2p.com/vendedor/${username.toLowerCase().replace(/[^a-z0-9]/g, '-')}\n`;
                 message += "────────────────────────────────\n";
                 message += "DATOS DEL NEGOCIO\n";
                 message += `Nombre: ${businessName}\n`;
@@ -1119,9 +1120,8 @@
                 message += "────────────────────────────────\n";
                 message += `PLAN: Vendedor Verificado - Pago Anual $200.000 COP\n`;
                 message += "────────────────────────────────\n";
-                message += "COMISIONES:\n";
-                message += "- Pago en linea (tarjeta, PSE, corresponsales): 10% por venta exitosa\n";
-                message += "- Pago en persona / efectivo: 0% comision\n";
+                message += "COMISION POR VENTA:\n";
+                message += "- TODOS los metodos de pago (linea y efectivo): 10% sobre cada venta exitosa\n";
                 message += "────────────────────────────────\n";
                 message += "PAGO PENDIENTE: COP$ 200.000 (anual)\n";
                 message += "Contactar al vendedor para activar cuenta y enviar datos de pago";
