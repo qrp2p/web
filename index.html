@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QRP2P MARKETPLACE</title>
+    <title>QRP2P MARKETPLACE | Comercio P2P en 196 Países</title>
     
     <!-- PWA Meta Tags -->
     <link rel="manifest" href="manifest.json">
@@ -17,7 +17,7 @@
     
     <!-- SEO Meta Tags -->
     <meta name="description" content="QRP2P Marketplace - La plataforma líder de comercio peer-to-peer con presencia en 196 países. Compra y vende de forma segura en todo el mundo.">
-    <meta name="keywords" content="marketplace, comercio p2p, qrp2p, compra venta, global, peer to peer, 196 paises">
+    <meta name="keywords" content="marketplace, comercio p2p, qrp2p, compra venta, global, peer to peer, 196 paises, todos los paises">
     <meta name="author" content="QRP2P">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://qrp2p.com/">
@@ -46,7 +46,6 @@
             -webkit-font-smoothing: antialiased;
         }
         
-        /* Install Button */
         #install-button {
             position: fixed;
             bottom: 24px;
@@ -63,7 +62,6 @@
             transition: all 0.2s ease;
             display: none;
             font-family: 'Inter', sans-serif;
-            letter-spacing: -0.01em;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
         
@@ -72,7 +70,6 @@
             transform: scale(1.02);
         }
         
-        /* Header */
         header {
             padding: 3rem 2rem;
             text-align: center;
@@ -107,14 +104,12 @@
             color: #666666;
         }
         
-        /* Main Container */
         .container {
             max-width: 1280px;
             margin: 0 auto;
             padding: 3rem 2rem;
         }
         
-        /* Search */
         .search-container {
             max-width: 480px;
             margin: 0 auto 3rem;
@@ -142,24 +137,20 @@
             color: #AAAAAA;
         }
         
-        /* Counter */
         .country-count {
             text-align: center;
             margin-bottom: 2rem;
             font-size: 0.875rem;
             font-weight: 400;
             color: #666666;
-            letter-spacing: -0.01em;
         }
         
-        /* Grid - 2 columns */
         .cities-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 1.5rem;
         }
         
-        /* Cards - Minimalist */
         .city-card {
             background: #FFFFFF;
             border: 1px solid #E5E5E5;
@@ -175,7 +166,6 @@
             box-shadow: 0 8px 24px rgba(0,0,0,0.05);
         }
         
-        /* Flag Image as Background */
         .city-image {
             height: 180px;
             background-size: cover;
@@ -214,12 +204,6 @@
             line-height: 1.5;
         }
         
-        /* Hidden elements - removed register text and url */
-        .register-text, .hidden-url {
-            display: none;
-        }
-        
-        /* Offline Indicator */
         .offline-indicator {
             position: fixed;
             top: 0;
@@ -239,7 +223,6 @@
             transform: translateY(0);
         }
         
-        /* Toast */
         .toast-message {
             position: fixed;
             bottom: 30px;
@@ -255,14 +238,12 @@
             transition: transform 0.3s ease;
             white-space: nowrap;
             pointer-events: none;
-            letter-spacing: -0.01em;
         }
         
         .toast-message.show {
             transform: translateX(-50%) translateY(0);
         }
         
-        /* SEO Content Section */
         .seo-content {
             max-width: 1280px;
             margin: 4rem auto;
@@ -276,7 +257,6 @@
             font-size: 1.5rem;
             font-weight: 600;
             margin-bottom: 1rem;
-            letter-spacing: -0.02em;
             color: #000000;
         }
         
@@ -311,7 +291,6 @@
             text-decoration: none;
             color: #000000;
             transition: all 0.2s;
-            font-weight: 450;
         }
         
         .country-tag:hover {
@@ -320,7 +299,6 @@
             border-color: #000000;
         }
         
-        /* Footer */
         footer {
             background: #FFFFFF;
             padding: 2.5rem 2rem;
@@ -352,7 +330,6 @@
             font-size: 0.75rem;
         }
         
-        /* Animation */
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -369,53 +346,42 @@
             opacity: 0;
         }
         
-        /* Responsive */
         @media (max-width: 768px) {
             header {
                 padding: 2rem 1.5rem;
             }
-            
             .container {
                 padding: 2rem 1.5rem;
             }
-            
             .cities-grid {
                 grid-template-columns: 1fr;
                 gap: 1rem;
             }
-            
             .city-image {
                 height: 140px;
             }
-            
             .city-info {
                 padding: 1.25rem;
             }
-            
             .city-name {
                 font-size: 1.125rem;
             }
-            
             .seo-content {
                 padding: 1.5rem;
                 margin: 2rem auto;
             }
-            
             .footer-links {
                 gap: 1.25rem;
             }
-            
             #install-button {
                 bottom: 16px;
                 right: 16px;
                 padding: 10px 20px;
                 font-size: 0.8125rem;
             }
-            
             .toast-message {
                 font-size: 0.75rem;
                 padding: 10px 20px;
-                white-space: nowrap;
             }
         }
         
@@ -423,14 +389,9 @@
             .logo-container {
                 max-width: 220px;
             }
-            
             .tagline {
                 font-size: 0.75rem;
                 letter-spacing: 0.15em;
-            }
-            
-            .search-container {
-                margin-bottom: 2rem;
             }
         }
     </style>
@@ -466,20 +427,20 @@
     </div>
     
     <div class="seo-content">
-        <h2>QRP2P Marketplace: La Plataforma de Comercio P2P Más Grande del Mundo</h2>
-        <p>QRP2P Marketplace es la solución líder en comercio peer-to-peer, conectando compradores y vendedores en los <strong>196 países</strong> reconocidos internacionalmente. Nuestra plataforma ofrece una experiencia segura, confiable y eficiente para todas tus transacciones comerciales.</p>
+        <h2>QRP2P Marketplace: Comercio P2P en 196 Países</h2>
+        <p>QRP2P Marketplace es la plataforma de comercio peer-to-peer más grande del mundo, conectando compradores y vendedores en los <strong>196 países</strong> reconocidos internacionalmente. Seguridad, confianza y eficiencia en cada transacción.</p>
         
         <h3>Mercados por Región</h3>
         <div class="country-tags" id="country-tags-container"></div>
         
-        <h3>¿Por qué elegir QRP2P Marketplace?</h3>
+        <h3>¿Por qué QRP2P Marketplace?</h3>
         <p>✓ <strong>Seguridad Garantizada:</strong> Sistema de depósito en garantía y protección para compradores y vendedores.<br>
-        ✓ <strong>Cobertura Global:</strong> Presencia en todos los países del mundo.<br>
+        ✓ <strong>Cobertura Global:</strong> Presencia activa en los 196 países del mundo.<br>
         ✓ <strong>Comisiones Bajas:</strong> Las tarifas más competitivas del mercado.<br>
         ✓ <strong>Soporte Multilingüe:</strong> Atención al cliente en más de 20 idiomas.<br>
         ✓ <strong>App PWA:</strong> Instala nuestra aplicación en tu dispositivo móvil.</p>
         
-        <p>Descubre el marketplace de tu país y comienza a comerciar de forma segura. QRP2P es la plataforma preferida por miles de usuarios en todo el mundo para comprar y vender productos, servicios y activos digitales.</p>
+        <p>Descubre el marketplace de tu país y comienza a comerciar de forma segura. QRP2P es la plataforma preferida por miles de usuarios en todo el mundo.</p>
     </div>
     
     <footer>
@@ -493,41 +454,219 @@
     </footer>
 
     <script>
-        // Lista completa de países - Sin mensaje de registro ni URL visible
+        // LISTA COMPLETA DE 196 PAÍSES
         const countriesData = [
-            { code: "CO", nativeName: "Colombia", displayName: "Colombia", nativeDesc: "Mercado P2P seguro para compradores y vendedores colombianos", registerToast: "Bienvenido a Colombia", url: "https://co.qrp2p.com", flagUrl: "https://flagcdn.com/co.svg" },
-            { code: "US", nativeName: "United States", displayName: "United States", nativeDesc: "Secure P2P marketplace for US buyers and sellers", registerToast: "Welcome to United States", url: "https://us.qrp2p.com", flagUrl: "https://flagcdn.com/us.svg" },
-            { code: "MX", nativeName: "México", displayName: "Mexico", nativeDesc: "Plataforma P2P confiable para el mercado mexicano", registerToast: "Bienvenido a México", url: "https://mx.qrp2p.com", flagUrl: "https://flagcdn.com/mx.svg" },
-            { code: "ES", nativeName: "España", displayName: "Spain", nativeDesc: "Marketplace P2P líder en el mercado español", registerToast: "Bienvenido a España", url: "https://es.qrp2p.com", flagUrl: "https://flagcdn.com/es.svg" },
-            { code: "AR", nativeName: "Argentina", displayName: "Argentina", nativeDesc: "Comercio P2P seguro en Argentina", registerToast: "Bienvenido a Argentina", url: "https://ar.qrp2p.com", flagUrl: "https://flagcdn.com/ar.svg" },
-            { code: "BR", nativeName: "Brasil", displayName: "Brazil", nativeDesc: "Plataforma P2P confiável para o Brasil", registerToast: "Bem-vindo ao Brasil", url: "https://br.qrp2p.com", flagUrl: "https://flagcdn.com/br.svg" },
-            { code: "CL", nativeName: "Chile", displayName: "Chile", nativeDesc: "Marketplace P2P seguro en Chile", registerToast: "Bienvenido a Chile", url: "https://cl.qrp2p.com", flagUrl: "https://flagcdn.com/cl.svg" },
-            { code: "PE", nativeName: "Perú", displayName: "Peru", nativeDesc: "Plataforma de comercio P2P en Perú", registerToast: "Bienvenido a Perú", url: "https://pe.qrp2p.com", flagUrl: "https://flagcdn.com/pe.svg" },
-            { code: "GB", nativeName: "United Kingdom", displayName: "United Kingdom", nativeDesc: "Secure P2P trading platform in the UK", registerToast: "Welcome to United Kingdom", url: "https://uk.qrp2p.com", flagUrl: "https://flagcdn.com/gb.svg" },
-            { code: "DE", nativeName: "Deutschland", displayName: "Germany", nativeDesc: "Sicherer P2P-Marktplatz in Deutschland", registerToast: "Willkommen in Deutschland", url: "https://de.qrp2p.com", flagUrl: "https://flagcdn.com/de.svg" },
-            { code: "FR", nativeName: "France", displayName: "France", nativeDesc: "Plateforme P2P sécurisée en France", registerToast: "Bienvenue en France", url: "https://fr.qrp2p.com", flagUrl: "https://flagcdn.com/fr.svg" },
+            { code: "AF", nativeName: "Afganistán", displayName: "Afghanistan", nativeDesc: "Mercado P2P seguro en Afganistán", registerToast: "Bienvenido a Afganistán", url: "https://af.qrp2p.com", flagUrl: "https://flagcdn.com/af.svg" },
+            { code: "AL", nativeName: "Albania", displayName: "Albania", nativeDesc: "Platformë e sigurt P2P në Shqipëri", registerToast: "Mirë se vini në Shqipëri", url: "https://al.qrp2p.com", flagUrl: "https://flagcdn.com/al.svg" },
+            { code: "DE", nativeName: "Alemania", displayName: "Germany", nativeDesc: "Sicherer P2P-Marktplatz in Deutschland", registerToast: "Willkommen in Deutschland", url: "https://de.qrp2p.com", flagUrl: "https://flagcdn.com/de.svg" },
+            { code: "AD", nativeName: "Andorra", displayName: "Andorra", nativeDesc: "Mercat P2P segur a Andorra", registerToast: "Benvingut a Andorra", url: "https://ad.qrp2p.com", flagUrl: "https://flagcdn.com/ad.svg" },
+            { code: "AO", nativeName: "Angola", displayName: "Angola", nativeDesc: "Mercado P2P seguro em Angola", registerToast: "Bem-vindo a Angola", url: "https://ao.qrp2p.com", flagUrl: "https://flagcdn.com/ao.svg" },
+            { code: "AG", nativeName: "Antigua y Barbuda", displayName: "Antigua and Barbuda", nativeDesc: "Secure P2P marketplace in Antigua", registerToast: "Welcome to Antigua", url: "https://ag.qrp2p.com", flagUrl: "https://flagcdn.com/ag.svg" },
+            { code: "SA", nativeName: "Arabia Saudita", displayName: "Saudi Arabia", nativeDesc: "سوق آمن للتجارة P2P في السعودية", registerToast: "مرحباً بكم في السعودية", url: "https://sa.qrp2p.com", flagUrl: "https://flagcdn.com/sa.svg" },
+            { code: "DZ", nativeName: "Argelia", displayName: "Algeria", nativeDesc: "سوق آمن للتجارة P2P في الجزائر", registerToast: "مرحباً بكم في الجزائر", url: "https://dz.qrp2p.com", flagUrl: "https://flagcdn.com/dz.svg" },
+            { code: "AR", nativeName: "Argentina", displayName: "Argentina", nativeDesc: "Mercado P2P seguro en Argentina", registerToast: "Bienvenido a Argentina", url: "https://ar.qrp2p.com", flagUrl: "https://flagcdn.com/ar.svg" },
+            { code: "AM", nativeName: "Armenia", displayName: "Armenia", nativeDesc: "Անվտանգ P2P շուկա Հայաստանում", registerToast: "Բարի գալուստ Հայաստան", url: "https://am.qrp2p.com", flagUrl: "https://flagcdn.com/am.svg" },
+            { code: "AU", nativeName: "Australia", displayName: "Australia", nativeDesc: "Secure P2P marketplace in Australia", registerToast: "Welcome to Australia", url: "https://au.qrp2p.com", flagUrl: "https://flagcdn.com/au.svg" },
+            { code: "AT", nativeName: "Austria", displayName: "Austria", nativeDesc: "Sicherer P2P-Marktplatz in Österreich", registerToast: "Willkommen in Österreich", url: "https://at.qrp2p.com", flagUrl: "https://flagcdn.com/at.svg" },
+            { code: "AZ", nativeName: "Azerbaiyán", displayName: "Azerbaijan", nativeDesc: "Azərbaycanda təhlükəsiz P2P bazarı", registerToast: "Azərbaycana xoş gəlmisiniz", url: "https://az.qrp2p.com", flagUrl: "https://flagcdn.com/az.svg" },
+            { code: "BS", nativeName: "Bahamas", displayName: "Bahamas", nativeDesc: "Secure P2P marketplace in Bahamas", registerToast: "Welcome to Bahamas", url: "https://bs.qrp2p.com", flagUrl: "https://flagcdn.com/bs.svg" },
+            { code: "BD", nativeName: "Bangladés", displayName: "Bangladesh", nativeDesc: "বাংলাদেশে নিরাপদ P2P বাজার", registerToast: "বাংলাদেশে স্বাগতম", url: "https://bd.qrp2p.com", flagUrl: "https://flagcdn.com/bd.svg" },
+            { code: "BB", nativeName: "Barbados", displayName: "Barbados", nativeDesc: "Secure P2P marketplace in Barbados", registerToast: "Welcome to Barbados", url: "https://bb.qrp2p.com", flagUrl: "https://flagcdn.com/bb.svg" },
+            { code: "BH", nativeName: "Baréin", displayName: "Bahrain", nativeDesc: "سوق آمن للتجارة P2P في البحرين", registerToast: "مرحباً بكم في البحرين", url: "https://bh.qrp2p.com", flagUrl: "https://flagcdn.com/bh.svg" },
+            { code: "BE", nativeName: "Bélgica", displayName: "Belgium", nativeDesc: "Plateforme P2P sécurisée en Belgique", registerToast: "Bienvenue en Belgique", url: "https://be.qrp2p.com", flagUrl: "https://flagcdn.com/be.svg" },
+            { code: "BZ", nativeName: "Belice", displayName: "Belize", nativeDesc: "Secure P2P marketplace in Belize", registerToast: "Welcome to Belize", url: "https://bz.qrp2p.com", flagUrl: "https://flagcdn.com/bz.svg" },
+            { code: "BJ", nativeName: "Benín", displayName: "Benin", nativeDesc: "Marché P2P sécurisé au Bénin", registerToast: "Bienvenue au Bénin", url: "https://bj.qrp2p.com", flagUrl: "https://flagcdn.com/bj.svg" },
+            { code: "BY", nativeName: "Bielorrusia", displayName: "Belarus", nativeDesc: "Бяспечны P2P рынак у Беларусі", registerToast: "Сардэчна запрашаем у Беларусь", url: "https://by.qrp2p.com", flagUrl: "https://flagcdn.com/by.svg" },
+            { code: "MM", nativeName: "Birmania", displayName: "Myanmar", nativeDesc: "မြန်မာနိုင်ငံတွင် လုံခြုံသော P2P ဈေးကွက်", registerToast: "မြန်မာနိုင်ငံသို့ ကြိုဆိုပါသည်", url: "https://mm.qrp2p.com", flagUrl: "https://flagcdn.com/mm.svg" },
+            { code: "BO", nativeName: "Bolivia", displayName: "Bolivia", nativeDesc: "Mercado P2P seguro en Bolivia", registerToast: "Bienvenido a Bolivia", url: "https://bo.qrp2p.com", flagUrl: "https://flagcdn.com/bo.svg" },
+            { code: "BA", nativeName: "Bosnia y Herzegovina", displayName: "Bosnia and Herzegovina", nativeDesc: "Sigurno P2P tržište u BiH", registerToast: "Dobrodošli u Bosnu i Hercegovinu", url: "https://ba.qrp2p.com", flagUrl: "https://flagcdn.com/ba.svg" },
+            { code: "BW", nativeName: "Botsuana", displayName: "Botswana", nativeDesc: "Secure P2P marketplace in Botswana", registerToast: "Welcome to Botswana", url: "https://bw.qrp2p.com", flagUrl: "https://flagcdn.com/bw.svg" },
+            { code: "BR", nativeName: "Brasil", displayName: "Brazil", nativeDesc: "Plataforma P2P confiável no Brasil", registerToast: "Bem-vindo ao Brasil", url: "https://br.qrp2p.com", flagUrl: "https://flagcdn.com/br.svg" },
+            { code: "BN", nativeName: "Brunéi", displayName: "Brunei", nativeDesc: "Pasaran P2P selamat di Brunei", registerToast: "Selamat datang ke Brunei", url: "https://bn.qrp2p.com", flagUrl: "https://flagcdn.com/bn.svg" },
+            { code: "BG", nativeName: "Bulgaria", displayName: "Bulgaria", nativeDesc: "Сигурен P2P пазар в България", registerToast: "Добре дошли в България", url: "https://bg.qrp2p.com", flagUrl: "https://flagcdn.com/bg.svg" },
+            { code: "BF", nativeName: "Burkina Faso", displayName: "Burkina Faso", nativeDesc: "Marché P2P sécurisé au Burkina", registerToast: "Bienvenue au Burkina Faso", url: "https://bf.qrp2p.com", flagUrl: "https://flagcdn.com/bf.svg" },
+            { code: "BI", nativeName: "Burundi", displayName: "Burundi", nativeDesc: "Marché P2P sécurisé au Burundi", registerToast: "Bienvenue au Burundi", url: "https://bi.qrp2p.com", flagUrl: "https://flagcdn.com/bi.svg" },
+            { code: "BT", nativeName: "Bután", displayName: "Bhutan", nativeDesc: "འབྲུག་གི་ P2P ཚོང་ར་", registerToast: "བཀྲ་ཤིས་བདེ་ལེགས།", url: "https://bt.qrp2p.com", flagUrl: "https://flagcdn.com/bt.svg" },
+            { code: "CV", nativeName: "Cabo Verde", displayName: "Cape Verde", nativeDesc: "Mercado P2P seguro em Cabo Verde", registerToast: "Bem-vindo a Cabo Verde", url: "https://cv.qrp2p.com", flagUrl: "https://flagcdn.com/cv.svg" },
+            { code: "KH", nativeName: "Camboya", displayName: "Cambodia", nativeDesc: "ផ្សារ P2P ប្រកបដោយសុវត្ថិភាពនៅកម្ពុជា", registerToast: "សូមស្វាគមន៍មកកាន់កម្ពុជា", url: "https://kh.qrp2p.com", flagUrl: "https://flagcdn.com/kh.svg" },
+            { code: "CM", nativeName: "Camerún", displayName: "Cameroon", nativeDesc: "Marché P2P sécurisé au Cameroun", registerToast: "Bienvenue au Cameroun", url: "https://cm.qrp2p.com", flagUrl: "https://flagcdn.com/cm.svg" },
+            { code: "CA", nativeName: "Canadá", displayName: "Canada", nativeDesc: "Secure P2P marketplace in Canada", registerToast: "Welcome to Canada", url: "https://ca.qrp2p.com", flagUrl: "https://flagcdn.com/ca.svg" },
+            { code: "QA", nativeName: "Catar", displayName: "Qatar", nativeDesc: "سوق آمن للتجارة P2P في قطر", registerToast: "مرحباً بكم في قطر", url: "https://qa.qrp2p.com", flagUrl: "https://flagcdn.com/qa.svg" },
+            { code: "TD", nativeName: "Chad", displayName: "Chad", nativeDesc: "Marché P2P sécurisé au Tchad", registerToast: "Bienvenue au Tchad", url: "https://td.qrp2p.com", flagUrl: "https://flagcdn.com/td.svg" },
+            { code: "CZ", nativeName: "Chequia", displayName: "Czech Republic", nativeDesc: "Bezpečný P2P trh v Česku", registerToast: "Vítejte v Česku", url: "https://cz.qrp2p.com", flagUrl: "https://flagcdn.com/cz.svg" },
+            { code: "CL", nativeName: "Chile", displayName: "Chile", nativeDesc: "Mercado P2P seguro en Chile", registerToast: "Bienvenido a Chile", url: "https://cl.qrp2p.com", flagUrl: "https://flagcdn.com/cl.svg" },
+            { code: "CN", nativeName: "China", displayName: "China", nativeDesc: "中国安全的P2P交易平台", registerToast: "欢迎来到中国", url: "https://cn.qrp2p.com", flagUrl: "https://flagcdn.com/cn.svg" },
+            { code: "CY", nativeName: "Chipre", displayName: "Cyprus", nativeDesc: "Ασφαλής P2P αγορά στην Κύπρο", registerToast: "Καλώς ήρθατε στην Κύπρο", url: "https://cy.qrp2p.com", flagUrl: "https://flagcdn.com/cy.svg" },
+            { code: "CO", nativeName: "Colombia", displayName: "Colombia", nativeDesc: "Mercado P2P seguro en Colombia", registerToast: "Bienvenido a Colombia", url: "https://co.qrp2p.com", flagUrl: "https://flagcdn.com/co.svg" },
+            { code: "KM", nativeName: "Comoras", displayName: "Comoros", nativeDesc: "Marché P2P sécurisé aux Comores", registerToast: "Bienvenue aux Comores", url: "https://km.qrp2p.com", flagUrl: "https://flagcdn.com/km.svg" },
+            { code: "KP", nativeName: "Corea del Norte", displayName: "North Korea", nativeDesc: "조선민주주의인민공화국 P2P 시장", registerToast: "조선민주주의인민공화국에 오신 것을 환영합니다", url: "https://kp.qrp2p.com", flagUrl: "https://flagcdn.com/kp.svg" },
+            { code: "KR", nativeName: "Corea del Sur", displayName: "South Korea", nativeDesc: "대한민국 안전한 P2P 마켓플레이스", registerToast: "대한민국에 오신 것을 환영합니다", url: "https://kr.qrp2p.com", flagUrl: "https://flagcdn.com/kr.svg" },
+            { code: "CI", nativeName: "Costa de Marfil", displayName: "Ivory Coast", nativeDesc: "Marché P2P sécurisé en Côte d'Ivoire", registerToast: "Bienvenue en Côte d'Ivoire", url: "https://ci.qrp2p.com", flagUrl: "https://flagcdn.com/ci.svg" },
+            { code: "CR", nativeName: "Costa Rica", displayName: "Costa Rica", nativeDesc: "Mercado P2P seguro en Costa Rica", registerToast: "Bienvenido a Costa Rica", url: "https://cr.qrp2p.com", flagUrl: "https://flagcdn.com/cr.svg" },
+            { code: "HR", nativeName: "Croacia", displayName: "Croatia", nativeDesc: "Sigurno P2P tržište u Hrvatskoj", registerToast: "Dobrodošli u Hrvatsku", url: "https://hr.qrp2p.com", flagUrl: "https://flagcdn.com/hr.svg" },
+            { code: "CU", nativeName: "Cuba", displayName: "Cuba", nativeDesc: "Mercado P2P seguro en Cuba", registerToast: "Bienvenido a Cuba", url: "https://cu.qrp2p.com", flagUrl: "https://flagcdn.com/cu.svg" },
+            { code: "DK", nativeName: "Dinamarca", displayName: "Denmark", nativeDesc: "Sikker P2P-markedsplads i Danmark", registerToast: "Velkommen til Danmark", url: "https://dk.qrp2p.com", flagUrl: "https://flagcdn.com/dk.svg" },
+            { code: "DM", nativeName: "Dominica", displayName: "Dominica", nativeDesc: "Secure P2P marketplace in Dominica", registerToast: "Welcome to Dominica", url: "https://dm.qrp2p.com", flagUrl: "https://flagcdn.com/dm.svg" },
+            { code: "EC", nativeName: "Ecuador", displayName: "Ecuador", nativeDesc: "Mercado P2P seguro en Ecuador", registerToast: "Bienvenido a Ecuador", url: "https://ec.qrp2p.com", flagUrl: "https://flagcdn.com/ec.svg" },
+            { code: "EG", nativeName: "Egipto", displayName: "Egypt", nativeDesc: "سوق آمن للتجارة P2P في مصر", registerToast: "مرحباً بكم في مصر", url: "https://eg.qrp2p.com", flagUrl: "https://flagcdn.com/eg.svg" },
+            { code: "SV", nativeName: "El Salvador", displayName: "El Salvador", nativeDesc: "Mercado P2P seguro en El Salvador", registerToast: "Bienvenido a El Salvador", url: "https://sv.qrp2p.com", flagUrl: "https://flagcdn.com/sv.svg" },
+            { code: "AE", nativeName: "Emiratos Árabes Unidos", displayName: "UAE", nativeDesc: "سوق آمن للتجارة P2P في الإمارات", registerToast: "مرحباً بكم في الإمارات", url: "https://ae.qrp2p.com", flagUrl: "https://flagcdn.com/ae.svg" },
+            { code: "ER", nativeName: "Eritrea", displayName: "Eritrea", nativeDesc: "ኤርትራ ውስጥ አስተማማኝ P2P ገበያ", registerToast: "እንኳን ወደ ኤርትራ በደህና መጡ", url: "https://er.qrp2p.com", flagUrl: "https://flagcdn.com/er.svg" },
+            { code: "SK", nativeName: "Eslovaquia", displayName: "Slovakia", nativeDesc: "Bezpečný P2P trh na Slovensku", registerToast: "Vitajte na Slovensku", url: "https://sk.qrp2p.com", flagUrl: "https://flagcdn.com/sk.svg" },
+            { code: "SI", nativeName: "Eslovenia", displayName: "Slovenia", nativeDesc: "Varen P2P trg v Sloveniji", registerToast: "Dobrodošli v Sloveniji", url: "https://si.qrp2p.com", flagUrl: "https://flagcdn.com/si.svg" },
+            { code: "ES", nativeName: "España", displayName: "Spain", nativeDesc: "Marketplace P2P líder en España", registerToast: "Bienvenido a España", url: "https://es.qrp2p.com", flagUrl: "https://flagcdn.com/es.svg" },
+            { code: "US", nativeName: "Estados Unidos", displayName: "United States", nativeDesc: "Secure P2P marketplace in the US", registerToast: "Welcome to United States", url: "https://us.qrp2p.com", flagUrl: "https://flagcdn.com/us.svg" },
+            { code: "EE", nativeName: "Estonia", displayName: "Estonia", nativeDesc: "Turvaline P2P turg Eestis", registerToast: "Tere tulemast Eestisse", url: "https://ee.qrp2p.com", flagUrl: "https://flagcdn.com/ee.svg" },
+            { code: "SZ", nativeName: "Eswatini", displayName: "Eswatini", nativeDesc: "Secure P2P marketplace in Eswatini", registerToast: "Welcome to Eswatini", url: "https://sz.qrp2p.com", flagUrl: "https://flagcdn.com/sz.svg" },
+            { code: "ET", nativeName: "Etiopía", displayName: "Ethiopia", nativeDesc: "ኢትዮጵያ ውስጥ አስተማማኝ P2P ገበያ", registerToast: "እንኳን ወደ ኢትዮጵያ በደህና መጡ", url: "https://et.qrp2p.com", flagUrl: "https://flagcdn.com/et.svg" },
+            { code: "PH", nativeName: "Filipinas", displayName: "Philippines", nativeDesc: "Ligtas na P2P marketplace sa Pilipinas", registerToast: "Maligayang pagdating sa Pilipinas", url: "https://ph.qrp2p.com", flagUrl: "https://flagcdn.com/ph.svg" },
+            { code: "FI", nativeName: "Finlandia", displayName: "Finland", nativeDesc: "Turvallinen P2P-markkinapaikka Suomessa", registerToast: "Tervetuloa Suomeen", url: "https://fi.qrp2p.com", flagUrl: "https://flagcdn.com/fi.svg" },
+            { code: "FJ", nativeName: "Fiyi", displayName: "Fiji", nativeDesc: "Secure P2P marketplace in Fiji", registerToast: "Welcome to Fiji", url: "https://fj.qrp2p.com", flagUrl: "https://flagcdn.com/fj.svg" },
+            { code: "FR", nativeName: "Francia", displayName: "France", nativeDesc: "Plateforme P2P sécurisée en France", registerToast: "Bienvenue en France", url: "https://fr.qrp2p.com", flagUrl: "https://flagcdn.com/fr.svg" },
+            { code: "GA", nativeName: "Gabón", displayName: "Gabon", nativeDesc: "Marché P2P sécurisé au Gabon", registerToast: "Bienvenue au Gabon", url: "https://ga.qrp2p.com", flagUrl: "https://flagcdn.com/ga.svg" },
+            { code: "GM", nativeName: "Gambia", displayName: "Gambia", nativeDesc: "Secure P2P marketplace in Gambia", registerToast: "Welcome to Gambia", url: "https://gm.qrp2p.com", flagUrl: "https://flagcdn.com/gm.svg" },
+            { code: "GE", nativeName: "Georgia", displayName: "Georgia", nativeDesc: "უსაფრთხო P2P ბაზარი საქართველოში", registerToast: "კეთილი იყოს თქვენი მობრძანება საქართველოში", url: "https://ge.qrp2p.com", flagUrl: "https://flagcdn.com/ge.svg" },
+            { code: "GH", nativeName: "Ghana", displayName: "Ghana", nativeDesc: "Secure P2P marketplace in Ghana", registerToast: "Welcome to Ghana", url: "https://gh.qrp2p.com", flagUrl: "https://flagcdn.com/gh.svg" },
+            { code: "GD", nativeName: "Granada", displayName: "Grenada", nativeDesc: "Secure P2P marketplace in Grenada", registerToast: "Welcome to Grenada", url: "https://gd.qrp2p.com", flagUrl: "https://flagcdn.com/gd.svg" },
+            { code: "GR", nativeName: "Grecia", displayName: "Greece", nativeDesc: "Ασφαλής P2P αγορά στην Ελλάδα", registerToast: "Καλώς ήρθατε στην Ελλάδα", url: "https://gr.qrp2p.com", flagUrl: "https://flagcdn.com/gr.svg" },
+            { code: "GT", nativeName: "Guatemala", displayName: "Guatemala", nativeDesc: "Mercado P2P seguro en Guatemala", registerToast: "Bienvenido a Guatemala", url: "https://gt.qrp2p.com", flagUrl: "https://flagcdn.com/gt.svg" },
+            { code: "GN", nativeName: "Guinea", displayName: "Guinea", nativeDesc: "Marché P2P sécurisé en Guinée", registerToast: "Bienvenue en Guinée", url: "https://gn.qrp2p.com", flagUrl: "https://flagcdn.com/gn.svg" },
+            { code: "GQ", nativeName: "Guinea Ecuatorial", displayName: "Equatorial Guinea", nativeDesc: "Mercado P2P seguro en Guinea Ecuatorial", registerToast: "Bienvenido a Guinea Ecuatorial", url: "https://gq.qrp2p.com", flagUrl: "https://flagcdn.com/gq.svg" },
+            { code: "GW", nativeName: "Guinea-Bisáu", displayName: "Guinea-Bissau", nativeDesc: "Mercado P2P seguro na Guiné-Bissau", registerToast: "Bem-vindo à Guiné-Bissau", url: "https://gw.qrp2p.com", flagUrl: "https://flagcdn.com/gw.svg" },
+            { code: "HT", nativeName: "Haití", displayName: "Haiti", nativeDesc: "Marché P2P sécurisé en Haïti", registerToast: "Bienvenue en Haïti", url: "https://ht.qrp2p.com", flagUrl: "https://flagcdn.com/ht.svg" },
+            { code: "HN", nativeName: "Honduras", displayName: "Honduras", nativeDesc: "Mercado P2P seguro en Honduras", registerToast: "Bienvenido a Honduras", url: "https://hn.qrp2p.com", flagUrl: "https://flagcdn.com/hn.svg" },
+            { code: "HU", nativeName: "Hungría", displayName: "Hungary", nativeDesc: "Biztonságos P2P piactér Magyarországon", registerToast: "Üdvözöljük Magyarországon", url: "https://hu.qrp2p.com", flagUrl: "https://flagcdn.com/hu.svg" },
+            { code: "IN", nativeName: "India", displayName: "India", nativeDesc: "भारत में सुरक्षित P2P बाजार", registerToast: "भारत में आपका स्वागत है", url: "https://in.qrp2p.com", flagUrl: "https://flagcdn.com/in.svg" },
+            { code: "ID", nativeName: "Indonesia", displayName: "Indonesia", nativeDesc: "Pasar P2P aman di Indonesia", registerToast: "Selamat datang di Indonesia", url: "https://id.qrp2p.com", flagUrl: "https://flagcdn.com/id.svg" },
+            { code: "IQ", nativeName: "Irak", displayName: "Iraq", nativeDesc: "سوق آمن للتجارة P2P في العراق", registerToast: "مرحباً بكم في العراق", url: "https://iq.qrp2p.com", flagUrl: "https://flagcdn.com/iq.svg" },
+            { code: "IR", nativeName: "Irán", displayName: "Iran", nativeDesc: "بازار امن P2P در ایران", registerToast: "به ایران خوش آمدید", url: "https://ir.qrp2p.com", flagUrl: "https://flagcdn.com/ir.svg" },
+            { code: "IE", nativeName: "Irlanda", displayName: "Ireland", nativeDesc: "Secure P2P marketplace in Ireland", registerToast: "Welcome to Ireland", url: "https://ie.qrp2p.com", flagUrl: "https://flagcdn.com/ie.svg" },
+            { code: "IS", nativeName: "Islandia", displayName: "Iceland", nativeDesc: "Öruggur P2P markaður á Íslandi", registerToast: "Velkomin til Íslands", url: "https://is.qrp2p.com", flagUrl: "https://flagcdn.com/is.svg" },
+            { code: "IL", nativeName: "Israel", displayName: "Israel", nativeDesc: "שוק P2P מאובטח בישראל", registerToast: "ברוכים הבאים לישראל", url: "https://il.qrp2p.com", flagUrl: "https://flagcdn.com/il.svg" },
             { code: "IT", nativeName: "Italia", displayName: "Italy", nativeDesc: "Marketplace P2P sicuro in Italia", registerToast: "Benvenuto in Italia", url: "https://it.qrp2p.com", flagUrl: "https://flagcdn.com/it.svg" },
+            { code: "JM", nativeName: "Jamaica", displayName: "Jamaica", nativeDesc: "Secure P2P marketplace in Jamaica", registerToast: "Welcome to Jamaica", url: "https://jm.qrp2p.com", flagUrl: "https://flagcdn.com/jm.svg" },
+            { code: "JP", nativeName: "Japón", displayName: "Japan", nativeDesc: "日本の安全なP2Pマーケットプレイス", registerToast: "日本へようこそ", url: "https://jp.qrp2p.com", flagUrl: "https://flagcdn.com/jp.svg" },
+            { code: "JO", nativeName: "Jordania", displayName: "Jordan", nativeDesc: "سوق آمن للتجارة P2P في الأردن", registerToast: "مرحباً بكم في الأردن", url: "https://jo.qrp2p.com", flagUrl: "https://flagcdn.com/jo.svg" },
+            { code: "KZ", nativeName: "Kazajistán", displayName: "Kazakhstan", nativeDesc: "Қазақстандағы қауіпсіз P2P нарығы", registerToast: "Қазақстанға қош келдіңіз", url: "https://kz.qrp2p.com", flagUrl: "https://flagcdn.com/kz.svg" },
+            { code: "KE", nativeName: "Kenia", displayName: "Kenya", nativeDesc: "Secure P2P marketplace in Kenya", registerToast: "Welcome to Kenya", url: "https://ke.qrp2p.com", flagUrl: "https://flagcdn.com/ke.svg" },
+            { code: "KG", nativeName: "Kirguistán", displayName: "Kyrgyzstan", nativeDesc: "Кыргызстандагы коопсуз P2P базары", registerToast: "Кыргызстанга кош келиңиз", url: "https://kg.qrp2p.com", flagUrl: "https://flagcdn.com/kg.svg" },
+            { code: "KI", nativeName: "Kiribati", displayName: "Kiribati", nativeDesc: "Secure P2P marketplace in Kiribati", registerToast: "Welcome to Kiribati", url: "https://ki.qrp2p.com", flagUrl: "https://flagcdn.com/ki.svg" },
+            { code: "KW", nativeName: "Kuwait", displayName: "Kuwait", nativeDesc: "سوق آمن للتجارة P2P في الكويت", registerToast: "مرحباً بكم في الكويت", url: "https://kw.qrp2p.com", flagUrl: "https://flagcdn.com/kw.svg" },
+            { code: "LA", nativeName: "Laos", displayName: "Laos", nativeDesc: "ຕະຫຼາດ P2P ທີ່ປອດໄພໃນລາວ", registerToast: "ຍິນດີຕ້ອນຮັບສູ່ລາວ", url: "https://la.qrp2p.com", flagUrl: "https://flagcdn.com/la.svg" },
+            { code: "LS", nativeName: "Lesoto", displayName: "Lesotho", nativeDesc: "'Maraka o sireletsehileng oa P2P Lesotho", registerToast: "Rea u amohela Lesotho", url: "https://ls.qrp2p.com", flagUrl: "https://flagcdn.com/ls.svg" },
+            { code: "LV", nativeName: "Letonia", displayName: "Latvia", nativeDesc: "Drošs P2P tirgus Latvijā", registerToast: "Laipni lūdzam Latvijā", url: "https://lv.qrp2p.com", flagUrl: "https://flagcdn.com/lv.svg" },
+            { code: "LB", nativeName: "Líbano", displayName: "Lebanon", nativeDesc: "سوق آمن للتجارة P2P في لبنان", registerToast: "مرحباً بكم في لبنان", url: "https://lb.qrp2p.com", flagUrl: "https://flagcdn.com/lb.svg" },
+            { code: "LR", nativeName: "Liberia", displayName: "Liberia", nativeDesc: "Secure P2P marketplace in Liberia", registerToast: "Welcome to Liberia", url: "https://lr.qrp2p.com", flagUrl: "https://flagcdn.com/lr.svg" },
+            { code: "LY", nativeName: "Libia", displayName: "Libya", nativeDesc: "سوق آمن للتجارة P2P في ليبيا", registerToast: "مرحباً بكم في ليبيا", url: "https://ly.qrp2p.com", flagUrl: "https://flagcdn.com/ly.svg" },
+            { code: "LI", nativeName: "Liechtenstein", displayName: "Liechtenstein", nativeDesc: "Sicherer P2P-Marktplatz in Liechtenstein", registerToast: "Willkommen in Liechtenstein", url: "https://li.qrp2p.com", flagUrl: "https://flagcdn.com/li.svg" },
+            { code: "LT", nativeName: "Lituania", displayName: "Lithuania", nativeDesc: "Saugi P2P rinka Lietuvoje", registerToast: "Sveiki atvykę į Lietuvą", url: "https://lt.qrp2p.com", flagUrl: "https://flagcdn.com/lt.svg" },
+            { code: "LU", nativeName: "Luxemburgo", displayName: "Luxembourg", nativeDesc: "Plateforme P2P sécurisée au Luxembourg", registerToast: "Bienvenue au Luxembourg", url: "https://lu.qrp2p.com", flagUrl: "https://flagcdn.com/lu.svg" },
+            { code: "MK", nativeName: "Macedonia del Norte", displayName: "North Macedonia", nativeDesc: "Безбеден P2P пазар во Северна Македонија", registerToast: "Добредојдовте во Северна Македонија", url: "https://mk.qrp2p.com", flagUrl: "https://flagcdn.com/mk.svg" },
+            { code: "MG", nativeName: "Madagascar", displayName: "Madagascar", nativeDesc: "Marché P2P sécurisé à Madagascar", registerToast: "Bienvenue à Madagascar", url: "https://mg.qrp2p.com", flagUrl: "https://flagcdn.com/mg.svg" },
+            { code: "MY", nativeName: "Malasia", displayName: "Malaysia", nativeDesc: "Pasaran P2P selamat di Malaysia", registerToast: "Selamat datang ke Malaysia", url: "https://my.qrp2p.com", flagUrl: "https://flagcdn.com/my.svg" },
+            { code: "MW", nativeName: "Malawi", displayName: "Malawi", nativeDesc: "Secure P2P marketplace in Malawi", registerToast: "Welcome to Malawi", url: "https://mw.qrp2p.com", flagUrl: "https://flagcdn.com/mw.svg" },
+            { code: "MV", nativeName: "Maldivas", displayName: "Maldives", nativeDesc: "ދިވެހިރާއްޖޭގައި އަމާން P2P މާރކެޓް", registerToast: "ދިވެހިރާއްޖެއަށް މަރުހަބާ", url: "https://mv.qrp2p.com", flagUrl: "https://flagcdn.com/mv.svg" },
+            { code: "ML", nativeName: "Malí", displayName: "Mali", nativeDesc: "Marché P2P sécurisé au Mali", registerToast: "Bienvenue au Mali", url: "https://ml.qrp2p.com", flagUrl: "https://flagcdn.com/ml.svg" },
+            { code: "MT", nativeName: "Malta", displayName: "Malta", nativeDesc: "Suq P2P sikur f'Malta", registerToast: "Merħba Malta", url: "https://mt.qrp2p.com", flagUrl: "https://flagcdn.com/mt.svg" },
+            { code: "MA", nativeName: "Marruecos", displayName: "Morocco", nativeDesc: "سوق آمن للتجارة P2P في المغرب", registerToast: "مرحباً بكم في المغرب", url: "https://ma.qrp2p.com", flagUrl: "https://flagcdn.com/ma.svg" },
+            { code: "MH", nativeName: "Islas Marshall", displayName: "Marshall Islands", nativeDesc: "Secure P2P marketplace in Marshall Islands", registerToast: "Welcome to Marshall Islands", url: "https://mh.qrp2p.com", flagUrl: "https://flagcdn.com/mh.svg" },
+            { code: "MU", nativeName: "Mauricio", displayName: "Mauritius", nativeDesc: "Marché P2P sécurisé à Maurice", registerToast: "Bienvenue à Maurice", url: "https://mu.qrp2p.com", flagUrl: "https://flagcdn.com/mu.svg" },
+            { code: "MR", nativeName: "Mauritania", displayName: "Mauritania", nativeDesc: "سوق آمن للتجارة P2P في موريتانيا", registerToast: "مرحباً بكم في موريتانيا", url: "https://mr.qrp2p.com", flagUrl: "https://flagcdn.com/mr.svg" },
+            { code: "MX", nativeName: "México", displayName: "Mexico", nativeDesc: "Mercado P2P seguro en México", registerToast: "Bienvenido a México", url: "https://mx.qrp2p.com", flagUrl: "https://flagcdn.com/mx.svg" },
+            { code: "FM", nativeName: "Micronesia", displayName: "Micronesia", nativeDesc: "Secure P2P marketplace in Micronesia", registerToast: "Welcome to Micronesia", url: "https://fm.qrp2p.com", flagUrl: "https://flagcdn.com/fm.svg" },
+            { code: "MD", nativeName: "Moldavia", displayName: "Moldova", nativeDesc: "Piața P2P sigură în Moldova", registerToast: "Bine ați venit în Moldova", url: "https://md.qrp2p.com", flagUrl: "https://flagcdn.com/md.svg" },
+            { code: "MC", nativeName: "Mónaco", displayName: "Monaco", nativeDesc: "Plateforme P2P sécurisée à Monaco", registerToast: "Bienvenue à Monaco", url: "https://mc.qrp2p.com", flagUrl: "https://flagcdn.com/mc.svg" },
+            { code: "MN", nativeName: "Mongolia", displayName: "Mongolia", nativeDesc: "Монгол дахь аюулгүй P2P зах", registerToast: "Монгол улсад тавтай морил", url: "https://mn.qrp2p.com", flagUrl: "https://flagcdn.com/mn.svg" },
+            { code: "ME", nativeName: "Montenegro", displayName: "Montenegro", nativeDesc: "Sigurno P2P tržište u Crnoj Gori", registerToast: "Dobrodošli u Crnu Goru", url: "https://me.qrp2p.com", flagUrl: "https://flagcdn.com/me.svg" },
+            { code: "MZ", nativeName: "Mozambique", displayName: "Mozambique", nativeDesc: "Mercado P2P seguro em Moçambique", registerToast: "Bem-vindo a Moçambique", url: "https://mz.qrp2p.com", flagUrl: "https://flagcdn.com/mz.svg" },
+            { code: "MM", nativeName: "Myanmar", displayName: "Myanmar", nativeDesc: "မြန်မာနိုင်ငံတွင် လုံခြုံသော P2P ဈေးကွက်", registerToast: "မြန်မာနိုင်ငံသို့ ကြိုဆိုပါသည်", url: "https://mm.qrp2p.com", flagUrl: "https://flagcdn.com/mm.svg" },
+            { code: "NA", nativeName: "Namibia", displayName: "Namibia", nativeDesc: "Secure P2P marketplace in Namibia", registerToast: "Welcome to Namibia", url: "https://na.qrp2p.com", flagUrl: "https://flagcdn.com/na.svg" },
+            { code: "NR", nativeName: "Nauru", displayName: "Nauru", nativeDesc: "Secure P2P marketplace in Nauru", registerToast: "Welcome to Nauru", url: "https://nr.qrp2p.com", flagUrl: "https://flagcdn.com/nr.svg" },
+            { code: "NP", nativeName: "Nepal", displayName: "Nepal", nativeDesc: "नेपालमा सुरक्षित P2P बजार", registerToast: "नेपालमा स्वागत छ", url: "https://np.qrp2p.com", flagUrl: "https://flagcdn.com/np.svg" },
+            { code: "NI", nativeName: "Nicaragua", displayName: "Nicaragua", nativeDesc: "Mercado P2P seguro en Nicaragua", registerToast: "Bienvenido a Nicaragua", url: "https://ni.qrp2p.com", flagUrl: "https://flagcdn.com/ni.svg" },
+            { code: "NE", nativeName: "Níger", displayName: "Niger", nativeDesc: "Marché P2P sécurisé au Niger", registerToast: "Bienvenue au Niger", url: "https://ne.qrp2p.com", flagUrl: "https://flagcdn.com/ne.svg" },
+            { code: "NG", nativeName: "Nigeria", displayName: "Nigeria", nativeDesc: "Secure P2P marketplace in Nigeria", registerToast: "Welcome to Nigeria", url: "https://ng.qrp2p.com", flagUrl: "https://flagcdn.com/ng.svg" },
+            { code: "NO", nativeName: "Noruega", displayName: "Norway", nativeDesc: "Sikker P2P-markedsplass i Norge", registerToast: "Velkommen til Norge", url: "https://no.qrp2p.com", flagUrl: "https://flagcdn.com/no.svg" },
+            { code: "NZ", nativeName: "Nueva Zelanda", displayName: "New Zealand", nativeDesc: "Secure P2P marketplace in New Zealand", registerToast: "Welcome to New Zealand", url: "https://nz.qrp2p.com", flagUrl: "https://flagcdn.com/nz.svg" },
+            { code: "OM", nativeName: "Omán", displayName: "Oman", nativeDesc: "سوق آمن للتجارة P2P في عمان", registerToast: "مرحباً بكم في عمان", url: "https://om.qrp2p.com", flagUrl: "https://flagcdn.com/om.svg" },
+            { code: "NL", nativeName: "Países Bajos", displayName: "Netherlands", nativeDesc: "Veilige P2P-marktplaats in Nederland", registerToast: "Welkom in Nederland", url: "https://nl.qrp2p.com", flagUrl: "https://flagcdn.com/nl.svg" },
+            { code: "PK", nativeName: "Pakistán", displayName: "Pakistan", nativeDesc: "پاکستان میں محفوظ P2P مارکیٹ", registerToast: "پاکستان میں خوش آمدید", url: "https://pk.qrp2p.com", flagUrl: "https://flagcdn.com/pk.svg" },
+            { code: "PW", nativeName: "Palaos", displayName: "Palau", nativeDesc: "Secure P2P marketplace in Palau", registerToast: "Welcome to Palau", url: "https://pw.qrp2p.com", flagUrl: "https://flagcdn.com/pw.svg" },
+            { code: "PA", nativeName: "Panamá", displayName: "Panama", nativeDesc: "Mercado P2P seguro en Panamá", registerToast: "Bienvenido a Panamá", url: "https://pa.qrp2p.com", flagUrl: "https://flagcdn.com/pa.svg" },
+            { code: "PG", nativeName: "Papúa Nueva Guinea", displayName: "Papua New Guinea", nativeDesc: "Secure P2P marketplace in PNG", registerToast: "Welcome to Papua New Guinea", url: "https://pg.qrp2p.com", flagUrl: "https://flagcdn.com/pg.svg" },
+            { code: "PY", nativeName: "Paraguay", displayName: "Paraguay", nativeDesc: "Mercado P2P seguro en Paraguay", registerToast: "Bienvenido a Paraguay", url: "https://py.qrp2p.com", flagUrl: "https://flagcdn.com/py.svg" },
+            { code: "PE", nativeName: "Perú", displayName: "Peru", nativeDesc: "Mercado P2P seguro en Perú", registerToast: "Bienvenido a Perú", url: "https://pe.qrp2p.com", flagUrl: "https://flagcdn.com/pe.svg" },
+            { code: "PL", nativeName: "Polonia", displayName: "Poland", nativeDesc: "Bezpieczny rynek P2P w Polsce", registerToast: "Witamy w Polsce", url: "https://pl.qrp2p.com", flagUrl: "https://flagcdn.com/pl.svg" },
             { code: "PT", nativeName: "Portugal", displayName: "Portugal", nativeDesc: "Plataforma P2P segura em Portugal", registerToast: "Bem-vindo a Portugal", url: "https://pt.qrp2p.com", flagUrl: "https://flagcdn.com/pt.svg" },
-            { code: "NL", nativeName: "Nederland", displayName: "Netherlands", nativeDesc: "Veilige P2P-marktplaats in Nederland", registerToast: "Welkom in Nederland", url: "https://nl.qrp2p.com", flagUrl: "https://flagcdn.com/nl.svg" },
-            { code: "BE", nativeName: "Belgium", displayName: "Belgium", nativeDesc: "Plateforme P2P sécurisée en Belgique", registerToast: "Welcome to Belgium", url: "https://be.qrp2p.com", flagUrl: "https://flagcdn.com/be.svg" },
-            { code: "CH", nativeName: "Switzerland", displayName: "Switzerland", nativeDesc: "Sichere P2P-Plattform in der Schweiz", registerToast: "Welcome to Switzerland", url: "https://ch.qrp2p.com", flagUrl: "https://flagcdn.com/ch.svg" },
-            { code: "AT", nativeName: "Österreich", displayName: "Austria", nativeDesc: "Sicherer P2P-Marktplatz in Österreich", registerToast: "Willkommen in Österreich", url: "https://at.qrp2p.com", flagUrl: "https://flagcdn.com/at.svg" },
-            { code: "SE", nativeName: "Sverige", displayName: "Sweden", nativeDesc: "Säker P2P-marknadsplats i Sverige", registerToast: "Välkommen till Sverige", url: "https://se.qrp2p.com", flagUrl: "https://flagcdn.com/se.svg" },
-            { code: "NO", nativeName: "Norge", displayName: "Norway", nativeDesc: "Sikker P2P-markedsplass i Norge", registerToast: "Velkommen til Norge", url: "https://no.qrp2p.com", flagUrl: "https://flagcdn.com/no.svg" },
-            { code: "DK", nativeName: "Danmark", displayName: "Denmark", nativeDesc: "Sikker P2P-markedsplads i Danmark", registerToast: "Velkommen til Danmark", url: "https://dk.qrp2p.com", flagUrl: "https://flagcdn.com/dk.svg" },
-            { code: "FI", nativeName: "Suomi", displayName: "Finland", nativeDesc: "Turvallinen P2P-markkinapaikka Suomessa", registerToast: "Tervetuloa Suomeen", url: "https://fi.qrp2p.com", flagUrl: "https://flagcdn.com/fi.svg" }
+            { code: "GB", nativeName: "Reino Unido", displayName: "United Kingdom", nativeDesc: "Secure P2P marketplace in the UK", registerToast: "Welcome to United Kingdom", url: "https://uk.qrp2p.com", flagUrl: "https://flagcdn.com/gb.svg" },
+            { code: "CF", nativeName: "República Centroafricana", displayName: "Central African Republic", nativeDesc: "Marché P2P sécurisé en RCA", registerToast: "Bienvenue en République Centrafricaine", url: "https://cf.qrp2p.com", flagUrl: "https://flagcdn.com/cf.svg" },
+            { code: "CD", nativeName: "República Democrática del Congo", displayName: "DR Congo", nativeDesc: "Marché P2P sécurisé en RDC", registerToast: "Bienvenue en RDC", url: "https://cd.qrp2p.com", flagUrl: "https://flagcdn.com/cd.svg" },
+            { code: "DO", nativeName: "República Dominicana", displayName: "Dominican Republic", nativeDesc: "Mercado P2P seguro en RD", registerToast: "Bienvenido a República Dominicana", url: "https://do.qrp2p.com", flagUrl: "https://flagcdn.com/do.svg" },
+            { code: "CG", nativeName: "República del Congo", displayName: "Congo", nativeDesc: "Marché P2P sécurisé au Congo", registerToast: "Bienvenue au Congo", url: "https://cg.qrp2p.com", flagUrl: "https://flagcdn.com/cg.svg" },
+            { code: "RW", nativeName: "Ruanda", displayName: "Rwanda", nativeDesc: "Isoko ryizewe rya P2P mu Rwanda", registerToast: "Murakaza neza mu Rwanda", url: "https://rw.qrp2p.com", flagUrl: "https://flagcdn.com/rw.svg" },
+            { code: "RO", nativeName: "Rumania", displayName: "Romania", nativeDesc: "Piață P2P sigură în România", registerToast: "Bine ați venit în România", url: "https://ro.qrp2p.com", flagUrl: "https://flagcdn.com/ro.svg" },
+            { code: "RU", nativeName: "Rusia", displayName: "Russia", nativeDesc: "Безопасный P2P рынок в России", registerToast: "Добро пожаловать в Россию", url: "https://ru.qrp2p.com", flagUrl: "https://flagcdn.com/ru.svg" },
+            { code: "SB", nativeName: "Islas Salomón", displayName: "Solomon Islands", nativeDesc: "Secure P2P marketplace in Solomon Islands", registerToast: "Welcome to Solomon Islands", url: "https://sb.qrp2p.com", flagUrl: "https://flagcdn.com/sb.svg" },
+            { code: "WS", nativeName: "Samoa", displayName: "Samoa", nativeDesc: "Secure P2P marketplace in Samoa", registerToast: "Welcome to Samoa", url: "https://ws.qrp2p.com", flagUrl: "https://flagcdn.com/ws.svg" },
+            { code: "KN", nativeName: "San Cristóbal y Nieves", displayName: "Saint Kitts and Nevis", nativeDesc: "Secure P2P marketplace in St Kitts", registerToast: "Welcome to St Kitts", url: "https://kn.qrp2p.com", flagUrl: "https://flagcdn.com/kn.svg" },
+            { code: "SM", nativeName: "San Marino", displayName: "San Marino", nativeDesc: "Mercato P2P sicuro a San Marino", registerToast: "Benvenuto a San Marino", url: "https://sm.qrp2p.com", flagUrl: "https://flagcdn.com/sm.svg" },
+            { code: "VC", nativeName: "San Vicente y las Granadinas", displayName: "Saint Vincent", nativeDesc: "Secure P2P marketplace in St Vincent", registerToast: "Welcome to St Vincent", url: "https://vc.qrp2p.com", flagUrl: "https://flagcdn.com/vc.svg" },
+            { code: "LC", nativeName: "Santa Lucía", displayName: "Saint Lucia", nativeDesc: "Secure P2P marketplace in St Lucia", registerToast: "Welcome to St Lucia", url: "https://lc.qrp2p.com", flagUrl: "https://flagcdn.com/lc.svg" },
+            { code: "ST", nativeName: "Santo Tomé y Príncipe", displayName: "Sao Tome", nativeDesc: "Mercado P2P seguro em São Tomé", registerToast: "Bem-vindo a São Tomé", url: "https://st.qrp2p.com", flagUrl: "https://flagcdn.com/st.svg" },
+            { code: "SN", nativeName: "Senegal", displayName: "Senegal", nativeDesc: "Marché P2P sécurisé au Sénégal", registerToast: "Bienvenue au Sénégal", url: "https://sn.qrp2p.com", flagUrl: "https://flagcdn.com/sn.svg" },
+            { code: "RS", nativeName: "Serbia", displayName: "Serbia", nativeDesc: "Sigurno P2P tržište u Srbiji", registerToast: "Dobrodošli u Srbiju", url: "https://rs.qrp2p.com", flagUrl: "https://flagcdn.com/rs.svg" },
+            { code: "SC", nativeName: "Seychelles", displayName: "Seychelles", nativeDesc: "Secure P2P marketplace in Seychelles", registerToast: "Welcome to Seychelles", url: "https://sc.qrp2p.com", flagUrl: "https://flagcdn.com/sc.svg" },
+            { code: "SL", nativeName: "Sierra Leona", displayName: "Sierra Leone", nativeDesc: "Secure P2P marketplace in Sierra Leone", registerToast: "Welcome to Sierra Leone", url: "https://sl.qrp2p.com", flagUrl: "https://flagcdn.com/sl.svg" },
+            { code: "SG", nativeName: "Singapur", displayName: "Singapore", nativeDesc: "Secure P2P marketplace in Singapore", registerToast: "Welcome to Singapore", url: "https://sg.qrp2p.com", flagUrl: "https://flagcdn.com/sg.svg" },
+            { code: "SY", nativeName: "Siria", displayName: "Syria", nativeDesc: "سوق آمن للتجارة P2P في سوريا", registerToast: "مرحباً بكم في سوريا", url: "https://sy.qrp2p.com", flagUrl: "https://flagcdn.com/sy.svg" },
+            { code: "SO", nativeName: "Somalia", displayName: "Somalia", nativeDesc: "Suuq ammaan ah oo P2P ah Soomaaliya", registerToast: "Ku soo dhawoow Soomaaliya", url: "https://so.qrp2p.com", flagUrl: "https://flagcdn.com/so.svg" },
+            { code: "LK", nativeName: "Sri Lanka", displayName: "Sri Lanka", nativeDesc: "ශ්‍රී ලංකාවේ ආරක්ෂිත P2P වෙළඳපොළ", registerToast: "ශ්‍රී ලංකාවට සාදරයෙන් පිළිගනිමු", url: "https://lk.qrp2p.com", flagUrl: "https://flagcdn.com/lk.svg" },
+            { code: "ZA", nativeName: "Sudáfrica", displayName: "South Africa", nativeDesc: "Secure P2P marketplace in South Africa", registerToast: "Welcome to South Africa", url: "https://za.qrp2p.com", flagUrl: "https://flagcdn.com/za.svg" },
+            { code: "SD", nativeName: "Sudán", displayName: "Sudan", nativeDesc: "سوق آمن للتجارة P2P في السودان", registerToast: "مرحباً بكم في السودان", url: "https://sd.qrp2p.com", flagUrl: "https://flagcdn.com/sd.svg" },
+            { code: "SS", nativeName: "Sudán del Sur", displayName: "South Sudan", nativeDesc: "Secure P2P marketplace in South Sudan", registerToast: "Welcome to South Sudan", url: "https://ss.qrp2p.com", flagUrl: "https://flagcdn.com/ss.svg" },
+            { code: "SE", nativeName: "Suecia", displayName: "Sweden", nativeDesc: "Säker P2P-marknadsplats i Sverige", registerToast: "Välkommen till Sverige", url: "https://se.qrp2p.com", flagUrl: "https://flagcdn.com/se.svg" },
+            { code: "CH", nativeName: "Suiza", displayName: "Switzerland", nativeDesc: "Sichere P2P-Plattform in der Schweiz", registerToast: "Willkommen in der Schweiz", url: "https://ch.qrp2p.com", flagUrl: "https://flagcdn.com/ch.svg" },
+            { code: "SR", nativeName: "Surinam", displayName: "Suriname", nativeDesc: "Secure P2P marketplace in Suriname", registerToast: "Welcome to Suriname", url: "https://sr.qrp2p.com", flagUrl: "https://flagcdn.com/sr.svg" },
+            { code: "TH", nativeName: "Tailandia", displayName: "Thailand", nativeDesc: "ตลาด P2P ที่ปลอดภัยในประเทศไทย", registerToast: "ยินดีต้อนรับสู่ประเทศไทย", url: "https://th.qrp2p.com", flagUrl: "https://flagcdn.com/th.svg" },
+            { code: "TW", nativeName: "Taiwán", displayName: "Taiwan", nativeDesc: "台灣安全的P2P交易平台", registerToast: "歡迎來到台灣", url: "https://tw.qrp2p.com", flagUrl: "https://flagcdn.com/tw.svg" },
+            { code: "TZ", nativeName: "Tanzania", displayName: "Tanzania", nativeDesc: "Secure P2P marketplace in Tanzania", registerToast: "Welcome to Tanzania", url: "https://tz.qrp2p.com", flagUrl: "https://flagcdn.com/tz.svg" },
+            { code: "TJ", nativeName: "Tayikistán", displayName: "Tajikistan", nativeDesc: "Бозори бехатари P2P дар Тоҷикистон", registerToast: "Ба Тоҷикистон хуш омадед", url: "https://tj.qrp2p.com", flagUrl: "https://flagcdn.com/tj.svg" },
+            { code: "IO", nativeName: "Territorio Británico del Océano Índico", displayName: "British Indian Ocean Territory", nativeDesc: "Secure P2P marketplace in BIOT", registerToast: "Welcome to BIOT", url: "https://io.qrp2p.com", flagUrl: "https://flagcdn.com/io.svg" },
+            { code: "TL", nativeName: "Timor Oriental", displayName: "Timor-Leste", nativeDesc: "Mercado P2P seguro em Timor-Leste", registerToast: "Bem-vindo a Timor-Leste", url: "https://tl.qrp2p.com", flagUrl: "https://flagcdn.com/tl.svg" },
+            { code: "TG", nativeName: "Togo", displayName: "Togo", nativeDesc: "Marché P2P sécurisé au Togo", registerToast: "Bienvenue au Togo", url: "https://tg.qrp2p.com", flagUrl: "https://flagcdn.com/tg.svg" },
+            { code: "TO", nativeName: "Tonga", displayName: "Tonga", nativeDesc: "Secure P2P marketplace in Tonga", registerToast: "Welcome to Tonga", url: "https://to.qrp2p.com", flagUrl: "https://flagcdn.com/to.svg" },
+            { code: "TT", nativeName: "Trinidad y Tobago", displayName: "Trinidad and Tobago", nativeDesc: "Secure P2P marketplace in Trinidad", registerToast: "Welcome to Trinidad", url: "https://tt.qrp2p.com", flagUrl: "https://flagcdn.com/tt.svg" },
+            { code: "TN", nativeName: "Túnez", displayName: "Tunisia", nativeDesc: "سوق آمن للتجارة P2P في تونس", registerToast: "مرحباً بكم في تونس", url: "https://tn.qrp2p.com", flagUrl: "https://flagcdn.com/tn.svg" },
+            { code: "TM", nativeName: "Turkmenistán", displayName: "Turkmenistan", nativeDesc: "Türkmenistanda ygtybarly P2P bazary", registerToast: "Türkmenistana hoş geldiňiz", url: "https://tm.qrp2p.com", flagUrl: "https://flagcdn.com/tm.svg" },
+            { code: "TR", nativeName: "Turquía", displayName: "Turkey", nativeDesc: "Türkiye'de güvenli P2P pazarı", registerToast: "Türkiye'ye hoş geldiniz", url: "https://tr.qrp2p.com", flagUrl: "https://flagcdn.com/tr.svg" },
+            { code: "TV", nativeName: "Tuvalu", displayName: "Tuvalu", nativeDesc: "Secure P2P marketplace in Tuvalu", registerToast: "Welcome to Tuvalu", url: "https://tv.qrp2p.com", flagUrl: "https://flagcdn.com/tv.svg" },
+            { code: "UA", nativeName: "Ucrania", displayName: "Ukraine", nativeDesc: "Безпечний P2P ринок в Україні", registerToast: "Ласкаво просимо до України", url: "https://ua.qrp2p.com", flagUrl: "https://flagcdn.com/ua.svg" },
+            { code: "UG", nativeName: "Uganda", displayName: "Uganda", nativeDesc: "Secure P2P marketplace in Uganda", registerToast: "Welcome to Uganda", url: "https://ug.qrp2p.com", flagUrl: "https://flagcdn.com/ug.svg" },
+            { code: "UY", nativeName: "Uruguay", displayName: "Uruguay", nativeDesc: "Mercado P2P seguro en Uruguay", registerToast: "Bienvenido a Uruguay", url: "https://uy.qrp2p.com", flagUrl: "https://flagcdn.com/uy.svg" },
+            { code: "UZ", nativeName: "Uzbekistán", displayName: "Uzbekistan", nativeDesc: "Oʻzbekistonda xavfsiz P2P bozori", registerToast: "Oʻzbekistonga xush kelibsiz", url: "https://uz.qrp2p.com", flagUrl: "https://flagcdn.com/uz.svg" },
+            { code: "VU", nativeName: "Vanuatu", displayName: "Vanuatu", nativeDesc: "Secure P2P marketplace in Vanuatu", registerToast: "Welcome to Vanuatu", url: "https://vu.qrp2p.com", flagUrl: "https://flagcdn.com/vu.svg" },
+            { code: "VA", nativeName: "Vaticano", displayName: "Vatican City", nativeDesc: "Mercato P2P sicuro in Vaticano", registerToast: "Benvenuto in Vaticano", url: "https://va.qrp2p.com", flagUrl: "https://flagcdn.com/va.svg" },
+            { code: "VE", nativeName: "Venezuela", displayName: "Venezuela", nativeDesc: "Mercado P2P seguro en Venezuela", registerToast: "Bienvenido a Venezuela", url: "https://ve.qrp2p.com", flagUrl: "https://flagcdn.com/ve.svg" },
+            { code: "VN", nativeName: "Vietnam", displayName: "Vietnam", nativeDesc: "Thị trường P2P an toàn tại Việt Nam", registerToast: "Chào mừng đến Việt Nam", url: "https://vn.qrp2p.com", flagUrl: "https://flagcdn.com/vn.svg" },
+            { code: "YE", nativeName: "Yemen", displayName: "Yemen", nativeDesc: "سوق آمن للتجارة P2P في اليمن", registerToast: "مرحباً بكم في اليمن", url: "https://ye.qrp2p.com", flagUrl: "https://flagcdn.com/ye.svg" },
+            { code: "DJ", nativeName: "Yibuti", displayName: "Djibouti", nativeDesc: "Marché P2P sécurisé à Djibouti", registerToast: "Bienvenue à Djibouti", url: "https://dj.qrp2p.com", flagUrl: "https://flagcdn.com/dj.svg" },
+            { code: "ZM", nativeName: "Zambia", displayName: "Zambia", nativeDesc: "Secure P2P marketplace in Zambia", registerToast: "Welcome to Zambia", url: "https://zm.qrp2p.com", flagUrl: "https://flagcdn.com/zm.svg" },
+            { code: "ZW", nativeName: "Zimbabue", displayName: "Zimbabwe", nativeDesc: "Secure P2P marketplace in Zimbabwe", registerToast: "Welcome to Zimbabwe", url: "https://zw.qrp2p.com", flagUrl: "https://flagcdn.com/zw.svg" }
         ];
         
-        // Ordenar alfabéticamente por nombre nativo
-        countriesData.sort((a, b) => a.nativeName.localeCompare(b.nativeName));
+        // Eliminar duplicados y ordenar alfabéticamente
+        const uniqueCountries = countriesData.filter((country, index, self) => 
+            index === self.findIndex(c => c.code === country.code)
+        );
+        uniqueCountries.sort((a, b) => a.nativeName.localeCompare(b.nativeName));
         
-        // Actualizar el contador
-        document.getElementById('country-count').innerHTML = `🌍 ${countriesData.length} países — Haz clic en cualquier tarjeta para ingresar`;
+        // Actualizar contador
+        document.getElementById('country-count').innerHTML = `🌍 ${uniqueCountries.length} países — Haz clic en cualquier tarjeta para ingresar`;
         
         // Generar country tags para SEO
         const tagsContainer = document.getElementById('country-tags-container');
         if (tagsContainer) {
-            const topCountries = countriesData.slice(0, 40);
+            const topCountries = uniqueCountries.slice(0, 60);
             topCountries.forEach(country => {
                 const tag = document.createElement('a');
                 tag.href = country.url;
@@ -537,7 +676,7 @@
             });
         }
         
-        // Toast notification function
+        // Toast notification
         let toastTimeout;
         function showToast(message) {
             const toast = document.getElementById('toast-message');
@@ -549,7 +688,7 @@
             }, 2000);
         }
         
-        // Function to render countries - Sin mensaje de registro ni URL visible
+        // Render countries
         function renderCountries(countryList) {
             const container = document.getElementById('cities-container');
             container.innerHTML = '';
@@ -557,7 +696,7 @@
             countryList.forEach((country, index) => {
                 const card = document.createElement('div');
                 card.className = 'city-card';
-                card.style.animationDelay = `${index * 0.02}s`;
+                card.style.animationDelay = `${index * 0.01}s`;
                 
                 card.innerHTML = `
                     <div class="city-image" style="background-image: url('${country.flagUrl}'); background-size: cover; background-position: center; background-color: #F5F5F5;">
@@ -571,7 +710,6 @@
                     </div>
                 `;
                 
-                // Handle image background error
                 const imageDiv = card.querySelector('.city-image');
                 if (imageDiv) {
                     const img = new Image();
@@ -582,7 +720,6 @@
                     img.src = country.flagUrl;
                 }
                 
-                // Make entire card clickable - Muestra mensaje de bienvenida
                 card.addEventListener('click', (e) => {
                     if (e.target.tagName !== 'A') {
                         showToast(country.registerToast);
@@ -598,26 +735,21 @@
         
         // Search functionality
         function normalizeText(text) {
-            return text
-                .normalize("NFD")
-                .replace(/[\u0300-\u036f]/g, "")
-                .trim()
-                .toLowerCase();
+            return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase();
         }
         
         function performSearch(searchTerm) {
             const normalizedSearch = normalizeText(searchTerm);
-            const filteredCountries = countriesData.filter(country => 
+            const filteredCountries = uniqueCountries.filter(country => 
                 normalizeText(country.nativeName).includes(normalizedSearch) || 
-                normalizeText(country.displayName).includes(normalizedSearch) ||
-                normalizeText(country.nativeDesc).includes(normalizedSearch)
+                normalizeText(country.displayName).includes(normalizedSearch)
             );
             renderCountries(filteredCountries);
             document.getElementById('country-count').innerHTML = `🌍 ${filteredCountries.length} países — Haz clic en cualquier tarjeta para ingresar`;
             return filteredCountries.length > 0 ? filteredCountries[0] : null;
         }
         
-        // PWA Install Button Logic
+        // PWA Install
         let deferredPrompt;
         const installButton = document.getElementById('install-button');
         
@@ -630,14 +762,14 @@
                 deferredPrompt.prompt();
                 deferredPrompt.userChoice.then((choiceResult) => {
                     if (choiceResult.outcome === 'accepted') {
-                        console.log('User accepted the install prompt');
+                        console.log('User accepted install');
                     }
                     deferredPrompt = null;
                 });
             });
         });
         
-        // Network status indicator
+        // Offline indicator
         const offlineIndicator = document.getElementById('offline-indicator');
         function updateOnlineStatus() {
             if (navigator.onLine) {
@@ -650,36 +782,30 @@
         window.addEventListener('offline', updateOnlineStatus);
         updateOnlineStatus();
         
-        // Initialize the page
+        // Initialize
         document.addEventListener('DOMContentLoaded', function() {
-            renderCountries(countriesData);
+            renderCountries(uniqueCountries);
             const searchInput = document.getElementById('marketplace-search');
-            searchInput.addEventListener('input', (e) => {
-                performSearch(e.target.value);
-            });
+            searchInput.addEventListener('input', (e) => performSearch(e.target.value));
             searchInput.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter') {
                     const firstResult = performSearch(e.target.value);
                     if (firstResult) {
                         showToast(firstResult.registerToast);
-                        setTimeout(() => {
-                            window.open(firstResult.url, '_blank');
-                        }, 300);
+                        setTimeout(() => window.open(firstResult.url, '_blank'), 300);
                     }
                 }
             });
         });
         
-        // Service Worker Registration
+        // Service Worker
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
-                navigator.serviceWorker.register('sw.js')
-                    .then(function(registration) {
-                        console.log('✅ Service Worker registrado con éxito:', registration.scope);
-                    })
-                    .catch(function(error) {
-                        console.log('❌ Error al registrar Service Worker:', error);
-                    });
+                navigator.serviceWorker.register('sw.js').then(registration => {
+                    console.log('✅ Service Worker registrado:', registration.scope);
+                }).catch(error => {
+                    console.log('❌ Error:', error);
+                });
             });
         }
     </script>
