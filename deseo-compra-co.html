@@ -306,12 +306,12 @@
             color: #4b5563;
         }
         
-        /* Beneficios extranjeros */
         .beneficios-extranjeros {
             background: linear-gradient(135deg, #e0f2fe 0%, #fef9e6 100%);
             border-radius: 20px;
             padding: 1.2rem;
             margin-top: 1rem;
+            margin-bottom: 1rem;
             border: 1px solid #cbd5e1;
         }
         
@@ -361,7 +361,6 @@
             margin-top: 2rem;
         }
         
-        /* Modal para agendar visita */
         .modal-visita {
             display: none;
             position: fixed;
@@ -376,7 +375,7 @@
         }
         
         .modal-visita-content {
-            max-width: 800px;
+            max-width: 700px;
             margin: 1rem auto;
             background: white;
             border-radius: 28px;
@@ -384,13 +383,19 @@
             box-shadow: 0 20px 40px rgba(0,0,0,0.2);
         }
         
+        .modal-header {
+            background: #fff;
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            text-align: right;
+        }
+        
         .close-modal-visita {
-            float: right;
             font-size: 1.8rem;
             font-weight: bold;
             cursor: pointer;
-            padding: 0.5rem 1rem;
             color: #666;
+            display: inline-block;
         }
         
         .close-modal-visita:hover {
@@ -535,20 +540,19 @@
                 </div>
             </div>
 
-            <!-- SECCIÓN 3: COMPRADORES CON BENEFICIOS PARA EXTRANJEROS -->
+            <!-- SECCIÓN 3: COMPRADORES -->
             <div class="section">
                 <div class="section-title">👥 Compradores participantes</div>
                 <p style="margin-bottom: 1rem; font-size: 0.9rem;">
-                    <strong>⚠️ Importante:</strong> Debes agregar al menos <strong>1 comprador</strong> (persona natural o jurídica).<br>
+                    <strong>⚠️ Importante:</strong> Debes agregar al menos <strong>1 comprador</strong>.<br>
                     <strong>📱 El teléfono celular es obligatorio</strong> para poder contactarte.
                 </p>
                 
-                <!-- Beneficios para inversionistas extranjeros -->
                 <div class="beneficios-extranjeros">
                     <h4>🌎 ¿Eres inversionista extranjero?</h4>
-                    <p>✅ <strong>Beneficios de invertir en Colombia:</strong> Visa de inversionista (M-5 o M-10), estabilidad jurídica, plusvalía en sectores premium, posibilidad de residencia por inversión.</p>
-                    <p>✅ <strong>Creación de SAS en 24 horas:</strong> Te ayudamos a constituir tu Sociedad por Acciones Simplificada (SAS) con capital desde 1 SMMLV. Ideal para comprar propiedades en Colombia como persona jurídica.</p>
-                    <p>✅ <strong>Asesoría legal migratoria:</strong> Gestionamos tu visa de inversionista o visa de rentista. <a href="#" id="infoExtranjerosLink">📞 Solicita información personalizada →</a></p>
+                    <p>✅ <strong>Beneficios de invertir en Colombia:</strong> Visa de inversionista, estabilidad jurídica, plusvalía en sectores premium.</p>
+                    <p>✅ <strong>Creación de SAS en 24 horas:</strong> Constitución de Sociedad por Acciones Simplificada con capital desde 1 SMMLV.</p>
+                    <p>✅ <strong>Asesoría legal migratoria:</strong> Gestionamos tu visa de inversionista. <a href="#" id="infoExtranjerosLink">📞 Solicita información →</a></p>
                 </div>
                 
                 <div id="compradoresContainer"></div>
@@ -561,7 +565,7 @@
                 </div>
             </div>
 
-            <!-- SECCIÓN 4: REFERIDO Y OPORTUNIDAD -->
+            <!-- SECCIÓN 4: REFERIDO -->
             <div class="section">
                 <div class="section-title">⭐ ¿Cómo nos conociste?</div>
                 <div class="referido-box">
@@ -589,13 +593,18 @@
                                 <input type="text" id="nombreReferido" placeholder="Ej: Juan Pérez">
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label>Teléfono o contacto del referido (opcional)</label>
+                            <input type="text" id="contactoReferido" placeholder="Ej: 3001234567">
+                        </div>
+                        <div class="info-box">💡 Si tu referido es un agente inmobiliario, podremos coordinar la comisión correspondiente.</div>
                     </div>
                     <div class="agente-section">
                         <div class="agente-text">
-                            <h3>🤝 ¿Eres agente inmobiliario o quieres generar ingresos extra?</h3>
-                            <p>Únete a QRP2P como corredor independiente. Gana comisiones, accede a listados exclusivos.</p>
+                            <h3>🤝 ¿Eres agente inmobiliario?</h3>
+                            <p>Únete a QRP2P como corredor independiente. Gana comisiones y accede a listados exclusivos.</p>
                         </div>
-                        <a href="registro-agente-co.html" target="_blank" class="btn">🚀 Quiero ser agente QRP2P</a>
+                        <a href="#" class="btn" id="agenteLink">🚀 Quiero ser agente QRP2P</a>
                     </div>
                 </div>
             </div>
@@ -618,22 +627,19 @@
                     <label>Comentarios adicionales</label>
                     <textarea rows="3" id="comentariosFinal" placeholder="Ej: Prefiero visita el fin de semana..."></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">🚀 Enviar mi DESEO DE COMPRA - Iniciar proceso</button>
-                <small style="display: block; text-align: center; margin-top: 1rem;">Al enviar, un asesor QRP2P revisará tu información y te contactará en menos de 24 horas.</small>
+                <button type="submit" class="btn btn-primary">🚀 Enviar mi DESEO DE COMPRA</button>
+                <small style="display: block; text-align: center; margin-top: 1rem;">Al enviar, un asesor QRP2P te contactará en menos de 24 horas.</small>
             </div>
         </form>
     </div>
 
-    <!-- MODAL PARA AGENDAR VISITA (CONTENIDO INTEGRADO) -->
+    <!-- MODAL PARA AGENDAR VISITA -->
     <div id="modalVisita" class="modal-visita">
         <div class="modal-visita-content">
-            <div style="background: #fff; padding: 1rem; border-bottom: 1px solid #eee;">
+            <div class="modal-header">
                 <span class="close-modal-visita" id="closeModalVisita">&times;</span>
-                <div style="clear:both"></div>
             </div>
-            <div id="agendaVisitaIframeContainer">
-                <!-- Aquí se inyectará dinámicamente el contenido del formulario de visita -->
-            </div>
+            <div id="agendaVisitaContainer" style="padding: 1.5rem;"></div>
         </div>
     </div>
 
@@ -643,7 +649,8 @@
     </footer>
 
     <script>
-        // ==================== FUNCIONES DEL FORMULARIO PRINCIPAL ====================
+        // ==================== FUNCIONES PRINCIPALES ====================
+        
         function formatCOP(value) {
             if (!value) return '0';
             return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(value);
@@ -674,6 +681,7 @@
         const referidoSi = document.getElementById('referidoSi');
         const referidoNo = document.getElementById('referidoNo');
         const datosReferido = document.getElementById('datosReferido');
+        
         function toggleReferido() {
             datosReferido.style.display = referidoSi.checked ? 'block' : 'none';
         }
@@ -681,12 +689,12 @@
         referidoNo.addEventListener('change', toggleReferido);
         toggleReferido();
 
-        // COMPRADORES
+        // ==================== COMPRADORES ====================
         let compradorCount = 1;
         const compradoresContainer = document.getElementById('compradoresContainer');
         const compradorWarning = document.getElementById('compradorWarning');
 
-        function crearCompradorNatural(idx, data = {}) {
+        function crearCompradorNatural(data = {}) {
             const div = document.createElement('div');
             div.className = 'comprador-card';
             div.setAttribute('data-tipo', 'natural');
@@ -698,7 +706,7 @@
                     <div class="form-group"><label>Apellidos *</label><input type="text" class="nat_apellidos" value="${data.apellidos || ''}" required></div>
                 </div>
                 <div class="row-2">
-                    <div class="form-group"><label>Tipo documento *</label><select class="nat_tipoDoc" required><option>CC</option><option>CE</option><option>Pasaporte</option><option>NIT</option></select></div>
+                    <div class="form-group"><label>Tipo documento *</label><select class="nat_tipoDoc" required><option>CC</option><option>CE</option><option>Pasaporte</option></select></div>
                     <div class="form-group"><label>Número documento *</label><input type="text" class="nat_numDoc" value="${data.numDoc || ''}" required></div>
                 </div>
                 <div class="row-2">
@@ -706,15 +714,19 @@
                     <div class="form-group"><label>Correo electrónico (opcional)</label><input type="email" class="nat_email" value="${data.email || ''}"></div>
                 </div>
             `;
-            div.querySelector('.eliminar-item').addEventListener('click', () => {
-                if (document.querySelectorAll('#compradoresContainer .comprador-card').length > 1) div.remove();
-                else alert("Debe haber al menos un comprador.");
-                validarCompradores();
+            const eliminarBtn = div.querySelector('.eliminar-item');
+            eliminarBtn.addEventListener('click', () => {
+                if (document.querySelectorAll('#compradoresContainer .comprador-card').length > 1) {
+                    div.remove();
+                    validarCompradores();
+                } else {
+                    alert("Debe haber al menos un comprador en la solicitud.");
+                }
             });
             return div;
         }
 
-        function crearCompradorJuridico(idx, data = {}) {
+        function crearCompradorJuridico(data = {}) {
             const div = document.createElement('div');
             div.className = 'comprador-card';
             div.setAttribute('data-tipo', 'juridica');
@@ -731,27 +743,46 @@
                     <div class="form-group"><label>Correo electrónico (opcional)</label><input type="email" class="jur_email" value="${data.email || ''}"></div>
                 </div>
             `;
-            div.querySelector('.eliminar-item').addEventListener('click', () => {
-                if (document.querySelectorAll('#compradoresContainer .comprador-card').length > 1) div.remove();
-                else alert("Debe haber al menos un comprador.");
-                validarCompradores();
+            const eliminarBtn = div.querySelector('.eliminar-item');
+            eliminarBtn.addEventListener('click', () => {
+                if (document.querySelectorAll('#compradoresContainer .comprador-card').length > 1) {
+                    div.remove();
+                    validarCompradores();
+                } else {
+                    alert("Debe haber al menos un comprador en la solicitud.");
+                }
             });
             return div;
         }
 
         function validarCompradores() {
             const cantidad = document.querySelectorAll('#compradoresContainer .comprador-card').length;
-            if (cantidad === 0) { compradorWarning.style.display = 'block'; return false; }
-            else { compradorWarning.style.display = 'none'; return true; }
+            if (cantidad === 0) {
+                compradorWarning.style.display = 'block';
+                return false;
+            } else {
+                compradorWarning.style.display = 'none';
+                return true;
+            }
         }
 
-        compradoresContainer.appendChild(crearCompradorNatural(1));
-        document.getElementById('agregarNaturalBtn').addEventListener('click', () => compradoresContainer.appendChild(crearCompradorNatural(++compradorCount)));
-        document.getElementById('agregarJuridicaBtn').addEventListener('click', () => compradoresContainer.appendChild(crearCompradorJuridico(++compradorCount)));
+        // Agregar comprador natural por defecto
+        compradoresContainer.appendChild(crearCompradorNatural());
 
-        // Selección de proceso
+        document.getElementById('agregarNaturalBtn').addEventListener('click', () => {
+            compradoresContainer.appendChild(crearCompradorNatural());
+            validarCompradores();
+        });
+        
+        document.getElementById('agregarJuridicaBtn').addEventListener('click', () => {
+            compradoresContainer.appendChild(crearCompradorJuridico());
+            validarCompradores();
+        });
+
+        // ==================== SELECCIÓN DE PROCESO ====================
         const optionCards = document.querySelectorAll('.option-card');
         const tipoProcesoInput = document.getElementById('tipoProceso');
+        
         optionCards.forEach(card => {
             card.addEventListener('click', () => {
                 optionCards.forEach(c => c.classList.remove('selected'));
@@ -760,160 +791,250 @@
             });
         });
 
-        // ========== MODAL VISITA ==========
+        // ==================== MODAL VISITA ====================
         const modalVisita = document.getElementById('modalVisita');
         const closeModalBtn = document.getElementById('closeModalVisita');
-        const agendaContainer = document.getElementById('agendaVisitaIframeContainer');
+        const agendaContainer = document.getElementById('agendaVisitaContainer');
         
-        // Código del formulario de visita (simplificado pero completo)
-        function getFormularioVisitaHTML() {
-            return `<!DOCTYPE html>
-            <html>
-            <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <style>
-                *{margin:0;padding:0;box-sizing:border-box;}
-                body{font-family:system-ui;background:#fff;padding:1.5rem;}
-                .step-title{font-size:1.5rem;font-weight:600;margin-bottom:1.2rem;}
-                .form-group{margin-bottom:1rem;}
-                label{display:block;font-weight:500;margin-bottom:0.3rem;font-size:0.8rem;}
-                input,select{width:100%;padding:0.8rem;border:1px solid #ccc;border-radius:14px;}
-                .btn-next,.btn-submit{width:100%;padding:0.9rem;background:#000;color:#fff;border:none;border-radius:40px;font-weight:600;margin-top:1rem;cursor:pointer;}
-                .calendar-card{border:1px solid #eee;border-radius:24px;padding:1rem;margin:1rem 0;}
-                .days-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center;}
-                .day-cell{padding:0.5rem;cursor:pointer;border-radius:40px;}
-                .day-cell.selected{background:#000;color:#fff;}
-                .horario-badge{display:inline-block;padding:0.4rem 1rem;border:1px solid #ccc;border-radius:40px;margin:0.3rem;cursor:pointer;}
-                .horario-badge.selected{background:#000;color:#fff;}
-            </style>
-            </head>
-            <body>
-            <div id="step1">
-                <div class="step-title">📅 Datos del visitante</div>
+        // Contenido del formulario de visita (visitante)
+        const formularioVisitaHTML = `
+            <div id="visitaStep1">
+                <div class="step-title" style="font-size:1.5rem; font-weight:600; margin-bottom:1rem;">📅 Agendar visita al inmueble</div>
                 <div class="form-group"><label>Nombre completo *</label><input type="text" id="visitanteNombre" placeholder="Ej: Carlos López"></div>
-                <div class="form-group"><label>Teléfono *</label><input type="tel" id="visitanteTelefono" placeholder="3001234567"></div>
+                <div class="form-group"><label>Teléfono / WhatsApp *</label><input type="tel" id="visitanteTelefono" placeholder="3001234567"></div>
                 <div class="form-group"><label>Correo electrónico</label><input type="email" id="visitanteEmail" placeholder="ejemplo@correo.com"></div>
-                <button class="btn-next" id="nextStepVisita">Siguiente →</button>
+                <button class="btn-next" id="nextStepVisita" style="background:#000; color:#fff; width:100%; padding:0.9rem; border:none; border-radius:40px; font-weight:600; cursor:pointer;">Siguiente →</button>
             </div>
-            <div id="step2" style="display:none;">
-                <div class="step-title">🗓️ Selecciona fecha y hora</div>
-                <div class="calendar-card"><div id="calendarSimple"></div></div>
-                <div id="horariosSimple"></div>
-                <button class="btn-submit" id="submitVisitaBtn">Agendar visita por WhatsApp</button>
-                <button id="backStep1" style="margin-top:0.5rem;background:transparent;border:1px solid #ccc;padding:0.7rem;border-radius:40px;width:100%;">← Volver</button>
+            <div id="visitaStep2" style="display:none;">
+                <div class="step-title" style="font-size:1.5rem; font-weight:600; margin-bottom:1rem;">🗓️ Selecciona fecha y hora</div>
+                <div class="calendar-card" style="border:1px solid #eee; border-radius:24px; padding:1rem; margin:1rem 0;">
+                    <div id="calendarSimple"></div>
+                </div>
+                <div id="horariosSimple" style="margin:1rem 0;"></div>
+                <button class="btn-submit" id="submitVisitaBtn" style="background:#000; color:#fff; width:100%; padding:0.9rem; border:none; border-radius:40px; font-weight:600; cursor:pointer;">Agendar visita por WhatsApp</button>
+                <button id="backStep1" style="margin-top:0.5rem; background:transparent; border:1px solid #ccc; padding:0.7rem; border-radius:40px; width:100%; cursor:pointer;">← Volver</button>
             </div>
-            <script>
-                let selectedDate = null, selectedHorario = null;
-                const horarios = ['08:00','09:00','10:00','11:00','14:00','15:00','16:00','17:00'];
-                function renderSimpleCalendar(){
-                    const today = new Date(); today.setHours(0,0,0,0);
-                    const year = today.getFullYear(), month = today.getMonth();
-                    const daysInMonth = new Date(year, month+1, 0).getDate();
-                    let html = '<div class="days-grid">';
-                    for(let d=1; d<=daysInMonth; d++){
-                        const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-                        const isSelected = (selectedDate === dateStr);
-                        html += `<div class="day-cell ${isSelected ? 'selected' : ''}" data-date="${dateStr}">${d}</div>`;
-                    }
-                    html += '</div>';
-                    document.getElementById('calendarSimple').innerHTML = html;
-                    document.querySelectorAll('.day-cell').forEach(el => {
-                        el.addEventListener('click', () => {
-                            document.querySelectorAll('.day-cell').forEach(c=>c.classList.remove('selected'));
-                            el.classList.add('selected');
-                            selectedDate = el.dataset.date;
-                            renderHorariosSimple();
-                        });
-                    });
+        `;
+        
+        function cargarFormularioVisita() {
+            agendaContainer.innerHTML = formularioVisitaHTML;
+            
+            let selectedDate = null;
+            let selectedHorario = null;
+            const horarios = ['08:00', '09:00', '10:00', '11:00', '14:00', '15:00', '16:00', '17:00'];
+            
+            function renderSimpleCalendar() {
+                const today = new Date();
+                today.setHours(0,0,0,0);
+                const year = today.getFullYear();
+                const month = today.getMonth();
+                const daysInMonth = new Date(year, month + 1, 0).getDate();
+                const firstDay = new Date(year, month, 1).getDay();
+                const offset = firstDay === 0 ? 6 : firstDay - 1;
+                
+                let html = '<div class="days-grid" style="display:grid; grid-template-columns:repeat(7,1fr); gap:6px; text-align:center;">';
+                
+                for(let i = 0; i < offset; i++) {
+                    html += '<div style="padding:0.5rem; opacity:0.3;"></div>';
                 }
-                function renderHorariosSimple(){
-                    const container = document.getElementById('horariosSimple');
-                    if(!selectedDate){ container.innerHTML = '<p>Primero selecciona una fecha</p>'; return; }
-                    let html = '<div>';
-                    horarios.forEach(h => {
-                        const cls = (selectedHorario === h) ? 'horario-badge selected' : 'horario-badge';
-                        html += `<span class="${cls}" data-horario="${h}">${h}</span>`;
-                    });
-                    html += '</div>';
-                    container.innerHTML = html;
-                    document.querySelectorAll('.horario-badge').forEach(el => {
-                        el.addEventListener('click', () => {
-                            document.querySelectorAll('.horario-badge').forEach(b=>b.classList.remove('selected'));
-                            el.classList.add('selected');
-                            selectedHorario = el.dataset.horario;
-                        });
-                    });
+                
+                for(let d = 1; d <= daysInMonth; d++) {
+                    const dateStr = `${year}-${String(month + 1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+                    const cellDate = new Date(year, month, d);
+                    const isPast = cellDate < today;
+                    const isSelected = (selectedDate === dateStr);
+                    const disabledClass = isPast ? 'disabled' : '';
+                    const selectedClass = isSelected ? 'selected' : '';
+                    html += `<div class="day-cell ${selectedClass} ${disabledClass}" data-date="${dateStr}" style="padding:0.5rem; cursor:${isPast ? 'not-allowed' : 'pointer'}; border-radius:40px; ${isSelected ? 'background:#000; color:#fff;' : ''} ${isPast ? 'opacity:0.3;' : ''}">${d}</div>`;
                 }
-                document.getElementById('nextStepVisita').addEventListener('click',()=>{
-                    const nombre = document.getElementById('visitanteNombre').value.trim();
-                    const telefono = document.getElementById('visitanteTelefono').value.trim();
-                    if(!nombre || !telefono){ alert("Nombre y teléfono son obligatorios"); return; }
-                    document.getElementById('step1').style.display='none';
-                    document.getElementById('step2').style.display='block';
+                html += '</div>';
+                document.getElementById('calendarSimple').innerHTML = html;
+                
+                document.querySelectorAll('.day-cell:not(.disabled)').forEach(el => {
+                    el.addEventListener('click', () => {
+                        if(el.classList.contains('disabled')) return;
+                        document.querySelectorAll('.day-cell').forEach(c => {
+                            c.classList.remove('selected');
+                            c.style.background = '';
+                            c.style.color = '';
+                        });
+                        el.classList.add('selected');
+                        el.style.background = '#000';
+                        el.style.color = '#fff';
+                        selectedDate = el.dataset.date;
+                        renderHorariosSimple();
+                    });
+                });
+            }
+            
+            function renderHorariosSimple() {
+                const container = document.getElementById('horariosSimple');
+                if(!selectedDate) {
+                    container.innerHTML = '<p style="color:#666;">📅 Primero selecciona una fecha en el calendario</p>';
+                    return;
+                }
+                let html = '<div style="display:flex; flex-wrap:wrap; gap:0.5rem;">';
+                horarios.forEach(h => {
+                    const cls = (selectedHorario === h) ? 'selected' : '';
+                    html += `<span class="horario-badge ${cls}" data-horario="${h}" style="display:inline-block; padding:0.5rem 1rem; border:1px solid #ccc; border-radius:40px; cursor:pointer; ${selectedHorario === h ? 'background:#000; color:#fff; border-color:#000;' : ''}">${h}</span>`;
+                });
+                html += '</div>';
+                container.innerHTML = html;
+                
+                document.querySelectorAll('.horario-badge').forEach(el => {
+                    el.addEventListener('click', () => {
+                        document.querySelectorAll('.horario-badge').forEach(b => {
+                            b.classList.remove('selected');
+                            b.style.background = '';
+                            b.style.color = '';
+                            b.style.borderColor = '#ccc';
+                        });
+                        el.classList.add('selected');
+                        el.style.background = '#000';
+                        el.style.color = '#fff';
+                        el.style.borderColor = '#000';
+                        selectedHorario = el.dataset.horario;
+                    });
+                });
+            }
+            
+            const nextBtn = document.getElementById('nextStepVisita');
+            const backBtn = document.getElementById('backStep1');
+            const submitBtn = document.getElementById('submitVisitaBtn');
+            const step1 = document.getElementById('visitaStep1');
+            const step2 = document.getElementById('visitaStep2');
+            
+            if(nextBtn) {
+                nextBtn.addEventListener('click', () => {
+                    const nombre = document.getElementById('visitanteNombre')?.value.trim();
+                    const telefono = document.getElementById('visitanteTelefono')?.value.trim();
+                    if(!nombre) { alert("Por favor ingresa tu nombre completo."); return; }
+                    if(!telefono) { alert("Por favor ingresa tu número de teléfono."); return; }
+                    step1.style.display = 'none';
+                    step2.style.display = 'block';
                     renderSimpleCalendar();
                 });
-                document.getElementById('backStep1').addEventListener('click',()=>{
-                    document.getElementById('step2').style.display='none';
-                    document.getElementById('step1').style.display='block';
+            }
+            
+            if(backBtn) {
+                backBtn.addEventListener('click', () => {
+                    step2.style.display = 'none';
+                    step1.style.display = 'block';
                 });
-                document.getElementById('submitVisitaBtn').addEventListener('click',()=>{
-                    if(!selectedDate || !selectedHorario){ alert("Selecciona fecha y horario"); return; }
-                    const nombre = document.getElementById('visitanteNombre').value.trim();
-                    const telefono = document.getElementById('visitanteTelefono').value.trim();
-                    const email = document.getElementById('visitanteEmail').value.trim() || 'No especificado';
-                    const msg = `*VISITA INMOBILIARIA QRP2P*%0A%0A*Visitante:* ${nombre}%0A*Teléfono:* ${telefono}%0A*Email:* ${email}%0A*Fecha:* ${selectedDate}%0A*Horario:* ${selectedHorario}%0A%0A--- Agendado desde formulario web ---`;
-                    window.open(`https://wa.me/573146824438?text=${msg}`, '_blank');
-                    document.getElementById('modalVisita').style.display = 'none';
+            }
+            
+            if(submitBtn) {
+                submitBtn.addEventListener('click', () => {
+                    if(!selectedDate) { alert("Por favor selecciona una fecha."); return; }
+                    if(!selectedHorario) { alert("Por favor selecciona un horario."); return; }
+                    const nombre = document.getElementById('visitanteNombre')?.value.trim() || '';
+                    const telefono = document.getElementById('visitanteTelefono')?.value.trim() || '';
+                    const email = document.getElementById('visitanteEmail')?.value.trim() || 'No especificado';
+                    const mensaje = `*AGENDA DE VISITA - QRP2P*%0A%0A*Visitante:* ${nombre}%0A*Teléfono:* ${telefono}%0A*Email:* ${email}%0A*Fecha:* ${selectedDate}%0A*Horario:* ${selectedHorario}%0A%0A--- Visita agendada desde formulario web ---`;
+                    window.open(`https://wa.me/573146824438?text=${mensaje}`, '_blank');
+                    modalVisita.style.display = 'none';
                 });
-            <\/script>
-            </body>
-            </html>`;
+            }
         }
         
-        // Abrir modal con el formulario de visita
-        document.querySelectorAll('.option-card').forEach(card => {
+        // Abrir modal cuando se selecciona "Agendar visita"
+        optionCards.forEach(card => {
             card.addEventListener('click', () => {
                 if(card.dataset.option === 'visita') {
                     modalVisita.style.display = 'flex';
-                    agendaContainer.innerHTML = getFormularioVisitaHTML();
-                    // Ejecutar scripts del iframe
-                    const scripts = agendaContainer.querySelectorAll('script');
-                    scripts.forEach(oldScript => {
-                        const newScript = document.createElement('script');
-                        newScript.textContent = oldScript.textContent;
-                        agendaContainer.appendChild(newScript);
-                        oldScript.remove();
-                    });
+                    cargarFormularioVisita();
                 }
             });
         });
         
-        closeModalBtn.addEventListener('click', () => { modalVisita.style.display = 'none'; });
-        window.addEventListener('click', (e) => { if(e.target === modalVisita) modalVisita.style.display = 'none'; });
-        
-        // Envío principal del DESEO DE COMPRA
-        document.getElementById('deseoCompraForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            if (!validarCompradores()) { alert("Debes agregar al menos un comprador."); return; }
-            let mensaje = "🏡 *DESEO DE COMPRA - QRP2P*\n────────────────────────\n\n";
-            mensaje += `📍 INMUEBLE: ${document.getElementById('tipoInmueble').value} en ${document.getElementById('ubicacion').value}\n`;
-            mensaje += `💰 Presupuesto: ${formatCOP(document.getElementById('precioDeseado').value)}\n`;
-            const formaPago = document.querySelector('input[name="formaPago"]:checked')?.value;
-            mensaje += `💵 Forma de pago: ${formaPago}\n`;
-            const compradores = document.querySelectorAll('#compradoresContainer .comprador-card');
-            compradores.forEach((c,i) => {
-                if(c.querySelector('.nat_nombres')){
-                    mensaje += `👤 Comprador ${i+1}: ${c.querySelector('.nat_nombres').value} ${c.querySelector('.nat_apellidos').value} - Tel: ${c.querySelector('.nat_telefono').value}\n`;
-                } else {
-                    mensaje += `🏢 Comprador ${i+1}: ${c.querySelector('.jur_razon').value} - Tel: ${c.querySelector('.jur_telefono').value}\n`;
-                }
-            });
-            mensaje += `\n📌 Proceso elegido: ${tipoProcesoInput.value === 'visita' ? 'Agendar visita' : 'Proceso digital'}`;
-            window.open(`https://wa.me/573146824438?text=${encodeURIComponent(mensaje)}`, '_blank');
+        closeModalBtn.addEventListener('click', () => {
+            modalVisita.style.display = 'none';
         });
         
-        document.getElementById('infoExtranjerosLink').addEventListener('click', (e) => {
+        window.addEventListener('click', (e) => {
+            if(e.target === modalVisita) modalVisita.style.display = 'none';
+        });
+        
+        // Enlace para extranjeros
+        document.getElementById('infoExtranjerosLink')?.addEventListener('click', (e) => {
             e.preventDefault();
             window.open('https://wa.me/573146824438?text=Hola%20QRP2P,%20quiero%20información%20sobre%20beneficios%20para%20inversionistas%20extranjeros%20y%20creación%20de%20SAS%20en%20Colombia', '_blank');
+        });
+        
+        document.getElementById('agenteLink')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.open('https://wa.me/573146824438?text=Hola%20QRP2P,%20quiero%20ser%20agente%20inmobiliario%20y%20generar%20ingresos%20extras', '_blank');
+        });
+        
+        // ==================== ENVÍO PRINCIPAL ====================
+        document.getElementById('deseoCompraForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if(!validarCompradores()) {
+                alert("⚠️ Debes agregar al menos un comprador (persona natural o jurídica) para continuar.");
+                return;
+            }
+            
+            let telefonoFaltante = false;
+            document.querySelectorAll('#compradoresContainer .comprador-card').forEach((comp, idx) => {
+                const esNatural = comp.querySelector('.nat_telefono') !== null;
+                let telefono;
+                if(esNatural) {
+                    telefono = comp.querySelector('.nat_telefono')?.value.trim();
+                } else {
+                    telefono = comp.querySelector('.jur_telefono')?.value.trim();
+                }
+                if(!telefono) {
+                    telefonoFaltante = true;
+                    alert(`⚠️ El comprador ${idx + 1} debe tener un teléfono de contacto obligatorio.`);
+                }
+            });
+            if(telefonoFaltante) return;
+            
+            const tipoInmueble = document.getElementById('tipoInmueble').value;
+            const ubicacion = document.getElementById('ubicacion').value.trim();
+            const precioDeseado = document.getElementById('precioDeseado').value;
+            const formaPago = document.querySelector('input[name="formaPago"]:checked')?.value;
+            const tipoProceso = tipoProcesoInput.value;
+            
+            if(!tipoInmueble || !ubicacion || !precioDeseado || !formaPago || !tipoProceso) {
+                alert("Por favor completa los campos obligatorios.");
+                return;
+            }
+            
+            let mensaje = "🏡 *DESEO DE COMPRA - QRP2P*\n────────────────────────\n\n";
+            mensaje += `📍 INMUEBLE: ${tipoInmueble} en ${ubicacion}\n`;
+            mensaje += `💰 Presupuesto máximo: ${formatCOP(precioDeseado)}\n`;
+            mensaje += `💵 Forma de pago: ${formaPago}\n`;
+            
+            if(formaPago === 'Mixto') {
+                const cuota = document.getElementById('cuotaInicial').value;
+                if(cuota) mensaje += `💰 Cuota inicial: ${cuota}\n`;
+            }
+            
+            mensaje += "\n👥 COMPRADORES:\n";
+            const compradoresLista = document.querySelectorAll('#compradoresContainer .comprador-card');
+            compradoresLista.forEach((comp, idx) => {
+                const esNatural = comp.querySelector('.nat_nombres') !== null;
+                if(esNatural) {
+                    const nombres = comp.querySelector('.nat_nombres')?.value || '';
+                    const apellidos = comp.querySelector('.nat_apellidos')?.value || '';
+                    const telefono = comp.querySelector('.nat_telefono')?.value || '';
+                    mensaje += `${idx+1}. ${nombres} ${apellidos} - Tel: ${telefono}\n`;
+                } else {
+                    const razon = comp.querySelector('.jur_razon')?.value || '';
+                    const telefono = comp.querySelector('.jur_telefono')?.value || '';
+                    mensaje += `${idx+1}. ${razon} - Tel: ${telefono}\n`;
+                }
+            });
+            
+            mensaje += `\n📌 Proceso: ${tipoProceso === 'visita' ? 'Agendar visita al inmueble' : 'Proceso 100% digital'}\n`;
+            const comentarios = document.getElementById('comentariosFinal').value;
+            if(comentarios) mensaje += `\n📝 Comentarios: ${comentarios}\n`;
+            
+            mensaje += "\n────────────────────────\n📲 Iniciar proceso de compra - QRP2P";
+            
+            window.open(`https://wa.me/573146824438?text=${encodeURIComponent(mensaje)}`, '_blank');
         });
     </script>
 </body>
