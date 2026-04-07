@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="description" content="Formulario DESEO DE COMPRA - Completa todos los datos para iniciar el proceso de compra de tu inmueble">
+    <title>DESEO DE COMPRA | QRP2P - Inicia tu proceso de compra</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f7fb;
+            color: #111111;
+            line-height: 1.5;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #0a2b3e 0%, #1a4a6f 100%);
+            color: #ffffff;
+            padding: 2rem 1.5rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+        }
+
+        .hero p {
+            font-size: 1rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        .section {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 1.8rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            border: 1px solid #eef2f6;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #0a2b3e;
+            border-left: 5px solid #f5a623;
+            padding-left: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1e4663;
+            margin: 1.2rem 0 1rem 0;
+            border-bottom: 2px solid #eef2f6;
+            padding-bottom: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            font-size: 0.85rem;
+            color: #1f2f3e;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #d0dbe8;
+            border-radius: 14px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            background: #ffffff;
+            transition: all 0.2s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #f5a623;
+            box-shadow: 0 0 0 3px rgba(245,166,35,0.1);
+        }
+
+        .row-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .radio-group, .checkbox-group {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            margin-top: 0.3rem;
+            flex-wrap: wrap;
+        }
+
+        .radio-group label, .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: normal;
+            margin-bottom: 0;
+            cursor: pointer;
+        }
+
+        .radio-group input, .checkbox-group input {
+            width: auto;
+            transform: scale(1.1);
+        }
+
+        .comprador-card {
+            background: #fafcff;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .badge-tipo {
+            display: inline-block;
+            background: #eef2ff;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #1e4663;
+            margin-bottom: 1rem;
+        }
+
+        .eliminar-item {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: #94a3b8;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.3rem;
+            border-radius: 50%;
+            width: auto;
+        }
+
+        .eliminar-item:hover {
+            color: #dc2626;
+            background: #fee2e2;
+        }
+
+        .btn {
+            background: #0a2b3e;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            font-weight: 600;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background: #1a4a6f;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: #0a2b3e;
+            border: 1px solid #cbd5e1;
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+        }
+
+        .btn-primary {
+            background: #f5a623;
+            color: #1e2a3a;
+            font-size: 1rem;
+            padding: 1rem;
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+
+        .btn-primary:hover {
+            background: #e59410;
+            transform: translateY(-2px);
+        }
+
+        .info-box {
+            background: #fef9e6;
+            border-left: 4px solid #f5a623;
+            padding: 0.8rem 1rem;
+            margin: 1rem 0;
+            font-size: 0.85rem;
+            border-radius: 12px;
+        }
+
+        .info-box-blue {
+            background: #e8f0fe;
+            border-left: 4px solid #0a2b3e;
+            padding: 0.8rem 1rem;
+            margin: 1rem 0;
+            font-size: 0.85rem;
+            border-radius: 12px;
+        }
+
+        .referido-box {
+            background: #e8f0fe;
+            border-left: 4px solid #0a2b3e;
+            padding: 1rem 1.2rem;
+            margin: 1rem 0;
+            border-radius: 16px;
+        }
+
+        .final-options {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin: 1.5rem 0;
+        }
+
+        .option-card {
+            flex: 1;
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option-card.selected {
+            border-color: #f5a623;
+            background: #fff8ed;
+            box-shadow: 0 4px 12px rgba(245,166,35,0.2);
+        }
+
+        .option-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #0a2b3e;
+        }
+
+        .option-card p {
+            font-size: 0.8rem;
+            color: #4b5563;
+        }
+
+        .warning-text {
+            color: #dc2626;
+            font-size: 0.75rem;
+            margin-top: 0.3rem;
+            display: none;
+        }
+
+        .agente-section {
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid #cbd5e1;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .agente-text {
+            flex: 1;
+        }
+
+        .agente-text h3 {
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+            color: #0a2b3e;
+        }
+
+        .agente-text p {
+            font-size: 0.85rem;
+            color: #4b5563;
+        }
+        
+        /* Beneficios extranjeros */
+        .beneficios-extranjeros {
+            background: linear-gradient(135deg, #e0f2fe 0%, #fef9e6 100%);
+            border-radius: 20px;
+            padding: 1.2rem;
+            margin-top: 1rem;
+            border: 1px solid #cbd5e1;
+        }
+        
+        .beneficios-extranjeros h4 {
+            color: #0a2b3e;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .beneficios-extranjeros p {
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .beneficios-extranjeros a {
+            color: #f5a623;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .row-2 {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+            .section {
+                padding: 1.2rem;
+            }
+            .hero h1 {
+                font-size: 1.6rem;
+            }
+            .final-options {
+                flex-direction: column;
+            }
+            .agente-section {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        footer {
+            background: #0a2b3e;
+            text-align: center;
+            padding: 1.5rem;
+            color: #cbd5e1;
+            font-size: 0.8rem;
+            margin-top: 2rem;
+        }
+        
+        /* Modal para agendar visita */
+        .modal-visita {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+        
+        .modal-visita-content {
+            max-width: 800px;
+            margin: 1rem auto;
+            background: white;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        .close-modal-visita {
+            float: right;
+            font-size: 1.8rem;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            color: #666;
+        }
+        
+        .close-modal-visita:hover {
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <h1>🏡 DESEO DE COMPRA</h1>
+        <p>Cuéntanos todo sobre la propiedad que deseas, cómo la vas a pagar y tu perfil como comprador. Recibirás asesoría personalizada.</p>
+    </header>
+
+    <div class="container">
+        <form id="deseoCompraForm">
+            <!-- SECCIÓN 1: INMUEBLE DESEADO -->
+            <div class="section">
+                <div class="section-title">📍 ¿Qué inmueble estás buscando?</div>
+                <div class="row-2">
+                    <div class="form-group">
+                        <label>Tipo de inmueble *</label>
+                        <select id="tipoInmueble" required>
+                            <option value="">Selecciona</option>
+                            <option value="Apartamento">Apartamento</option>
+                            <option value="Casa">Casa</option>
+                            <option value="Lote / Terreno">Lote / Terreno</option>
+                            <option value="Local comercial">Local comercial</option>
+                            <option value="Oficina">Oficina</option>
+                            <option value="Bodega">Bodega</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Ciudad / Zona de búsqueda *</label>
+                        <input type="text" id="ubicacion" placeholder="Ej: Bogotá, Chapinero / Medellín, El Poblado" required>
+                    </div>
+                </div>
+                <div class="row-2">
+                    <div class="form-group">
+                        <label>💰 Precio máximo presupuestado (COP) *</label>
+                        <input type="number" id="precioDeseado" placeholder="Ej: 250000000" required>
+                        <div class="info-box" style="margin-top: 5px;">
+                            💡 Este es el valor máximo que estás dispuesto(a) a pagar por el inmueble.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Estrato social (opcional)</label>
+                        <select id="estrato">
+                            <option value="">No aplica</option>
+                            <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Características especiales (habitaciones, baños, área, etc.)</label>
+                    <textarea rows="2" id="caracteristicas" placeholder="Ej: 3 habitaciones, 2 baños, área 80m², balcón, parqueadero..."></textarea>
+                </div>
+            </div>
+
+            <!-- SECCIÓN 2: FORMA DE PAGO -->
+            <div class="section">
+                <div class="section-title">💰 ¿Cómo vas a pagar?</div>
+                
+                <div class="form-group">
+                    <label>Forma de pago principal *</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="formaPago" value="Contado" required> Contado (pago total de contado)</label>
+                        <label><input type="radio" name="formaPago" value="Credito"> 100% financiado (crédito hipotecario)</label>
+                        <label><input type="radio" name="formaPago" value="Mixto"> Mixto (cuota inicial + crédito)</label>
+                    </div>
+                </div>
+
+                <div id="cuotaInicialSection" style="display: none;">
+                    <div class="form-group">
+                        <label>💰 ¿Qué valor tienes para cuota inicial?</label>
+                        <input type="text" id="cuotaInicial" placeholder="Ej: $50.000.000 o 30% del valor">
+                        <div class="info-box" style="margin-top: 5px;">
+                            💡 Recuerda: el crédito hipotecario generalmente financia hasta el 80% del valor del inmueble.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-subtitle">💵 Recursos que vas a utilizar para la compra</div>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="recursos" value="Recursos propios"> Recursos propios (ahorros)</label>
+                    <label><input type="checkbox" name="recursos" value="Crédito hipotecario"> Crédito hipotecario / Leasing</label>
+                    <label><input type="checkbox" name="recursos" value="Cesantías"> Cesantías</label>
+                    <label><input type="checkbox" name="recursos" value="Subsidio (Mi Casa Ya / FNA)"> Subsidio (Mi Casa Ya / FNA)</label>
+                </div>
+
+                <div id="soporteCredito" style="display: none;">
+                    <div class="section-subtitle">📄 Información del crédito</div>
+                    <div class="row-2">
+                        <div class="form-group">
+                            <label>Tipo de carta con la que cuenta el cliente</label>
+                            <select id="tipoCartaCredito">
+                                <option value="">Selecciona</option>
+                                <option value="Pre-aprobado">Pre-aprobado</option>
+                                <option value="Aprobado">Aprobado</option>
+                                <option value="En estudio">En estudio</option>
+                                <option value="No tengo">No tengo aún</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Tipo de crédito</label>
+                            <select id="tipoCredito">
+                                <option value="">Selecciona</option>
+                                <option value="Crédito bancario">Crédito bancario</option>
+                                <option value="Crédito leasing habitacional">Crédito leasing habitacional</option>
+                                <option value="FNA">Fondo Nacional del Ahorro (FNA)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Banco / Entidad financiera</label>
+                        <select id="bancoCredito">
+                            <option value="">Selecciona</option>
+                            <option>Bancolombia</option><option>Davivienda</option><option>BBVA</option>
+                            <option>Banco de Bogotá</option><option>FNA</option><option>Otro</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="cesantiasDetalle" style="display: none;">
+                    <div class="section-subtitle">💰 Detalle de Cesantías</div>
+                    <div class="form-group">
+                        <label>Entidad donde tienes tus cesantías</label>
+                        <select id="entidadCesantias">
+                            <option value="">Selecciona</option>
+                            <option>Porvenir</option><option>Protección</option><option>Colfondos</option>
+                            <option>Fondo Nacional del Ahorro</option><option>Caja Honor</option><option>Otro</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>¿Necesitas asesoría para el crédito o subsidios?</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="asesoriaCredito" value="Sí"> Sí, requiero asesoría</label>
+                        <label><input type="radio" name="asesoriaCredito" value="No"> No, ya tengo pre-aprobado</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECCIÓN 3: COMPRADORES CON BENEFICIOS PARA EXTRANJEROS -->
+            <div class="section">
+                <div class="section-title">👥 Compradores participantes</div>
+                <p style="margin-bottom: 1rem; font-size: 0.9rem;">
+                    <strong>⚠️ Importante:</strong> Debes agregar al menos <strong>1 comprador</strong> (persona natural o jurídica).<br>
+                    <strong>📱 El teléfono celular es obligatorio</strong> para poder contactarte.
+                </p>
+                
+                <!-- Beneficios para inversionistas extranjeros -->
+                <div class="beneficios-extranjeros">
+                    <h4>🌎 ¿Eres inversionista extranjero?</h4>
+                    <p>✅ <strong>Beneficios de invertir en Colombia:</strong> Visa de inversionista (M-5 o M-10), estabilidad jurídica, plusvalía en sectores premium, posibilidad de residencia por inversión.</p>
+                    <p>✅ <strong>Creación de SAS en 24 horas:</strong> Te ayudamos a constituir tu Sociedad por Acciones Simplificada (SAS) con capital desde 1 SMMLV. Ideal para comprar propiedades en Colombia como persona jurídica.</p>
+                    <p>✅ <strong>Asesoría legal migratoria:</strong> Gestionamos tu visa de inversionista o visa de rentista. <a href="#" id="infoExtranjerosLink">📞 Solicita información personalizada →</a></p>
+                </div>
+                
+                <div id="compradoresContainer"></div>
+                <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                    <button type="button" id="agregarNaturalBtn" class="btn btn-secondary">+ Agregar comprador natural</button>
+                    <button type="button" id="agregarJuridicaBtn" class="btn btn-secondary">+ Agregar comprador jurídica</button>
+                </div>
+                <div id="compradorWarning" class="warning-text">
+                    ⚠️ Debes agregar al menos un comprador para continuar.
+                </div>
+            </div>
+
+            <!-- SECCIÓN 4: REFERIDO Y OPORTUNIDAD -->
+            <div class="section">
+                <div class="section-title">⭐ ¿Cómo nos conociste?</div>
+                <div class="referido-box">
+                    <div class="form-group">
+                        <label>¿Fuiste referido por alguien?</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="tieneReferido" value="Si" id="referidoSi"> Sí, me recomendaron</label>
+                            <label><input type="radio" name="tieneReferido" value="No" id="referidoNo" checked> No, llegué por mi cuenta</label>
+                        </div>
+                    </div>
+                    <div id="datosReferido" style="display: none;">
+                        <div class="row-2">
+                            <div class="form-group">
+                                <label>Tipo de referido</label>
+                                <select id="tipoReferido">
+                                    <option value="">Selecciona</option>
+                                    <option value="Agente inmobiliario">Agente inmobiliario</option>
+                                    <option value="Conocido / Amigo">Conocido / Amigo</option>
+                                    <option value="Familiar">Familiar</option>
+                                    <option value="Cliente anterior">Cliente anterior</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Nombre del referido</label>
+                                <input type="text" id="nombreReferido" placeholder="Ej: Juan Pérez">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="agente-section">
+                        <div class="agente-text">
+                            <h3>🤝 ¿Eres agente inmobiliario o quieres generar ingresos extra?</h3>
+                            <p>Únete a QRP2P como corredor independiente. Gana comisiones, accede a listados exclusivos.</p>
+                        </div>
+                        <a href="registro-agente-co.html" target="_blank" class="btn">🚀 Quiero ser agente QRP2P</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECCIÓN 5: ELECCIÓN FINAL -->
+            <div class="section">
+                <div class="section-title">📌 ¿Cómo quieres continuar?</div>
+                <div class="final-options" id="finalOptions">
+                    <div class="option-card" data-option="visita">
+                        <h3>🏠 Agendar una visita</h3>
+                        <p>Quiero conocer el inmueble físicamente con un asesor.</p>
+                    </div>
+                    <div class="option-card" data-option="digital">
+                        <h3>💻 Proceso 100% digital</h3>
+                        <p>Quiero que inicien el estudio rápido y formalicemos sin desplazarme.</p>
+                    </div>
+                </div>
+                <input type="hidden" id="tipoProceso" value="">
+                <div class="form-group">
+                    <label>Comentarios adicionales</label>
+                    <textarea rows="3" id="comentariosFinal" placeholder="Ej: Prefiero visita el fin de semana..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">🚀 Enviar mi DESEO DE COMPRA - Iniciar proceso</button>
+                <small style="display: block; text-align: center; margin-top: 1rem;">Al enviar, un asesor QRP2P revisará tu información y te contactará en menos de 24 horas.</small>
+            </div>
+        </form>
+    </div>
+
+    <!-- MODAL PARA AGENDAR VISITA (CONTENIDO INTEGRADO) -->
+    <div id="modalVisita" class="modal-visita">
+        <div class="modal-visita-content">
+            <div style="background: #fff; padding: 1rem; border-bottom: 1px solid #eee;">
+                <span class="close-modal-visita" id="closeModalVisita">&times;</span>
+                <div style="clear:both"></div>
+            </div>
+            <div id="agendaVisitaIframeContainer">
+                <!-- Aquí se inyectará dinámicamente el contenido del formulario de visita -->
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>QRP2P · Asesoría integral para tu compra de inmueble</p>
+        <p>📲 +57 3146824438 · ✉️ asesoria@qrp2p.com</p>
+    </footer>
+
+    <script>
+        // ==================== FUNCIONES DEL FORMULARIO PRINCIPAL ====================
+        function formatCOP(value) {
+            if (!value) return '0';
+            return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(value);
+        }
+
+        // Mostrar/ocultar secciones financieras
+        const formaPagoRadios = document.querySelectorAll('input[name="formaPago"]');
+        const cuotaInicialSection = document.getElementById('cuotaInicialSection');
+        const soporteDiv = document.getElementById('soporteCredito');
+        const cesantiasDiv = document.getElementById('cesantiasDetalle');
+        const recursosCheckboxes = document.querySelectorAll('input[name="recursos"]');
+
+        function actualizarSeccionesFinancieras() {
+            const forma = document.querySelector('input[name="formaPago"]:checked')?.value;
+            cuotaInicialSection.style.display = (forma === 'Mixto') ? 'block' : 'none';
+            const creditoSeleccionado = Array.from(recursosCheckboxes).some(cb => cb.value === 'Crédito hipotecario' && cb.checked);
+            const formaConCredito = (forma === 'Credito' || forma === 'Mixto');
+            soporteDiv.style.display = (formaConCredito || creditoSeleccionado) ? 'block' : 'none';
+            const cesantiasSeleccionado = Array.from(recursosCheckboxes).some(cb => cb.value === 'Cesantías' && cb.checked);
+            cesantiasDiv.style.display = cesantiasSeleccionado ? 'block' : 'none';
+        }
+
+        formaPagoRadios.forEach(r => r.addEventListener('change', actualizarSeccionesFinancieras));
+        recursosCheckboxes.forEach(cb => cb.addEventListener('change', actualizarSeccionesFinancieras));
+        actualizarSeccionesFinancieras();
+
+        // Referido
+        const referidoSi = document.getElementById('referidoSi');
+        const referidoNo = document.getElementById('referidoNo');
+        const datosReferido = document.getElementById('datosReferido');
+        function toggleReferido() {
+            datosReferido.style.display = referidoSi.checked ? 'block' : 'none';
+        }
+        referidoSi.addEventListener('change', toggleReferido);
+        referidoNo.addEventListener('change', toggleReferido);
+        toggleReferido();
+
+        // COMPRADORES
+        let compradorCount = 1;
+        const compradoresContainer = document.getElementById('compradoresContainer');
+        const compradorWarning = document.getElementById('compradorWarning');
+
+        function crearCompradorNatural(idx, data = {}) {
+            const div = document.createElement('div');
+            div.className = 'comprador-card';
+            div.setAttribute('data-tipo', 'natural');
+            div.innerHTML = `
+                <button type="button" class="eliminar-item">✖</button>
+                <span class="badge-tipo">👤 Persona Natural</span>
+                <div class="row-2">
+                    <div class="form-group"><label>Nombres *</label><input type="text" class="nat_nombres" value="${data.nombres || ''}" required></div>
+                    <div class="form-group"><label>Apellidos *</label><input type="text" class="nat_apellidos" value="${data.apellidos || ''}" required></div>
+                </div>
+                <div class="row-2">
+                    <div class="form-group"><label>Tipo documento *</label><select class="nat_tipoDoc" required><option>CC</option><option>CE</option><option>Pasaporte</option><option>NIT</option></select></div>
+                    <div class="form-group"><label>Número documento *</label><input type="text" class="nat_numDoc" value="${data.numDoc || ''}" required></div>
+                </div>
+                <div class="row-2">
+                    <div class="form-group"><label>Teléfono / WhatsApp *</label><input type="tel" class="nat_telefono" value="${data.telefono || ''}" required></div>
+                    <div class="form-group"><label>Correo electrónico (opcional)</label><input type="email" class="nat_email" value="${data.email || ''}"></div>
+                </div>
+            `;
+            div.querySelector('.eliminar-item').addEventListener('click', () => {
+                if (document.querySelectorAll('#compradoresContainer .comprador-card').length > 1) div.remove();
+                else alert("Debe haber al menos un comprador.");
+                validarCompradores();
+            });
+            return div;
+        }
+
+        function crearCompradorJuridico(idx, data = {}) {
+            const div = document.createElement('div');
+            div.className = 'comprador-card';
+            div.setAttribute('data-tipo', 'juridica');
+            div.innerHTML = `
+                <button type="button" class="eliminar-item">✖</button>
+                <span class="badge-tipo">🏢 Persona Jurídica</span>
+                <div class="form-group"><label>Razón social *</label><input type="text" class="jur_razon" value="${data.razon || ''}" required></div>
+                <div class="row-2">
+                    <div class="form-group"><label>NIT *</label><input type="text" class="jur_nit" value="${data.nit || ''}" required></div>
+                    <div class="form-group"><label>Representante legal *</label><input type="text" class="jur_representante" value="${data.representante || ''}" required></div>
+                </div>
+                <div class="row-2">
+                    <div class="form-group"><label>Teléfono / WhatsApp *</label><input type="tel" class="jur_telefono" value="${data.telefono || ''}" required></div>
+                    <div class="form-group"><label>Correo electrónico (opcional)</label><input type="email" class="jur_email" value="${data.email || ''}"></div>
+                </div>
+            `;
+            div.querySelector('.eliminar-item').addEventListener('click', () => {
+                if (document.querySelectorAll('#compradoresContainer .comprador-card').length > 1) div.remove();
+                else alert("Debe haber al menos un comprador.");
+                validarCompradores();
+            });
+            return div;
+        }
+
+        function validarCompradores() {
+            const cantidad = document.querySelectorAll('#compradoresContainer .comprador-card').length;
+            if (cantidad === 0) { compradorWarning.style.display = 'block'; return false; }
+            else { compradorWarning.style.display = 'none'; return true; }
+        }
+
+        compradoresContainer.appendChild(crearCompradorNatural(1));
+        document.getElementById('agregarNaturalBtn').addEventListener('click', () => compradoresContainer.appendChild(crearCompradorNatural(++compradorCount)));
+        document.getElementById('agregarJuridicaBtn').addEventListener('click', () => compradoresContainer.appendChild(crearCompradorJuridico(++compradorCount)));
+
+        // Selección de proceso
+        const optionCards = document.querySelectorAll('.option-card');
+        const tipoProcesoInput = document.getElementById('tipoProceso');
+        optionCards.forEach(card => {
+            card.addEventListener('click', () => {
+                optionCards.forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                tipoProcesoInput.value = card.dataset.option;
+            });
+        });
+
+        // ========== MODAL VISITA ==========
+        const modalVisita = document.getElementById('modalVisita');
+        const closeModalBtn = document.getElementById('closeModalVisita');
+        const agendaContainer = document.getElementById('agendaVisitaIframeContainer');
+        
+        // Código del formulario de visita (simplificado pero completo)
+        function getFormularioVisitaHTML() {
+            return `<!DOCTYPE html>
+            <html>
+            <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <style>
+                *{margin:0;padding:0;box-sizing:border-box;}
+                body{font-family:system-ui;background:#fff;padding:1.5rem;}
+                .step-title{font-size:1.5rem;font-weight:600;margin-bottom:1.2rem;}
+                .form-group{margin-bottom:1rem;}
+                label{display:block;font-weight:500;margin-bottom:0.3rem;font-size:0.8rem;}
+                input,select{width:100%;padding:0.8rem;border:1px solid #ccc;border-radius:14px;}
+                .btn-next,.btn-submit{width:100%;padding:0.9rem;background:#000;color:#fff;border:none;border-radius:40px;font-weight:600;margin-top:1rem;cursor:pointer;}
+                .calendar-card{border:1px solid #eee;border-radius:24px;padding:1rem;margin:1rem 0;}
+                .days-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center;}
+                .day-cell{padding:0.5rem;cursor:pointer;border-radius:40px;}
+                .day-cell.selected{background:#000;color:#fff;}
+                .horario-badge{display:inline-block;padding:0.4rem 1rem;border:1px solid #ccc;border-radius:40px;margin:0.3rem;cursor:pointer;}
+                .horario-badge.selected{background:#000;color:#fff;}
+            </style>
+            </head>
+            <body>
+            <div id="step1">
+                <div class="step-title">📅 Datos del visitante</div>
+                <div class="form-group"><label>Nombre completo *</label><input type="text" id="visitanteNombre" placeholder="Ej: Carlos López"></div>
+                <div class="form-group"><label>Teléfono *</label><input type="tel" id="visitanteTelefono" placeholder="3001234567"></div>
+                <div class="form-group"><label>Correo electrónico</label><input type="email" id="visitanteEmail" placeholder="ejemplo@correo.com"></div>
+                <button class="btn-next" id="nextStepVisita">Siguiente →</button>
+            </div>
+            <div id="step2" style="display:none;">
+                <div class="step-title">🗓️ Selecciona fecha y hora</div>
+                <div class="calendar-card"><div id="calendarSimple"></div></div>
+                <div id="horariosSimple"></div>
+                <button class="btn-submit" id="submitVisitaBtn">Agendar visita por WhatsApp</button>
+                <button id="backStep1" style="margin-top:0.5rem;background:transparent;border:1px solid #ccc;padding:0.7rem;border-radius:40px;width:100%;">← Volver</button>
+            </div>
+            <script>
+                let selectedDate = null, selectedHorario = null;
+                const horarios = ['08:00','09:00','10:00','11:00','14:00','15:00','16:00','17:00'];
+                function renderSimpleCalendar(){
+                    const today = new Date(); today.setHours(0,0,0,0);
+                    const year = today.getFullYear(), month = today.getMonth();
+                    const daysInMonth = new Date(year, month+1, 0).getDate();
+                    let html = '<div class="days-grid">';
+                    for(let d=1; d<=daysInMonth; d++){
+                        const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+                        const isSelected = (selectedDate === dateStr);
+                        html += `<div class="day-cell ${isSelected ? 'selected' : ''}" data-date="${dateStr}">${d}</div>`;
+                    }
+                    html += '</div>';
+                    document.getElementById('calendarSimple').innerHTML = html;
+                    document.querySelectorAll('.day-cell').forEach(el => {
+                        el.addEventListener('click', () => {
+                            document.querySelectorAll('.day-cell').forEach(c=>c.classList.remove('selected'));
+                            el.classList.add('selected');
+                            selectedDate = el.dataset.date;
+                            renderHorariosSimple();
+                        });
+                    });
+                }
+                function renderHorariosSimple(){
+                    const container = document.getElementById('horariosSimple');
+                    if(!selectedDate){ container.innerHTML = '<p>Primero selecciona una fecha</p>'; return; }
+                    let html = '<div>';
+                    horarios.forEach(h => {
+                        const cls = (selectedHorario === h) ? 'horario-badge selected' : 'horario-badge';
+                        html += `<span class="${cls}" data-horario="${h}">${h}</span>`;
+                    });
+                    html += '</div>';
+                    container.innerHTML = html;
+                    document.querySelectorAll('.horario-badge').forEach(el => {
+                        el.addEventListener('click', () => {
+                            document.querySelectorAll('.horario-badge').forEach(b=>b.classList.remove('selected'));
+                            el.classList.add('selected');
+                            selectedHorario = el.dataset.horario;
+                        });
+                    });
+                }
+                document.getElementById('nextStepVisita').addEventListener('click',()=>{
+                    const nombre = document.getElementById('visitanteNombre').value.trim();
+                    const telefono = document.getElementById('visitanteTelefono').value.trim();
+                    if(!nombre || !telefono){ alert("Nombre y teléfono son obligatorios"); return; }
+                    document.getElementById('step1').style.display='none';
+                    document.getElementById('step2').style.display='block';
+                    renderSimpleCalendar();
+                });
+                document.getElementById('backStep1').addEventListener('click',()=>{
+                    document.getElementById('step2').style.display='none';
+                    document.getElementById('step1').style.display='block';
+                });
+                document.getElementById('submitVisitaBtn').addEventListener('click',()=>{
+                    if(!selectedDate || !selectedHorario){ alert("Selecciona fecha y horario"); return; }
+                    const nombre = document.getElementById('visitanteNombre').value.trim();
+                    const telefono = document.getElementById('visitanteTelefono').value.trim();
+                    const email = document.getElementById('visitanteEmail').value.trim() || 'No especificado';
+                    const msg = `*VISITA INMOBILIARIA QRP2P*%0A%0A*Visitante:* ${nombre}%0A*Teléfono:* ${telefono}%0A*Email:* ${email}%0A*Fecha:* ${selectedDate}%0A*Horario:* ${selectedHorario}%0A%0A--- Agendado desde formulario web ---`;
+                    window.open(`https://wa.me/573146824438?text=${msg}`, '_blank');
+                    document.getElementById('modalVisita').style.display = 'none';
+                });
+            <\/script>
+            </body>
+            </html>`;
+        }
+        
+        // Abrir modal con el formulario de visita
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', () => {
+                if(card.dataset.option === 'visita') {
+                    modalVisita.style.display = 'flex';
+                    agendaContainer.innerHTML = getFormularioVisitaHTML();
+                    // Ejecutar scripts del iframe
+                    const scripts = agendaContainer.querySelectorAll('script');
+                    scripts.forEach(oldScript => {
+                        const newScript = document.createElement('script');
+                        newScript.textContent = oldScript.textContent;
+                        agendaContainer.appendChild(newScript);
+                        oldScript.remove();
+                    });
+                }
+            });
+        });
+        
+        closeModalBtn.addEventListener('click', () => { modalVisita.style.display = 'none'; });
+        window.addEventListener('click', (e) => { if(e.target === modalVisita) modalVisita.style.display = 'none'; });
+        
+        // Envío principal del DESEO DE COMPRA
+        document.getElementById('deseoCompraForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (!validarCompradores()) { alert("Debes agregar al menos un comprador."); return; }
+            let mensaje = "🏡 *DESEO DE COMPRA - QRP2P*\n────────────────────────\n\n";
+            mensaje += `📍 INMUEBLE: ${document.getElementById('tipoInmueble').value} en ${document.getElementById('ubicacion').value}\n`;
+            mensaje += `💰 Presupuesto: ${formatCOP(document.getElementById('precioDeseado').value)}\n`;
+            const formaPago = document.querySelector('input[name="formaPago"]:checked')?.value;
+            mensaje += `💵 Forma de pago: ${formaPago}\n`;
+            const compradores = document.querySelectorAll('#compradoresContainer .comprador-card');
+            compradores.forEach((c,i) => {
+                if(c.querySelector('.nat_nombres')){
+                    mensaje += `👤 Comprador ${i+1}: ${c.querySelector('.nat_nombres').value} ${c.querySelector('.nat_apellidos').value} - Tel: ${c.querySelector('.nat_telefono').value}\n`;
+                } else {
+                    mensaje += `🏢 Comprador ${i+1}: ${c.querySelector('.jur_razon').value} - Tel: ${c.querySelector('.jur_telefono').value}\n`;
+                }
+            });
+            mensaje += `\n📌 Proceso elegido: ${tipoProcesoInput.value === 'visita' ? 'Agendar visita' : 'Proceso digital'}`;
+            window.open(`https://wa.me/573146824438?text=${encodeURIComponent(mensaje)}`, '_blank');
+        });
+        
+        document.getElementById('infoExtranjerosLink').addEventListener('click', (e) => {
+            e.preventDefault();
+            window.open('https://wa.me/573146824438?text=Hola%20QRP2P,%20quiero%20información%20sobre%20beneficios%20para%20inversionistas%20extranjeros%20y%20creación%20de%20SAS%20en%20Colombia', '_blank');
+        });
+    </script>
+</body>
+</html>
