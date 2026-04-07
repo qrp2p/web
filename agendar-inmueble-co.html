@@ -372,7 +372,7 @@
     </div>
   </div>
 
-  <!-- STEP 1 - Datos del cliente -->
+  <!-- STEP 1 - Datos del cliente (sin conjunto ni dirección) -->
   <div id="step1Container" class="form-panel">
     <div class="step-title">Agenda tu visita</div>
     <div class="form-group">
@@ -400,10 +400,6 @@
       <label>Correo electrónico</label>
       <input type="email" id="email" placeholder="ejemplo@correo.com" value="">
     </div>
-    <div class="form-group">
-      <label>Nombre del conjunto *</label>
-      <input type="text" id="conjunto" placeholder="Ej: Pórticos de Britalia" value="">
-    </div>
     <div class="inline-checkbox">
       <input type="checkbox" id="acceptTerms">
       <label>Acepto <span class="terms-link" id="openTermsModal">términos y condiciones</span>.</label>
@@ -424,10 +420,6 @@
         <span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span>
       </div>
       <div class="days-grid" id="daysGrid"></div>
-    </div>
-    <div class="form-group">
-      <label>Dirección del inmueble</label>
-      <input type="text" id="direccionInmueble" placeholder="Calle 88 sur # 88c - 89" value="Calle 88 sur # 88c - 89">
     </div>
     <div class="horarios-section">
       <label>Selecciona un horario (07:00 - 18:00)</label>
@@ -460,7 +452,7 @@
   const END_MONTH = 11;  // Diciembre
   
   let currentYear = 2026;
-  let currentMonth = 2; // Marzo 2026 como mes inicial (para mostrar ejemplo)
+  let currentMonth = 2; // Marzo 2026 como mes inicial
   let selectedDate = null;  // formato 'YYYY-MM-DD'
   let selectedHorario = null;
   
@@ -475,18 +467,16 @@
   });
   allHorarios.sort((a,b) => a.localeCompare(b));
   
-  // Función para obtener los días del mes actual (con días del mes anterior/siguiente para completar)
   function getDaysForMonth(year, month) {
     const firstDayOfMonth = new Date(year, month, 1);
-    let startWeekday = firstDayOfMonth.getDay(); // 0 = domingo
-    let offsetMonday = (startWeekday === 0 ? 6 : startWeekday - 1); // ajuste a lunes como primer día
+    let startWeekday = firstDayOfMonth.getDay();
+    let offsetMonday = (startWeekday === 0 ? 6 : startWeekday - 1);
     
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     const prevMonthDays = new Date(year, month, 0).getDate();
     
     const daysArray = [];
     
-    // Días del mes anterior
     for (let i = 0; i < offsetMonday; i++) {
       let dayNum = prevMonthDays - offsetMonday + i + 1;
       let prevMonth = month - 1;
@@ -505,7 +495,6 @@
       });
     }
     
-    // Días del mes actual (TODOS DISPONIBLES)
     for (let d = 1; d <= daysInMonth; d++) {
       let fullDate = new Date(year, month, d);
       let dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
@@ -519,7 +508,6 @@
       });
     }
     
-    // Completar hasta 42 celdas (6 filas)
     const remaining = 42 - daysArray.length;
     for (let i = 1; i <= remaining; i++) {
       let nextMonth = month + 1;
@@ -563,11 +551,9 @@
       
       if (cell.isSelectable) {
         div.addEventListener('click', () => {
-          // Quitar selección anterior
           document.querySelectorAll('.day-cell').forEach(el => el.classList.remove('selected'));
           div.classList.add('selected');
           selectedDate = cell.dateStr;
-          // Resetear horario al cambiar fecha
           selectedHorario = null;
           renderHorarios();
         });
@@ -612,7 +598,6 @@
       newYear++;
     }
     
-    // Limitar a 2026-2027
     if (newYear < START_YEAR || (newYear === START_YEAR && newMonth < START_MONTH)) return;
     if (newYear > END_YEAR || (newYear === END_YEAR && newMonth > END_MONTH)) return;
     
@@ -621,29 +606,23 @@
     renderCalendar();
   }
   
-  // Validación paso 1
   function validateStep1() {
     let nombre = document.getElementById('nombreCliente').value.trim();
     let telefono = document.getElementById('telefono').value.trim();
-    let conjunto = document.getElementById('conjunto').value.trim();
     let termsChecked = document.getElementById('acceptTerms').checked;
     
     if (!nombre) { alert("Por favor ingresa el nombre completo."); return false; }
     if (!telefono) { alert("Por favor ingresa el teléfono."); return false; }
-    if (!conjunto) { alert("Por favor ingresa el nombre del conjunto."); return false; }
     if (!termsChecked) { alert("Debes aceptar los términos y condiciones."); return false; }
     return true;
   }
   
-  // Construir mensaje para WhatsApp
   function buildWhatsAppMessage() {
     const nombre = document.getElementById('nombreCliente').value.trim() || "No especificado";
     const telefono = document.getElementById('telefono').value.trim() || "No especificado";
     const tipoDoc = document.getElementById('tipoDoc').value;
     const documento = document.getElementById('documento').value.trim() || "No especificado";
     const email = document.getElementById('email').value.trim() || "No especificado";
-    const conjunto = document.getElementById('conjunto').value.trim() || "No especificado";
-    const direccion = document.getElementById('direccionInmueble').value.trim() || "Calle 88 sur # 88c - 89";
     
     let fechaLegible = "No seleccionada";
     if (selectedDate) {
@@ -659,9 +638,7 @@
       `*Teléfono:* ${telefono}%0A` +
       `*Tipo documento:* ${tipoDoc}%0A` +
       `*Documento:* ${documento}%0A` +
-      `*Correo:* ${email}%0A` +
-      `*Conjunto:* ${conjunto}%0A` +
-      `*Dirección:* ${direccion}%0A%0A` +
+      `*Correo:* ${email}%0A%0A` +
       `*Fecha seleccionada:* ${fechaLegible}%0A` +
       `*Horario:* ${horario}%0A%0A` +
       `--- Visita agendada desde formulario web QRP2P ---`;
@@ -701,13 +678,10 @@
   const stepBadge = document.getElementById('stepBadge');
   const stepDescription = document.getElementById('stepDescription');
   
-  // Eventos de navegación
   nextBtn.addEventListener('click', () => {
     if (!validateStep1()) return;
     
-    // Seleccionar fecha por defecto si no hay ninguna seleccionada
     if (!selectedDate) {
-      // Buscar el primer día disponible del mes actual (marzo 2026)
       const today = new Date();
       today.setHours(0,0,0,0);
       for (let cell of currentDays) {
@@ -716,7 +690,6 @@
           break;
         }
       }
-      // Si no hay ninguna, tomar la primera disponible
       if (!selectedDate) {
         for (let cell of currentDays) {
           if (cell.isSelectable) {
@@ -751,7 +724,6 @@
   prevMonthBtn.addEventListener('click', () => changeMonth(-1));
   nextMonthBtn.addEventListener('click', () => changeMonth(1));
   
-  // Modal de términos y condiciones
   function openModal() { termsModal.style.display = 'flex'; }
   function closeModal() { termsModal.style.display = 'none'; }
   openTermsModalBtn.addEventListener('click', openModal);
@@ -762,15 +734,13 @@
   });
   window.addEventListener('click', (e) => { if(e.target === termsModal) closeModal(); });
   
-  // Compra directa
   compraDirectaLink.addEventListener('click', (e) => {
     e.preventDefault();
     window.open('https://qrp2p.com/oferta-inmueble-co', '_blank');
   });
   
-  // Inicializar calendario con marzo 2026 y seleccionar 27 de marzo como ejemplo
   currentYear = 2026;
-  currentMonth = 2; // Marzo
+  currentMonth = 2;
   selectedDate = '2026-03-27';
   selectedHorario = '08:00';
   
