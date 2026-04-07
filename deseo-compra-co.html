@@ -401,6 +401,154 @@
         .close-modal-visita:hover {
             color: #000;
         }
+        
+        /* Estilos para el calendario dinámico */
+        .calendar-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .month-year {
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+        
+        .nav-btn {
+            background: transparent;
+            border: 1px solid #ccc;
+            border-radius: 30px;
+            padding: 0.4rem 0.8rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: 0.2s;
+        }
+        
+        .nav-btn:hover {
+            background: #f0f0f0;
+            border-color: #000;
+        }
+        
+        .weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            text-align: center;
+            font-weight: 500;
+            font-size: 0.75rem;
+            margin-bottom: 0.5rem;
+            color: #555;
+        }
+        
+        .days-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 6px;
+            text-align: center;
+        }
+        
+        .day-cell {
+            padding: 0.6rem 0;
+            font-size: 0.85rem;
+            border-radius: 40px;
+            cursor: pointer;
+            background: #fff;
+            transition: all 0.1s;
+            border: 1px solid transparent;
+        }
+        
+        .day-cell.selected {
+            background: #000000;
+            color: white;
+            font-weight: 500;
+            border-color: #000;
+        }
+        
+        .day-cell.available:hover {
+            border-color: #aaa;
+            background: #f2f2f2;
+        }
+        
+        .day-cell.disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            text-decoration: line-through;
+        }
+        
+        .day-cell.other-month {
+            opacity: 0.3;
+            cursor: default;
+        }
+        
+        .horarios-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+            max-height: 200px;
+            overflow-y: auto;
+            padding: 0.25rem;
+        }
+        
+        .horario-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border: 1px solid #ccc;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            background: white;
+            transition: 0.1s;
+        }
+        
+        .horario-badge.selected {
+            background: #000;
+            color: white;
+            border-color: #000;
+        }
+        
+        .horario-badge:hover {
+            border-color: #000;
+            background: #f5f5f5;
+        }
+        
+        .btn-next, .btn-submit {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1rem;
+            font-weight: 600;
+            background: #000000;
+            color: white;
+            border: none;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 1rem;
+        }
+        
+        .btn-next:hover, .btn-submit:hover {
+            background: #2c2c2c;
+        }
+        
+        .btn-back {
+            background: transparent;
+            border: 1px solid #aaa;
+            color: #111;
+            margin-top: 1rem;
+            width: 100%;
+            padding: 0.9rem;
+            border-radius: 40px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        .btn-back:hover {
+            background: #f5f5f5;
+            border-color: #000;
+        }
     </style>
 </head>
 <body>
@@ -633,7 +781,7 @@
         </form>
     </div>
 
-    <!-- MODAL PARA AGENDAR VISITA -->
+    <!-- MODAL PARA AGENDAR VISITA CON CALENDARIO DINÁMICO -->
     <div id="modalVisita" class="modal-visita">
         <div class="modal-visita-content">
             <div class="modal-header">
@@ -690,7 +838,6 @@
         toggleReferido();
 
         // ==================== COMPRADORES ====================
-        let compradorCount = 1;
         const compradoresContainer = document.getElementById('compradoresContainer');
         const compradorWarning = document.getElementById('compradorWarning');
 
@@ -714,8 +861,7 @@
                     <div class="form-group"><label>Correo electrónico (opcional)</label><input type="email" class="nat_email" value="${data.email || ''}"></div>
                 </div>
             `;
-            const eliminarBtn = div.querySelector('.eliminar-item');
-            eliminarBtn.addEventListener('click', () => {
+            div.querySelector('.eliminar-item').addEventListener('click', () => {
                 if (document.querySelectorAll('#compradoresContainer .comprador-card').length > 1) {
                     div.remove();
                     validarCompradores();
@@ -743,8 +889,7 @@
                     <div class="form-group"><label>Correo electrónico (opcional)</label><input type="email" class="jur_email" value="${data.email || ''}"></div>
                 </div>
             `;
-            const eliminarBtn = div.querySelector('.eliminar-item');
-            eliminarBtn.addEventListener('click', () => {
+            div.querySelector('.eliminar-item').addEventListener('click', () => {
                 if (document.querySelectorAll('#compradoresContainer .comprador-card').length > 1) {
                     div.remove();
                     validarCompradores();
@@ -791,146 +936,264 @@
             });
         });
 
-        // ==================== MODAL VISITA ====================
+        // ==================== CALENDARIO DINÁMICO PARA VISITAS ====================
         const modalVisita = document.getElementById('modalVisita');
         const closeModalBtn = document.getElementById('closeModalVisita');
         const agendaContainer = document.getElementById('agendaVisitaContainer');
         
-        // Contenido del formulario de visita (visitante)
-        const formularioVisitaHTML = `
-            <div id="visitaStep1">
-                <div class="step-title" style="font-size:1.5rem; font-weight:600; margin-bottom:1rem;">📅 Agendar visita al inmueble</div>
-                <div class="form-group"><label>Nombre completo *</label><input type="text" id="visitanteNombre" placeholder="Ej: Carlos López"></div>
-                <div class="form-group"><label>Teléfono / WhatsApp *</label><input type="tel" id="visitanteTelefono" placeholder="3001234567"></div>
-                <div class="form-group"><label>Correo electrónico</label><input type="email" id="visitanteEmail" placeholder="ejemplo@correo.com"></div>
-                <button class="btn-next" id="nextStepVisita" style="background:#000; color:#fff; width:100%; padding:0.9rem; border:none; border-radius:40px; font-weight:600; cursor:pointer;">Siguiente →</button>
-            </div>
-            <div id="visitaStep2" style="display:none;">
-                <div class="step-title" style="font-size:1.5rem; font-weight:600; margin-bottom:1rem;">🗓️ Selecciona fecha y hora</div>
-                <div class="calendar-card" style="border:1px solid #eee; border-radius:24px; padding:1rem; margin:1rem 0;">
-                    <div id="calendarSimple"></div>
-                </div>
-                <div id="horariosSimple" style="margin:1rem 0;"></div>
-                <button class="btn-submit" id="submitVisitaBtn" style="background:#000; color:#fff; width:100%; padding:0.9rem; border:none; border-radius:40px; font-weight:600; cursor:pointer;">Agendar visita por WhatsApp</button>
-                <button id="backStep1" style="margin-top:0.5rem; background:transparent; border:1px solid #ccc; padding:0.7rem; border-radius:40px; width:100%; cursor:pointer;">← Volver</button>
-            </div>
-        `;
+        // Horarios disponibles (de 8am a 6pm)
+        const horariosDisponibles = ['08:00', '09:00', '10:00', '11:00', '14:00', '15:00', '16:00', '17:00'];
+        
+        let currentYear, currentMonth;
+        let selectedDate = null;
+        let selectedHorario = null;
+        
+        function obtenerFechaMinima() {
+            const hoy = new Date();
+            hoy.setHours(0, 0, 0, 0);
+            const manana = new Date(hoy);
+            manana.setDate(hoy.getDate() + 1);
+            return manana;
+        }
+        
+        function esFechaValida(year, month, day) {
+            const fecha = new Date(year, month, day);
+            fecha.setHours(0, 0, 0, 0);
+            const fechaMinima = obtenerFechaMinima();
+            return fecha >= fechaMinima;
+        }
+        
+        function obtenerDiasDelMes(year, month) {
+            const firstDay = new Date(year, month, 1);
+            const startWeekday = firstDay.getDay();
+            const offsetMonday = startWeekday === 0 ? 6 : startWeekday - 1;
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const prevMonthDays = new Date(year, month, 0).getDate();
+            
+            const daysArray = [];
+            
+            // Días del mes anterior
+            for (let i = 0; i < offsetMonday; i++) {
+                let dayNum = prevMonthDays - offsetMonday + i + 1;
+                let prevMonth = month - 1;
+                let prevYear = year;
+                if (prevMonth < 0) {
+                    prevMonth = 11;
+                    prevYear = year - 1;
+                }
+                daysArray.push({
+                    day: dayNum,
+                    currentMonth: false,
+                    year: prevYear,
+                    month: prevMonth,
+                    dateStr: `${prevYear}-${String(prevMonth+1).padStart(2,'0')}-${String(dayNum).padStart(2,'0')}`,
+                    isSelectable: false
+                });
+            }
+            
+            // Días del mes actual
+            for (let d = 1; d <= daysInMonth; d++) {
+                const isValid = esFechaValida(year, month, d);
+                daysArray.push({
+                    day: d,
+                    currentMonth: true,
+                    year: year,
+                    month: month,
+                    dateStr: `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`,
+                    isSelectable: isValid
+                });
+            }
+            
+            // Completar hasta 42 celdas (6 semanas)
+            const remaining = 42 - daysArray.length;
+            for (let i = 1; i <= remaining; i++) {
+                let nextMonth = month + 1;
+                let nextYear = year;
+                if (nextMonth > 11) {
+                    nextMonth = 0;
+                    nextYear = year + 1;
+                }
+                daysArray.push({
+                    day: i,
+                    currentMonth: false,
+                    year: nextYear,
+                    month: nextMonth,
+                    dateStr: `${nextYear}-${String(nextMonth+1).padStart(2,'0')}-${String(i).padStart(2,'0')}`,
+                    isSelectable: false
+                });
+            }
+            
+            return daysArray;
+        }
+        
+        function renderCalendar() {
+            const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+            document.getElementById('monthYearDisplay').innerText = `${monthNames[currentMonth]} ${currentYear}`;
+            
+            const days = obtenerDiasDelMes(currentYear, currentMonth);
+            const daysGrid = document.getElementById('daysGrid');
+            daysGrid.innerHTML = '';
+            
+            days.forEach((cell) => {
+                const div = document.createElement('div');
+                div.className = 'day-cell';
+                if (!cell.currentMonth) {
+                    div.classList.add('other-month');
+                }
+                if (!cell.isSelectable) {
+                    div.classList.add('disabled');
+                } else {
+                    div.classList.add('available');
+                }
+                div.innerText = cell.day;
+                
+                if (cell.isSelectable) {
+                    div.addEventListener('click', () => {
+                        document.querySelectorAll('#daysGrid .day-cell').forEach(el => el.classList.remove('selected'));
+                        div.classList.add('selected');
+                        selectedDate = cell.dateStr;
+                        selectedHorario = null;
+                        renderHorarios();
+                    });
+                    if (selectedDate === cell.dateStr) {
+                        div.classList.add('selected');
+                    }
+                }
+                daysGrid.appendChild(div);
+            });
+        }
+        
+        function renderHorarios() {
+            const horariosContainer = document.getElementById('horariosContainer');
+            if (!selectedDate) {
+                horariosContainer.innerHTML = '<div style="font-size:0.8rem; padding:0.5rem; color:#666;">📅 Primero selecciona una fecha en el calendario</div>';
+                return;
+            }
+            
+            horariosContainer.innerHTML = '';
+            horariosDisponibles.forEach(slot => {
+                const badge = document.createElement('span');
+                badge.className = 'horario-badge';
+                badge.innerText = slot;
+                if (selectedHorario === slot) badge.classList.add('selected');
+                badge.addEventListener('click', () => {
+                    document.querySelectorAll('.horario-badge').forEach(b => b.classList.remove('selected'));
+                    badge.classList.add('selected');
+                    selectedHorario = slot;
+                });
+                horariosContainer.appendChild(badge);
+            });
+        }
+        
+        function changeMonth(delta) {
+            let newMonth = currentMonth + delta;
+            let newYear = currentYear;
+            if (newMonth < 0) {
+                newMonth = 11;
+                newYear--;
+            } else if (newMonth > 11) {
+                newMonth = 0;
+                newYear++;
+            }
+            
+            const hoy = new Date();
+            const mesActual = hoy.getMonth();
+            const añoActual = hoy.getFullYear();
+            
+            if (newYear < añoActual || (newYear === añoActual && newMonth < mesActual)) {
+                return;
+            }
+            
+            currentYear = newYear;
+            currentMonth = newMonth;
+            renderCalendar();
+        }
+        
+        function inicializarCalendario() {
+            const hoy = new Date();
+            currentYear = hoy.getFullYear();
+            currentMonth = hoy.getMonth();
+            renderCalendar();
+        }
         
         function cargarFormularioVisita() {
-            agendaContainer.innerHTML = formularioVisitaHTML;
+            agendaContainer.innerHTML = `
+                <div id="visitaStep1">
+                    <div style="font-size:1.5rem; font-weight:600; margin-bottom:1rem;">📅 Agendar visita al inmueble</div>
+                    <div class="form-group"><label>Nombre completo *</label><input type="text" id="visitanteNombre" placeholder="Ej: Carlos López"></div>
+                    <div class="form-group"><label>Teléfono / WhatsApp *</label><input type="tel" id="visitanteTelefono" placeholder="3001234567"></div>
+                    <div class="form-group"><label>Correo electrónico</label><input type="email" id="visitanteEmail" placeholder="ejemplo@correo.com"></div>
+                    <button class="btn-next" id="nextStepVisita">Siguiente →</button>
+                </div>
+                <div id="visitaStep2" style="display:none;">
+                    <div style="font-size:1.5rem; font-weight:600; margin-bottom:1rem;">🗓️ Selecciona fecha y hora</div>
+                    <div class="calendar-card" style="border:1px solid #eee; border-radius:24px; padding:1rem; margin:1rem 0;">
+                        <div class="calendar-nav">
+                            <button class="nav-btn" id="prevMonthBtn">←</button>
+                            <div class="month-year" id="monthYearDisplay"></div>
+                            <button class="nav-btn" id="nextMonthBtn">→</button>
+                        </div>
+                        <div class="weekdays">
+                            <span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span>
+                        </div>
+                        <div class="days-grid" id="daysGrid"></div>
+                    </div>
+                    <div class="horarios-section">
+                        <label>Selecciona un horario (08:00 - 17:00)</label>
+                        <div id="horariosContainer" class="horarios-list"></div>
+                    </div>
+                    <button class="btn-submit" id="submitVisitaBtn">Agendar visita por WhatsApp</button>
+                    <button class="btn-back" id="backStep1">← Volver</button>
+                </div>
+            `;
             
-            let selectedDate = null;
-            let selectedHorario = null;
-            const horarios = ['08:00', '09:00', '10:00', '11:00', '14:00', '15:00', '16:00', '17:00'];
+            selectedDate = null;
+            selectedHorario = null;
+            inicializarCalendario();
+            renderHorarios();
             
-            function renderSimpleCalendar() {
-                const today = new Date();
-                today.setHours(0,0,0,0);
-                const year = today.getFullYear();
-                const month = today.getMonth();
-                const daysInMonth = new Date(year, month + 1, 0).getDate();
-                const firstDay = new Date(year, month, 1).getDay();
-                const offset = firstDay === 0 ? 6 : firstDay - 1;
-                
-                let html = '<div class="days-grid" style="display:grid; grid-template-columns:repeat(7,1fr); gap:6px; text-align:center;">';
-                
-                for(let i = 0; i < offset; i++) {
-                    html += '<div style="padding:0.5rem; opacity:0.3;"></div>';
-                }
-                
-                for(let d = 1; d <= daysInMonth; d++) {
-                    const dateStr = `${year}-${String(month + 1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-                    const cellDate = new Date(year, month, d);
-                    const isPast = cellDate < today;
-                    const isSelected = (selectedDate === dateStr);
-                    const disabledClass = isPast ? 'disabled' : '';
-                    const selectedClass = isSelected ? 'selected' : '';
-                    html += `<div class="day-cell ${selectedClass} ${disabledClass}" data-date="${dateStr}" style="padding:0.5rem; cursor:${isPast ? 'not-allowed' : 'pointer'}; border-radius:40px; ${isSelected ? 'background:#000; color:#fff;' : ''} ${isPast ? 'opacity:0.3;' : ''}">${d}</div>`;
-                }
-                html += '</div>';
-                document.getElementById('calendarSimple').innerHTML = html;
-                
-                document.querySelectorAll('.day-cell:not(.disabled)').forEach(el => {
-                    el.addEventListener('click', () => {
-                        if(el.classList.contains('disabled')) return;
-                        document.querySelectorAll('.day-cell').forEach(c => {
-                            c.classList.remove('selected');
-                            c.style.background = '';
-                            c.style.color = '';
-                        });
-                        el.classList.add('selected');
-                        el.style.background = '#000';
-                        el.style.color = '#fff';
-                        selectedDate = el.dataset.date;
-                        renderHorariosSimple();
-                    });
-                });
-            }
+            const prevBtn = document.getElementById('prevMonthBtn');
+            const nextBtn = document.getElementById('nextMonthBtn');
+            if (prevBtn) prevBtn.addEventListener('click', () => changeMonth(-1));
+            if (nextBtn) nextBtn.addEventListener('click', () => changeMonth(1));
             
-            function renderHorariosSimple() {
-                const container = document.getElementById('horariosSimple');
-                if(!selectedDate) {
-                    container.innerHTML = '<p style="color:#666;">📅 Primero selecciona una fecha en el calendario</p>';
-                    return;
-                }
-                let html = '<div style="display:flex; flex-wrap:wrap; gap:0.5rem;">';
-                horarios.forEach(h => {
-                    const cls = (selectedHorario === h) ? 'selected' : '';
-                    html += `<span class="horario-badge ${cls}" data-horario="${h}" style="display:inline-block; padding:0.5rem 1rem; border:1px solid #ccc; border-radius:40px; cursor:pointer; ${selectedHorario === h ? 'background:#000; color:#fff; border-color:#000;' : ''}">${h}</span>`;
-                });
-                html += '</div>';
-                container.innerHTML = html;
-                
-                document.querySelectorAll('.horario-badge').forEach(el => {
-                    el.addEventListener('click', () => {
-                        document.querySelectorAll('.horario-badge').forEach(b => {
-                            b.classList.remove('selected');
-                            b.style.background = '';
-                            b.style.color = '';
-                            b.style.borderColor = '#ccc';
-                        });
-                        el.classList.add('selected');
-                        el.style.background = '#000';
-                        el.style.color = '#fff';
-                        el.style.borderColor = '#000';
-                        selectedHorario = el.dataset.horario;
-                    });
-                });
-            }
-            
-            const nextBtn = document.getElementById('nextStepVisita');
+            const nextStepBtn = document.getElementById('nextStepVisita');
             const backBtn = document.getElementById('backStep1');
             const submitBtn = document.getElementById('submitVisitaBtn');
             const step1 = document.getElementById('visitaStep1');
             const step2 = document.getElementById('visitaStep2');
             
-            if(nextBtn) {
-                nextBtn.addEventListener('click', () => {
+            if (nextStepBtn) {
+                nextStepBtn.addEventListener('click', () => {
                     const nombre = document.getElementById('visitanteNombre')?.value.trim();
                     const telefono = document.getElementById('visitanteTelefono')?.value.trim();
-                    if(!nombre) { alert("Por favor ingresa tu nombre completo."); return; }
-                    if(!telefono) { alert("Por favor ingresa tu número de teléfono."); return; }
+                    if (!nombre) { alert("Por favor ingresa tu nombre completo."); return; }
+                    if (!telefono) { alert("Por favor ingresa tu número de teléfono."); return; }
                     step1.style.display = 'none';
                     step2.style.display = 'block';
-                    renderSimpleCalendar();
                 });
             }
             
-            if(backBtn) {
+            if (backBtn) {
                 backBtn.addEventListener('click', () => {
                     step2.style.display = 'none';
                     step1.style.display = 'block';
                 });
             }
             
-            if(submitBtn) {
+            if (submitBtn) {
                 submitBtn.addEventListener('click', () => {
-                    if(!selectedDate) { alert("Por favor selecciona una fecha."); return; }
-                    if(!selectedHorario) { alert("Por favor selecciona un horario."); return; }
+                    if (!selectedDate) { alert("Por favor selecciona una fecha válida (futura)."); return; }
+                    if (!selectedHorario) { alert("Por favor selecciona un horario."); return; }
                     const nombre = document.getElementById('visitanteNombre')?.value.trim() || '';
                     const telefono = document.getElementById('visitanteTelefono')?.value.trim() || '';
                     const email = document.getElementById('visitanteEmail')?.value.trim() || 'No especificado';
-                    const mensaje = `*AGENDA DE VISITA - QRP2P*%0A%0A*Visitante:* ${nombre}%0A*Teléfono:* ${telefono}%0A*Email:* ${email}%0A*Fecha:* ${selectedDate}%0A*Horario:* ${selectedHorario}%0A%0A--- Visita agendada desde formulario web ---`;
+                    
+                    const [year, month, day] = selectedDate.split('-');
+                    const fechaObj = new Date(year, month-1, day);
+                    const fechaLegible = fechaObj.toLocaleDateString('es-ES', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+                    
+                    const mensaje = `*AGENDA DE VISITA - QRP2P*%0A%0A*Visitante:* ${nombre}%0A*Teléfono:* ${telefono}%0A*Email:* ${email}%0A*Fecha:* ${fechaLegible}%0A*Horario:* ${selectedHorario}%0A%0A--- Visita agendada desde formulario web ---`;
                     window.open(`https://wa.me/573146824438?text=${mensaje}`, '_blank');
                     modalVisita.style.display = 'none';
                 });
@@ -940,7 +1203,7 @@
         // Abrir modal cuando se selecciona "Agendar visita"
         optionCards.forEach(card => {
             card.addEventListener('click', () => {
-                if(card.dataset.option === 'visita') {
+                if (card.dataset.option === 'visita') {
                     modalVisita.style.display = 'flex';
                     cargarFormularioVisita();
                 }
@@ -952,10 +1215,10 @@
         });
         
         window.addEventListener('click', (e) => {
-            if(e.target === modalVisita) modalVisita.style.display = 'none';
+            if (e.target === modalVisita) modalVisita.style.display = 'none';
         });
         
-        // Enlace para extranjeros
+        // Enlaces externos
         document.getElementById('infoExtranjerosLink')?.addEventListener('click', (e) => {
             e.preventDefault();
             window.open('https://wa.me/573146824438?text=Hola%20QRP2P,%20quiero%20información%20sobre%20beneficios%20para%20inversionistas%20extranjeros%20y%20creación%20de%20SAS%20en%20Colombia', '_blank');
@@ -970,8 +1233,8 @@
         document.getElementById('deseoCompraForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            if(!validarCompradores()) {
-                alert("⚠️ Debes agregar al menos un comprador (persona natural o jurídica) para continuar.");
+            if (!validarCompradores()) {
+                alert("⚠️ Debes agregar al menos un comprador para continuar.");
                 return;
             }
             
@@ -979,17 +1242,17 @@
             document.querySelectorAll('#compradoresContainer .comprador-card').forEach((comp, idx) => {
                 const esNatural = comp.querySelector('.nat_telefono') !== null;
                 let telefono;
-                if(esNatural) {
+                if (esNatural) {
                     telefono = comp.querySelector('.nat_telefono')?.value.trim();
                 } else {
                     telefono = comp.querySelector('.jur_telefono')?.value.trim();
                 }
-                if(!telefono) {
+                if (!telefono) {
                     telefonoFaltante = true;
                     alert(`⚠️ El comprador ${idx + 1} debe tener un teléfono de contacto obligatorio.`);
                 }
             });
-            if(telefonoFaltante) return;
+            if (telefonoFaltante) return;
             
             const tipoInmueble = document.getElementById('tipoInmueble').value;
             const ubicacion = document.getElementById('ubicacion').value.trim();
@@ -997,8 +1260,8 @@
             const formaPago = document.querySelector('input[name="formaPago"]:checked')?.value;
             const tipoProceso = tipoProcesoInput.value;
             
-            if(!tipoInmueble || !ubicacion || !precioDeseado || !formaPago || !tipoProceso) {
-                alert("Por favor completa los campos obligatorios.");
+            if (!tipoInmueble || !ubicacion || !precioDeseado || !formaPago || !tipoProceso) {
+                alert("Por favor completa todos los campos obligatorios.");
                 return;
             }
             
@@ -1007,16 +1270,16 @@
             mensaje += `💰 Presupuesto máximo: ${formatCOP(precioDeseado)}\n`;
             mensaje += `💵 Forma de pago: ${formaPago}\n`;
             
-            if(formaPago === 'Mixto') {
+            if (formaPago === 'Mixto') {
                 const cuota = document.getElementById('cuotaInicial').value;
-                if(cuota) mensaje += `💰 Cuota inicial: ${cuota}\n`;
+                if (cuota) mensaje += `💰 Cuota inicial: ${cuota}\n`;
             }
             
             mensaje += "\n👥 COMPRADORES:\n";
             const compradoresLista = document.querySelectorAll('#compradoresContainer .comprador-card');
             compradoresLista.forEach((comp, idx) => {
                 const esNatural = comp.querySelector('.nat_nombres') !== null;
-                if(esNatural) {
+                if (esNatural) {
                     const nombres = comp.querySelector('.nat_nombres')?.value || '';
                     const apellidos = comp.querySelector('.nat_apellidos')?.value || '';
                     const telefono = comp.querySelector('.nat_telefono')?.value || '';
@@ -1030,7 +1293,7 @@
             
             mensaje += `\n📌 Proceso: ${tipoProceso === 'visita' ? 'Agendar visita al inmueble' : 'Proceso 100% digital'}\n`;
             const comentarios = document.getElementById('comentariosFinal').value;
-            if(comentarios) mensaje += `\n📝 Comentarios: ${comentarios}\n`;
+            if (comentarios) mensaje += `\n📝 Comentarios: ${comentarios}\n`;
             
             mensaje += "\n────────────────────────\n📲 Iniciar proceso de compra - QRP2P";
             
