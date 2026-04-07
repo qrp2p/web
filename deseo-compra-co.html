@@ -402,7 +402,6 @@
             color: #000;
         }
         
-        /* Estilos para el calendario dinámico */
         .calendar-nav {
             display: flex;
             justify-content: space-between;
@@ -781,7 +780,7 @@
         </form>
     </div>
 
-    <!-- MODAL PARA AGENDAR VISITA CON CALENDARIO DINÁMICO -->
+    <!-- MODAL PARA AGENDAR VISITA -->
     <div id="modalVisita" class="modal-visita">
         <div class="modal-visita-content">
             <div class="modal-header">
@@ -802,6 +801,92 @@
         function formatCOP(value) {
             if (!value) return '0';
             return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(value);
+        }
+
+        // Función para obtener todo el mensaje del formulario principal
+        function obtenerMensajeFormularioPrincipal() {
+            const tipoInmueble = document.getElementById('tipoInmueble').value;
+            const ubicacion = document.getElementById('ubicacion').value.trim();
+            const precioDeseado = document.getElementById('precioDeseado').value;
+            const estrato = document.getElementById('estrato').value;
+            const caracteristicas = document.getElementById('caracteristicas').value;
+            const formaPago = document.querySelector('input[name="formaPago"]:checked')?.value;
+            const cuotaInicial = document.getElementById('cuotaInicial').value;
+            const recursosSeleccionados = Array.from(document.querySelectorAll('input[name="recursos"]:checked')).map(cb => cb.value);
+            const tipoCarta = document.getElementById('tipoCartaCredito')?.value;
+            const tipoCred = document.getElementById('tipoCredito')?.value;
+            const banco = document.getElementById('bancoCredito')?.value;
+            const entidadCes = document.getElementById('entidadCesantias')?.value;
+            const asesoriaCredito = document.querySelector('input[name="asesoriaCredito"]:checked')?.value;
+            const tieneReferido = document.querySelector('input[name="tieneReferido"]:checked')?.value;
+            const tipoReferido = document.getElementById('tipoReferido')?.value;
+            const nombreReferido = document.getElementById('nombreReferido')?.value;
+            const contactoReferido = document.getElementById('contactoReferido')?.value;
+            const comentarios = document.getElementById('comentariosFinal').value;
+            
+            let mensaje = "🏡 *DESEO DE COMPRA - QRP2P*\n";
+            mensaje += "────────────────────────\n\n";
+            
+            mensaje += "*📍 INMUEBLE DESEADO*\n";
+            mensaje += `Tipo: ${tipoInmueble}\n`;
+            mensaje += `Ubicación: ${ubicacion}\n`;
+            mensaje += `Precio máximo: ${formatCOP(precioDeseado)}\n`;
+            if(estrato) mensaje += `Estrato: ${estrato}\n`;
+            if(caracteristicas) mensaje += `Características: ${caracteristicas}\n`;
+            mensaje += "\n";
+            
+            mensaje += "*💰 FORMA DE PAGO*\n";
+            if (formaPago === 'Contado') mensaje += `Modalidad: Contado (pago total)\n`;
+            else if (formaPago === 'Credito') mensaje += `Modalidad: 100% financiado (crédito hipotecario)\n`;
+            else mensaje += `Modalidad: Mixto (cuota inicial + crédito)\n`;
+            if (formaPago === 'Mixto' && cuotaInicial) mensaje += `Cuota inicial: ${cuotaInicial}\n`;
+            mensaje += `Recursos: ${recursosSeleccionados.length ? recursosSeleccionados.join(', ') : 'No seleccionó'}\n`;
+            if (tipoCarta && soporteDiv.style.display !== 'none') mensaje += `Soporte crédito: ${tipoCarta}\n`;
+            if (tipoCred && soporteDiv.style.display !== 'none') mensaje += `Tipo crédito: ${tipoCred}\n`;
+            if (banco && soporteDiv.style.display !== 'none') mensaje += `Banco: ${banco}\n`;
+            if (entidadCes && cesantiasDiv.style.display !== 'none') mensaje += `Entidad cesantías: ${entidadCes}\n`;
+            mensaje += `Asesoría crédito: ${asesoriaCredito || 'No responde'}\n\n`;
+            
+            mensaje += "*👥 COMPRADORES*\n";
+            const compradoresLista = document.querySelectorAll('#compradoresContainer .comprador-card');
+            compradoresLista.forEach((comp, idx) => {
+                const esNatural = comp.querySelector('.nat_nombres') !== null;
+                if (esNatural) {
+                    const nombres = comp.querySelector('.nat_nombres')?.value || '';
+                    const apellidos = comp.querySelector('.nat_apellidos')?.value || '';
+                    const tipoDoc = comp.querySelector('.nat_tipoDoc')?.value || '';
+                    const numDoc = comp.querySelector('.nat_numDoc')?.value || '';
+                    const telefono = comp.querySelector('.nat_telefono')?.value || '';
+                    const email = comp.querySelector('.nat_email')?.value || '';
+                    mensaje += `${idx+1}. ${nombres} ${apellidos}\n`;
+                    mensaje += `   Documento: ${tipoDoc} ${numDoc}\n`;
+                    mensaje += `   Teléfono: ${telefono}\n`;
+                    if(email) mensaje += `   Email: ${email}\n`;
+                } else {
+                    const razon = comp.querySelector('.jur_razon')?.value || '';
+                    const nit = comp.querySelector('.jur_nit')?.value || '';
+                    const representante = comp.querySelector('.jur_representante')?.value || '';
+                    const telefono = comp.querySelector('.jur_telefono')?.value || '';
+                    const email = comp.querySelector('.jur_email')?.value || '';
+                    mensaje += `${idx+1}. ${razon} (NIT: ${nit})\n`;
+                    mensaje += `   Representante: ${representante}\n`;
+                    mensaje += `   Teléfono: ${telefono}\n`;
+                    if(email) mensaje += `   Email: ${email}\n`;
+                }
+            });
+            mensaje += "\n";
+            
+            if (tieneReferido === 'Si') {
+                mensaje += "*⭐ REFERIDO*\n";
+                if(tipoReferido) mensaje += `Tipo: ${tipoReferido}\n`;
+                if(nombreReferido) mensaje += `Nombre: ${nombreReferido}\n`;
+                if(contactoReferido) mensaje += `Contacto: ${contactoReferido}\n`;
+                mensaje += "\n";
+            }
+            
+            if(comentarios) mensaje += `*📝 Comentarios adicionales:* ${comentarios}\n\n`;
+            
+            return mensaje;
         }
 
         // Mostrar/ocultar secciones financieras
@@ -941,7 +1026,6 @@
         const closeModalBtn = document.getElementById('closeModalVisita');
         const agendaContainer = document.getElementById('agendaVisitaContainer');
         
-        // Horarios disponibles (de 8am a 6pm)
         const horariosDisponibles = ['08:00', '09:00', '10:00', '11:00', '14:00', '15:00', '16:00', '17:00'];
         
         let currentYear, currentMonth;
@@ -972,7 +1056,6 @@
             
             const daysArray = [];
             
-            // Días del mes anterior
             for (let i = 0; i < offsetMonday; i++) {
                 let dayNum = prevMonthDays - offsetMonday + i + 1;
                 let prevMonth = month - 1;
@@ -991,7 +1074,6 @@
                 });
             }
             
-            // Días del mes actual
             for (let d = 1; d <= daysInMonth; d++) {
                 const isValid = esFechaValida(year, month, d);
                 daysArray.push({
@@ -1004,7 +1086,6 @@
                 });
             }
             
-            // Completar hasta 42 celdas (6 semanas)
             const remaining = 42 - daysArray.length;
             for (let i = 1; i <= remaining; i++) {
                 let nextMonth = month + 1;
@@ -1037,14 +1118,9 @@
             days.forEach((cell) => {
                 const div = document.createElement('div');
                 div.className = 'day-cell';
-                if (!cell.currentMonth) {
-                    div.classList.add('other-month');
-                }
-                if (!cell.isSelectable) {
-                    div.classList.add('disabled');
-                } else {
-                    div.classList.add('available');
-                }
+                if (!cell.currentMonth) div.classList.add('other-month');
+                if (!cell.isSelectable) div.classList.add('disabled');
+                else div.classList.add('available');
                 div.innerText = cell.day;
                 
                 if (cell.isSelectable) {
@@ -1055,9 +1131,7 @@
                         selectedHorario = null;
                         renderHorarios();
                     });
-                    if (selectedDate === cell.dateStr) {
-                        div.classList.add('selected');
-                    }
+                    if (selectedDate === cell.dateStr) div.classList.add('selected');
                 }
                 daysGrid.appendChild(div);
             });
@@ -1069,7 +1143,6 @@
                 horariosContainer.innerHTML = '<div style="font-size:0.8rem; padding:0.5rem; color:#666;">📅 Primero selecciona una fecha en el calendario</div>';
                 return;
             }
-            
             horariosContainer.innerHTML = '';
             horariosDisponibles.forEach(slot => {
                 const badge = document.createElement('span');
@@ -1088,21 +1161,11 @@
         function changeMonth(delta) {
             let newMonth = currentMonth + delta;
             let newYear = currentYear;
-            if (newMonth < 0) {
-                newMonth = 11;
-                newYear--;
-            } else if (newMonth > 11) {
-                newMonth = 0;
-                newYear++;
-            }
+            if (newMonth < 0) { newMonth = 11; newYear--; }
+            else if (newMonth > 11) { newMonth = 0; newYear++; }
             
             const hoy = new Date();
-            const mesActual = hoy.getMonth();
-            const añoActual = hoy.getFullYear();
-            
-            if (newYear < añoActual || (newYear === añoActual && newMonth < mesActual)) {
-                return;
-            }
+            if (newYear < hoy.getFullYear() || (newYear === hoy.getFullYear() && newMonth < hoy.getMonth())) return;
             
             currentYear = newYear;
             currentMonth = newMonth;
@@ -1116,13 +1179,29 @@
             renderCalendar();
         }
         
+        // Función que envía TODO el formulario + datos de visita
+        function enviarFormularioCompletoConVisita(nombreVisitante, telefonoVisitante, emailVisitante, fechaLegible, horario) {
+            let mensajeCompleto = obtenerMensajeFormularioPrincipal();
+            
+            mensajeCompleto += "*🏠 AGENDAR VISITA*\n";
+            mensajeCompleto += `────────────────────────\n`;
+            mensajeCompleto += `*Visitante que asistirá:* ${nombreVisitante}\n`;
+            mensajeCompleto += `*Teléfono del visitante:* ${telefonoVisitante}\n`;
+            mensajeCompleto += `*Email del visitante:* ${emailVisitante}\n`;
+            mensajeCompleto += `*Fecha seleccionada:* ${fechaLegible}\n`;
+            mensajeCompleto += `*Horario:* ${horario}\n\n`;
+            mensajeCompleto += "────────────────────────\n📲 Solicitud de visita - QRP2P";
+            
+            window.open(`https://wa.me/573146824438?text=${encodeURIComponent(mensajeCompleto)}`, '_blank');
+        }
+        
         function cargarFormularioVisita() {
             agendaContainer.innerHTML = `
                 <div id="visitaStep1">
                     <div style="font-size:1.5rem; font-weight:600; margin-bottom:1rem;">📅 Agendar visita al inmueble</div>
-                    <div class="form-group"><label>Nombre completo *</label><input type="text" id="visitanteNombre" placeholder="Ej: Carlos López"></div>
-                    <div class="form-group"><label>Teléfono / WhatsApp *</label><input type="tel" id="visitanteTelefono" placeholder="3001234567"></div>
-                    <div class="form-group"><label>Correo electrónico</label><input type="email" id="visitanteEmail" placeholder="ejemplo@correo.com"></div>
+                    <div class="form-group"><label>Nombre del visitante *</label><input type="text" id="visitanteNombre" placeholder="Ej: Carlos López"></div>
+                    <div class="form-group"><label>Teléfono del visitante *</label><input type="tel" id="visitanteTelefono" placeholder="3001234567"></div>
+                    <div class="form-group"><label>Correo electrónico del visitante</label><input type="email" id="visitanteEmail" placeholder="ejemplo@correo.com"></div>
                     <button class="btn-next" id="nextStepVisita">Siguiente →</button>
                 </div>
                 <div id="visitaStep2" style="display:none;">
@@ -1133,16 +1212,14 @@
                             <div class="month-year" id="monthYearDisplay"></div>
                             <button class="nav-btn" id="nextMonthBtn">→</button>
                         </div>
-                        <div class="weekdays">
-                            <span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span>
-                        </div>
+                        <div class="weekdays"><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span></div>
                         <div class="days-grid" id="daysGrid"></div>
                     </div>
                     <div class="horarios-section">
                         <label>Selecciona un horario (08:00 - 17:00)</label>
                         <div id="horariosContainer" class="horarios-list"></div>
                     </div>
-                    <button class="btn-submit" id="submitVisitaBtn">Agendar visita por WhatsApp</button>
+                    <button class="btn-submit" id="submitVisitaBtn">Agendar visita y enviar todo</button>
                     <button class="btn-back" id="backStep1">← Volver</button>
                 </div>
             `;
@@ -1152,71 +1229,57 @@
             inicializarCalendario();
             renderHorarios();
             
-            const prevBtn = document.getElementById('prevMonthBtn');
-            const nextBtn = document.getElementById('nextMonthBtn');
-            if (prevBtn) prevBtn.addEventListener('click', () => changeMonth(-1));
-            if (nextBtn) nextBtn.addEventListener('click', () => changeMonth(1));
+            document.getElementById('prevMonthBtn')?.addEventListener('click', () => changeMonth(-1));
+            document.getElementById('nextMonthBtn')?.addEventListener('click', () => changeMonth(1));
             
-            const nextStepBtn = document.getElementById('nextStepVisita');
-            const backBtn = document.getElementById('backStep1');
-            const submitBtn = document.getElementById('submitVisitaBtn');
-            const step1 = document.getElementById('visitaStep1');
-            const step2 = document.getElementById('visitaStep2');
+            document.getElementById('nextStepVisita')?.addEventListener('click', () => {
+                const nombre = document.getElementById('visitanteNombre')?.value.trim();
+                const telefono = document.getElementById('visitanteTelefono')?.value.trim();
+                if (!nombre) { alert("Por favor ingresa el nombre del visitante."); return; }
+                if (!telefono) { alert("Por favor ingresa el teléfono del visitante."); return; }
+                document.getElementById('visitaStep1').style.display = 'none';
+                document.getElementById('visitaStep2').style.display = 'block';
+            });
             
-            if (nextStepBtn) {
-                nextStepBtn.addEventListener('click', () => {
-                    const nombre = document.getElementById('visitanteNombre')?.value.trim();
-                    const telefono = document.getElementById('visitanteTelefono')?.value.trim();
-                    if (!nombre) { alert("Por favor ingresa tu nombre completo."); return; }
-                    if (!telefono) { alert("Por favor ingresa tu número de teléfono."); return; }
-                    step1.style.display = 'none';
-                    step2.style.display = 'block';
-                });
-            }
+            document.getElementById('backStep1')?.addEventListener('click', () => {
+                document.getElementById('visitaStep2').style.display = 'none';
+                document.getElementById('visitaStep1').style.display = 'block';
+            });
             
-            if (backBtn) {
-                backBtn.addEventListener('click', () => {
-                    step2.style.display = 'none';
-                    step1.style.display = 'block';
-                });
-            }
-            
-            if (submitBtn) {
-                submitBtn.addEventListener('click', () => {
-                    if (!selectedDate) { alert("Por favor selecciona una fecha válida (futura)."); return; }
-                    if (!selectedHorario) { alert("Por favor selecciona un horario."); return; }
-                    const nombre = document.getElementById('visitanteNombre')?.value.trim() || '';
-                    const telefono = document.getElementById('visitanteTelefono')?.value.trim() || '';
-                    const email = document.getElementById('visitanteEmail')?.value.trim() || 'No especificado';
-                    
-                    const [year, month, day] = selectedDate.split('-');
-                    const fechaObj = new Date(year, month-1, day);
-                    const fechaLegible = fechaObj.toLocaleDateString('es-ES', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
-                    
-                    const mensaje = `*AGENDA DE VISITA - QRP2P*%0A%0A*Visitante:* ${nombre}%0A*Teléfono:* ${telefono}%0A*Email:* ${email}%0A*Fecha:* ${fechaLegible}%0A*Horario:* ${selectedHorario}%0A%0A--- Visita agendada desde formulario web ---`;
-                    window.open(`https://wa.me/573146824438?text=${mensaje}`, '_blank');
-                    modalVisita.style.display = 'none';
-                });
-            }
+            document.getElementById('submitVisitaBtn')?.addEventListener('click', () => {
+                if (!selectedDate) { alert("Por favor selecciona una fecha válida (futura)."); return; }
+                if (!selectedHorario) { alert("Por favor selecciona un horario."); return; }
+                
+                const nombreVisitante = document.getElementById('visitanteNombre')?.value.trim() || '';
+                const telefonoVisitante = document.getElementById('visitanteTelefono')?.value.trim() || '';
+                const emailVisitante = document.getElementById('visitanteEmail')?.value.trim() || 'No especificado';
+                
+                const [year, month, day] = selectedDate.split('-');
+                const fechaObj = new Date(year, month-1, day);
+                const fechaLegible = fechaObj.toLocaleDateString('es-ES', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+                
+                enviarFormularioCompletoConVisita(nombreVisitante, telefonoVisitante, emailVisitante, fechaLegible, selectedHorario);
+                modalVisita.style.display = 'none';
+            });
         }
         
         // Abrir modal cuando se selecciona "Agendar visita"
         optionCards.forEach(card => {
             card.addEventListener('click', () => {
                 if (card.dataset.option === 'visita') {
+                    // Validar que haya al menos un comprador antes de abrir el modal
+                    if (!validarCompradores()) {
+                        alert("⚠️ Debes agregar al menos un comprador antes de agendar la visita.");
+                        return;
+                    }
                     modalVisita.style.display = 'flex';
                     cargarFormularioVisita();
                 }
             });
         });
         
-        closeModalBtn.addEventListener('click', () => {
-            modalVisita.style.display = 'none';
-        });
-        
-        window.addEventListener('click', (e) => {
-            if (e.target === modalVisita) modalVisita.style.display = 'none';
-        });
+        closeModalBtn.addEventListener('click', () => { modalVisita.style.display = 'none'; });
+        window.addEventListener('click', (e) => { if (e.target === modalVisita) modalVisita.style.display = 'none'; });
         
         // Enlaces externos
         document.getElementById('infoExtranjerosLink')?.addEventListener('click', (e) => {
@@ -1229,7 +1292,7 @@
             window.open('https://wa.me/573146824438?text=Hola%20QRP2P,%20quiero%20ser%20agente%20inmobiliario%20y%20generar%20ingresos%20extras', '_blank');
         });
         
-        // ==================== ENVÍO PRINCIPAL ====================
+        // ==================== ENVÍO PRINCIPAL (PROCESO DIGITAL) ====================
         document.getElementById('deseoCompraForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -1242,11 +1305,8 @@
             document.querySelectorAll('#compradoresContainer .comprador-card').forEach((comp, idx) => {
                 const esNatural = comp.querySelector('.nat_telefono') !== null;
                 let telefono;
-                if (esNatural) {
-                    telefono = comp.querySelector('.nat_telefono')?.value.trim();
-                } else {
-                    telefono = comp.querySelector('.jur_telefono')?.value.trim();
-                }
+                if (esNatural) telefono = comp.querySelector('.nat_telefono')?.value.trim();
+                else telefono = comp.querySelector('.jur_telefono')?.value.trim();
                 if (!telefono) {
                     telefonoFaltante = true;
                     alert(`⚠️ El comprador ${idx + 1} debe tener un teléfono de contacto obligatorio.`);
@@ -1254,50 +1314,20 @@
             });
             if (telefonoFaltante) return;
             
-            const tipoInmueble = document.getElementById('tipoInmueble').value;
-            const ubicacion = document.getElementById('ubicacion').value.trim();
-            const precioDeseado = document.getElementById('precioDeseado').value;
-            const formaPago = document.querySelector('input[name="formaPago"]:checked')?.value;
             const tipoProceso = tipoProcesoInput.value;
-            
-            if (!tipoInmueble || !ubicacion || !precioDeseado || !formaPago || !tipoProceso) {
-                alert("Por favor completa todos los campos obligatorios.");
+            if (!tipoProceso) {
+                alert("Por favor selecciona cómo quieres continuar (Agendar visita o Proceso digital).");
                 return;
             }
             
-            let mensaje = "🏡 *DESEO DE COMPRA - QRP2P*\n────────────────────────\n\n";
-            mensaje += `📍 INMUEBLE: ${tipoInmueble} en ${ubicacion}\n`;
-            mensaje += `💰 Presupuesto máximo: ${formatCOP(precioDeseado)}\n`;
-            mensaje += `💵 Forma de pago: ${formaPago}\n`;
-            
-            if (formaPago === 'Mixto') {
-                const cuota = document.getElementById('cuotaInicial').value;
-                if (cuota) mensaje += `💰 Cuota inicial: ${cuota}\n`;
+            // Si eligió proceso digital, enviamos solo el formulario principal
+            if (tipoProceso === 'digital') {
+                let mensaje = obtenerMensajeFormularioPrincipal();
+                mensaje += "\n📌 *Proceso elegido: Proceso 100% digital*\n";
+                mensaje += "────────────────────────\n📲 Iniciar proceso de compra - QRP2P";
+                window.open(`https://wa.me/573146824438?text=${encodeURIComponent(mensaje)}`, '_blank');
             }
-            
-            mensaje += "\n👥 COMPRADORES:\n";
-            const compradoresLista = document.querySelectorAll('#compradoresContainer .comprador-card');
-            compradoresLista.forEach((comp, idx) => {
-                const esNatural = comp.querySelector('.nat_nombres') !== null;
-                if (esNatural) {
-                    const nombres = comp.querySelector('.nat_nombres')?.value || '';
-                    const apellidos = comp.querySelector('.nat_apellidos')?.value || '';
-                    const telefono = comp.querySelector('.nat_telefono')?.value || '';
-                    mensaje += `${idx+1}. ${nombres} ${apellidos} - Tel: ${telefono}\n`;
-                } else {
-                    const razon = comp.querySelector('.jur_razon')?.value || '';
-                    const telefono = comp.querySelector('.jur_telefono')?.value || '';
-                    mensaje += `${idx+1}. ${razon} - Tel: ${telefono}\n`;
-                }
-            });
-            
-            mensaje += `\n📌 Proceso: ${tipoProceso === 'visita' ? 'Agendar visita al inmueble' : 'Proceso 100% digital'}\n`;
-            const comentarios = document.getElementById('comentariosFinal').value;
-            if (comentarios) mensaje += `\n📝 Comentarios: ${comentarios}\n`;
-            
-            mensaje += "\n────────────────────────\n📲 Iniciar proceso de compra - QRP2P";
-            
-            window.open(`https://wa.me/573146824438?text=${encodeURIComponent(mensaje)}`, '_blank');
+            // Si eligió agendar visita, el modal se abre automáticamente al hacer clic en la tarjeta
         });
     </script>
 </body>
