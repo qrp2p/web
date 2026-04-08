@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=5.0">
     <title>QRP2P Colombia | Marketplace P2P en Ciudades y Municipios de Colombia</title>
     
     <!-- PWA Meta Tags -->
@@ -23,14 +23,14 @@
     <meta name="googlebot" content="index, follow">
     <link rel="canonical" href="https://qrp2p.com/co">
     <meta property="og:title" content="QRP2P Colombia - Marketplace P2P en todo el país">
-    <meta property="og:description" content="El marketplace peer-to-peer más seguro de Colombia. Compra y vende en tu ciudad con protección por escrow.">
+    <meta property="og:description" content="El marketplace peer-to-peer más seguro de Colombia. Compra y vende en tu ciudad con protección por escrow y 0% comisión.">
     <meta property="og:image" content="https://qrp2p.com/img/og-colombia.jpg">
     <meta property="og:url" content="https://qrp2p.com/co">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="es_CO">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="QRP2P Colombia - Marketplace P2P">
-    <meta name="twitter:description" content="Compra y vende de forma segura en Colombia con QRP2P">
+    <meta name="twitter:description" content="Compra y vende de forma segura en Colombia con QRP2P - 0% comisión">
     <meta name="geo.region" content="CO">
     <meta name="geo.placename" content="Colombia">
     
@@ -44,10 +44,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
     
     <style>
+        /* Evita zoom automático al hacer scroll en iOS */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
         
         body {
@@ -55,6 +57,16 @@
             color: #000000;
             font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
             line-height: 1.45;
+            overflow-x: hidden;
+            -webkit-text-size-adjust: 100%;
+            touch-action: pan-x pan-y; /* Permite scroll pero NO zoom automático */
+        }
+        
+        /* Previene zoom no deseado en inputs en iOS */
+        input, select, textarea, button {
+            font-size: 16px !important;
+            -webkit-appearance: none;
+            appearance: none;
         }
         
         :root {
@@ -468,7 +480,7 @@
     
     <div class="seo-content">
         <h2>QRP2P Colombia: El Marketplace P2P más Grande del País</h2>
-        <p>QRP2P Colombia es la plataforma líder de comercio peer-to-peer en Colombia. Conectamos compradores y vendedores en más de <strong>120 ciudades y municipios</strong> colombianos, ofreciendo transacciones seguras con nuestro sistema de escrow, protección al comprador y vendedor, y las comisiones más bajas del mercado.</p>
+        <p>QRP2P Colombia es la plataforma líder de comercio peer-to-peer en Colombia. Conectamos compradores y vendedores en más de <strong>120 ciudades y municipios</strong> colombianos, ofreciendo transacciones seguras con nuestro sistema de escrow, protección al comprador y vendedor, y <strong>0% comisión</strong> entre compradores y vendedores.</p>
         
         <h3>Presencia Nacional en Todas las Regiones</h3>
         <div class="region-tags" id="region-tags-container"></div>
@@ -476,11 +488,11 @@
         <h3>¿Por qué elegir QRP2P Colombia?</h3>
         <p>✓ <strong>Seguridad Garantizada:</strong> Sistema de escrow que protege ambas partes.<br>
         ✓ <strong>Cobertura Nacional:</strong> Presente en Bogotá, Medellín, Cali, Barranquilla, Cartagena y más de 100 ciudades adicionales.<br>
-        ✓ <strong>Comisiones Bajas:</strong> Las tarifas más competitivas del mercado colombiano.<br>
+        ✓ <strong>0% Comisión:</strong> Sin tarifas ocultas. Compradores y vendedores no pagan comisión.<br>
         ✓ <strong>Soporte en Español:</strong> Atención al cliente en tu idioma, 7 días a la semana.<br>
         ✓ <strong>App PWA:</strong> Instala nuestra aplicación en tu dispositivo móvil.</p>
         
-        <p>Descubre el marketplace de tu ciudad y comienza a comerciar de forma segura. QRP2P es la plataforma preferida por miles de colombianos para comprar y vender productos, servicios y activos digitales.</p>
+        <p>Descubre el marketplace de tu ciudad y comienza a comerciar de forma segura y sin comisiones. QRP2P es la plataforma preferida por miles de colombianos para comprar y vender productos, servicios y activos digitales.</p>
     </div>
     
     <footer>
@@ -490,7 +502,7 @@
             <a href="contact.html">Contáctanos</a>
             <a href="blog.html">Blog</a>
         </div>
-        <div class="copyright">© QRP2P MARKETPLACE COLOMBIA — Compra y Vende con Seguridad</div>
+        <div class="copyright">© QRP2P MARKETPLACE COLOMBIA — 0% Comisión • Compra y Vende con Seguridad</div>
     </footer>
 
     <script>
@@ -647,7 +659,7 @@
             const counter = document.getElementById('result-count');
             if (counter) {
                 if (count === cities.length) {
-                    counter.innerHTML = `🇨🇴 ${count} ciudades y municipios disponibles en Colombia`;
+                    counter.innerHTML = `🇨🇴 ${count} ciudades y municipios disponibles en Colombia | 0% Comisión`;
                 } else {
                     counter.innerHTML = `🔍 ${count} resultado${count !== 1 ? 's' : ''} encontrado${count !== 1 ? 's' : ''}`;
                 }
