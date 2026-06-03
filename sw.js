@@ -26,7 +26,7 @@ const STATIC_CACHE_URLS = [
 
 // Instalación del Service Worker
 self.addEventListener('install', event => {
-  console.log('[Service Worker] Instalando QRP2P Negocios Verificados...');
+  console.log('[Service Worker] Instalando QRP2P.COM Real Estate...');
   
   event.waitUntil(
     caches.open(CACHE_NAME)
@@ -136,8 +136,8 @@ self.addEventListener('fetch', event => {
           return offlineResponse || new Response(`
             <!DOCTYPE html>
             <html lang="es">
-            <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>QRP2P - Offline</title><style>body{font-family:'Libre Baskerville',serif;text-align:center;padding:2rem;background:#000;color:#fff;}h1{font-size:2rem;}a{color:#25D366;}</style></head>
-            <body><h1>⚡ QRP2P</h1><p>No hay conexión a internet.</p><p>Conéctate para ver los negocios verificados.</p><a href="/">Intentar de nuevo</a></body>
+            <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>QRP2P.COM - Offline</title><style>body{font-family:'Libre Baskerville',serif;text-align:center;padding:2rem;background:#000;color:#fff;}h1{font-size:2rem;}a{color:#25D366;}</style></head>
+            <body><h1>⚡ QRP2P.COM</h1><p>No hay conexión a internet.</p><p>Conéctate para ver los negocios verificados.</p><a href="/">Intentar de nuevo</a></body>
             </html>
           `, {
             status: 503,
@@ -181,8 +181,8 @@ self.addEventListener('fetch', event => {
 
 // Manejo de notificaciones push
 self.addEventListener('push', event => {
-  let title = '⚡ QRP2P Negocios Verificados';
-  let body = 'Nuevos negocios disponibles en tu zona';
+  let title = '⚡ QRP2P.COM Real Estate';
+  let body = 'Nuevas propiedades disponibles en tu zona';
   let icon = '/icon-192.png';
   let tag = 'qrp2p-notification';
   
@@ -251,9 +251,9 @@ self.addEventListener('message', event => {
 
 // Sincronización en segundo plano (para cuando vuelve la conexión)
 self.addEventListener('sync', event => {
-  if (event.tag === 'sync-businesses') {
+  if (event.tag === 'sync-properties') {
     event.waitUntil(
-      console.log('[Service Worker] Sincronizando negocios pendientes...')
+      console.log('[Service Worker] Sincronizando propiedades pendientes...')
     );
   }
 });
