@@ -131,15 +131,93 @@
     .gm-style .gm-style-iw-d { overflow: auto !important; max-height: none !important; padding: 0 !important; }
     .gm-style-iw-tc { display: none; }
     
-    /* Modales */
-    .servicios-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); z-index: 2500; justify-content: center; align-items: center; }
-    .servicios-container { background: white; border-radius: 28px; width: 90%; max-width: 480px; max-height: 80vh; overflow-y: auto; padding: 1.2rem; }
-    .servicios-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eaeaea; padding-bottom: 0.6rem; margin-bottom: 1rem; }
-    .servicios-botones { display: flex; flex-direction: column; gap: 0.7rem; }
-    .servicio-btn { background: #000000; color: white; border: none; padding: 0.8rem; border-radius: 50px; font-size: 0.9rem; font-weight: 600; cursor: pointer; text-align: center; font-family: 'Libre Baskerville', serif; transition: all 0.2s; }
-    .servicio-btn:hover { background: #333333; transform: scale(0.98); }
-    .info-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); z-index: 2600; justify-content: center; align-items: center; }
-    .info-container { background: white; border-radius: 28px; width: 90%; max-width: 500px; max-height: 70vh; overflow-y: auto; padding: 1.5rem; }
+    /* Modales de Servicios */
+    .servicios-modal, .pais-modal, .servicio-detalle-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.85);
+      z-index: 2500;
+      justify-content: center;
+      align-items: center;
+    }
+    .servicios-container, .pais-container, .detalle-container {
+      background: white;
+      border-radius: 28px;
+      width: 90%;
+      max-width: 480px;
+      max-height: 80vh;
+      overflow-y: auto;
+      padding: 1.2rem;
+    }
+    .servicios-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #eaeaea;
+      padding-bottom: 0.6rem;
+      margin-bottom: 1rem;
+    }
+    .servicios-botones {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+    .servicio-btn, .pais-btn {
+      background: #000000;
+      color: white;
+      border: none;
+      padding: 0.8rem;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      font-family: 'Libre Baskerville', serif;
+      transition: all 0.2s;
+    }
+    .servicio-btn:hover, .pais-btn:hover { background: #333333; transform: scale(0.98); }
+    .info-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.85);
+      z-index: 2600;
+      justify-content: center;
+      align-items: center;
+    }
+    .info-container {
+      background: white;
+      border-radius: 28px;
+      width: 90%;
+      max-width: 500px;
+      max-height: 70vh;
+      overflow-y: auto;
+      padding: 1.5rem;
+    }
+    .contact-info-card {
+      background: #f8f9fa;
+      border-radius: 20px;
+      padding: 1rem;
+      margin-top: 1rem;
+      text-align: center;
+    }
+    .contact-info-card a {
+      display: inline-block;
+      margin: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: #25D366;
+      color: #000;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: bold;
+    }
     @media (max-width: 680px) { .popup-business-card { width: 280px; } }
   </style>
 </head>
@@ -166,14 +244,38 @@
     <div id="mapa"></div>
   </div>
 
-  <!-- Modal de Servicios Globales -->
+  <!-- Modal de Servicios Principales -->
   <div id="serviciosModal" class="servicios-modal">
     <div class="servicios-container">
       <div class="servicios-header">
-        <h2 id="servicios-modal-title">GLOBAL SERVICES</h2>
+        <h2 id="servicios-modal-title">SERVICIOS</h2>
         <button id="closeServiciosBtn" style="background:transparent; border:none; font-size:1.8rem; cursor:pointer;">&times;</button>
       </div>
-      <div id="serviciosGlobales" class="servicios-botones"></div>
+      <div id="serviciosPrincipales" class="servicios-botones"></div>
+    </div>
+  </div>
+
+  <!-- Modal de Selección de País -->
+  <div id="paisModal" class="pais-modal">
+    <div class="pais-container">
+      <div class="servicios-header">
+        <h2 id="pais-modal-title">SELECCIONAR PAÍS</h2>
+        <button id="closePaisBtn" style="background:transparent; border:none; font-size:1.8rem; cursor:pointer;">&times;</button>
+      </div>
+      <div id="listaPaises" class="servicios-botones"></div>
+      <button id="volverServiciosBtn" class="servicio-btn" style="background:#555; margin-top:1rem;">← Volver a Servicios</button>
+    </div>
+  </div>
+
+  <!-- Modal de Detalle del Servicio por País -->
+  <div id="servicioDetalleModal" class="servicio-detalle-modal">
+    <div class="detalle-container">
+      <div class="servicios-header">
+        <h2 id="detalle-titulo">Detalle del Servicio</h2>
+        <button id="closeDetalleBtn" style="background:transparent; border:none; font-size:1.8rem; cursor:pointer;">&times;</button>
+      </div>
+      <div id="detalle-contenido"></div>
+      <button id="volverPaisesBtn" class="servicio-btn" style="background:#555; margin-top:1rem;">← Volver a Países</button>
     </div>
   </div>
   
@@ -192,141 +294,69 @@
   <script>
     const WHATSAPP_NUMBER = "573041146297";
     let currentLang = 'en';
+    let servicioSeleccionado = null;
     
-    // SERVICIOS GLOBALES ACTUALIZADOS: Registrar Comercio, Marketing, Contacto/Agente WhatsApp
-    const globalServices = [
-      { name_en: "REGISTER BUSINESS", name_es: "REGISTRAR COMERCIO", url: "https://qrp2p.com/register", icon: "fa-building" },
-      { name_en: "MARKETING", name_es: "MARKETING", url: "https://qrp2p.com/marketing", icon: "fa-chart-line" },
-      { name_en: "CONTACT / WHATSAPP AGENT", name_es: "CONTACTO / AGENTE WHATSAPP", url: `https://wa.me/${WHATSAPP_NUMBER}`, icon: "fa-whatsapp" }
+    // SERVICIOS PRINCIPALES (6 servicios)
+    const serviciosPrincipales = [
+      { id: "plan_anual", name_en: "ANNUAL PLAN", name_es: "PLAN ANUAL", icon: "fa-calendar-alt" },
+      { id: "administracion", name_en: "ADMINISTRATION", name_es: "ADMINISTRACIÓN", icon: "fa-building" },
+      { id: "marketing", name_en: "MARKETING", name_es: "MARKETING", icon: "fa-chart-line" },
+      { id: "logistica", name_en: "LOGISTICS", name_es: "LOGÍSTICA", icon: "fa-truck" },
+      { id: "finanzas", name_en: "FINANCE", name_es: "FINANZAS", icon: "fa-coins" },
+      { id: "dropshipping", name_en: "DROPSHIPPING", name_es: "DROPSHIPPING", icon: "fa-boxes" }
     ];
     
-    // NEGOCIOS VERIFICADOS - Datos globales
-    const verifiedBusinesses = [
-      { 
-        id: "BIZ01", 
-        name_es: "TECH SOLUTIONS GROUP", 
-        name_en: "TECH SOLUTIONS GROUP",
-        category_es: "Tecnología & Software", 
-        category_en: "Technology & Software",
-        latlng: [40.7128, -74.0060], 
-        address_es: "350 5th Ave, New York, NY 10118", 
-        address_en: "350 5th Ave, New York, NY 10118",
-        description_es: "Desarrollo de software, ciberseguridad y consultoría IT. +10 años de experiencia.", 
-        description_en: "Software development, cybersecurity and IT consulting. +10 years of experience.",
-        phone: "+12125550123", 
-        email: "contact@techsolutions.com",
-        website: "https://techsolutions.com",
-        whatsapp: "12125550123"
+    // PAÍSES DISPONIBLES (se pueden agregar más)
+    const paisesDisponibles = [
+      { id: "colombia", name_en: "Colombia", name_es: "Colombia", code: "CO" },
+      { id: "usa", name_en: "United States", name_es: "Estados Unidos", code: "US" }
+      // Aquí se pueden agregar más países fácilmente
+    ];
+    
+    // Datos de contacto para cada servicio en cada país
+    const serviciosPorPais = {
+      "plan_anual": {
+        "colombia": { whatsapp: "573041146297", email: "plananual@qrp2p.com", phone: "+573041146297" },
+        "usa": { whatsapp: "12125550123", email: "annualplan@qrp2p.com", phone: "+12125550123" }
       },
-      { 
-        id: "BIZ02", 
-        name_es: "GREEN EARTH ORGANICS", 
-        name_en: "GREEN EARTH ORGANICS",
-        category_es: "Alimentos Saludables", 
-        category_en: "Healthy Food",
-        latlng: [51.5074, -0.1278], 
-        address_es: "Covent Garden, London WC2E 8RF", 
-        address_en: "Covent Garden, London WC2E 8RF",
-        description_es: "Tienda orgánica certificada. Productos frescos, veganos y sostenibles.", 
-        description_en: "Certified organic store. Fresh, vegan and sustainable products.",
-        phone: "+442079460123", 
-        email: "hello@greenearth.com",
-        website: "https://greenearthorganics.co.uk",
-        whatsapp: "447900123456"
+      "administracion": {
+        "colombia": { whatsapp: "573041146298", email: "administracion@qrp2p.com", phone: "+573041146298" },
+        "usa": { whatsapp: "12125550124", email: "admin@qrp2p.com", phone: "+12125550124" }
       },
-      { 
-        id: "BIZ03", 
-        name_es: "TOKYO TRADING CO.", 
-        name_en: "TOKYO TRADING CO.",
-        category_es: "Importación/Exportación", 
-        category_en: "Import/Export",
-        latlng: [35.6895, 139.6917], 
-        address_es: "Marunouchi 2-4-1, Chiyoda City, Tokyo", 
-        address_en: "Marunouchi 2-4-1, Chiyoda City, Tokyo",
-        description_es: "Especialistas en electrónica y componentes industriales. Envíos a todo el mundo.", 
-        description_en: "Specialists in electronics and industrial components. Worldwide shipping.",
-        phone: "+81332145678", 
-        email: "sales@tokyotrading.jp",
-        website: "https://tokyotrading.co.jp",
-        whatsapp: "81332145678"
+      "marketing": {
+        "colombia": { whatsapp: "573041146299", email: "marketing@qrp2p.com", phone: "+573041146299" },
+        "usa": { whatsapp: "12125550125", email: "marketing@qrp2p.com", phone: "+12125550125" }
       },
-      { 
-        id: "BIZ04", 
-        name_es: "DESERT SAFARI TOURS", 
-        name_en: "DESERT SAFARI TOURS",
-        category_es: "Turismo & Aventura", 
-        category_en: "Tourism & Adventure",
-        latlng: [25.2048, 55.2708], 
-        address_es: "Sheikh Zayed Road, Dubai", 
-        address_en: "Sheikh Zayed Road, Dubai",
-        description_es: "Experiencias únicas en el desierto. Safari, cena beduina y actividades extremas.", 
-        description_en: "Unique desert experiences. Safari, Bedouin dinner and extreme activities.",
-        phone: "+97143345678", 
-        email: "info@desertsafari.ae",
-        website: "https://desertsafari.ae",
-        whatsapp: "97150456789"
+      "logistica": {
+        "colombia": { whatsapp: "573041146300", email: "logistica@qrp2p.com", phone: "+573041146300" },
+        "usa": { whatsapp: "12125550126", email: "logistics@qrp2p.com", phone: "+12125550126" }
       },
-      { 
-        id: "BIZ05", 
-        name_es: "BOGOTÁ LEGAL & ASOCIADOS", 
-        name_en: "BOGOTA LEGAL & ASSOCIATES",
-        category_es: "Servicios Legales", 
-        category_en: "Legal Services",
-        latlng: [4.7110, -74.0721], 
-        address_es: "Calle 72 #10-34, Chapinero, Bogotá", 
-        address_en: "Calle 72 #10-34, Chapinero, Bogotá",
-        description_es: "Abogados corporativos, migratorios y propiedad intelectual.", 
-        description_en: "Corporate, immigration and intellectual property attorneys.",
-        phone: "+5717456789", 
-        email: "contacto@legalbogota.com",
-        website: "https://legalbogota.com",
-        whatsapp: "573102345678"
+      "finanzas": {
+        "colombia": { whatsapp: "573041146301", email: "finanzas@qrp2p.com", phone: "+573041146301" },
+        "usa": { whatsapp: "12125550127", email: "finance@qrp2p.com", phone: "+12125550127" }
       },
-      { 
-        id: "BIZ06", 
-        name_es: "MADRID DESIGN STUDIO", 
-        name_en: "MADRID DESIGN STUDIO",
-        category_es: "Diseño & Arquitectura", 
-        category_en: "Design & Architecture",
-        latlng: [40.4168, -3.7038], 
-        address_es: "Calle de Alcalá 123, Madrid", 
-        address_en: "Calle de Alcalá 123, Madrid",
-        description_es: "Diseño de interiores, branding y arquitectura sostenible.", 
-        description_en: "Interior design, branding and sustainable architecture.",
-        phone: "+34914567890", 
-        email: "hola@madridstudio.es",
-        website: "https://madridstudio.es",
-        whatsapp: "34612345678"
+      "dropshipping": {
+        "colombia": { whatsapp: "573041146302", email: "dropshipping@qrp2p.com", phone: "+573041146302" },
+        "usa": { whatsapp: "12125550128", email: "dropshipping@qrp2p.com", phone: "+12125550128" }
       }
+    };
+    
+    // NEGOCIOS VERIFICADOS
+    const verifiedBusinesses = [
+      { id: "BIZ01", name_es: "TECH SOLUTIONS GROUP", name_en: "TECH SOLUTIONS GROUP", category_es: "Tecnología & Software", category_en: "Technology & Software", latlng: [40.7128, -74.0060], address_es: "350 5th Ave, New York, NY 10118", address_en: "350 5th Ave, New York, NY 10118", description_es: "Desarrollo de software, ciberseguridad y consultoría IT.", description_en: "Software development, cybersecurity and IT consulting.", phone: "+12125550123", email: "contact@techsolutions.com", website: "https://techsolutions.com", whatsapp: "12125550123" },
+      { id: "BIZ02", name_es: "GREEN EARTH ORGANICS", name_en: "GREEN EARTH ORGANICS", category_es: "Alimentos Saludables", category_en: "Healthy Food", latlng: [51.5074, -0.1278], address_es: "Covent Garden, London WC2E 8RF", address_en: "Covent Garden, London WC2E 8RF", description_es: "Tienda orgánica certificada. Productos frescos, veganos y sostenibles.", description_en: "Certified organic store. Fresh, vegan and sustainable products.", phone: "+442079460123", email: "hello@greenearth.com", website: "https://greenearthorganics.co.uk", whatsapp: "447900123456" },
+      { id: "BIZ03", name_es: "TOKYO TRADING CO.", name_en: "TOKYO TRADING CO.", category_es: "Importación/Exportación", category_en: "Import/Export", latlng: [35.6895, 139.6917], address_es: "Marunouchi 2-4-1, Chiyoda City, Tokyo", address_en: "Marunouchi 2-4-1, Chiyoda City, Tokyo", description_es: "Especialistas en electrónica y componentes industriales.", description_en: "Specialists in electronics and industrial components.", phone: "+81332145678", email: "sales@tokyotrading.jp", website: "https://tokyotrading.co.jp", whatsapp: "81332145678" },
+      { id: "BIZ04", name_es: "DESERT SAFARI TOURS", name_en: "DESERT SAFARI TOURS", category_es: "Turismo & Aventura", category_en: "Tourism & Adventure", latlng: [25.2048, 55.2708], address_es: "Sheikh Zayed Road, Dubai", address_en: "Sheikh Zayed Road, Dubai", description_es: "Experiencias únicas en el desierto. Safari, cena beduina y actividades extremas.", description_en: "Unique desert experiences.", phone: "+97143345678", email: "info@desertsafari.ae", website: "https://desertsafari.ae", whatsapp: "97150456789" }
     ];
     
     const translations = { 
-      es: { 
-        buscar_placeholder: "Buscar negocios verificados en todo el mundo...", 
-        centrar: "CENTRAR", 
-        servicios: "SERVICIOS", 
-        mapa: "Mapa", 
-        satelite: "Satélite", 
-        servicios_titulo: "SERVICIOS GLOBALES",
-        view_store: "VER TIENDA",
-        info_btn: "Info"
-      },
-      en: { 
-        buscar_placeholder: "Search verified businesses worldwide...", 
-        centrar: "CENTER", 
-        servicios: "SERVICES", 
-        mapa: "Map", 
-        satelite: "Satellite", 
-        servicios_titulo: "GLOBAL SERVICES",
-        view_store: "VIEW STORE",
-        info_btn: "Info"
-      }
+      es: { buscar_placeholder: "Buscar negocios verificados en todo el mundo...", centrar: "CENTRAR", servicios: "SERVICIOS", mapa: "Mapa", satelite: "Satélite", servicios_titulo: "SERVICIOS", view_store: "VER TIENDA", seleccionar_pais: "SELECCIONAR PAÍS", detalle_servicio: "Detalle del Servicio", volver: "Volver" },
+      en: { buscar_placeholder: "Search verified businesses worldwide...", centrar: "CENTER", servicios: "SERVICES", mapa: "Map", satelite: "Satellite", servicios_titulo: "SERVICES", view_store: "VIEW STORE", seleccionar_pais: "SELECT COUNTRY", detalle_servicio: "Service Details", volver: "Back" }
     };
     
     let mapa, userMarker, marcadoresOriginales = [], currentLayer;
     function t(key) { return translations[currentLang][key] || key; }
     
-    // Generar popup para negocio con botón VER TIENDA/VIEW STORE traducido
     function generarPopupHTML(business) { 
       const name = currentLang === 'es' ? business.name_es : business.name_en;
       const category = currentLang === 'es' ? business.category_es : business.category_en;
@@ -334,62 +364,93 @@
       const address = currentLang === 'es' ? business.address_es : business.address_en;
       const storeText = t('view_store');
       const websiteUrl = business.website || (business.whatsapp ? `https://wa.me/${business.whatsapp.replace(/[^0-9]/g, '')}` : '#');
-      
       let contactButtons = '';
       if(business.website) contactButtons += `<a href="${business.website}" target="_blank" class="contact-link"><i class="fas fa-globe"></i> Web</a>`;
       if(business.whatsapp) contactButtons += `<a href="https://wa.me/${business.whatsapp.replace(/[^0-9]/g, '')}" target="_blank" class="contact-link"><i class="fab fa-whatsapp"></i> WhatsApp</a>`;
       if(business.phone) contactButtons += `<a href="tel:${business.phone}" class="contact-link"><i class="fas fa-phone"></i> Call</a>`;
       if(business.email) contactButtons += `<a href="mailto:${business.email}" class="contact-link"><i class="fas fa-envelope"></i> Email</a>`;
-      
-      return `<div class="popup-business-card" data-id="${business.id}">
-                <div class="popup-business-header">
-                  <h3>⚡ ${name}</h3>
-                  <span class="popup-business-category">${category}</span>
-                </div>
-                <div class="popup-business-info">
-                  <div class="popup-business-description">${description}</div>
-                  <div class="popup-business-address"><i class="fas fa-map-pin"></i> ${address}</div>
-                  <div class="popup-business-contact">${contactButtons}</div>
-                  <a href="${websiteUrl}" target="_blank" class="btn-view-store"><i class="fas fa-store"></i> ${storeText}</a>
-                </div>
-              </div>`; 
+      return `<div class="popup-business-card"><div class="popup-business-header"><h3>⚡ ${name}</h3><span class="popup-business-category">${category}</span></div><div class="popup-business-info"><div class="popup-business-description">${description}</div><div class="popup-business-address"><i class="fas fa-map-pin"></i> ${address}</div><div class="popup-business-contact">${contactButtons}</div><a href="${websiteUrl}" target="_blank" class="btn-view-store"><i class="fas fa-store"></i> ${storeText}</a></div></div>`; 
     }
     
     function initMap() { 
       const openStreetMapLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap' });
       mapa = L.map('mapa', { center: [20, 0], zoom: 2, zoomControl: false, layers: [openStreetMapLayer] });
       currentLayer = openStreetMapLayer;
-      
       let clusters = L.markerClusterGroup({ iconCreateFunction: cluster => L.divIcon({ html: `<div>${cluster.getChildCount()}</div>`, className: 'cluster-marcadores', iconSize: [40,40] }) }); 
       let icono = L.divIcon({ className: 'negocio-marker', html: '⚡', iconSize: [32,32], popupAnchor: [0,-16] }); 
-      
       verifiedBusinesses.forEach(business => { 
         let popup = generarPopupHTML(business); 
         let marker = L.marker(business.latlng, { icon: icono }).bindPopup(popup, { maxWidth: 380, className: 'custom-popup' }); 
         marker.datosNegocio = business; 
-        marker.datosBusqueda = `${business.name_es} ${business.name_en} ${business.category_es} ${business.category_en} ${business.description_es} ${business.description_en}`.toLowerCase(); 
+        marker.datosBusqueda = `${business.name_es} ${business.name_en} ${business.category_es} ${business.category_en}`.toLowerCase(); 
         marcadoresOriginales.push(marker); 
-        marker.on('popupopen', () => { setTimeout(() => {
-            let node = document.querySelector('.custom-popup'); 
-            if(node) { 
-              let infoSpan = node.querySelector(`.enlace-info`); 
-              if(infoSpan) infoSpan.addEventListener('click', (e) => { e.preventDefault(); abrirInfoModal(business); mapa.closePopup(); }); 
-            } 
-          }, 100); 
-        }); 
         clusters.addLayer(marker); 
       }); 
       mapa.addLayer(clusters); 
     }
     
-    function abrirInfoModal(business) {
-      let name = currentLang === 'es' ? business.name_es : business.name_en;
-      let category = currentLang === 'es' ? business.category_es : business.category_en;
-      let desc = currentLang === 'es' ? business.description_es : business.description_en;
-      let address = currentLang === 'es' ? business.address_es : business.address_en;
-      let html = `<div><strong>⚡ ${name}</strong></div><div>📁 ${category}</div><div>📍 ${address}</div><div>📝 ${desc}</div><div>📞 ${business.phone || 'N/A'}</div><div>✉️ ${business.email || 'N/A'}</div><div>🌐 <a href="${business.website}" target="_blank">${business.website}</a></div>`;
-      document.getElementById('infoContent').innerHTML = html;
-      document.getElementById('infoModal').style.display = 'flex';
+    function abrirServiciosModal() {
+      let container = document.getElementById('serviciosPrincipales');
+      container.innerHTML = '';
+      serviciosPrincipales.forEach(service => {
+        let btn = document.createElement('button');
+        btn.className = 'servicio-btn';
+        let name = currentLang === 'es' ? service.name_es : service.name_en;
+        btn.innerHTML = `<i class="fas ${service.icon}"></i> ${name}`;
+        btn.addEventListener('click', () => {
+          servicioSeleccionado = service;
+          document.getElementById('serviciosModal').style.display = 'none';
+          mostrarPaises();
+        });
+        container.appendChild(btn);
+      });
+      document.getElementById('serviciosModal').style.display = 'flex';
+    }
+    
+    function mostrarPaises() {
+      let container = document.getElementById('listaPaises');
+      container.innerHTML = '';
+      paisesDisponibles.forEach(pais => {
+        let btn = document.createElement('button');
+        btn.className = 'pais-btn';
+        let name = currentLang === 'es' ? pais.name_es : pais.name_en;
+        btn.innerHTML = `<i class="fas fa-flag"></i> ${name}`;
+        btn.addEventListener('click', () => {
+          document.getElementById('paisModal').style.display = 'none';
+          mostrarDetalleServicio(pais);
+        });
+        container.appendChild(btn);
+      });
+      document.getElementById('paisModal').style.display = 'flex';
+    }
+    
+    function mostrarDetalleServicio(pais) {
+      let servicioId = servicioSeleccionado.id;
+      let datos = serviciosPorPais[servicioId]?.[pais.id];
+      let servicioName = currentLang === 'es' ? servicioSeleccionado.name_es : servicioSeleccionado.name_en;
+      let paisName = currentLang === 'es' ? pais.name_es : pais.name_en;
+      let titulo = `${servicioName} - ${paisName}`;
+      document.getElementById('detalle-titulo').innerHTML = titulo;
+      let contenido = `
+        <div class="contact-info-card">
+          <p><strong>Contacto para ${servicioName} en ${paisName}:</strong></p>
+          <a href="https://wa.me/${datos.whatsapp}" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp: ${datos.whatsapp}</a>
+          <a href="mailto:${datos.email}"><i class="fas fa-envelope"></i> Email: ${datos.email}</a>
+          <p style="margin-top:0.8rem;"><i class="fas fa-phone"></i> Teléfono: ${datos.phone}</p>
+        </div>
+      `;
+      document.getElementById('detalle-contenido').innerHTML = contenido;
+      document.getElementById('servicioDetalleModal').style.display = 'flex';
+    }
+    
+    function volverServicios() {
+      document.getElementById('paisModal').style.display = 'none';
+      abrirServiciosModal();
+    }
+    
+    function volverPaises() {
+      document.getElementById('servicioDetalleModal').style.display = 'none';
+      mostrarPaises();
     }
     
     function updateUILanguage() {
@@ -399,107 +460,41 @@
       document.getElementById('map-text').innerText = t('mapa');
       document.getElementById('satellite-text').innerText = t('satelite');
       document.getElementById('servicios-modal-title').innerText = t('servicios_titulo');
-      // Actualizar popups con el nuevo texto del botón
-      marcadoresOriginales.forEach(marker => { 
-        let newPopup = generarPopupHTML(marker.datosNegocio); 
-        marker.bindPopup(newPopup, { maxWidth: 380, className: 'custom-popup' }); 
-      });
+      document.getElementById('pais-modal-title').innerText = t('seleccionar_pais');
+      marcadoresOriginales.forEach(marker => { marker.bindPopup(generarPopupHTML(marker.datosNegocio), { maxWidth: 380, className: 'custom-popup' }); });
     }
     
     function centrarMapaRapido() {
       if (navigator.geolocation) {
         const btn = document.getElementById('centrar-btn');
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span id="centrar-text">GETTING...</span>';
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>GETTING...</span>';
         navigator.geolocation.getCurrentPosition(
-          pos => { const { latitude, longitude } = pos.coords; if (userMarker) mapa.removeLayer(userMarker); userMarker = L.marker([latitude, longitude], { icon: L.divIcon({ className: 'user-location-marker', html: '📍', iconSize: [28, 28] }) }).addTo(mapa).bindPopup(currentLang === 'es' ? 'Tu ubicación actual' : 'Your current location'); mapa.setView([latitude, longitude], 14); btn.innerHTML = '<i class="fas fa-location-dot"></i><span id="centrar-text">'+t('centrar')+'</span>'; },
-          err => { btn.innerHTML = '<i class="fas fa-location-dot"></i><span id="centrar-text">'+t('centrar')+'</span>'; mapa.setView([20, 0], 2); alert(currentLang === 'es' ? 'No se pudo obtener tu ubicación.' : 'Could not get your location.'); }
+          pos => { const { latitude, longitude } = pos.coords; if (userMarker) mapa.removeLayer(userMarker); userMarker = L.marker([latitude, longitude], { icon: L.divIcon({ className: 'user-location-marker', html: '📍', iconSize: [28, 28] }) }).addTo(mapa).bindPopup(currentLang === 'es' ? 'Tu ubicación actual' : 'Your current location'); mapa.setView([latitude, longitude], 14); btn.innerHTML = '<i class="fas fa-location-dot"></i><span>'+t('centrar')+'</span>'; },
+          err => { btn.innerHTML = '<i class="fas fa-location-dot"></i><span>'+t('centrar')+'</span>'; mapa.setView([20, 0], 2); alert(currentLang === 'es' ? 'No se pudo obtener tu ubicación.' : 'Could not get your location.'); }
         );
       } else { mapa.setView([20, 0], 2); }
     }
     
-    function abrirServiciosModal() {
-      let container = document.getElementById('serviciosGlobales');
-      container.innerHTML = '';
-      globalServices.forEach(service => {
-        let btn = document.createElement('button');
-        btn.className = 'servicio-btn';
-        let name = currentLang === 'es' ? service.name_es : service.name_en;
-        btn.innerHTML = `<i class="fas ${service.icon}"></i> ${name}`;
-        btn.addEventListener('click', () => { window.open(service.url, '_blank'); });
-        container.appendChild(btn);
-      });
-      document.getElementById('serviciosModal').style.display = 'flex';
-    }
-    
-    function buscarNegocios(q) { 
-      let term = q.toLowerCase(); 
-      let resultados = marcadoresOriginales.filter(m => m.datosBusqueda.includes(term)); 
-      let sugerenciasDiv = document.getElementById('sugerencias-busqueda'); 
-      if(resultados.length) { 
-        sugerenciasDiv.innerHTML = ''; 
-        resultados.forEach(m => { 
-          let name = currentLang === 'es' ? m.datosNegocio.name_es : m.datosNegocio.name_en;
-          let cat = currentLang === 'es' ? m.datosNegocio.category_es : m.datosNegocio.category_en;
-          let item = document.createElement('div'); 
-          item.className = 'sugerencia-item'; 
-          item.innerHTML = `<div class="sugerencia-texto"><strong>⚡ ${name}</strong><br><small>${cat}</small></div><button class="sugerencia-boton" data-id="${m.datosNegocio.id}">${currentLang==='es'?'Ver':'View'}</button>`; 
-          let btn = item.querySelector('.sugerencia-boton'); 
-          btn.addEventListener('click', (e) => { e.stopPropagation(); abrirInfoModal(m.datosNegocio); }); 
-          item.addEventListener('click', () => { abrirInfoModal(m.datosNegocio); }); 
-          sugerenciasDiv.appendChild(item); 
-        }); 
-      } else { 
-        sugerenciasDiv.innerHTML = `<div class="sugerencia-item">❌ No verified businesses found</div>`; 
-      } 
-    }
-    
     document.addEventListener('DOMContentLoaded', () => { 
-      initMap(); 
-      updateUILanguage();
+      initMap(); updateUILanguage();
       document.getElementById('centrar-btn').addEventListener('click', centrarMapaRapido);
       document.getElementById('servicios-btn').addEventListener('click', abrirServiciosModal);
-      document.getElementById('map-btn').addEventListener('click', () => { 
-        mapa.eachLayer(layer => { if(layer instanceof L.TileLayer && layer !== currentLayer) mapa.removeLayer(layer); });
-        const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 });
-        currentLayer = osm; osm.addTo(mapa);
-        document.getElementById('map-btn').classList.add('active'); 
-        document.getElementById('satellite-btn').classList.remove('active'); 
-      }); 
-      document.getElementById('satellite-btn').addEventListener('click', () => { 
-        mapa.eachLayer(layer => { if(layer instanceof L.TileLayer && layer !== currentLayer) mapa.removeLayer(layer); });
-        const satellite = L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', { maxZoom: 20, subdomains: ['mt0','mt1','mt2','mt3'] });
-        currentLayer = satellite; satellite.addTo(mapa);
-        document.getElementById('satellite-btn').classList.add('active'); 
-        document.getElementById('map-btn').classList.remove('active'); 
-      }); 
+      document.getElementById('map-btn').addEventListener('click', () => { mapa.eachLayer(layer => { if(layer instanceof L.TileLayer && layer !== currentLayer) mapa.removeLayer(layer); }); const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }); currentLayer = osm; osm.addTo(mapa); document.getElementById('map-btn').classList.add('active'); document.getElementById('satellite-btn').classList.remove('active'); }); 
+      document.getElementById('satellite-btn').addEventListener('click', () => { mapa.eachLayer(layer => { if(layer instanceof L.TileLayer && layer !== currentLayer) mapa.removeLayer(layer); }); const satellite = L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', { maxZoom: 20, subdomains: ['mt0','mt1','mt2','mt3'] }); currentLayer = satellite; satellite.addTo(mapa); document.getElementById('satellite-btn').classList.add('active'); document.getElementById('map-btn').classList.remove('active'); }); 
       document.getElementById('closeServiciosBtn').addEventListener('click', () => document.getElementById('serviciosModal').style.display='none');
+      document.getElementById('closePaisBtn').addEventListener('click', () => document.getElementById('paisModal').style.display='none');
+      document.getElementById('closeDetalleBtn').addEventListener('click', () => document.getElementById('servicioDetalleModal').style.display='none');
+      document.getElementById('volverServiciosBtn').addEventListener('click', volverServicios);
+      document.getElementById('volverPaisesBtn').addEventListener('click', volverPaises);
       document.getElementById('closeInfoModalBtn').addEventListener('click', () => document.getElementById('infoModal').style.display='none');
-      window.addEventListener('click', (e) => { if(e.target === document.getElementById('serviciosModal')) document.getElementById('serviciosModal').style.display='none'; if(e.target === document.getElementById('infoModal')) document.getElementById('infoModal').style.display='none'; });
+      window.addEventListener('click', (e) => { if(e.target === document.getElementById('serviciosModal')) document.getElementById('serviciosModal').style.display='none'; if(e.target === document.getElementById('paisModal')) document.getElementById('paisModal').style.display='none'; if(e.target === document.getElementById('servicioDetalleModal')) document.getElementById('servicioDetalleModal').style.display='none'; });
       
       document.querySelectorAll('.lang-btn').forEach(btn => { 
-        btn.addEventListener('click', () => { 
-          document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active')); 
-          btn.classList.add('active'); 
-          currentLang = btn.getAttribute('data-lang'); 
-          updateUILanguage(); 
-          document.getElementById('buscador').value = ''; 
-          document.getElementById('sugerencias-busqueda').style.display = 'none'; 
-        }); 
+        btn.addEventListener('click', () => { document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); currentLang = btn.getAttribute('data-lang'); updateUILanguage(); }); 
       });
       
-      let inputBuscar = document.getElementById('buscador'); 
-      let buscadorTimeout;
-      inputBuscar.addEventListener('input', (e) => { 
-        clearTimeout(buscadorTimeout); 
-        let term = e.target.value.trim(); 
-        let sugDiv = document.getElementById('sugerencias-busqueda'); 
-        if(term.length < 2) { sugDiv.style.display = 'none'; return; } 
-        sugDiv.innerHTML = `<div class="sugerencia-item">🔍 Searching...</div>`; 
-        sugDiv.style.display = 'block'; 
-        buscadorTimeout = setTimeout(() => buscarNegocios(term), 300); 
-      }); 
-      inputBuscar.addEventListener('keydown', (e) => { if(e.key === 'Enter') { e.preventDefault(); let term = inputBuscar.value.trim(); if(term) buscarNegocios(term); } }); 
-      document.addEventListener('click', (e) => { if(!e.target.closest('.contenedor-buscador')) document.getElementById('sugerencias-busqueda').style.display = 'none'; }); 
+      let inputBuscar = document.getElementById('buscador'); let buscadorTimeout;
+      inputBuscar.addEventListener('input', (e) => { clearTimeout(buscadorTimeout); let term = e.target.value.trim(); let sugDiv = document.getElementById('sugerencias-busqueda'); if(term.length < 2) { sugDiv.style.display = 'none'; return; } sugDiv.innerHTML = `<div class="sugerencia-item">🔍 Searching...</div>`; sugDiv.style.display = 'block'; buscadorTimeout = setTimeout(() => { let resultados = marcadoresOriginales.filter(m => m.datosBusqueda.includes(term.toLowerCase())); sugDiv.innerHTML = ''; resultados.forEach(m => { let name = currentLang === 'es' ? m.datosNegocio.name_es : m.datosNegocio.name_en; let item = document.createElement('div'); item.className = 'sugerencia-item'; item.innerHTML = `<div class="sugerencia-texto"><strong>⚡ ${name}</strong></div><button class="sugerencia-boton">${currentLang==='es'?'Ver':'View'}</button>`; item.querySelector('.sugerencia-boton').addEventListener('click', () => { m.openPopup(); mapa.setView(m.getLatLng(), 14); sugDiv.style.display = 'none'; }); sugDiv.appendChild(item); }); if(resultados.length===0) sugDiv.innerHTML = `<div class="sugerencia-item">❌ No results</div>`; }, 300); }); 
     });
   </script>
 </body>
