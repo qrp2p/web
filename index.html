@@ -131,24 +131,16 @@
     .gm-style .gm-style-iw-d { overflow: auto !important; max-height: none !important; padding: 0 !important; }
     .gm-style-iw-tc { display: none; }
     
-    /* Modales y otros estilos */
-    .lightbox-overlay, .modal-overlay, .terms-modal, .servicios-modal, .info-modal { display: none; position: fixed; background-color: rgba(0,0,0,0.85); z-index: 10000; justify-content: center; align-items: center; }
-    .modal-container { max-width: 580px; width: 100%; max-height: 90vh; overflow-y: auto; border-radius: 28px; background: white; }
-    .close-modal { position: sticky; top: 0; right: 0; display: flex; justify-content: flex-end; padding: 0.8rem 1rem; background: white; border-bottom: 1px solid #eee; }
-    .close-modal button { background: #f0f0f0; border: none; font-size: 1.4rem; cursor: pointer; width: 36px; height: 36px; border-radius: 50%; }
-    .form-panel { padding: 1.2rem 1.5rem; }
-    .step-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem; }
-    .form-group { margin-bottom: 1rem; }
-    label { display: block; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.3rem; color: #333; }
-    input, select, textarea { width: 100%; padding: 0.7rem 0.9rem; font-size: 15px; border: 1.5px solid #e0e0e0; border-radius: 16px; font-family: inherit; user-select: text; }
-    .btn-submit { width: 100%; padding: 0.8rem; font-size: 0.9rem; font-weight: 700; background: #000000; color: white; border: none; border-radius: 50px; cursor: pointer; margin-top: 1rem; }
-    .servicios-container { background: white; border-radius: 28px; width: 90%; max-width: 480px; padding: 1.2rem; }
+    /* Modales */
+    .servicios-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); z-index: 2500; justify-content: center; align-items: center; }
+    .servicios-container { background: white; border-radius: 28px; width: 90%; max-width: 480px; max-height: 80vh; overflow-y: auto; padding: 1.2rem; }
     .servicios-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eaeaea; padding-bottom: 0.6rem; margin-bottom: 1rem; }
     .servicios-botones { display: flex; flex-direction: column; gap: 0.7rem; }
-    .servicio-btn { background: #000000; color: white; border: none; padding: 0.8rem; border-radius: 50px; font-size: 0.9rem; font-weight: 600; cursor: pointer; text-align: center; font-family: 'Libre Baskerville', serif; }
+    .servicio-btn { background: #000000; color: white; border: none; padding: 0.8rem; border-radius: 50px; font-size: 0.9rem; font-weight: 600; cursor: pointer; text-align: center; font-family: 'Libre Baskerville', serif; transition: all 0.2s; }
+    .servicio-btn:hover { background: #333333; transform: scale(0.98); }
+    .info-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); z-index: 2600; justify-content: center; align-items: center; }
     .info-container { background: white; border-radius: 28px; width: 90%; max-width: 500px; max-height: 70vh; overflow-y: auto; padding: 1.5rem; }
-    .row-2cols { display: flex; gap: 1rem; }
-    @media (max-width: 680px) { .popup-business-card { width: 280px; } .row-2cols { flex-direction: column; gap: 0; } }
+    @media (max-width: 680px) { .popup-business-card { width: 280px; } }
   </style>
 </head>
 <body>
@@ -174,8 +166,26 @@
     <div id="mapa"></div>
   </div>
 
-  <div id="serviciosModal" class="servicios-modal"><div class="servicios-container"><div class="servicios-header"><h2 id="servicios-modal-title">GLOBAL SERVICES</h2><button class="close-servicios" id="closeServiciosBtn">&times;</button></div><div id="serviciosGlobales" class="servicios-botones"></div></div></div>
-  <div id="infoModal" class="info-modal"><div class="info-container"><div class="servicios-header"><h2>Business Information</h2><button id="closeInfoModalBtn" style="background:transparent; border:none; font-size:1.8rem; cursor:pointer;">&times;</button></div><div id="infoContent"></div></div></div>
+  <!-- Modal de Servicios Globales -->
+  <div id="serviciosModal" class="servicios-modal">
+    <div class="servicios-container">
+      <div class="servicios-header">
+        <h2 id="servicios-modal-title">GLOBAL SERVICES</h2>
+        <button id="closeServiciosBtn" style="background:transparent; border:none; font-size:1.8rem; cursor:pointer;">&times;</button>
+      </div>
+      <div id="serviciosGlobales" class="servicios-botones"></div>
+    </div>
+  </div>
+  
+  <div id="infoModal" class="info-modal">
+    <div class="info-container">
+      <div class="servicios-header">
+        <h2>Business Information</h2>
+        <button id="closeInfoModalBtn" style="background:transparent; border:none; font-size:1.8rem; cursor:pointer;">&times;</button>
+      </div>
+      <div id="infoContent"></div>
+    </div>
+  </div>
 
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
@@ -183,14 +193,14 @@
     const WHATSAPP_NUMBER = "573041146297";
     let currentLang = 'en';
     
-    // SERVICIOS GLOBALES
+    // SERVICIOS GLOBALES ACTUALIZADOS: Registrar Comercio, Marketing, Contacto/Agente WhatsApp
     const globalServices = [
       { name_en: "REGISTER BUSINESS", name_es: "REGISTRAR COMERCIO", url: "https://qrp2p.com/register", icon: "fa-building" },
-      { name_en: "CONTACT US", name_es: "CONTACTO", url: "https://qrp2p.com/contact", icon: "fa-envelope" },
-      { name_en: "WHATSAPP AGENT", name_es: "AGENTE WHATSAPP", url: `https://wa.me/${WHATSAPP_NUMBER}`, icon: "fa-whatsapp" }
+      { name_en: "MARKETING", name_es: "MARKETING", url: "https://qrp2p.com/marketing", icon: "fa-chart-line" },
+      { name_en: "CONTACT / WHATSAPP AGENT", name_es: "CONTACTO / AGENTE WHATSAPP", url: `https://wa.me/${WHATSAPP_NUMBER}`, icon: "fa-whatsapp" }
     ];
     
-    // NEGOCIOS VERIFICADOS - Sin inmuebles, ahora son negocios
+    // NEGOCIOS VERIFICADOS - Datos globales
     const verifiedBusinesses = [
       { 
         id: "BIZ01", 
@@ -206,8 +216,7 @@
         phone: "+12125550123", 
         email: "contact@techsolutions.com",
         website: "https://techsolutions.com",
-        whatsapp: "12125550123",
-        social: { instagram: "@techsolutions", linkedin: "techsolutions" }
+        whatsapp: "12125550123"
       },
       { 
         id: "BIZ02", 
@@ -223,8 +232,7 @@
         phone: "+442079460123", 
         email: "hello@greenearth.com",
         website: "https://greenearthorganics.co.uk",
-        whatsapp: "447900123456",
-        social: { instagram: "@greenearth" }
+        whatsapp: "447900123456"
       },
       { 
         id: "BIZ03", 
@@ -240,8 +248,7 @@
         phone: "+81332145678", 
         email: "sales@tokyotrading.jp",
         website: "https://tokyotrading.co.jp",
-        whatsapp: "81332145678",
-        social: { linkedin: "tokyo-trading" }
+        whatsapp: "81332145678"
       },
       { 
         id: "BIZ04", 
@@ -257,8 +264,7 @@
         phone: "+97143345678", 
         email: "info@desertsafari.ae",
         website: "https://desertsafari.ae",
-        whatsapp: "97150456789",
-        social: { instagram: "@desertsafari" }
+        whatsapp: "97150456789"
       },
       { 
         id: "BIZ05", 
@@ -274,8 +280,7 @@
         phone: "+5717456789", 
         email: "contacto@legalbogota.com",
         website: "https://legalbogota.com",
-        whatsapp: "573102345678",
-        social: { linkedin: "bogota-legal" }
+        whatsapp: "573102345678"
       },
       { 
         id: "BIZ06", 
@@ -291,25 +296,44 @@
         phone: "+34914567890", 
         email: "hola@madridstudio.es",
         website: "https://madridstudio.es",
-        whatsapp: "34612345678",
-        social: { instagram: "@madridstudio" }
+        whatsapp: "34612345678"
       }
     ];
     
     const translations = { 
-      es: { buscar_placeholder: "Buscar negocios verificados en todo el mundo...", centrar: "CENTRAR", servicios: "SERVICIOS", mapa: "Mapa", satelite: "Satélite", servicios_titulo: "SERVICIOS GLOBALES", visit_btn: "Contactar", info_btn: "Info" },
-      en: { buscar_placeholder: "Search verified businesses worldwide...", centrar: "CENTER", servicios: "SERVICES", mapa: "Map", satelite: "Satellite", servicios_titulo: "GLOBAL SERVICES", visit_btn: "Contact", info_btn: "Info" }
+      es: { 
+        buscar_placeholder: "Buscar negocios verificados en todo el mundo...", 
+        centrar: "CENTRAR", 
+        servicios: "SERVICIOS", 
+        mapa: "Mapa", 
+        satelite: "Satélite", 
+        servicios_titulo: "SERVICIOS GLOBALES",
+        view_store: "VER TIENDA",
+        info_btn: "Info"
+      },
+      en: { 
+        buscar_placeholder: "Search verified businesses worldwide...", 
+        centrar: "CENTER", 
+        servicios: "SERVICES", 
+        mapa: "Map", 
+        satelite: "Satellite", 
+        servicios_titulo: "GLOBAL SERVICES",
+        view_store: "VIEW STORE",
+        info_btn: "Info"
+      }
     };
     
     let mapa, userMarker, marcadoresOriginales = [], currentLayer;
     function t(key) { return translations[currentLang][key] || key; }
     
-    // Generar popup para negocio
+    // Generar popup para negocio con botón VER TIENDA/VIEW STORE traducido
     function generarPopupHTML(business) { 
       const name = currentLang === 'es' ? business.name_es : business.name_en;
       const category = currentLang === 'es' ? business.category_es : business.category_en;
       const description = currentLang === 'es' ? business.description_es : business.description_en;
       const address = currentLang === 'es' ? business.address_es : business.address_en;
+      const storeText = t('view_store');
+      const websiteUrl = business.website || (business.whatsapp ? `https://wa.me/${business.whatsapp.replace(/[^0-9]/g, '')}` : '#');
       
       let contactButtons = '';
       if(business.website) contactButtons += `<a href="${business.website}" target="_blank" class="contact-link"><i class="fas fa-globe"></i> Web</a>`;
@@ -326,7 +350,7 @@
                   <div class="popup-business-description">${description}</div>
                   <div class="popup-business-address"><i class="fas fa-map-pin"></i> ${address}</div>
                   <div class="popup-business-contact">${contactButtons}</div>
-                  <a href="${business.website || business.whatsapp ? `https://wa.me/${business.whatsapp || WHATSAPP_NUMBER}` : '#'}" target="_blank" class="btn-view-store"><i class="fas fa-store"></i> VER TIENDA</a>
+                  <a href="${websiteUrl}" target="_blank" class="btn-view-store"><i class="fas fa-store"></i> ${storeText}</a>
                 </div>
               </div>`; 
     }
@@ -348,7 +372,6 @@
         marker.on('popupopen', () => { setTimeout(() => {
             let node = document.querySelector('.custom-popup'); 
             if(node) { 
-              // No se necesita lógica de imágenes, solo el botón VER TIENDA ya tiene href
               let infoSpan = node.querySelector(`.enlace-info`); 
               if(infoSpan) infoSpan.addEventListener('click', (e) => { e.preventDefault(); abrirInfoModal(business); mapa.closePopup(); }); 
             } 
@@ -376,6 +399,7 @@
       document.getElementById('map-text').innerText = t('mapa');
       document.getElementById('satellite-text').innerText = t('satelite');
       document.getElementById('servicios-modal-title').innerText = t('servicios_titulo');
+      // Actualizar popups con el nuevo texto del botón
       marcadoresOriginales.forEach(marker => { 
         let newPopup = generarPopupHTML(marker.datosNegocio); 
         marker.bindPopup(newPopup, { maxWidth: 380, className: 'custom-popup' }); 
