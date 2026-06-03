@@ -251,7 +251,7 @@
   </div>
 
   <!-- Cargar Google Maps API -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places,marker&callback=initMap" async defer></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=initMap" async defer></script>
   
   <script>
     const WHATSAPP_NUMBER = "573041146297";
@@ -259,7 +259,7 @@
     let paisSeleccionado = null;
     let mapa, userMarker, marcadores = [], infoWindow, autocomplete;
     
-    // PAÍSES DISPONIBLES
+    // PAÍSES DISPONIBLES (se pueden agregar más)
     const paisesDisponibles = [
       { id: "colombia", name_en: "Colombia", name_es: "Colombia", code: "CO" },
       { id: "usa", name_en: "United States", name_es: "Estados Unidos", code: "US" }
@@ -275,17 +275,35 @@
       { id: "dropshipping", name_en: "DROPSHIPPING", name_es: "DROPSHIPPING", icon: "fa-boxes" }
     ];
     
-    // URLs de redirección
+    // URLs de redirección para cada servicio y país
     const urlsRedireccion = {
-      "plan-anual": { "colombia": "https://qrp2p.com/plan-anual/colombia", "usa": "https://qrp2p.com/plan-anual/usa" },
-      "administracion": { "colombia": "https://qrp2p.com/administracion/colombia", "usa": "https://qrp2p.com/administracion/usa" },
-      "marketing": { "colombia": "https://qrp2p.com/marketing/colombia", "usa": "https://qrp2p.com/marketing/usa" },
-      "logistica": { "colombia": "https://qrp2p.com/logistica/colombia", "usa": "https://qrp2p.com/logistica/usa" },
-      "finanzas": { "colombia": "https://qrp2p.com/finanzas/colombia", "usa": "https://qrp2p.com/finanzas/usa" },
-      "dropshipping": { "colombia": "https://qrp2p.com/dropshipping/colombia", "usa": "https://qrp2p.com/dropshipping/usa" }
+      "plan-anual": {
+        "colombia": "https://qrp2p.com/plan-anual/colombia",
+        "usa": "https://qrp2p.com/plan-anual/usa"
+      },
+      "administracion": {
+        "colombia": "https://qrp2p.com/administracion/colombia",
+        "usa": "https://qrp2p.com/administracion/usa"
+      },
+      "marketing": {
+        "colombia": "https://qrp2p.com/marketing/colombia",
+        "usa": "https://qrp2p.com/marketing/usa"
+      },
+      "logistica": {
+        "colombia": "https://qrp2p.com/logistica/colombia",
+        "usa": "https://qrp2p.com/logistica/usa"
+      },
+      "finanzas": {
+        "colombia": "https://qrp2p.com/finanzas/colombia",
+        "usa": "https://qrp2p.com/finanzas/usa"
+      },
+      "dropshipping": {
+        "colombia": "https://qrp2p.com/dropshipping/colombia",
+        "usa": "https://qrp2p.com/dropshipping/usa"
+      }
     };
     
-    // NEGOCIOS VERIFICADOS - SOLO COLOMBIA
+    // NEGOCIOS VERIFICADOS - SOLO COLOMBIA (2 en Bogotá, 1 en Cali)
     const verifiedBusinesses = [
       { 
         id: "WSC01", 
@@ -377,18 +395,17 @@
       
       // Crear marcadores personalizados con ícono de rayo
       verifiedBusinesses.forEach(business => {
-        const marker = new google.maps.Marker({
+        // Crear un div personalizado para el marcador con emoji de rayo
+        const markerDiv = document.createElement('div');
+        markerDiv.innerHTML = '⚡';
+        markerDiv.style.fontSize = '28px';
+        markerDiv.style.cursor = 'pointer';
+        markerDiv.style.filter = 'drop-shadow(0 2px 2px rgba(0,0,0,0.3))';
+        
+        const marker = new google.maps.marker.AdvancedMarkerElement({
           position: business.latlng,
           map: mapa,
-          icon: {
-            path: 'M12 2L2 22h20L12 2z M12 6l6 14H6l6-14z',
-            fillColor: '#FFD700',
-            fillOpacity: 1,
-            strokeColor: '#000000',
-            strokeWeight: 1.5,
-            scale: 1.2,
-            anchor: new google.maps.Point(12, 22)
-          },
+          content: markerDiv,
           title: business.name_es
         });
         
@@ -398,7 +415,7 @@
         
         marker.addListener('click', () => {
           infoWindow.setContent(generarPopupHTML(business));
-          infoWindow.open(mapa, marker);
+          infoWindow.open({ anchor: marker, map: mapa });
         });
       });
       
@@ -449,7 +466,7 @@
           item.className = 'sugerencia-item';
           item.innerHTML = `<div class="sugerencia-texto"><strong>⚡ ${name}</strong><br><small>${business.category_es}</small></div><button class="sugerencia-boton">${currentLang==='es'?'Ver':'View'}</button>`;
           item.querySelector('.sugerencia-boton').addEventListener('click', () => {
-            mapa.setCenter(marker.getPosition());
+            mapa.setCenter(marker.position);
             mapa.setZoom(16);
             google.maps.event.trigger(marker, 'click');
             sugerenciasDiv.style.display = 'none';
@@ -491,8 +508,11 @@
         btn.innerHTML = `<i class="fas ${servicio.icon}"></i> ${name}`;
         btn.addEventListener('click', () => {
           let url = urlsRedireccion[servicio.id]?.[paisSeleccionado.id];
-          if(url) window.open(url, '_blank');
-          else window.open('https://qrp2p.com', '_blank');
+          if(url) {
+            window.open(url, '_blank');
+          } else {
+            window.open('https://qrp2p.com', '_blank');
+          }
           document.getElementById('servicioModal').style.display = 'none';
         });
         container.appendChild(btn);
@@ -515,18 +535,16 @@
             mapa.setCenter(userLocation);
             mapa.setZoom(15);
             if (userMarker) userMarker.setMap(null);
-            userMarker = new google.maps.Marker({
+            
+            const userMarkerDiv = document.createElement('div');
+            userMarkerDiv.innerHTML = '📍';
+            userMarkerDiv.style.fontSize = '28px';
+            userMarkerDiv.style.filter = 'drop-shadow(0 2px 2px rgba(0,0,0,0.3))';
+            
+            userMarker = new google.maps.marker.AdvancedMarkerElement({
               position: userLocation,
               map: mapa,
-              icon: {
-                path: 'M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z',
-                fillColor: '#4285F4',
-                fillOpacity: 1,
-                strokeColor: '#ffffff',
-                strokeWeight: 2,
-                scale: 1,
-                anchor: new google.maps.Point(12, 22)
-              },
+              content: userMarkerDiv,
               title: currentLang === 'es' ? 'Tu ubicación' : 'Your location'
             });
             btn.innerHTML = '<i class="fas fa-location-dot"></i><span>'+t('centrar')+'</span>';
@@ -565,7 +583,11 @@
       document.getElementById('volverPaisesBtn').addEventListener('click', volverPaises);
       document.getElementById('closeInfoModalBtn').addEventListener('click', () => document.getElementById('infoModal').style.display='none');
       window.addEventListener('click', (e) => { if(e.target === document.getElementById('paisModal')) document.getElementById('paisModal').style.display='none'; if(e.target === document.getElementById('servicioModal')) document.getElementById('servicioModal').style.display='none'; });
-      document.querySelectorAll('.lang-btn').forEach(btn => { btn.addEventListener('click', () => { document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); currentLang = btn.getAttribute('data-lang'); updateUILanguage(); }); });
+      
+      document.querySelectorAll('.lang-btn').forEach(btn => { 
+        btn.addEventListener('click', () => { document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); currentLang = btn.getAttribute('data-lang'); updateUILanguage(); }); 
+      });
+      
       document.addEventListener('click', (e) => { if(!e.target.closest('.contenedor-buscador')) document.getElementById('sugerencias-busqueda').style.display = 'none'; });
     });
   </script>
