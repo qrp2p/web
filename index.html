@@ -132,7 +132,7 @@
     .gm-style-iw-tc { display: none; }
     
     /* Modales de Servicios */
-    .servicios-modal, .pais-modal, .servicio-detalle-modal {
+    .pais-modal, .servicio-modal {
       display: none;
       position: fixed;
       top: 0;
@@ -144,7 +144,7 @@
       justify-content: center;
       align-items: center;
     }
-    .servicios-container, .pais-container, .detalle-container {
+    .pais-container, .servicio-container {
       background: white;
       border-radius: 28px;
       width: 90%;
@@ -166,7 +166,7 @@
       flex-direction: column;
       gap: 0.7rem;
     }
-    .servicio-btn, .pais-btn {
+    .pais-btn, .servicio-item-btn {
       background: #000000;
       color: white;
       border: none;
@@ -179,7 +179,7 @@
       font-family: 'Libre Baskerville', serif;
       transition: all 0.2s;
     }
-    .servicio-btn:hover, .pais-btn:hover { background: #333333; transform: scale(0.98); }
+    .pais-btn:hover, .servicio-item-btn:hover { background: #333333; transform: scale(0.98); }
     .info-modal {
       display: none;
       position: fixed;
@@ -200,23 +200,6 @@
       max-height: 70vh;
       overflow-y: auto;
       padding: 1.5rem;
-    }
-    .contact-info-card {
-      background: #f8f9fa;
-      border-radius: 20px;
-      padding: 1rem;
-      margin-top: 1rem;
-      text-align: center;
-    }
-    .contact-info-card a {
-      display: inline-block;
-      margin: 0.5rem;
-      padding: 0.5rem 1rem;
-      background: #25D366;
-      color: #000;
-      border-radius: 50px;
-      text-decoration: none;
-      font-weight: bold;
     }
     @media (max-width: 680px) { .popup-business-card { width: 280px; } }
   </style>
@@ -244,18 +227,7 @@
     <div id="mapa"></div>
   </div>
 
-  <!-- Modal de Servicios Principales -->
-  <div id="serviciosModal" class="servicios-modal">
-    <div class="servicios-container">
-      <div class="servicios-header">
-        <h2 id="servicios-modal-title">SERVICIOS</h2>
-        <button id="closeServiciosBtn" style="background:transparent; border:none; font-size:1.8rem; cursor:pointer;">&times;</button>
-      </div>
-      <div id="serviciosPrincipales" class="servicios-botones"></div>
-    </div>
-  </div>
-
-  <!-- Modal de Selección de País -->
+  <!-- Modal de Selección de País (PRIMERO) -->
   <div id="paisModal" class="pais-modal">
     <div class="pais-container">
       <div class="servicios-header">
@@ -263,19 +235,18 @@
         <button id="closePaisBtn" style="background:transparent; border:none; font-size:1.8rem; cursor:pointer;">&times;</button>
       </div>
       <div id="listaPaises" class="servicios-botones"></div>
-      <button id="volverServiciosBtn" class="servicio-btn" style="background:#555; margin-top:1rem;">← Volver a Servicios</button>
     </div>
   </div>
 
-  <!-- Modal de Detalle del Servicio por País -->
-  <div id="servicioDetalleModal" class="servicio-detalle-modal">
-    <div class="detalle-container">
+  <!-- Modal de Selección de Servicio (SEGUNDO) -->
+  <div id="servicioModal" class="servicio-modal">
+    <div class="servicio-container">
       <div class="servicios-header">
-        <h2 id="detalle-titulo">Detalle del Servicio</h2>
-        <button id="closeDetalleBtn" style="background:transparent; border:none; font-size:1.8rem; cursor:pointer;">&times;</button>
+        <h2 id="servicio-modal-title">SELECCIONAR SERVICIO</h2>
+        <button id="closeServicioBtn" style="background:transparent; border:none; font-size:1.8rem; cursor:pointer;">&times;</button>
       </div>
-      <div id="detalle-contenido"></div>
-      <button id="volverPaisesBtn" class="servicio-btn" style="background:#555; margin-top:1rem;">← Volver a Países</button>
+      <div id="listaServicios" class="servicios-botones"></div>
+      <button id="volverPaisesBtn" class="servicio-item-btn" style="background:#555; margin-top:1rem;">← Volver a Países</button>
     </div>
   </div>
   
@@ -294,17 +265,7 @@
   <script>
     const WHATSAPP_NUMBER = "573041146297";
     let currentLang = 'en';
-    let servicioSeleccionado = null;
-    
-    // SERVICIOS PRINCIPALES (6 servicios)
-    const serviciosPrincipales = [
-      { id: "plan_anual", name_en: "ANNUAL PLAN", name_es: "PLAN ANUAL", icon: "fa-calendar-alt" },
-      { id: "administracion", name_en: "ADMINISTRATION", name_es: "ADMINISTRACIÓN", icon: "fa-building" },
-      { id: "marketing", name_en: "MARKETING", name_es: "MARKETING", icon: "fa-chart-line" },
-      { id: "logistica", name_en: "LOGISTICS", name_es: "LOGÍSTICA", icon: "fa-truck" },
-      { id: "finanzas", name_en: "FINANCE", name_es: "FINANZAS", icon: "fa-coins" },
-      { id: "dropshipping", name_en: "DROPSHIPPING", name_es: "DROPSHIPPING", icon: "fa-boxes" }
-    ];
+    let paisSeleccionado = null;
     
     // PAÍSES DISPONIBLES (se pueden agregar más)
     const paisesDisponibles = [
@@ -313,31 +274,41 @@
       // Aquí se pueden agregar más países fácilmente
     ];
     
-    // Datos de contacto para cada servicio en cada país
-    const serviciosPorPais = {
-      "plan_anual": {
-        "colombia": { whatsapp: "573041146297", email: "plananual@qrp2p.com", phone: "+573041146297" },
-        "usa": { whatsapp: "12125550123", email: "annualplan@qrp2p.com", phone: "+12125550123" }
+    // SERVICIOS (6 servicios)
+    const serviciosLista = [
+      { id: "plan-anual", name_en: "ANNUAL PLAN", name_es: "PLAN ANUAL", icon: "fa-calendar-alt" },
+      { id: "administracion", name_en: "ADMINISTRATION", name_es: "ADMINISTRACIÓN", icon: "fa-building" },
+      { id: "marketing", name_en: "MARKETING", name_es: "MARKETING", icon: "fa-chart-line" },
+      { id: "logistica", name_en: "LOGISTICS", name_es: "LOGÍSTICA", icon: "fa-truck" },
+      { id: "finanzas", name_en: "FINANCE", name_es: "FINANZAS", icon: "fa-coins" },
+      { id: "dropshipping", name_en: "DROPSHIPPING", name_es: "DROPSHIPPING", icon: "fa-boxes" }
+    ];
+    
+    // URLs de redirección para cada servicio y país
+    const urlsRedireccion = {
+      "plan-anual": {
+        "colombia": "https://qrp2p.com/plan-anual/colombia",
+        "usa": "https://qrp2p.com/plan-anual/usa"
       },
       "administracion": {
-        "colombia": { whatsapp: "573041146298", email: "administracion@qrp2p.com", phone: "+573041146298" },
-        "usa": { whatsapp: "12125550124", email: "admin@qrp2p.com", phone: "+12125550124" }
+        "colombia": "https://qrp2p.com/administracion/colombia",
+        "usa": "https://qrp2p.com/administracion/usa"
       },
       "marketing": {
-        "colombia": { whatsapp: "573041146299", email: "marketing@qrp2p.com", phone: "+573041146299" },
-        "usa": { whatsapp: "12125550125", email: "marketing@qrp2p.com", phone: "+12125550125" }
+        "colombia": "https://qrp2p.com/marketing/colombia",
+        "usa": "https://qrp2p.com/marketing/usa"
       },
       "logistica": {
-        "colombia": { whatsapp: "573041146300", email: "logistica@qrp2p.com", phone: "+573041146300" },
-        "usa": { whatsapp: "12125550126", email: "logistics@qrp2p.com", phone: "+12125550126" }
+        "colombia": "https://qrp2p.com/logistica/colombia",
+        "usa": "https://qrp2p.com/logistica/usa"
       },
       "finanzas": {
-        "colombia": { whatsapp: "573041146301", email: "finanzas@qrp2p.com", phone: "+573041146301" },
-        "usa": { whatsapp: "12125550127", email: "finance@qrp2p.com", phone: "+12125550127" }
+        "colombia": "https://qrp2p.com/finanzas/colombia",
+        "usa": "https://qrp2p.com/finanzas/usa"
       },
       "dropshipping": {
-        "colombia": { whatsapp: "573041146302", email: "dropshipping@qrp2p.com", phone: "+573041146302" },
-        "usa": { whatsapp: "12125550128", email: "dropshipping@qrp2p.com", phone: "+12125550128" }
+        "colombia": "https://qrp2p.com/dropshipping/colombia",
+        "usa": "https://qrp2p.com/dropshipping/usa"
       }
     };
     
@@ -350,8 +321,8 @@
     ];
     
     const translations = { 
-      es: { buscar_placeholder: "Buscar negocios verificados en todo el mundo...", centrar: "CENTRAR", servicios: "SERVICIOS", mapa: "Mapa", satelite: "Satélite", servicios_titulo: "SERVICIOS", view_store: "VER TIENDA", seleccionar_pais: "SELECCIONAR PAÍS", detalle_servicio: "Detalle del Servicio", volver: "Volver" },
-      en: { buscar_placeholder: "Search verified businesses worldwide...", centrar: "CENTER", servicios: "SERVICES", mapa: "Map", satelite: "Satellite", servicios_titulo: "SERVICES", view_store: "VIEW STORE", seleccionar_pais: "SELECT COUNTRY", detalle_servicio: "Service Details", volver: "Back" }
+      es: { buscar_placeholder: "Buscar negocios verificados en todo el mundo...", centrar: "CENTRAR", servicios: "SERVICIOS", mapa: "Mapa", satelite: "Satélite", seleccionar_pais: "SELECCIONAR PAÍS", seleccionar_servicio: "SELECCIONAR SERVICIO", view_store: "VER TIENDA" },
+      en: { buscar_placeholder: "Search verified businesses worldwide...", centrar: "CENTER", servicios: "SERVICES", mapa: "Map", satelite: "Satellite", seleccionar_pais: "SELECT COUNTRY", seleccionar_servicio: "SELECT SERVICE", view_store: "VIEW STORE" }
     };
     
     let mapa, userMarker, marcadoresOriginales = [], currentLayer;
@@ -389,24 +360,7 @@
       mapa.addLayer(clusters); 
     }
     
-    function abrirServiciosModal() {
-      let container = document.getElementById('serviciosPrincipales');
-      container.innerHTML = '';
-      serviciosPrincipales.forEach(service => {
-        let btn = document.createElement('button');
-        btn.className = 'servicio-btn';
-        let name = currentLang === 'es' ? service.name_es : service.name_en;
-        btn.innerHTML = `<i class="fas ${service.icon}"></i> ${name}`;
-        btn.addEventListener('click', () => {
-          servicioSeleccionado = service;
-          document.getElementById('serviciosModal').style.display = 'none';
-          mostrarPaises();
-        });
-        container.appendChild(btn);
-      });
-      document.getElementById('serviciosModal').style.display = 'flex';
-    }
-    
+    // PRIMERO: Mostrar países
     function mostrarPaises() {
       let container = document.getElementById('listaPaises');
       container.innerHTML = '';
@@ -416,40 +370,43 @@
         let name = currentLang === 'es' ? pais.name_es : pais.name_en;
         btn.innerHTML = `<i class="fas fa-flag"></i> ${name}`;
         btn.addEventListener('click', () => {
+          paisSeleccionado = pais;
           document.getElementById('paisModal').style.display = 'none';
-          mostrarDetalleServicio(pais);
+          mostrarServicios();
         });
         container.appendChild(btn);
       });
       document.getElementById('paisModal').style.display = 'flex';
     }
     
-    function mostrarDetalleServicio(pais) {
-      let servicioId = servicioSeleccionado.id;
-      let datos = serviciosPorPais[servicioId]?.[pais.id];
-      let servicioName = currentLang === 'es' ? servicioSeleccionado.name_es : servicioSeleccionado.name_en;
-      let paisName = currentLang === 'es' ? pais.name_es : pais.name_en;
-      let titulo = `${servicioName} - ${paisName}`;
-      document.getElementById('detalle-titulo').innerHTML = titulo;
-      let contenido = `
-        <div class="contact-info-card">
-          <p><strong>Contacto para ${servicioName} en ${paisName}:</strong></p>
-          <a href="https://wa.me/${datos.whatsapp}" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp: ${datos.whatsapp}</a>
-          <a href="mailto:${datos.email}"><i class="fas fa-envelope"></i> Email: ${datos.email}</a>
-          <p style="margin-top:0.8rem;"><i class="fas fa-phone"></i> Teléfono: ${datos.phone}</p>
-        </div>
-      `;
-      document.getElementById('detalle-contenido').innerHTML = contenido;
-      document.getElementById('servicioDetalleModal').style.display = 'flex';
-    }
-    
-    function volverServicios() {
-      document.getElementById('paisModal').style.display = 'none';
-      abrirServiciosModal();
+    // SEGUNDO: Mostrar servicios según el país seleccionado
+    function mostrarServicios() {
+      let container = document.getElementById('listaServicios');
+      container.innerHTML = '';
+      serviciosLista.forEach(servicio => {
+        let btn = document.createElement('button');
+        btn.className = 'servicio-item-btn';
+        let name = currentLang === 'es' ? servicio.name_es : servicio.name_en;
+        btn.innerHTML = `<i class="fas ${servicio.icon}"></i> ${name}`;
+        btn.addEventListener('click', () => {
+          // Redirigir a la URL específica según servicio y país
+          let url = urlsRedireccion[servicio.id]?.[paisSeleccionado.id];
+          if(url) {
+            window.open(url, '_blank');
+          } else {
+            // Fallback: redirigir a la página principal
+            window.open('https://qrp2p.com', '_blank');
+          }
+          // Cerrar el modal después de redirigir
+          document.getElementById('servicioModal').style.display = 'none';
+        });
+        container.appendChild(btn);
+      });
+      document.getElementById('servicioModal').style.display = 'flex';
     }
     
     function volverPaises() {
-      document.getElementById('servicioDetalleModal').style.display = 'none';
+      document.getElementById('servicioModal').style.display = 'none';
       mostrarPaises();
     }
     
@@ -459,8 +416,8 @@
       document.getElementById('servicios-text').innerText = t('servicios');
       document.getElementById('map-text').innerText = t('mapa');
       document.getElementById('satellite-text').innerText = t('satelite');
-      document.getElementById('servicios-modal-title').innerText = t('servicios_titulo');
       document.getElementById('pais-modal-title').innerText = t('seleccionar_pais');
+      document.getElementById('servicio-modal-title').innerText = t('seleccionar_servicio');
       marcadoresOriginales.forEach(marker => { marker.bindPopup(generarPopupHTML(marker.datosNegocio), { maxWidth: 380, className: 'custom-popup' }); });
     }
     
@@ -478,16 +435,14 @@
     document.addEventListener('DOMContentLoaded', () => { 
       initMap(); updateUILanguage();
       document.getElementById('centrar-btn').addEventListener('click', centrarMapaRapido);
-      document.getElementById('servicios-btn').addEventListener('click', abrirServiciosModal);
+      document.getElementById('servicios-btn').addEventListener('click', mostrarPaises);
       document.getElementById('map-btn').addEventListener('click', () => { mapa.eachLayer(layer => { if(layer instanceof L.TileLayer && layer !== currentLayer) mapa.removeLayer(layer); }); const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }); currentLayer = osm; osm.addTo(mapa); document.getElementById('map-btn').classList.add('active'); document.getElementById('satellite-btn').classList.remove('active'); }); 
       document.getElementById('satellite-btn').addEventListener('click', () => { mapa.eachLayer(layer => { if(layer instanceof L.TileLayer && layer !== currentLayer) mapa.removeLayer(layer); }); const satellite = L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', { maxZoom: 20, subdomains: ['mt0','mt1','mt2','mt3'] }); currentLayer = satellite; satellite.addTo(mapa); document.getElementById('satellite-btn').classList.add('active'); document.getElementById('map-btn').classList.remove('active'); }); 
-      document.getElementById('closeServiciosBtn').addEventListener('click', () => document.getElementById('serviciosModal').style.display='none');
       document.getElementById('closePaisBtn').addEventListener('click', () => document.getElementById('paisModal').style.display='none');
-      document.getElementById('closeDetalleBtn').addEventListener('click', () => document.getElementById('servicioDetalleModal').style.display='none');
-      document.getElementById('volverServiciosBtn').addEventListener('click', volverServicios);
+      document.getElementById('closeServicioBtn').addEventListener('click', () => document.getElementById('servicioModal').style.display='none');
       document.getElementById('volverPaisesBtn').addEventListener('click', volverPaises);
       document.getElementById('closeInfoModalBtn').addEventListener('click', () => document.getElementById('infoModal').style.display='none');
-      window.addEventListener('click', (e) => { if(e.target === document.getElementById('serviciosModal')) document.getElementById('serviciosModal').style.display='none'; if(e.target === document.getElementById('paisModal')) document.getElementById('paisModal').style.display='none'; if(e.target === document.getElementById('servicioDetalleModal')) document.getElementById('servicioDetalleModal').style.display='none'; });
+      window.addEventListener('click', (e) => { if(e.target === document.getElementById('paisModal')) document.getElementById('paisModal').style.display='none'; if(e.target === document.getElementById('servicioModal')) document.getElementById('servicioModal').style.display='none'; });
       
       document.querySelectorAll('.lang-btn').forEach(btn => { 
         btn.addEventListener('click', () => { document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); currentLang = btn.getAttribute('data-lang'); updateUILanguage(); }); 
