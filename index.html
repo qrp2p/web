@@ -1,1462 +1,482 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
-    <meta name="description" content="QRP2P.COM - Marketplace descentralizado P2P. Compra y venta directa entre comprador y vendedor verificado. 0% comisión por venta.">
-    <meta name="keywords" content="QRP2P, marketplace P2P, descentralizado, bienes raíces, compra venta directa, 0% comisión, peer-to-peer, propiedades">
-    <meta name="author" content="QRP2P.COM">
-    <meta name="robots" content="index, follow">
-    <meta name="theme-color" content="#000000">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="QRP2P">
-    <meta name="mobile-web-app-capable" content="yes">
-    <link rel="manifest" href="/manifest.json">
-    <link rel="apple-touch-icon" href="/icon-192.png">
-    <title>QRP2P.COM | MARKETPLACE DESCENTRALIZADO P2P · 0% COMISIÓN</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover, shrink-to-fit=no, minimum-scale=1.0, maximum-scale=1.0">
+  <title>QRP2P.COM | NEGOCIOS VERIFICADOS | MARKETPLACE P2P</title>
+  <meta name="description" content="Global decentralized P2P marketplace. Find verified businesses, zero commission forever. QRP2P.COM">
+  <meta name="keywords" content="NEGOCIOS VERIFICADOS, P2P, MARKETPLACE, 0% COMISION">
+  <meta name="author" content="QRP2P">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#000000">
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; -webkit-tap-highlight-color: transparent; }
+    body { font-family: 'Libre Baskerville', serif; background-color: #ffffff; color: #111111; line-height: 1.5; font-size: 16px; overflow: hidden; position: fixed; width: 100%; height: 100%; }
+    #contenedor-mapa { width: 100%; height: 100vh; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+    #barra-superior { display: flex; gap: 0.8rem; padding: 0.8rem; background: #ffffff; width: 100%; z-index: 1000; justify-content: space-between; align-items: center; flex-wrap: wrap; border-bottom: 1px solid #eaeaea; flex-shrink: 0; }
+    .contenedor-buscador { position: relative; flex: 1; max-width: 400px; }
+    #buscador { width: 100%; padding: 0.6rem 1.2rem; border: 1.5px solid #e0e0e0; border-radius: 50px; font-size: 16px; font-family: 'Libre Baskerville', serif; transition: all 0.3s ease; background: #ffffff; user-select: text; }
+    #buscador:focus { outline: none; border-color: #000000; }
+    .btn-mapa { background: #000000; color: #ffffff; padding: 0.6rem 1.2rem; border-radius: 40px; text-decoration: none; font-weight: 600; border: none; cursor: pointer; white-space: nowrap; display: flex; gap: 5px; font-family: 'Libre Baskerville', serif; transition: all 0.2s ease; }
+    .btn-mapa:hover { background: #333333; }
+    .btn-centrar { background-color: #000000; }
+    .btn-registro { background-color: #25D366; color: #000000; }
+    .botones-izquierda { display: flex; gap: 0.8rem; align-items: center; }
+    .botones-derecha { display: flex; gap: 0.5rem; background: #f0f0f0; padding: 0.3rem; border-radius: 50px; }
+    .map-type-btn { padding: 0.5rem 1rem; border: none; border-radius: 40px; cursor: pointer; background: transparent; font-family: 'Libre Baskerville', serif; font-weight: 600; }
+    .map-type-btn.active { background: #000000; color: white; }
+    .lang-selector { display: flex; gap: 0.3rem; margin-left: 0.5rem; }
+    .lang-btn { background: transparent; border: 1px solid #ccc; border-radius: 20px; padding: 0.4rem 0.8rem; cursor: pointer; font-family: 'Libre Baskerville', serif; font-weight: 600; font-size: 0.8rem; }
+    .lang-btn.active { background: #000000; color: white; border-color: #000000; }
+    #mapa { flex: 1; background: #f0f0f0; width: 100%; min-height: 0; }
+    .leaflet-control-zoom { display: none !important; }
+    .sugerencias-busqueda { position: absolute; top: 100%; left: 0; right: 0; background: white; border-radius: 0 0 20px 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1000; max-height: 200px; overflow-y: auto; display: none; }
+    .sugerencia-item { padding: 12px 15px; cursor: pointer; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+    .sugerencia-item:hover { background-color: #f5f5f5; }
+    .sugerencia-texto { flex: 1; }
+    .sugerencia-boton { margin-left: 10px; padding: 6px 12px; background-color: #000000; color: white; border: none; border-radius: 20px; cursor: pointer; }
+    .cluster-marcadores { background: rgba(0,0,0,0.7); border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+    .negocio-marker { background: transparent; border: none; font-size: 28px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+    .user-location-marker { background: transparent; border: none; font-size: 28px; display: flex; align-items: center; justify-content: center; }
     
-    <meta property="og:title" content="QRP2P.COM — Marketplace descentralizado P2P">
-    <meta property="og:description" content="Pagos directos entre comprador y vendedor verificado. 0% comisión por venta. Disponible en 196 países.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://qrp2p.com">
-    <meta property="og:image" content="/icon-512.png">
+    /* Popup de Negocio Verificado */
+    .popup-business-card {
+      background: #ffffff;
+      border-radius: 24px;
+      overflow: hidden;
+      width: 340px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+    .popup-business-header {
+      background: #000000;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    .popup-business-header h3 {
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+      font-weight: 700;
+    }
+    .popup-business-category {
+      font-size: 0.7rem;
+      opacity: 0.8;
+      background: rgba(255,255,255,0.2);
+      display: inline-block;
+      padding: 0.2rem 0.8rem;
+      border-radius: 50px;
+    }
+    .popup-business-info {
+      padding: 1rem;
+    }
+    .popup-business-description {
+      font-size: 0.75rem;
+      color: #555;
+      margin-bottom: 0.8rem;
+      line-height: 1.4;
+    }
+    .popup-business-address {
+      font-size: 0.7rem;
+      color: #333;
+      margin-bottom: 0.8rem;
+      display: flex;
+      gap: 0.5rem;
+      align-items: flex-start;
+    }
+    .popup-business-address i {
+      margin-top: 0.2rem;
+      color: #000;
+    }
+    .popup-business-contact {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 0.5rem;
+      border-top: 1px solid #f0f0f0;
+      padding-top: 0.8rem;
+    }
+    .contact-link {
+      font-size: 0.7rem;
+      background: #f5f5f5;
+      padding: 0.3rem 0.6rem;
+      border-radius: 20px;
+      text-decoration: none;
+      color: #000;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-weight: 600;
+    }
+    .contact-link i { font-size: 0.7rem; }
+    .btn-view-store {
+      display: block;
+      background: #000000;
+      color: white;
+      text-align: center;
+      padding: 0.7rem;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.8rem;
+      margin-top: 0.8rem;
+      transition: all 0.2s ease;
+    }
+    .btn-view-store:hover { background: #333333; transform: scale(0.98); }
+    .gm-style .gm-style-iw-c { border-radius: 24px !important; padding: 0 !important; max-width: 380px !important; }
+    .gm-style .gm-style-iw-d { overflow: auto !important; max-height: none !important; padding: 0 !important; }
+    .gm-style-iw-tc { display: none; }
     
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="QRP2P.COM">
-    <meta name="twitter:description" content="Marketplace descentralizado P2P · 0% comisión · 196 países">
-    <meta name="twitter:image" content="/icon-512.png">
-    
-    <style>
-        * {
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        input, textarea, [contenteditable="true"] {
-            -webkit-user-select: text;
-            -moz-user-select: text;
-            -ms-user-select: text;
-            user-select: text;
-        }
-        
-        body {
-            background-color: #ffffff;
-            color: #000000;
-            font-family: 'Libre Baskerville', 'Times New Roman', Georgia, 'Baskerville', serif;
-            font-weight: 400;
-            line-height: 1.4;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-            -webkit-touch-callout: none;
-            overflow-x: hidden;
-        }
-        
-        html {
-            touch-action: pan-x pan-y;
-            overflow-x: hidden;
-        }
-        
-        img, a, button {
-            -webkit-user-drag: none;
-            user-drag: none;
-        }
-        
-        .container {
-            max-width: 1200px;
-            width: 100%;
-            margin: 0 auto;
-            text-align: center;
-            overflow-x: hidden;
-        }
-
-        .language-bar {
-            position: absolute;
-            top: 1.8rem;
-            right: 2rem;
-            display: flex;
-            gap: 0.75rem;
-            z-index: 10;
-        }
-
-        .lang-btn {
-            background: none;
-            border: none;
-            font-family: 'Libre Baskerville', serif;
-            font-size: 0.85rem;
-            font-weight: 400;
-            color: #3a3a3a;
-            cursor: pointer;
-            padding: 0.25rem 0.5rem;
-            transition: all 0.2s ease;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-
-        .lang-btn.active {
-            color: #000000;
-            font-weight: 700;
-            border-bottom: 1.5px solid #000000;
-        }
-
-        .lang-btn:hover:not(.active) {
-            color: #000000;
-            background-color: #f5f5f5;
-        }
-
-        .brand {
-            margin-bottom: 2rem;
-            margin-top: 0.5rem;
-        }
-
-        .logo {
-            font-size: 2.8rem;
-            letter-spacing: -0.02em;
-            font-weight: 700;
-            text-transform: lowercase;
-            color: #000000;
-            text-decoration: none;
-            border-bottom: 1px solid rgba(0,0,0,0.1);
-            display: inline-block;
-            padding-bottom: 0.2rem;
-        }
-
-        .tagline {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            margin-top: 1rem;
-            color: #3a3a3a;
-            font-weight: 400;
-        }
-
-        .hero {
-            margin-bottom: 2rem;
-        }
-
-        .hero h1 {
-            font-size: 1.8rem;
-            font-weight: 400;
-            line-height: 1.3;
-            margin-bottom: 0.75rem;
-            color: #000000;
-            letter-spacing: -0.3px;
-        }
-
-        .hero p {
-            font-size: 1rem;
-            color: #2c2c2c;
-            max-width: 580px;
-            margin: 0 auto;
-            font-weight: 350;
-        }
-
-        .search-section {
-            max-width: 480px;
-            width: 100%;
-            margin: 1.8rem auto 2rem;
-            position: relative;
-        }
-
-        .search-input-wrapper {
-            position: relative;
-            width: 100%;
-            display: flex;
-            align-items: center;
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1rem;
-            color: #8a8a8a;
-            pointer-events: none;
-            font-weight: 400;
-            z-index: 2;
-        }
-
-        .search-icon::before {
-            content: "🔍";
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 0.9rem 3rem 0.9rem 2.8rem;
-            font-family: 'Libre Baskerville', serif;
-            font-size: 0.95rem;
-            background: #ffffff;
-            border: 1.5px solid #e0e0e0;
-            color: #000000;
-            border-radius: 0px;
-            transition: all 0.25s ease;
-            outline: none;
-            letter-spacing: -0.2px;
-            box-shadow: none;
-        }
-
-        .search-input:focus {
-            border-color: #000000;
-            box-shadow: 0 0 0 1px rgba(0,0,0,0.05);
-        }
-
-        .search-input::placeholder {
-            color: #b0b0b0;
-            font-weight: 300;
-            font-style: italic;
-        }
-
-        .search-clear {
-            position: absolute;
-            right: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            font-size: 1.2rem;
-            cursor: pointer;
-            color: #9a9a9a;
-            padding: 0 6px;
-            display: none;
-            font-family: monospace;
-            z-index: 2;
-            transition: color 0.2s;
-        }
-
-        .search-clear:hover {
-            color: #000000;
-        }
-
-        .results-count {
-            font-size: 0.7rem;
-            text-align: center;
-            margin-top: 0.65rem;
-            color: #5a5a5a;
-            letter-spacing: 0.3px;
-            font-style: italic;
-        }
-
-        .country-selector {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin: 2rem 0 2.5rem;
-            transition: all 0.2s;
-        }
-
-        .country-card {
-            background: #ffffff;
-            border: 1px solid #e0e0e0;
-            padding: 2rem 1.5rem;
-            transition: all 0.2s ease;
-            cursor: pointer;
-            text-align: center;
-            text-decoration: none;
-            color: #000000;
-            display: block;
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .country-card.hidden-card {
-            display: none;
-        }
-
-        .country-card:hover {
-            border-color: #000000;
-            background-color: #fafafa;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        }
-
-        .country-card:active {
-            transform: translateY(1px);
-        }
-
-        .country-flag {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .country-name {
-            font-size: 1.7rem;
-            font-weight: 700;
-            letter-spacing: -0.3px;
-            margin-bottom: 0.5rem;
-            text-transform: uppercase;
-        }
-
-        .country-sub {
-            font-size: 0.8rem;
-            color: #4a4a4a;
-            font-style: normal;
-            border-top: 1px solid #efefef;
-            display: inline-block;
-            padding-top: 0.6rem;
-            margin-top: 0.6rem;
-            letter-spacing: 1px;
-        }
-
-        .country-domain {
-            font-size: 0.7rem;
-            color: #8a8a8a;
-            margin-top: 0.5rem;
-            font-family: monospace;
-        }
-
-        .divider {
-            width: 40px;
-            height: 1px;
-            background: #d4d4d4;
-            margin: 1rem auto;
-        }
-
-        .no-results {
-            text-align: center;
-            padding: 3rem 1rem;
-            color: #6c6c6c;
-            font-style: italic;
-            font-size: 0.9rem;
-            border-top: 1px solid #f0f0f0;
-            margin-top: 1rem;
-        }
-
-        .install-banner {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #000000;
-            color: #ffffff;
-            padding: 12px 24px;
-            border-radius: 40px;
-            display: none;
-            align-items: center;
-            gap: 16px;
-            z-index: 1000;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            font-family: 'Libre Baskerville', serif;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .install-banner:hover {
-            background: #1a1a1a;
-            transform: translateX(-50%) translateY(-2px);
-        }
-
-        .install-banner button {
-            background: #ffffff;
-            color: #000000;
-            border: none;
-            padding: 6px 16px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-family: inherit;
-            font-weight: 600;
-            font-size: 0.8rem;
-        }
-
-        .footer {
-            margin-top: 3rem;
-            font-size: 0.7rem;
-            color: #6c6c6c;
-            letter-spacing: 0.5px;
-            border-top: 1px solid #ececec;
-            padding-top: 2rem;
-        }
-
-        .footer p {
-            margin-bottom: 0.2rem;
-        }
-
-        .loading-spinner {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            border: 2px solid #f0f0f0;
-            border-top: 2px solid #000000;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin: 2rem auto;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        @media (max-width: 768px) {
-            body {
-                padding: 1.5rem;
-            }
-            .language-bar {
-                position: relative;
-                top: 0;
-                right: 0;
-                justify-content: center;
-                margin-bottom: 1rem;
-            }
-            .logo {
-                font-size: 2rem;
-            }
-            .hero h1 {
-                font-size: 1.4rem;
-            }
-            .country-name {
-                font-size: 1.4rem;
-            }
-            .country-selector {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-            .search-section {
-                max-width: 360px;
-                margin: 1.2rem auto;
-            }
-            .search-input {
-                padding: 0.8rem 2.8rem 0.8rem 2.5rem;
-                font-size: 0.88rem;
-            }
-            .install-banner {
-                width: 90%;
-                text-align: center;
-                flex-direction: column;
-                padding: 12px;
-            }
-        }
-
-        .country-card:focus-visible {
-            outline: 2px solid #000000;
-            outline-offset: 4px;
-        }
-
-        a {
-            text-decoration: none;
-        }
-
-        @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
-    </style>
+    /* Modales y otros estilos */
+    .lightbox-overlay, .modal-overlay, .terms-modal, .servicios-modal, .info-modal { display: none; position: fixed; background-color: rgba(0,0,0,0.85); z-index: 10000; justify-content: center; align-items: center; }
+    .modal-container { max-width: 580px; width: 100%; max-height: 90vh; overflow-y: auto; border-radius: 28px; background: white; }
+    .close-modal { position: sticky; top: 0; right: 0; display: flex; justify-content: flex-end; padding: 0.8rem 1rem; background: white; border-bottom: 1px solid #eee; }
+    .close-modal button { background: #f0f0f0; border: none; font-size: 1.4rem; cursor: pointer; width: 36px; height: 36px; border-radius: 50%; }
+    .form-panel { padding: 1.2rem 1.5rem; }
+    .step-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem; }
+    .form-group { margin-bottom: 1rem; }
+    label { display: block; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.3rem; color: #333; }
+    input, select, textarea { width: 100%; padding: 0.7rem 0.9rem; font-size: 15px; border: 1.5px solid #e0e0e0; border-radius: 16px; font-family: inherit; user-select: text; }
+    .btn-submit { width: 100%; padding: 0.8rem; font-size: 0.9rem; font-weight: 700; background: #000000; color: white; border: none; border-radius: 50px; cursor: pointer; margin-top: 1rem; }
+    .servicios-container { background: white; border-radius: 28px; width: 90%; max-width: 480px; padding: 1.2rem; }
+    .servicios-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eaeaea; padding-bottom: 0.6rem; margin-bottom: 1rem; }
+    .servicios-botones { display: flex; flex-direction: column; gap: 0.7rem; }
+    .servicio-btn { background: #000000; color: white; border: none; padding: 0.8rem; border-radius: 50px; font-size: 0.9rem; font-weight: 600; cursor: pointer; text-align: center; font-family: 'Libre Baskerville', serif; }
+    .info-container { background: white; border-radius: 28px; width: 90%; max-width: 500px; max-height: 70vh; overflow-y: auto; padding: 1.5rem; }
+    .row-2cols { display: flex; gap: 1rem; }
+    @media (max-width: 680px) { .popup-business-card { width: 280px; } .row-2cols { flex-direction: column; gap: 0; } }
+  </style>
 </head>
 <body>
-
-<div class="container">
-    <div class="language-bar">
-        <button class="lang-btn active" id="lang-es" data-lang="es">ES</button>
-        <button class="lang-btn" id="lang-en" data-lang="en">EN</button>
-    </div>
-
-    <div class="brand">
-        <span class="logo">QRP2P.COM</span>
-        <div class="tagline" data-i18n="tagline">MARKETPLACE</div>
-    </div>
-
-    <div class="hero">
-        <h1 data-i18n="title">SELECCIONAR PAÍS<br></h1>
-        <div class="divider"></div>
-        <p data-i18n="subtitle">Pagos directos entre comprador y vendedor verificado. Sin comisiones. Sin intermediarios.</p>
-    </div>
-
-    <div class="search-section">
-        <div class="search-input-wrapper">
-            <span class="search-icon"></span>
-            <input type="text" id="countrySearch" class="search-input" placeholder="Buscar país..." autocomplete="off" spellcheck="false" aria-label="Buscar país">
-            <button id="clearSearch" class="search-clear" aria-label="Limpiar búsqueda">✕</button>
+  <div id="contenedor-mapa">
+    <div id="barra-superior">
+      <div class="botones-izquierda">
+        <div class="contenedor-buscador">
+          <input type="search" id="buscador" placeholder="Search verified businesses worldwide..." enterkeyhint="search">
+          <div id="sugerencias-busqueda" class="sugerencias-busqueda"></div>
         </div>
-        <div id="resultsCount" class="results-count"></div>
+        <button class="btn-mapa btn-centrar" id="centrar-btn"><i class="fas fa-location-dot"></i><span id="centrar-text">CENTER</span></button>
+        <button class="btn-mapa btn-registro" id="servicios-btn"><i class="fas fa-bolt"></i><span id="servicios-text">SERVICES</span></button>
+      </div>
+      <div class="botones-derecha">
+        <button class="map-type-btn active" id="map-btn"><span id="map-text">Map</span></button>
+        <button class="map-type-btn" id="satellite-btn"><span id="satellite-text">Satellite</span></button>
+        <div class="lang-selector">
+          <button class="lang-btn" data-lang="es">ES</button>
+          <button class="lang-btn active" data-lang="en">EN</button>
+        </div>
+      </div>
     </div>
+    <div id="mapa"></div>
+  </div>
 
-    <div id="countriesContainer" class="country-selector"></div>
+  <div id="serviciosModal" class="servicios-modal"><div class="servicios-container"><div class="servicios-header"><h2 id="servicios-modal-title">GLOBAL SERVICES</h2><button class="close-servicios" id="closeServiciosBtn">&times;</button></div><div id="serviciosGlobales" class="servicios-botones"></div></div></div>
+  <div id="infoModal" class="info-modal"><div class="info-container"><div class="servicios-header"><h2>Business Information</h2><button id="closeInfoModalBtn" style="background:transparent; border:none; font-size:1.8rem; cursor:pointer;">&times;</button></div><div id="infoContent"></div></div></div>
 
-    <div class="footer">
-        <p data-i18n="footer_copyright">© QRP2P.COM — Marketplace descentralizado P2P · 0% comisión</p>
-        <p data-i18n="footer_tagline">venta directa · comprador verificado · cero comisiones</p>
-        <p style="margin-top: 0.5rem; font-size: 0.65rem;">v2.0.0</p>
-    </div>
-</div>
-
-<div id="installBanner" class="install-banner">
-    <span data-i18n="install_text">📱 Instalar QRP2P App</span>
-    <button id="installBtn" data-i18n="install_btn">Instalar</button>
-</div>
-
-<script>
-    // --------------------------------------------------------------
-    // 1. BLOQUEO DE INTERACCIONES
-    // --------------------------------------------------------------
-    (function() {
-        const blockEvents = ['copy', 'cut', 'paste', 'contextmenu', 'dragstart', 'selectstart'];
-        blockEvents.forEach(eventType => {
-            document.addEventListener(eventType, function(e) {
-                const isSearchInput = e.target.id === 'countrySearch' || e.target.closest('#countrySearch');
-                if (!isSearchInput) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    return false;
-                }
-                return true;
-            });
-        });
-        
-        document.addEventListener('keydown', function(e) {
-            const isSearchInputFocused = document.activeElement && document.activeElement.id === 'countrySearch';
-            if ((e.ctrlKey || e.metaKey) && (e.key === 'c' || e.key === 'v' || e.key === 'x' || e.key === 'a')) {
-                if (!isSearchInputFocused) {
-                    e.preventDefault();
-                    return false;
-                }
-            }
-        });
-        
-        let lastTouchEnd = 0;
-        document.addEventListener('touchstart', function(e) {
-            if (e.touches.length > 1) e.preventDefault();
-        }, { passive: false });
-        
-        document.addEventListener('touchend', function(e) {
-            const now = Date.now();
-            if (now - lastTouchEnd <= 300) e.preventDefault();
-            lastTouchEnd = now;
-        }, false);
-    })();
-
-    // --------------------------------------------------------------
-    // 2. DATOS DE PAÍSES (196 PAÍSES) con SUBDOMINIOS
-    // --------------------------------------------------------------
-    const countriesData = [
-        { id: 'afganistan', subdomain: 'af', flag: '🇦🇫', nameKey: 'afganistan_name', subKey: 'afganistan_sub', searchTerms: ['afganistan', 'afghanistan', 'afganistán', 'kabul', 'af'] },
-        { id: 'albania', subdomain: 'al', flag: '🇦🇱', nameKey: 'albania_name', subKey: 'albania_sub', searchTerms: ['albania', 'albanie', 'tirana', 'al'] },
-        { id: 'alemania', subdomain: 'de', flag: '🇩🇪', nameKey: 'alemania_name', subKey: 'alemania_sub', searchTerms: ['alemania', 'germany', 'deutschland', 'berlin', 'aleman', 'de'] },
-        { id: 'andorra', subdomain: 'ad', flag: '🇦🇩', nameKey: 'andorra_name', subKey: 'andorra_sub', searchTerms: ['andorra', 'andorre', 'ad'] },
-        { id: 'angola', subdomain: 'ao', flag: '🇦🇴', nameKey: 'angola_name', subKey: 'angola_sub', searchTerms: ['angola', 'luanda', 'ao'] },
-        { id: 'anguila', subdomain: 'ai', flag: '🇦🇮', nameKey: 'anguila_name', subKey: 'anguila_sub', searchTerms: ['anguila', 'anguilla', 'ai'] },
-        { id: 'antigua_barbuda', subdomain: 'ag', flag: '🇦🇬', nameKey: 'antigua_barbuda_name', subKey: 'antigua_barbuda_sub', searchTerms: ['antigua', 'barbuda', 'antigua y barbuda', 'ag'] },
-        { id: 'arabia_saudita', subdomain: 'sa', flag: '🇸🇦', nameKey: 'arabia_saudita_name', subKey: 'arabia_saudita_sub', searchTerms: ['arabia', 'saudi', 'arabia saudita', 'saudi arabia', 'riad', 'riyadh', 'sa'] },
-        { id: 'argelia', subdomain: 'dz', flag: '🇩🇿', nameKey: 'argelia_name', subKey: 'argelia_sub', searchTerms: ['argelia', 'algeria', 'algerie', 'argel', 'dz'] },
-        { id: 'argentina', subdomain: 'ar', flag: '🇦🇷', nameKey: 'argentina_name', subKey: 'argentina_sub', searchTerms: ['argentina', 'buenos aires', 'bs as', 'arg', 'ar'] },
-        { id: 'armenia', subdomain: 'am', flag: '🇦🇲', nameKey: 'armenia_name', subKey: 'armenia_sub', searchTerms: ['armenia', 'armenie', 'erevan', 'yerevan', 'am'] },
-        { id: 'aruba', subdomain: 'aw', flag: '🇦🇼', nameKey: 'aruba_name', subKey: 'aruba_sub', searchTerms: ['aruba', 'aw'] },
-        { id: 'australia', subdomain: 'au', flag: '🇦🇺', nameKey: 'australia_name', subKey: 'australia_sub', searchTerms: ['australia', 'aussie', 'sidney', 'sydney', 'melbourne', 'canberra', 'au'] },
-        { id: 'austria', subdomain: 'at', flag: '🇦🇹', nameKey: 'austria_name', subKey: 'austria_sub', searchTerms: ['austria', 'österreich', 'viena', 'vienna', 'at'] },
-        { id: 'azerbaiyan', subdomain: 'az', flag: '🇦🇿', nameKey: 'azerbaiyan_name', subKey: 'azerbaiyan_sub', searchTerms: ['azerbaiyan', 'azerbaijan', 'azerbaidjan', 'baku', 'az'] },
-        { id: 'bahamas', subdomain: 'bs', flag: '🇧🇸', nameKey: 'bahamas_name', subKey: 'bahamas_sub', searchTerms: ['bahamas', 'nassau', 'bs'] },
-        { id: 'bahrein', subdomain: 'bh', flag: '🇧🇭', nameKey: 'bahrein_name', subKey: 'bahrein_sub', searchTerms: ['bahrein', 'bahrain', 'manama', 'bh'] },
-        { id: 'bangladesh', subdomain: 'bd', flag: '🇧🇩', nameKey: 'bangladesh_name', subKey: 'bangladesh_sub', searchTerms: ['bangladesh', 'banglades', 'daca', 'dhaka', 'bd'] },
-        { id: 'barbados', subdomain: 'bb', flag: '🇧🇧', nameKey: 'barbados_name', subKey: 'barbados_sub', searchTerms: ['barbados', 'bridgetown', 'bb'] },
-        { id: 'belgica', subdomain: 'be', flag: '🇧🇪', nameKey: 'belgica_name', subKey: 'belgica_sub', searchTerms: ['belgica', 'belgium', 'belgique', 'belgie', 'bruselas', 'brussels', 'be'] },
-        { id: 'belice', subdomain: 'bz', flag: '🇧🇿', nameKey: 'belice_name', subKey: 'belice_sub', searchTerms: ['belice', 'belize', 'belmopan', 'bz'] },
-        { id: 'benin', subdomain: 'bj', flag: '🇧🇯', nameKey: 'benin_name', subKey: 'benin_sub', searchTerms: ['benin', 'bénin', 'porto novo', 'cotonou', 'bj'] },
-        { id: 'bermudas', subdomain: 'bm', flag: '🇧🇲', nameKey: 'bermudas_name', subKey: 'bermudas_sub', searchTerms: ['bermudas', 'bermuda', 'hamilton', 'bm'] },
-        { id: 'bielorrusia', subdomain: 'by', flag: '🇧🇾', nameKey: 'bielorrusia_name', subKey: 'bielorrusia_sub', searchTerms: ['bielorrusia', 'belarus', 'bielorrusie', 'minsk', 'by'] },
-        { id: 'birmania', subdomain: 'mm', flag: '🇲🇲', nameKey: 'birmania_name', subKey: 'birmania_sub', searchTerms: ['birmania', 'myanmar', 'burma', 'naypyido', 'rangun', 'mm'] },
-        { id: 'bolivia', subdomain: 'bo', flag: '🇧🇴', nameKey: 'bolivia_name', subKey: 'bolivia_sub', searchTerms: ['bolivia', 'la paz', 'sucre', 'santa cruz', 'bo'] },
-        { id: 'bosnia_herzegovina', subdomain: 'ba', flag: '🇧🇦', nameKey: 'bosnia_herzegovina_name', subKey: 'bosnia_herzegovina_sub', searchTerms: ['bosnia', 'herzegovina', 'bosnia y herzegovina', 'sarajevo', 'ba'] },
-        { id: 'botsuana', subdomain: 'bw', flag: '🇧🇼', nameKey: 'botsuana_name', subKey: 'botsuana_sub', searchTerms: ['botsuana', 'botswana', 'gaborone', 'bw'] },
-        { id: 'brasil', subdomain: 'br', flag: '🇧🇷', nameKey: 'brasil_name', subKey: 'brasil_sub', searchTerms: ['brasil', 'brazil', 'brésil', 'brasilia', 'rio', 'sao paulo', 'são paulo', 'br'] },
-        { id: 'brunei', subdomain: 'bn', flag: '🇧🇳', nameKey: 'brunei_name', subKey: 'brunei_sub', searchTerms: ['brunei', 'bandar seri begawan', 'bn'] },
-        { id: 'bulgaria', subdomain: 'bg', flag: '🇧🇬', nameKey: 'bulgaria_name', subKey: 'bulgaria_sub', searchTerms: ['bulgaria', 'bulgarie', 'sofia', 'sofía', 'bg'] },
-        { id: 'burkina_faso', subdomain: 'bf', flag: '🇧🇫', nameKey: 'burkina_faso_name', subKey: 'burkina_faso_sub', searchTerms: ['burkina', 'faso', 'burkina faso', 'uagadugu', 'bf'] },
-        { id: 'burundi', subdomain: 'bi', flag: '🇧🇮', nameKey: 'burundi_name', subKey: 'burundi_sub', searchTerms: ['burundi', 'buyumbura', 'bujumbura', 'bi'] },
-        { id: 'butan', subdomain: 'bt', flag: '🇧🇹', nameKey: 'butan_name', subKey: 'butan_sub', searchTerms: ['butan', 'bhutan', 'bhoutan', 'timbu', 'thimphu', 'bt'] },
-        { id: 'cabo_verde', subdomain: 'cv', flag: '🇨🇻', nameKey: 'cabo_verde_name', subKey: 'cabo_verde_sub', searchTerms: ['cabo verde', 'cape verde', 'praia', 'cv'] },
-        { id: 'camboya', subdomain: 'kh', flag: '🇰🇭', nameKey: 'camboya_name', subKey: 'camboya_sub', searchTerms: ['camboya', 'cambodia', 'cambodge', 'phnom penh', 'nom pen', 'kh'] },
-        { id: 'camerun', subdomain: 'cm', flag: '🇨🇲', nameKey: 'camerun_name', subKey: 'camerun_sub', searchTerms: ['camerun', 'cameroun', 'cameroon', 'yaunde', 'yaounde', 'douala', 'cm'] },
-        { id: 'canada', subdomain: 'ca', flag: '🇨🇦', nameKey: 'canada_name', subKey: 'canada_sub', searchTerms: ['canada', 'canadá', 'ottawa', 'toronto', 'vancouver', 'montreal', 'quebec', 'ca'] },
-        { id: 'catar', subdomain: 'qa', flag: '🇶🇦', nameKey: 'catar_name', subKey: 'catar_sub', searchTerms: ['catar', 'qatar', 'doha', 'qa'] },
-        { id: 'chad', subdomain: 'td', flag: '🇹🇩', nameKey: 'chad_name', subKey: 'chad_sub', searchTerms: ['chad', 'tchad', 'yamena', 'n djamena', 'td'] },
-        { id: 'chile', subdomain: 'cl', flag: '🇨🇱', nameKey: 'chile_name', subKey: 'chile_sub', searchTerms: ['chile', 'santiago', 'valparaiso', 'valparaíso', 'cl'] },
-        { id: 'china', subdomain: 'cn', flag: '🇨🇳', nameKey: 'china_name', subKey: 'china_sub', searchTerms: ['china', 'chine', 'beijing', 'pekin', 'shanghai', 'shanghái', 'cn'] },
-        { id: 'chipre', subdomain: 'cy', flag: '🇨🇾', nameKey: 'chipre_name', subKey: 'chipre_sub', searchTerms: ['chipre', 'cyprus', 'chypre', 'nicosia', 'cy'] },
-        { id: 'ciudad_vaticano', subdomain: 'va', flag: '🇻🇦', nameKey: 'ciudad_vaticano_name', subKey: 'ciudad_vaticano_sub', searchTerms: ['vaticano', 'vatican', 'ciudad del vaticano', 'santa sede', 'va'] },
-        { id: 'colombia', subdomain: 'co', flag: '🇨🇴', nameKey: 'colombia_name', subKey: 'colombia_sub', searchTerms: ['colombia', 'colombie', 'columbia', 'col', 'co', 'colombiano', 'bogota', 'medellin', 'cali', 'cartagena', 'barranquilla'] },
-        { id: 'comoras', subdomain: 'km', flag: '🇰🇲', nameKey: 'comoras_name', subKey: 'comoras_sub', searchTerms: ['comoras', 'comoros', 'comores', 'moroni', 'km'] },
-        { id: 'corea_norte', subdomain: 'kp', flag: '🇰🇵', nameKey: 'corea_norte_name', subKey: 'corea_norte_sub', searchTerms: ['corea del norte', 'north korea', 'coree du nord', 'pyongyang', 'pionyang', 'kp'] },
-        { id: 'corea_sur', subdomain: 'kr', flag: '🇰🇷', nameKey: 'corea_sur_name', subKey: 'corea_sur_sub', searchTerms: ['corea del sur', 'south korea', 'coree du sud', 'seul', 'seoul', 'seúl', 'kr'] },
-        { id: 'costa_marfil', subdomain: 'ci', flag: '🇨🇮', nameKey: 'costa_marfil_name', subKey: 'costa_marfil_sub', searchTerms: ['costa de marfil', 'cote ivoire', 'côte ivoire', 'abiyan', 'abidjan', 'yamusukro', 'ci'] },
-        { id: 'costa_rica', subdomain: 'cr', flag: '🇨🇷', nameKey: 'costa_rica_name', subKey: 'costa_rica_sub', searchTerms: ['costa rica', 'san jose', 'san josé', 'cr'] },
-        { id: 'croacia', subdomain: 'hr', flag: '🇭🇷', nameKey: 'croacia_name', subKey: 'croacia_sub', searchTerms: ['croacia', 'croatia', 'croatie', 'zagreb', 'hr'] },
-        { id: 'cuba', subdomain: 'cu', flag: '🇨🇺', nameKey: 'cuba_name', subKey: 'cuba_sub', searchTerms: ['cuba', 'la habana', 'habana', 'cu'] },
-        { id: 'dinamarca', subdomain: 'dk', flag: '🇩🇰', nameKey: 'dinamarca_name', subKey: 'dinamarca_sub', searchTerms: ['dinamarca', 'denmark', 'danmark', 'copenhague', 'copenhagen', 'kobenhavn', 'dk'] },
-        { id: 'dominica', subdomain: 'dm', flag: '🇩🇲', nameKey: 'dominica_name', subKey: 'dominica_sub', searchTerms: ['dominica', 'roseau', 'dm'] },
-        { id: 'ecuador', subdomain: 'ec', flag: '🇪🇨', nameKey: 'ecuador_name', subKey: 'ecuador_sub', searchTerms: ['ecuador', 'equateur', 'quito', 'guayaquil', 'ec'] },
-        { id: 'egipto', subdomain: 'eg', flag: '🇪🇬', nameKey: 'egipto_name', subKey: 'egipto_sub', searchTerms: ['egipto', 'egypt', 'egipte', 'el cairo', 'cairo', 'alejandria', 'eg'] },
-        { id: 'el_salvador', subdomain: 'sv', flag: '🇸🇻', nameKey: 'el_salvador_name', subKey: 'el_salvador_sub', searchTerms: ['el salvador', 'salvador', 'san salvador', 'sv'] },
-        { id: 'emiratos_arabes', subdomain: 'ae', flag: '🇦🇪', nameKey: 'emiratos_arabes_name', subKey: 'emiratos_arabes_sub', searchTerms: ['emiratos', 'emiratos arabes', 'emiratos árabes', 'uae', 'dubai', 'dubái', 'abu dhabi', 'ae'] },
-        { id: 'eritrea', subdomain: 'er', flag: '🇪🇷', nameKey: 'eritrea_name', subKey: 'eritrea_sub', searchTerms: ['eritrea', 'erithree', 'asmara', 'er'] },
-        { id: 'eslovaquia', subdomain: 'sk', flag: '🇸🇰', nameKey: 'eslovaquia_name', subKey: 'eslovaquia_sub', searchTerms: ['eslovaquia', 'slovakia', 'slovaquie', 'bratislava', 'sk'] },
-        { id: 'eslovenia', subdomain: 'si', flag: '🇸🇮', nameKey: 'eslovenia_name', subKey: 'eslovenia_sub', searchTerms: ['eslovenia', 'slovenia', 'slovenie', 'liubliana', 'ljubljana', 'si'] },
-        { id: 'espana', subdomain: 'es', flag: '🇪🇸', nameKey: 'espana_name', subKey: 'espana_sub', searchTerms: ['españa', 'espana', 'spain', 'espagne', 'madrid', 'barcelona', 'valencia', 'sevilla', 'es'] },
-        { id: 'estados_unidos', subdomain: 'us', flag: '🇺🇸', nameKey: 'estados_unidos_name', subKey: 'estados_unidos_sub', searchTerms: ['usa', 'united states', 'estados unidos', 'eeuu', 'america', 'us', 'ee.uu.', 'north america', 'new york', 'miami', 'california', 'texas', 'florida', 'los angeles', 'chicago'] },
-        { id: 'estonia', subdomain: 'ee', flag: '🇪🇪', nameKey: 'estonia_name', subKey: 'estonia_sub', searchTerms: ['estonia', 'estonie', 'tallin', 'tallinn', 'ee'] },
-        { id: 'esuatini', subdomain: 'sz', flag: '🇸🇿', nameKey: 'esuatini_name', subKey: 'esuatini_sub', searchTerms: ['esuatini', 'eswatini', 'suazilandia', 'swaziland', 'mbabane', 'sz'] },
-        { id: 'etiopia', subdomain: 'et', flag: '🇪🇹', nameKey: 'etiopia_name', subKey: 'etiopia_sub', searchTerms: ['etiopia', 'etiopía', 'ethiopia', 'ethiopie', 'adis abeba', 'addis ababa', 'et'] },
-        { id: 'fiji', subdomain: 'fj', flag: '🇫🇯', nameKey: 'fiji_name', subKey: 'fiji_sub', searchTerms: ['fiji', 'fidji', 'suva', 'fj'] },
-        { id: 'filipinas', subdomain: 'ph', flag: '🇵🇭', nameKey: 'filipinas_name', subKey: 'filipinas_sub', searchTerms: ['filipinas', 'philippines', 'manila', 'quezon', 'ph'] },
-        { id: 'finlandia', subdomain: 'fi', flag: '🇫🇮', nameKey: 'finlandia_name', subKey: 'finlandia_sub', searchTerms: ['finlandia', 'finland', 'finlande', 'helsinki', 'fi'] },
-        { id: 'francia', subdomain: 'fr', flag: '🇫🇷', nameKey: 'francia_name', subKey: 'francia_sub', searchTerms: ['francia', 'france', 'paris', 'parís', 'marsella', 'lyon', 'niza', 'fr'] },
-        { id: 'gabon', subdomain: 'ga', flag: '🇬🇦', nameKey: 'gabon_name', subKey: 'gabon_sub', searchTerms: ['gabon', 'gabón', 'libreville', 'ga'] },
-        { id: 'gambia', subdomain: 'gm', flag: '🇬🇲', nameKey: 'gambia_name', subKey: 'gambia_sub', searchTerms: ['gambia', 'gambie', 'banjul', 'gm'] },
-        { id: 'georgia', subdomain: 'ge', flag: '🇬🇪', nameKey: 'georgia_name', subKey: 'georgia_sub', searchTerms: ['georgia', 'georgie', 'tiflis', 'tbilisi', 'ge'] },
-        { id: 'ghana', subdomain: 'gh', flag: '🇬🇭', nameKey: 'ghana_name', subKey: 'ghana_sub', searchTerms: ['ghana', 'acra', 'accra', 'gh'] },
-        { id: 'granada', subdomain: 'gd', flag: '🇬🇩', nameKey: 'granada_name', subKey: 'granada_sub', searchTerms: ['granada', 'grenada', 'grenade', 'saint george', 'gd'] },
-        { id: 'grecia', subdomain: 'gr', flag: '🇬🇷', nameKey: 'grecia_name', subKey: 'grecia_sub', searchTerms: ['grecia', 'greece', 'grece', 'atenas', 'athens', 'gr'] },
-        { id: 'groenlandia', subdomain: 'gl', flag: '🇬🇱', nameKey: 'groenlandia_name', subKey: 'groenlandia_sub', searchTerms: ['groenlandia', 'greenland', 'nuuk', 'gl'] },
-        { id: 'guadalupe', subdomain: 'gp', flag: '🇬🇵', nameKey: 'guadalupe_name', subKey: 'guadalupe_sub', searchTerms: ['guadalupe', 'guadeloupe', 'basse terre', 'gp'] },
-        { id: 'guam', subdomain: 'gu', flag: '🇬🇺', nameKey: 'guam_name', subKey: 'guam_sub', searchTerms: ['guam', 'hagatna', 'hagåtña', 'gu'] },
-        { id: 'guatemala', subdomain: 'gt', flag: '🇬🇹', nameKey: 'guatemala_name', subKey: 'guatemala_sub', searchTerms: ['guatemala', 'ciudad de guatemala', 'gt'] },
-        { id: 'guayana_francesa', subdomain: 'gf', flag: '🇬🇫', nameKey: 'guayana_francesa_name', subKey: 'guayana_francesa_sub', searchTerms: ['guayana francesa', 'guyane', 'cayena', 'cayenne', 'gf'] },
-        { id: 'guernsey', subdomain: 'gg', flag: '🇬🇬', nameKey: 'guernsey_name', subKey: 'guernsey_sub', searchTerms: ['guernsey', 'saint peter port', 'gg'] },
-        { id: 'guinea', subdomain: 'gn', flag: '🇬🇳', nameKey: 'guinea_name', subKey: 'guinea_sub', searchTerms: ['guinea', 'guinee', 'guinée', 'conakry', 'conakri', 'gn'] },
-        { id: 'guinea_bisau', subdomain: 'gw', flag: '🇬🇼', nameKey: 'guinea_bisau_name', subKey: 'guinea_bisau_sub', searchTerms: ['guinea bisau', 'guinea bissau', 'bissau', 'bisau', 'gw'] },
-        { id: 'guinea_ecuatorial', subdomain: 'gq', flag: '🇬🇶', nameKey: 'guinea_ecuatorial_name', subKey: 'guinea_ecuatorial_sub', searchTerms: ['guinea ecuatorial', 'equatorial guinea', 'malabo', 'gq'] },
-        { id: 'guyana', subdomain: 'gy', flag: '🇬🇾', nameKey: 'guyana_name', subKey: 'guyana_sub', searchTerms: ['guyana', 'georgetown', 'gy'] },
-        { id: 'haiti', subdomain: 'ht', flag: '🇭🇹', nameKey: 'haiti_name', subKey: 'haiti_sub', searchTerms: ['haiti', 'haití', 'puerto principe', 'port au prince', 'ht'] },
-        { id: 'honduras', subdomain: 'hn', flag: '🇭🇳', nameKey: 'honduras_name', subKey: 'honduras_sub', searchTerms: ['honduras', 'tegucigalpa', 'san pedro sula', 'hn'] },
-        { id: 'hong_kong', subdomain: 'hk', flag: '🇭🇰', nameKey: 'hong_kong_name', subKey: 'hong_kong_sub', searchTerms: ['hong kong', 'hk'] },
-        { id: 'hungria', subdomain: 'hu', flag: '🇭🇺', nameKey: 'hungria_name', subKey: 'hungria_sub', searchTerms: ['hungria', 'hungría', 'hungary', 'hongrie', 'budapest', 'hu'] },
-        { id: 'india', subdomain: 'in', flag: '🇮🇳', nameKey: 'india_name', subKey: 'india_sub', searchTerms: ['india', 'inde', 'nueva delhi', 'new delhi', 'mumbai', 'bombay', 'bangalore', 'in'] },
-        { id: 'indonesia', subdomain: 'id', flag: '🇮🇩', nameKey: 'indonesia_name', subKey: 'indonesia_sub', searchTerms: ['indonesia', 'indonesie', 'indonésie', 'jakarta', 'yacarta', 'bali', 'id'] },
-        { id: 'irak', subdomain: 'iq', flag: '🇮🇶', nameKey: 'irak_name', subKey: 'irak_sub', searchTerms: ['irak', 'iraq', 'bagdad', 'baghdad', 'iq'] },
-        { id: 'iran', subdomain: 'ir', flag: '🇮🇷', nameKey: 'iran_name', subKey: 'iran_sub', searchTerms: ['iran', 'irán', 'teheran', 'teherán', 'tehran', 'ir'] },
-        { id: 'irlanda', subdomain: 'ie', flag: '🇮🇪', nameKey: 'irlanda_name', subKey: 'irlanda_sub', searchTerms: ['irlanda', 'ireland', 'irlande', 'dublin', 'dublín', 'ie'] },
-        { id: 'isla_man', subdomain: 'im', flag: '🇮🇲', nameKey: 'isla_man_name', subKey: 'isla_man_sub', searchTerms: ['isla de man', 'isle of man', 'douglas', 'im'] },
-        { id: 'islandia', subdomain: 'is', flag: '🇮🇸', nameKey: 'islandia_name', subKey: 'islandia_sub', searchTerms: ['islandia', 'iceland', 'islande', 'reikiavik', 'reykjavik', 'is'] },
-        { id: 'islas_caiman', subdomain: 'ky', flag: '🇰🇾', nameKey: 'islas_caiman_name', subKey: 'islas_caiman_sub', searchTerms: ['islas caiman', 'cayman', 'george town', 'ky'] },
-        { id: 'islas_cook', subdomain: 'ck', flag: '🇨🇰', nameKey: 'islas_cook_name', subKey: 'islas_cook_sub', searchTerms: ['islas cook', 'cook islands', 'avarua', 'ck'] },
-        { id: 'islas_feroe', subdomain: 'fo', flag: '🇫🇴', nameKey: 'islas_feroe_name', subKey: 'islas_feroe_sub', searchTerms: ['islas feroe', 'faroe', 'torshavn', 'fo'] },
-        { id: 'islas_malvinas', subdomain: 'fk', flag: '🇫🇰', nameKey: 'islas_malvinas_name', subKey: 'islas_malvinas_sub', searchTerms: ['islas malvinas', 'falkland', 'stanley', 'fk'] },
-        { id: 'islas_marshall', subdomain: 'mh', flag: '🇲🇭', nameKey: 'islas_marshall_name', subKey: 'islas_marshall_sub', searchTerms: ['islas marshall', 'marshall islands', 'majuro', 'mh'] },
-        { id: 'islas_salomon', subdomain: 'sb', flag: '🇸🇧', nameKey: 'islas_salomon_name', subKey: 'islas_salomon_sub', searchTerms: ['islas salomon', 'solomon', 'honiara', 'sb'] },
-        { id: 'islas_turcas_caicos', subdomain: 'tc', flag: '🇹🇨', nameKey: 'islas_turcas_caicos_name', subKey: 'islas_turcas_caicos_sub', searchTerms: ['islas turcas', 'turcas y caicos', 'turks and caicos', 'tc'] },
-        { id: 'islas_virgenes_britanicas', subdomain: 'vg', flag: '🇻🇬', nameKey: 'islas_virgenes_britanicas_name', subKey: 'islas_virgenes_britanicas_sub', searchTerms: ['islas virgenes britanicas', 'british virgin islands', 'tortola', 'road town', 'vg'] },
-        { id: 'islas_virgenes_eeuu', subdomain: 'vi', flag: '🇻🇮', nameKey: 'islas_virgenes_eeuu_name', subKey: 'islas_virgenes_eeuu_sub', searchTerms: ['islas virgenes eeuu', 'us virgin islands', 'charlotte amalie', 'vi'] },
-        { id: 'israel', subdomain: 'il', flag: '🇮🇱', nameKey: 'israel_name', subKey: 'israel_sub', searchTerms: ['israel', 'israël', 'jerusalen', 'jerusalem', 'tel aviv', 'il'] },
-        { id: 'italia', subdomain: 'it', flag: '🇮🇹', nameKey: 'italia_name', subKey: 'italia_sub', searchTerms: ['italia', 'italy', 'italie', 'roma', 'rome', 'milan', 'milano', 'napoles', 'florencia', 'it'] },
-        { id: 'jamaica', subdomain: 'jm', flag: '🇯🇲', nameKey: 'jamaica_name', subKey: 'jamaica_sub', searchTerms: ['jamaica', 'jamaique', 'kingston', 'jm'] },
-        { id: 'japon', subdomain: 'jp', flag: '🇯🇵', nameKey: 'japon_name', subKey: 'japon_sub', searchTerms: ['japon', 'japón', 'japan', 'tokio', 'tokyo', 'osaka', 'kioto', 'jp'] },
-        { id: 'jersey', subdomain: 'je', flag: '🇯🇪', nameKey: 'jersey_name', subKey: 'jersey_sub', searchTerms: ['jersey', 'saint helier', 'je'] },
-        { id: 'jordania', subdomain: 'jo', flag: '🇯🇴', nameKey: 'jordania_name', subKey: 'jordania_sub', searchTerms: ['jordania', 'jordan', 'jordanie', 'amman', 'amán', 'jo'] },
-        { id: 'kazajistan', subdomain: 'kz', flag: '🇰🇿', nameKey: 'kazajistan_name', subKey: 'kazajistan_sub', searchTerms: ['kazajistan', 'kazajistán', 'kazakhstan', 'nursultan', 'astana', 'almaty', 'kz'] },
-        { id: 'kenia', subdomain: 'ke', flag: '🇰🇪', nameKey: 'kenia_name', subKey: 'kenia_sub', searchTerms: ['kenia', 'kenya', 'nairobi', 'ke'] },
-        { id: 'kirguistan', subdomain: 'kg', flag: '🇰🇬', nameKey: 'kirguistan_name', subKey: 'kirguistan_sub', searchTerms: ['kirguistan', 'kirguistán', 'kyrgyzstan', 'bishkek', 'kg'] },
-        { id: 'kiribati', subdomain: 'ki', flag: '🇰🇮', nameKey: 'kiribati_name', subKey: 'kiribati_sub', searchTerms: ['kiribati', 'tarawa', 'ki'] },
-        { id: 'kuwait', subdomain: 'kw', flag: '🇰🇼', nameKey: 'kuwait_name', subKey: 'kuwait_sub', searchTerms: ['kuwait', 'koweit', 'ciudad de kuwait', 'kw'] },
-        { id: 'laos', subdomain: 'la', flag: '🇱🇦', nameKey: 'laos_name', subKey: 'laos_sub', searchTerms: ['laos', 'vientian', 'vientiane', 'la'] },
-        { id: 'lesoto', subdomain: 'ls', flag: '🇱🇸', nameKey: 'lesoto_name', subKey: 'lesoto_sub', searchTerms: ['lesoto', 'lesotho', 'maseru', 'ls'] },
-        { id: 'letonia', subdomain: 'lv', flag: '🇱🇻', nameKey: 'letonia_name', subKey: 'letonia_sub', searchTerms: ['letonia', 'latvia', 'lettonie', 'riga', 'lv'] },
-        { id: 'libano', subdomain: 'lb', flag: '🇱🇧', nameKey: 'libano_name', subKey: 'libano_sub', searchTerms: ['libano', 'líbano', 'lebanon', 'liban', 'beirut', 'lb'] },
-        { id: 'liberia', subdomain: 'lr', flag: '🇱🇷', nameKey: 'liberia_name', subKey: 'liberia_sub', searchTerms: ['liberia', 'monrovia', 'lr'] },
-        { id: 'libia', subdomain: 'ly', flag: '🇱🇾', nameKey: 'libia_name', subKey: 'libia_sub', searchTerms: ['libia', 'libya', 'libye', 'tripoli', 'trípoli', 'ly'] },
-        { id: 'liechtenstein', subdomain: 'li', flag: '🇱🇮', nameKey: 'liechtenstein_name', subKey: 'liechtenstein_sub', searchTerms: ['liechtenstein', 'vaduz', 'li'] },
-        { id: 'lituania', subdomain: 'lt', flag: '🇱🇹', nameKey: 'lituania_name', subKey: 'lituania_sub', searchTerms: ['lituania', 'lithuania', 'lituanie', 'vilnius', 'vilna', 'lt'] },
-        { id: 'luxemburgo', subdomain: 'lu', flag: '🇱🇺', nameKey: 'luxemburgo_name', subKey: 'luxemburgo_sub', searchTerms: ['luxemburgo', 'luxembourg', 'lu'] },
-        { id: 'macao', subdomain: 'mo', flag: '🇲🇴', nameKey: 'macao_name', subKey: 'macao_sub', searchTerms: ['macao', 'macau', 'mo'] },
-        { id: 'macedonia_norte', subdomain: 'mk', flag: '🇲🇰', nameKey: 'macedonia_norte_name', subKey: 'macedonia_norte_sub', searchTerms: ['macedonia', 'macedonia del norte', 'north macedonia', 'skopie', 'skopje', 'mk'] },
-        { id: 'madagascar', subdomain: 'mg', flag: '🇲🇬', nameKey: 'madagascar_name', subKey: 'madagascar_sub', searchTerms: ['madagascar', 'antananarivo', 'mg'] },
-        { id: 'malasia', subdomain: 'my', flag: '🇲🇾', nameKey: 'malasia_name', subKey: 'malasia_sub', searchTerms: ['malasia', 'malaysia', 'malaisie', 'kuala lumpur', 'my'] },
-        { id: 'malaui', subdomain: 'mw', flag: '🇲🇼', nameKey: 'malaui_name', subKey: 'malaui_sub', searchTerms: ['malaui', 'malawi', 'lilongwe', 'lilongüe', 'mw'] },
-        { id: 'maldivas', subdomain: 'mv', flag: '🇲🇻', nameKey: 'maldivas_name', subKey: 'maldivas_sub', searchTerms: ['maldivas', 'maldives', 'male', 'malé', 'mv'] },
-        { id: 'mali', subdomain: 'ml', flag: '🇲🇱', nameKey: 'mali_name', subKey: 'mali_sub', searchTerms: ['mali', 'malí', 'bamako', 'ml'] },
-        { id: 'malta', subdomain: 'mt', flag: '🇲🇹', nameKey: 'malta_name', subKey: 'malta_sub', searchTerms: ['malta', 'malte', 'valeta', 'valletta', 'mt'] },
-        { id: 'marruecos', subdomain: 'ma', flag: '🇲🇦', nameKey: 'marruecos_name', subKey: 'marruecos_sub', searchTerms: ['marruecos', 'morocco', 'maroc', 'rabat', 'casablanca', 'marrakech', 'ma'] },
-        { id: 'martinica', subdomain: 'mq', flag: '🇲🇶', nameKey: 'martinica_name', subKey: 'martinica_sub', searchTerms: ['martinica', 'martinique', 'fort de france', 'mq'] },
-        { id: 'mauricio', subdomain: 'mu', flag: '🇲🇺', nameKey: 'mauricio_name', subKey: 'mauricio_sub', searchTerms: ['mauricio', 'mauritius', 'maurice', 'port louis', 'mu'] },
-        { id: 'mauritania', subdomain: 'mr', flag: '🇲🇷', nameKey: 'mauritania_name', subKey: 'mauritania_sub', searchTerms: ['mauritania', 'mauritanie', 'nuakchot', 'nouakchott', 'mr'] },
-        { id: 'mayotte', subdomain: 'yt', flag: '🇾🇹', nameKey: 'mayotte_name', subKey: 'mayotte_sub', searchTerms: ['mayotte', 'mamoudzou', 'yt'] },
-        { id: 'mexico', subdomain: 'mx', flag: '🇲🇽', nameKey: 'mexico_name', subKey: 'mexico_sub', searchTerms: ['mexico', 'méxico', 'mexique', 'ciudad de mexico', 'cdmx', 'guadalajara', 'monterrey', 'cancun', 'mx'] },
-        { id: 'micronesia', subdomain: 'fm', flag: '🇫🇲', nameKey: 'micronesia_name', subKey: 'micronesia_sub', searchTerms: ['micronesia', 'micronésie', 'palikir', 'fm'] },
-        { id: 'moldavia', subdomain: 'md', flag: '🇲🇩', nameKey: 'moldavia_name', subKey: 'moldavia_sub', searchTerms: ['moldavia', 'moldova', 'moldavie', 'chisinau', 'chisináu', 'md'] },
-        { id: 'monaco', subdomain: 'mc', flag: '🇲🇨', nameKey: 'monaco_name', subKey: 'monaco_sub', searchTerms: ['monaco', 'mónaco', 'montecarlo', 'mc'] },
-        { id: 'mongolia', subdomain: 'mn', flag: '🇲🇳', nameKey: 'mongolia_name', subKey: 'mongolia_sub', searchTerms: ['mongolia', 'mongolie', 'ulan bator', 'ulaanbaatar', 'mn'] },
-        { id: 'montenegro', subdomain: 'me', flag: '🇲🇪', nameKey: 'montenegro_name', subKey: 'montenegro_sub', searchTerms: ['montenegro', 'podgorica', 'me'] },
-        { id: 'montserrat', subdomain: 'ms', flag: '🇲🇸', nameKey: 'montserrat_name', subKey: 'montserrat_sub', searchTerms: ['montserrat', 'plymouth', 'ms'] },
-        { id: 'mozambique', subdomain: 'mz', flag: '🇲🇿', nameKey: 'mozambique_name', subKey: 'mozambique_sub', searchTerms: ['mozambique', 'maputo', 'mz'] },
-        { id: 'namibia', subdomain: 'na', flag: '🇳🇦', nameKey: 'namibia_name', subKey: 'namibia_sub', searchTerms: ['namibia', 'namibie', 'windhoek', 'na'] },
-        { id: 'nauru', subdomain: 'nr', flag: '🇳🇷', nameKey: 'nauru_name', subKey: 'nauru_sub', searchTerms: ['nauru', 'yaren', 'nr'] },
-        { id: 'nepal', subdomain: 'np', flag: '🇳🇵', nameKey: 'nepal_name', subKey: 'nepal_sub', searchTerms: ['nepal', 'népal', 'katmandu', 'katmandú', 'np'] },
-        { id: 'nicaragua', subdomain: 'ni', flag: '🇳🇮', nameKey: 'nicaragua_name', subKey: 'nicaragua_sub', searchTerms: ['nicaragua', 'managua', 'ni'] },
-        { id: 'niger', subdomain: 'ne', flag: '🇳🇪', nameKey: 'niger_name', subKey: 'niger_sub', searchTerms: ['niger', 'níger', 'niamey', 'niamei', 'ne'] },
-        { id: 'nigeria', subdomain: 'ng', flag: '🇳🇬', nameKey: 'nigeria_name', subKey: 'nigeria_sub', searchTerms: ['nigeria', 'abuja', 'lagos', 'ng'] },
-        { id: 'niue', subdomain: 'nu', flag: '🇳🇺', nameKey: 'niue_name', subKey: 'niue_sub', searchTerms: ['niue', 'alofi', 'nu'] },
-        { id: 'noruega', subdomain: 'no', flag: '🇳🇴', nameKey: 'noruega_name', subKey: 'noruega_sub', searchTerms: ['noruega', 'norway', 'norge', 'oslo', 'no'] },
-        { id: 'nueva_caledonia', subdomain: 'nc', flag: '🇳🇨', nameKey: 'nueva_caledonia_name', subKey: 'nueva_caledonia_sub', searchTerms: ['nueva caledonia', 'new caledonia', 'noumea', 'numea', 'nc'] },
-        { id: 'nueva_zelanda', subdomain: 'nz', flag: '🇳🇿', nameKey: 'nueva_zelanda_name', subKey: 'nueva_zelanda_sub', searchTerms: ['nueva zelanda', 'new zealand', 'nouvelle zelande', 'wellington', 'auckland', 'nz'] },
-        { id: 'oman', subdomain: 'om', flag: '🇴🇲', nameKey: 'oman_name', subKey: 'oman_sub', searchTerms: ['oman', 'omán', 'mascate', 'muscat', 'om'] },
-        { id: 'paises_bajos', subdomain: 'nl', flag: '🇳🇱', nameKey: 'paises_bajos_name', subKey: 'paises_bajos_sub', searchTerms: ['paises bajos', 'netherlands', 'holanda', 'holland', 'amsterdam', 'roterdam', 'la haya', 'nl'] },
-        { id: 'pakistan', subdomain: 'pk', flag: '🇵🇰', nameKey: 'pakistan_name', subKey: 'pakistan_sub', searchTerms: ['pakistan', 'pakistán', 'islamabad', 'karachi', 'pk'] },
-        { id: 'palaos', subdomain: 'pw', flag: '🇵🇼', nameKey: 'palaos_name', subKey: 'palaos_sub', searchTerms: ['palaos', 'palau', 'ngerulmud', 'pw'] },
-        { id: 'palestina', subdomain: 'ps', flag: '🇵🇸', nameKey: 'palestina_name', subKey: 'palestina_sub', searchTerms: ['palestina', 'palestine', 'ramala', 'gaza', 'ps'] },
-        { id: 'panama', subdomain: 'pa', flag: '🇵🇦', nameKey: 'panama_name', subKey: 'panama_sub', searchTerms: ['panama', 'panamá', 'ciudad de panama', 'pa'] },
-        { id: 'papua_nueva_guinea', subdomain: 'pg', flag: '🇵🇬', nameKey: 'papua_nueva_guinea_name', subKey: 'papua_nueva_guinea_sub', searchTerms: ['papua nueva guinea', 'papua new guinea', 'port moresby', 'pg'] },
-        { id: 'paraguay', subdomain: 'py', flag: '🇵🇾', nameKey: 'paraguay_name', subKey: 'paraguay_sub', searchTerms: ['paraguay', 'asuncion', 'asunción', 'ciudad del este', 'py'] },
-        { id: 'peru', subdomain: 'pe', flag: '🇵🇪', nameKey: 'peru_name', subKey: 'peru_sub', searchTerms: ['peru', 'perú', 'pérou', 'lima', 'cusco', 'arequipa', 'pe'] },
-        { id: 'polinesia_francesa', subdomain: 'pf', flag: '🇵🇫', nameKey: 'polinesia_francesa_name', subKey: 'polinesia_francesa_sub', searchTerms: ['polinesia francesa', 'french polynesia', 'papeete', 'tahiti', 'pf'] },
-        { id: 'polonia', subdomain: 'pl', flag: '🇵🇱', nameKey: 'polonia_name', subKey: 'polonia_sub', searchTerms: ['polonia', 'poland', 'pologne', 'varsovia', 'warsaw', 'cracovia', 'pl'] },
-        { id: 'portugal', subdomain: 'pt', flag: '🇵🇹', nameKey: 'portugal_name', subKey: 'portugal_sub', searchTerms: ['portugal', 'lisboa', 'lisbon', 'oporto', 'porto', 'algarve', 'pt'] },
-        { id: 'puerto_rico', subdomain: 'pr', flag: '🇵🇷', nameKey: 'puerto_rico_name', subKey: 'puerto_rico_sub', searchTerms: ['puerto rico', 'san juan', 'pr'] },
-        { id: 'reino_unido', subdomain: 'gb', flag: '🇬🇧', nameKey: 'reino_unido_name', subKey: 'reino_unido_sub', searchTerms: ['reino unido', 'united kingdom', 'uk', 'inglaterra', 'londres', 'london', 'manchester', 'birmingham', 'gb'] },
-        { id: 'republica_centroafricana', subdomain: 'cf', flag: '🇨🇫', nameKey: 'republica_centroafricana_name', subKey: 'republica_centroafricana_sub', searchTerms: ['republica centroafricana', 'central african republic', 'bangui', 'cf'] },
-        { id: 'republica_checa', subdomain: 'cz', flag: '🇨🇿', nameKey: 'republica_checa_name', subKey: 'republica_checa_sub', searchTerms: ['republica checa', 'república checa', 'czech republic', 'praga', 'prague', 'cz'] },
-        { id: 'republica_congo', subdomain: 'cg', flag: '🇨🇬', nameKey: 'republica_congo_name', subKey: 'republica_congo_sub', searchTerms: ['republica del congo', 'congo', 'brazzaville', 'cg'] },
-        { id: 'republica_dominicana', subdomain: 'do', flag: '🇩🇴', nameKey: 'republica_dominicana_name', subKey: 'republica_dominicana_sub', searchTerms: ['republica dominicana', 'república dominicana', 'dominican republic', 'santo domingo', 'punta cana', 'do'] },
-        { id: 'republica_democratica_congo', subdomain: 'cd', flag: '🇨🇩', nameKey: 'republica_democratica_congo_name', subKey: 'republica_democratica_congo_sub', searchTerms: ['republica democratica del congo', 'rdc', 'kinshasa', 'kinsasa', 'cd'] },
-        { id: 'ruanda', subdomain: 'rw', flag: '🇷🇼', nameKey: 'ruanda_name', subKey: 'ruanda_sub', searchTerms: ['ruanda', 'rwanda', 'kigali', 'rw'] },
-        { id: 'rumania', subdomain: 'ro', flag: '🇷🇴', nameKey: 'rumania_name', subKey: 'rumania_sub', searchTerms: ['rumania', 'rumanía', 'romania', 'roumanie', 'bucarest', 'bucharest', 'ro'] },
-        { id: 'rusia', subdomain: 'ru', flag: '🇷🇺', nameKey: 'rusia_name', subKey: 'rusia_sub', searchTerms: ['rusia', 'russia', 'russie', 'moscu', 'moscow', 'san petersburgo', 'saint petersburg', 'ru'] },
-        { id: 'sahara_occidental', subdomain: 'eh', flag: '🇪🇭', nameKey: 'sahara_occidental_name', subKey: 'sahara_occidental_sub', searchTerms: ['sahara occidental', 'western sahara', 'el aaiun', 'eh'] },
-        { id: 'samoa', subdomain: 'ws', flag: '🇼🇸', nameKey: 'samoa_name', subKey: 'samoa_sub', searchTerms: ['samoa', 'apia', 'ws'] },
-        { id: 'samoa_americana', subdomain: 'as', flag: '🇦🇸', nameKey: 'samoa_americana_name', subKey: 'samoa_americana_sub', searchTerms: ['samoa americana', 'american samoa', 'pago pago', 'as'] },
-        { id: 'san_bartolome', subdomain: 'bl', flag: '🇧🇱', nameKey: 'san_bartolome_name', subKey: 'san_bartolome_sub', searchTerms: ['san bartolome', 'saint barthelemy', 'gustavia', 'bl'] },
-        { id: 'san_cristobal_nieves', subdomain: 'kn', flag: '🇰🇳', nameKey: 'san_cristobal_nieves_name', subKey: 'san_cristobal_nieves_sub', searchTerms: ['san cristobal', 'nieves', 'saint kitts', 'basseterre', 'kn'] },
-        { id: 'san_marino', subdomain: 'sm', flag: '🇸🇲', nameKey: 'san_marino_name', subKey: 'san_marino_sub', searchTerms: ['san marino', 'saint marin', 'sm'] },
-        { id: 'san_martin', subdomain: 'mf', flag: '🇲🇫', nameKey: 'san_martin_name', subKey: 'san_martin_sub', searchTerms: ['san martin', 'saint martin', 'marigot', 'mf'] },
-        { id: 'san_pedro_miquelon', subdomain: 'pm', flag: '🇵🇲', nameKey: 'san_pedro_miquelon_name', subKey: 'san_pedro_miquelon_sub', searchTerms: ['san pedro y miquelon', 'saint pierre', 'miquelon', 'pm'] },
-        { id: 'san_vicente_granadinas', subdomain: 'vc', flag: '🇻🇨', nameKey: 'san_vicente_granadinas_name', subKey: 'san_vicente_granadinas_sub', searchTerms: ['san vicente', 'granadinas', 'saint vincent', 'kingstown', 'vc'] },
-        { id: 'santa_elena', subdomain: 'sh', flag: '🇸🇭', nameKey: 'santa_elena_name', subKey: 'santa_elena_sub', searchTerms: ['santa elena', 'saint helena', 'jamestown', 'sh'] },
-        { id: 'santa_lucia', subdomain: 'lc', flag: '🇱🇨', nameKey: 'santa_lucia_name', subKey: 'santa_lucia_sub', searchTerms: ['santa lucia', 'saint lucia', 'castries', 'lc'] },
-        { id: 'santo_tome_principe', subdomain: 'st', flag: '🇸🇹', nameKey: 'santo_tome_principe_name', subKey: 'santo_tome_principe_sub', searchTerms: ['santo tome', 'principe', 'sao tome', 'são tomé', 'st'] },
-        { id: 'senegal', subdomain: 'sn', flag: '🇸🇳', nameKey: 'senegal_name', subKey: 'senegal_sub', searchTerms: ['senegal', 'sénégal', 'dakar', 'sn'] },
-        { id: 'serbia', subdomain: 'rs', flag: '🇷🇸', nameKey: 'serbia_name', subKey: 'serbia_sub', searchTerms: ['serbia', 'serbie', 'belgrado', 'belgrade', 'rs'] },
-        { id: 'seychelles', subdomain: 'sc', flag: '🇸🇨', nameKey: 'seychelles_name', subKey: 'seychelles_sub', searchTerms: ['seychelles', 'victoria', 'sc'] },
-        { id: 'sierra_leona', subdomain: 'sl', flag: '🇸🇱', nameKey: 'sierra_leona_name', subKey: 'sierra_leona_sub', searchTerms: ['sierra leona', 'sierra leone', 'freetown', 'sl'] },
-        { id: 'singapur', subdomain: 'sg', flag: '🇸🇬', nameKey: 'singapur_name', subKey: 'singapur_sub', searchTerms: ['singapur', 'singapore', 'singapour', 'sg'] },
-        { id: 'sint_maarten', subdomain: 'sx', flag: '🇸🇽', nameKey: 'sint_maarten_name', subKey: 'sint_maarten_sub', searchTerms: ['sint maarten', 'philipsburg', 'sx'] },
-        { id: 'siria', subdomain: 'sy', flag: '🇸🇾', nameKey: 'siria_name', subKey: 'siria_sub', searchTerms: ['siria', 'syria', 'syrie', 'damasco', 'damascus', 'sy'] },
-        { id: 'somalia', subdomain: 'so', flag: '🇸🇴', nameKey: 'somalia_name', subKey: 'somalia_sub', searchTerms: ['somalia', 'somalie', 'mogadiscio', 'mogadishu', 'so'] },
-        { id: 'sri_lanka', subdomain: 'lk', flag: '🇱🇰', nameKey: 'sri_lanka_name', subKey: 'sri_lanka_sub', searchTerms: ['sri lanka', 'colombo', 'sri jayawardenapura', 'lk'] },
-        { id: 'sudafrica', subdomain: 'za', flag: '🇿🇦', nameKey: 'sudafrica_name', subKey: 'sudafrica_sub', searchTerms: ['sudafrica', 'sudáfrica', 'south africa', 'afrique du sud', 'pretoria', 'ciudad del cabo', 'johannesburgo', 'za'] },
-        { id: 'sudan', subdomain: 'sd', flag: '🇸🇩', nameKey: 'sudan_name', subKey: 'sudan_sub', searchTerms: ['sudan', 'sudán', 'jartum', 'khartoum', 'sd'] },
-        { id: 'sudan_sur', subdomain: 'ss', flag: '🇸🇸', nameKey: 'sudan_sur_name', subKey: 'sudan_sur_sub', searchTerms: ['sudan del sur', 'south sudan', 'juba', 'yuba', 'ss'] },
-        { id: 'suecia', subdomain: 'se', flag: '🇸🇪', nameKey: 'suecia_name', subKey: 'suecia_sub', searchTerms: ['suecia', 'sweden', 'sverige', 'estocolmo', 'stockholm', 'gotemburgo', 'se'] },
-        { id: 'suiza', subdomain: 'ch', flag: '🇨🇭', nameKey: 'suiza_name', subKey: 'suiza_sub', searchTerms: ['suiza', 'switzerland', 'schweiz', 'berna', 'bern', 'zurich', 'ginebra', 'basilea', 'ch'] },
-        { id: 'surinam', subdomain: 'sr', flag: '🇸🇷', nameKey: 'surinam_name', subKey: 'surinam_sub', searchTerms: ['surinam', 'suriname', 'paramaribo', 'sr'] },
-        { id: 'tailandia', subdomain: 'th', flag: '🇹🇭', nameKey: 'tailandia_name', subKey: 'tailandia_sub', searchTerms: ['tailandia', 'thailand', 'thailande', 'bangkok', 'phuket', 'th'] },
-        { id: 'taiwan', subdomain: 'tw', flag: '🇹🇼', nameKey: 'taiwan_name', subKey: 'taiwan_sub', searchTerms: ['taiwan', 'taiwán', 'taipei', 'taipéi', 'tw'] },
-        { id: 'tanzania', subdomain: 'tz', flag: '🇹🇿', nameKey: 'tanzania_name', subKey: 'tanzania_sub', searchTerms: ['tanzania', 'tanzanie', 'dodoma', 'dar es salaam', 'tz'] },
-        { id: 'tayikistan', subdomain: 'tj', flag: '🇹🇯', nameKey: 'tayikistan_name', subKey: 'tayikistan_sub', searchTerms: ['tayikistan', 'tayikistán', 'tajikistan', 'dushanbe', 'tj'] },
-        { id: 'timor_oriental', subdomain: 'tl', flag: '🇹🇱', nameKey: 'timor_oriental_name', subKey: 'timor_oriental_sub', searchTerms: ['timor oriental', 'east timor', 'dili', 'tl'] },
-        { id: 'togo', subdomain: 'tg', flag: '🇹🇬', nameKey: 'togo_name', subKey: 'togo_sub', searchTerms: ['togo', 'lome', 'lomé', 'tg'] },
-        { id: 'tonga', subdomain: 'to', flag: '🇹🇴', nameKey: 'tonga_name', subKey: 'tonga_sub', searchTerms: ['tonga', 'nukualofa', 'to'] },
-        { id: 'trinidad_tobago', subdomain: 'tt', flag: '🇹🇹', nameKey: 'trinidad_tobago_name', subKey: 'trinidad_tobago_sub', searchTerms: ['trinidad', 'tobago', 'trinidad y tobago', 'puerto españa', 'port of spain', 'tt'] },
-        { id: 'tunez', subdomain: 'tn', flag: '🇹🇳', nameKey: 'tunez_name', subKey: 'tunez_sub', searchTerms: ['tunez', 'túnez', 'tunisia', 'tunisie', 'tn'] },
-        { id: 'turkmenistan', subdomain: 'tm', flag: '🇹🇲', nameKey: 'turkmenistan_name', subKey: 'turkmenistan_sub', searchTerms: ['turkmenistan', 'turkmenistán', 'ashgabat', 'asjabad', 'tm'] },
-        { id: 'turquia', subdomain: 'tr', flag: '🇹🇷', nameKey: 'turquia_name', subKey: 'turquia_sub', searchTerms: ['turquia', 'turquía', 'turkey', 'turquie', 'ankara', 'estambul', 'istanbul', 'tr'] },
-        { id: 'tuvalu', subdomain: 'tv', flag: '🇹🇻', nameKey: 'tuvalu_name', subKey: 'tuvalu_sub', searchTerms: ['tuvalu', 'funafuti', 'tv'] },
-        { id: 'ucrania', subdomain: 'ua', flag: '🇺🇦', nameKey: 'ucrania_name', subKey: 'ucrania_sub', searchTerms: ['ucrania', 'ukraine', 'kiev', 'kíev', 'ua'] },
-        { id: 'uganda', subdomain: 'ug', flag: '🇺🇬', nameKey: 'uganda_name', subKey: 'uganda_sub', searchTerms: ['uganda', 'kampala', 'ug'] },
-        { id: 'uruguay', subdomain: 'uy', flag: '🇺🇾', nameKey: 'uruguay_name', subKey: 'uruguay_sub', searchTerms: ['uruguay', 'montevideo', 'punta del este', 'uy'] },
-        { id: 'uzbekistan', subdomain: 'uz', flag: '🇺🇿', nameKey: 'uzbekistan_name', subKey: 'uzbekistan_sub', searchTerms: ['uzbekistan', 'uzbekistán', 'tashkent', 'taskent', 'uz'] },
-        { id: 'vanuatu', subdomain: 'vu', flag: '🇻🇺', nameKey: 'vanuatu_name', subKey: 'vanuatu_sub', searchTerms: ['vanuatu', 'port vila', 'vu'] },
-        { id: 'venezuela', subdomain: 've', flag: '🇻🇪', nameKey: 'venezuela_name', subKey: 'venezuela_sub', searchTerms: ['venezuela', 'caracas', 'maracaibo', 'valencia', 've'] },
-        { id: 'vietnam', subdomain: 'vn', flag: '🇻🇳', nameKey: 'vietnam_name', subKey: 'vietnam_sub', searchTerms: ['vietnam', 'hanoi', 'hanói', 'ho chi minh', 'saigon', 'vn'] },
-        { id: 'wallis_futuna', subdomain: 'wf', flag: '🇼🇫', nameKey: 'wallis_futuna_name', subKey: 'wallis_futuna_sub', searchTerms: ['wallis y futuna', 'wallis et futuna', 'mata utu', 'wf'] },
-        { id: 'yemen', subdomain: 'ye', flag: '🇾🇪', nameKey: 'yemen_name', subKey: 'yemen_sub', searchTerms: ['yemen', 'sanaa', 'saná', 'aden', 'ye'] },
-        { id: 'yibuti', subdomain: 'dj', flag: '🇩🇯', nameKey: 'yibuti_name', subKey: 'yibuti_sub', searchTerms: ['yibuti', 'djibouti', 'dj'] },
-        { id: 'zambia', subdomain: 'zm', flag: '🇿🇲', nameKey: 'zambia_name', subKey: 'zambia_sub', searchTerms: ['zambia', 'lusaka', 'zm'] },
-        { id: 'zimbabue', subdomain: 'zw', flag: '🇿🇼', nameKey: 'zimbabue_name', subKey: 'zimbabue_sub', searchTerms: ['zimbabue', 'zimbabwe', 'harare', 'zw'] }
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+  <script>
+    const WHATSAPP_NUMBER = "573041146297";
+    let currentLang = 'en';
+    
+    // SERVICIOS GLOBALES
+    const globalServices = [
+      { name_en: "REGISTER BUSINESS", name_es: "REGISTRAR COMERCIO", url: "https://qrp2p.com/register", icon: "fa-building" },
+      { name_en: "CONTACT US", name_es: "CONTACTO", url: "https://qrp2p.com/contact", icon: "fa-envelope" },
+      { name_en: "WHATSAPP AGENT", name_es: "AGENTE WHATSAPP", url: `https://wa.me/${WHATSAPP_NUMBER}`, icon: "fa-whatsapp" }
     ];
-
-    // --------------------------------------------------------------
-    // 3. TRADUCCIONES COMPLETAS (ESPAÑOL E INGLÉS)
-    // --------------------------------------------------------------
-    const translations = {
-        es: {
-            tagline: "MARKETPLACE",
-            title: "SELECCIONAR PAÍS<br>",
-            subtitle: "Pagos directos entre comprador y vendedor verificado. Sin comisiones. Sin intermediarios.",
-            afganistan_name: "Afganistán", afganistan_sub: "QRP2P AFGANISTÁN",
-            albania_name: "Albania", albania_sub: "QRP2P ALBANIA",
-            alemania_name: "Alemania", alemania_sub: "QRP2P ALEMANIA",
-            andorra_name: "Andorra", andorra_sub: "QRP2P ANDORRA",
-            angola_name: "Angola", angola_sub: "QRP2P ANGOLA",
-            anguila_name: "Anguila", anguila_sub: "QRP2P ANGUILA",
-            antigua_barbuda_name: "Antigua y Barbuda", antigua_barbuda_sub: "QRP2P ANTIGUA Y BARBUDA",
-            arabia_saudita_name: "Arabia Saudita", arabia_saudita_sub: "QRP2P ARABIA SAUDITA",
-            argelia_name: "Argelia", argelia_sub: "QRP2P ARGELIA",
-            argentina_name: "Argentina", argentina_sub: "QRP2P ARGENTINA",
-            armenia_name: "Armenia", armenia_sub: "QRP2P ARMENIA",
-            aruba_name: "Aruba", aruba_sub: "QRP2P ARUBA",
-            australia_name: "Australia", australia_sub: "QRP2P AUSTRALIA",
-            austria_name: "Austria", austria_sub: "QRP2P AUSTRIA",
-            azerbaiyan_name: "Azerbaiyán", azerbaiyan_sub: "QRP2P AZERBAIYÁN",
-            bahamas_name: "Bahamas", bahamas_sub: "QRP2P BAHAMAS",
-            bahrein_name: "Bahrein", bahrein_sub: "QRP2P BAHREIN",
-            bangladesh_name: "Bangladesh", bangladesh_sub: "QRP2P BANGLADESH",
-            barbados_name: "Barbados", barbados_sub: "QRP2P BARBADOS",
-            belgica_name: "Bélgica", belgica_sub: "QRP2P BÉLGICA",
-            belice_name: "Belice", belice_sub: "QRP2P BELICE",
-            benin_name: "Benín", benin_sub: "QRP2P BENÍN",
-            bermudas_name: "Bermudas", bermudas_sub: "QRP2P BERMUDAS",
-            bielorrusia_name: "Bielorrusia", bielorrusia_sub: "QRP2P BIELORRUSIA",
-            birmania_name: "Birmania", birmania_sub: "QRP2P BIRMANIA",
-            bolivia_name: "Bolivia", bolivia_sub: "QRP2P BOLIVIA",
-            bosnia_herzegovina_name: "Bosnia y Herzegovina", bosnia_herzegovina_sub: "QRP2P BOSNIA Y HERZEGOVINA",
-            botsuana_name: "Botsuana", botsuana_sub: "QRP2P BOTSUANA",
-            brasil_name: "Brasil", brasil_sub: "QRP2P BRASIL",
-            brunei_name: "Brunéi", brunei_sub: "QRP2P BRUNÉI",
-            bulgaria_name: "Bulgaria", bulgaria_sub: "QRP2P BULGARIA",
-            burkina_faso_name: "Burkina Faso", burkina_faso_sub: "QRP2P BURKINA FASO",
-            burundi_name: "Burundi", burundi_sub: "QRP2P BURUNDI",
-            butan_name: "Bután", butan_sub: "QRP2P BUTÁN",
-            cabo_verde_name: "Cabo Verde", cabo_verde_sub: "QRP2P CABO VERDE",
-            camboya_name: "Camboya", camboya_sub: "QRP2P CAMBOYA",
-            camerun_name: "Camerún", camerun_sub: "QRP2P CAMERÚN",
-            canada_name: "Canadá", canada_sub: "QRP2P CANADÁ",
-            catar_name: "Catar", catar_sub: "QRP2P CATAR",
-            chad_name: "Chad", chad_sub: "QRP2P CHAD",
-            chile_name: "Chile", chile_sub: "QRP2P CHILE",
-            china_name: "China", china_sub: "QRP2P CHINA",
-            chipre_name: "Chipre", chipre_sub: "QRP2P CHIPRE",
-            ciudad_vaticano_name: "Ciudad del Vaticano", ciudad_vaticano_sub: "QRP2P VATICANO",
-            colombia_name: "Colombia", colombia_sub: "QRP2P COLOMBIA",
-            comoras_name: "Comoras", comoras_sub: "QRP2P COMORAS",
-            corea_norte_name: "Corea del Norte", corea_norte_sub: "QRP2P COREA DEL NORTE",
-            corea_sur_name: "Corea del Sur", corea_sur_sub: "QRP2P COREA DEL SUR",
-            costa_marfil_name: "Costa de Marfil", costa_marfil_sub: "QRP2P COSTA DE MARFIL",
-            costa_rica_name: "Costa Rica", costa_rica_sub: "QRP2P COSTA RICA",
-            croacia_name: "Croacia", croacia_sub: "QRP2P CROACIA",
-            cuba_name: "Cuba", cuba_sub: "QRP2P CUBA",
-            dinamarca_name: "Dinamarca", dinamarca_sub: "QRP2P DINAMARCA",
-            dominica_name: "Dominica", dominica_sub: "QRP2P DOMINICA",
-            ecuador_name: "Ecuador", ecuador_sub: "QRP2P ECUADOR",
-            egipto_name: "Egipto", egipto_sub: "QRP2P EGIPTO",
-            el_salvador_name: "El Salvador", el_salvador_sub: "QRP2P EL SALVADOR",
-            emiratos_arabes_name: "Emiratos Árabes", emiratos_arabes_sub: "QRP2P EAU",
-            eritrea_name: "Eritrea", eritrea_sub: "QRP2P ERITREA",
-            eslovaquia_name: "Eslovaquia", eslovaquia_sub: "QRP2P ESLOVAQUIA",
-            eslovenia_name: "Eslovenia", eslovenia_sub: "QRP2P ESLOVENIA",
-            espana_name: "España", espana_sub: "QRP2P ESPAÑA",
-            estados_unidos_name: "Estados Unidos", estados_unidos_sub: "QRP2P USA",
-            estonia_name: "Estonia", estonia_sub: "QRP2P ESTONIA",
-            esuatini_name: "Esuatini", esuatini_sub: "QRP2P ESUATINI",
-            etiopia_name: "Etiopía", etiopia_sub: "QRP2P ETIOPÍA",
-            fiji_name: "Fiyi", fiji_sub: "QRP2P FIYI",
-            filipinas_name: "Filipinas", filipinas_sub: "QRP2P FILIPINAS",
-            finlandia_name: "Finlandia", finlandia_sub: "QRP2P FINLANDIA",
-            francia_name: "Francia", francia_sub: "QRP2P FRANCIA",
-            gabon_name: "Gabón", gabon_sub: "QRP2P GABÓN",
-            gambia_name: "Gambia", gambia_sub: "QRP2P GAMBIA",
-            georgia_name: "Georgia", georgia_sub: "QRP2P GEORGIA",
-            ghana_name: "Ghana", ghana_sub: "QRP2P GHANA",
-            granada_name: "Granada", granada_sub: "QRP2P GRANADA",
-            grecia_name: "Grecia", grecia_sub: "QRP2P GRECIA",
-            groenlandia_name: "Groenlandia", groenlandia_sub: "QRP2P GROENLANDIA",
-            guadalupe_name: "Guadalupe", guadalupe_sub: "QRP2P GUADALUPE",
-            guam_name: "Guam", guam_sub: "QRP2P GUAM",
-            guatemala_name: "Guatemala", guatemala_sub: "QRP2P GUATEMALA",
-            guayana_francesa_name: "Guayana Francesa", guayana_francesa_sub: "QRP2P GUAYANA FRANCESA",
-            guernsey_name: "Guernsey", guernsey_sub: "QRP2P GUERNSEY",
-            guinea_name: "Guinea", guinea_sub: "QRP2P GUINEA",
-            guinea_bisau_name: "Guinea Bisáu", guinea_bisau_sub: "QRP2P GUINEA BISÁU",
-            guinea_ecuatorial_name: "Guinea Ecuatorial", guinea_ecuatorial_sub: "QRP2P GUINEA ECUATORIAL",
-            guyana_name: "Guyana", guyana_sub: "QRP2P GUYANA",
-            haiti_name: "Haití", haiti_sub: "QRP2P HAITÍ",
-            honduras_name: "Honduras", honduras_sub: "QRP2P HONDURAS",
-            hong_kong_name: "Hong Kong", hong_kong_sub: "QRP2P HONG KONG",
-            hungria_name: "Hungría", hungria_sub: "QRP2P HUNGRÍA",
-            india_name: "India", india_sub: "QRP2P INDIA",
-            indonesia_name: "Indonesia", indonesia_sub: "QRP2P INDONESIA",
-            irak_name: "Irak", irak_sub: "QRP2P IRAK",
-            iran_name: "Irán", iran_sub: "QRP2P IRÁN",
-            irlanda_name: "Irlanda", irlanda_sub: "QRP2P IRLANDA",
-            isla_man_name: "Isla de Man", isla_man_sub: "QRP2P ISLA DE MAN",
-            islandia_name: "Islandia", islandia_sub: "QRP2P ISLANDIA",
-            islas_caiman_name: "Islas Caimán", islas_caiman_sub: "QRP2P ISLAS CAIMÁN",
-            islas_cook_name: "Islas Cook", islas_cook_sub: "QRP2P ISLAS COOK",
-            islas_feroe_name: "Islas Feroe", islas_feroe_sub: "QRP2P ISLAS FEROE",
-            islas_malvinas_name: "Islas Malvinas", islas_malvinas_sub: "QRP2P ISLAS MALVINAS",
-            islas_marshall_name: "Islas Marshall", islas_marshall_sub: "QRP2P ISLAS MARSHALL",
-            islas_salomon_name: "Islas Salomón", islas_salomon_sub: "QRP2P ISLAS SALOMÓN",
-            islas_turcas_caicos_name: "Islas Turcas y Caicos", islas_turcas_caicos_sub: "QRP2P ISLAS TURCAS Y CAICOS",
-            islas_virgenes_britanicas_name: "Islas Vírgenes Británicas", islas_virgenes_britanicas_sub: "QRP2P ISLAS VÍRGENES BRITÁNICAS",
-            islas_virgenes_eeuu_name: "Islas Vírgenes EEUU", islas_virgenes_eeuu_sub: "QRP2P ISLAS VÍRGENES EEUU",
-            israel_name: "Israel", israel_sub: "QRP2P ISRAEL",
-            italia_name: "Italia", italia_sub: "QRP2P ITALIA",
-            jamaica_name: "Jamaica", jamaica_sub: "QRP2P JAMAICA",
-            japon_name: "Japón", japon_sub: "QRP2P JAPÓN",
-            jersey_name: "Jersey", jersey_sub: "QRP2P JERSEY",
-            jordania_name: "Jordania", jordania_sub: "QRP2P JORDANIA",
-            kazajistan_name: "Kazajistán", kazajistan_sub: "QRP2P KAZAJISTÁN",
-            kenia_name: "Kenia", kenia_sub: "QRP2P KENIA",
-            kirguistan_name: "Kirguistán", kirguistan_sub: "QRP2P KIRGUISTÁN",
-            kiribati_name: "Kiribati", kiribati_sub: "QRP2P KIRIBATI",
-            kuwait_name: "Kuwait", kuwait_sub: "QRP2P KUWAIT",
-            laos_name: "Laos", laos_sub: "QRP2P LAOS",
-            lesoto_name: "Lesoto", lesoto_sub: "QRP2P LESOTO",
-            letonia_name: "Letonia", letonia_sub: "QRP2P LETONIA",
-            libano_name: "Líbano", libano_sub: "QRP2P LÍBANO",
-            liberia_name: "Liberia", liberia_sub: "QRP2P LIBERIA",
-            libia_name: "Libia", libia_sub: "QRP2P LIBIA",
-            liechtenstein_name: "Liechtenstein", liechtenstein_sub: "QRP2P LIECHTENSTEIN",
-            lituania_name: "Lituania", lituania_sub: "QRP2P LITUANIA",
-            luxemburgo_name: "Luxemburgo", luxemburgo_sub: "QRP2P LUXEMBURGO",
-            macao_name: "Macao", macao_sub: "QRP2P MACAO",
-            macedonia_norte_name: "Macedonia del Norte", macedonia_norte_sub: "QRP2P MACEDONIA",
-            madagascar_name: "Madagascar", madagascar_sub: "QRP2P MADAGASCAR",
-            malasia_name: "Malasia", malasia_sub: "QRP2P MALASIA",
-            malaui_name: "Malaui", malaui_sub: "QRP2P MALAUI",
-            maldivas_name: "Maldivas", maldivas_sub: "QRP2P MALDIVAS",
-            mali_name: "Malí", mali_sub: "QRP2P MALÍ",
-            malta_name: "Malta", malta_sub: "QRP2P MALTA",
-            marruecos_name: "Marruecos", marruecos_sub: "QRP2P MARRUECOS",
-            martinica_name: "Martinica", martinica_sub: "QRP2P MARTINICA",
-            mauricio_name: "Mauricio", mauricio_sub: "QRP2P MAURICIO",
-            mauritania_name: "Mauritania", mauritania_sub: "QRP2P MAURITANIA",
-            mayotte_name: "Mayotte", mayotte_sub: "QRP2P MAYOTTE",
-            mexico_name: "México", mexico_sub: "QRP2P MÉXICO",
-            micronesia_name: "Micronesia", micronesia_sub: "QRP2P MICRONESIA",
-            moldavia_name: "Moldavia", moldavia_sub: "QRP2P MOLDAVIA",
-            monaco_name: "Mónaco", monaco_sub: "QRP2P MÓNACO",
-            mongolia_name: "Mongolia", mongolia_sub: "QRP2P MONGOLIA",
-            montenegro_name: "Montenegro", montenegro_sub: "QRP2P MONTENEGRO",
-            montserrat_name: "Montserrat", montserrat_sub: "QRP2P MONTSERRAT",
-            mozambique_name: "Mozambique", mozambique_sub: "QRP2P MOZAMBIQUE",
-            namibia_name: "Namibia", namibia_sub: "QRP2P NAMIBIA",
-            nauru_name: "Nauru", nauru_sub: "QRP2P NAURU",
-            nepal_name: "Nepal", nepal_sub: "QRP2P NEPAL",
-            nicaragua_name: "Nicaragua", nicaragua_sub: "QRP2P NICARAGUA",
-            niger_name: "Níger", niger_sub: "QRP2P NÍGER",
-            nigeria_name: "Nigeria", nigeria_sub: "QRP2P NIGERIA",
-            niue_name: "Niue", niue_sub: "QRP2P NIUE",
-            noruega_name: "Noruega", noruega_sub: "QRP2P NORUEGA",
-            nueva_caledonia_name: "Nueva Caledonia", nueva_caledonia_sub: "QRP2P NUEVA CALEDONIA",
-            nueva_zelanda_name: "Nueva Zelanda", nueva_zelanda_sub: "QRP2P NUEVA ZELANDA",
-            oman_name: "Omán", oman_sub: "QRP2P OMÁN",
-            paises_bajos_name: "Países Bajos", paises_bajos_sub: "QRP2P PAÍSES BAJOS",
-            pakistan_name: "Pakistán", pakistan_sub: "QRP2P PAKISTÁN",
-            palaos_name: "Palaos", palaos_sub: "QRP2P PALAOS",
-            palestina_name: "Palestina", palestina_sub: "QRP2P PALESTINA",
-            panama_name: "Panamá", panama_sub: "QRP2P PANAMÁ",
-            papua_nueva_guinea_name: "Papúa Nueva Guinea", papua_nueva_guinea_sub: "QRP2P PAPÚA NUEVA GUINEA",
-            paraguay_name: "Paraguay", paraguay_sub: "QRP2P PARAGUAY",
-            peru_name: "Perú", peru_sub: "QRP2P PERÚ",
-            polinesia_francesa_name: "Polinesia Francesa", polinesia_francesa_sub: "QRP2P POLINESIA FRANCESA",
-            polonia_name: "Polonia", polonia_sub: "QRP2P POLONIA",
-            portugal_name: "Portugal", portugal_sub: "QRP2P PORTUGAL",
-            puerto_rico_name: "Puerto Rico", puerto_rico_sub: "QRP2P PUERTO RICO",
-            reino_unido_name: "Reino Unido", reino_unido_sub: "QRP2P REINO UNIDO",
-            republica_centroafricana_name: "República Centroafricana", republica_centroafricana_sub: "QRP2P REP. CENTROAFRICANA",
-            republica_checa_name: "República Checa", republica_checa_sub: "QRP2P REPÚBLICA CHECA",
-            republica_congo_name: "República del Congo", republica_congo_sub: "QRP2P CONGO",
-            republica_dominicana_name: "República Dominicana", republica_dominicana_sub: "QRP2P REP. DOMINICANA",
-            republica_democratica_congo_name: "Rep. Dem. del Congo", republica_democratica_congo_sub: "QRP2P RDC",
-            ruanda_name: "Ruanda", ruanda_sub: "QRP2P RUANDA",
-            rumania_name: "Rumanía", rumania_sub: "QRP2P RUMANÍA",
-            rusia_name: "Rusia", rusia_sub: "QRP2P RUSIA",
-            sahara_occidental_name: "Sáhara Occidental", sahara_occidental_sub: "QRP2P SÁHARA OCC.",
-            samoa_name: "Samoa", samoa_sub: "QRP2P SAMOA",
-            samoa_americana_name: "Samoa Americana", samoa_americana_sub: "QRP2P SAMOA AMERICANA",
-            san_bartolome_name: "San Bartolomé", san_bartolome_sub: "QRP2P SAN BARTOLOMÉ",
-            san_cristobal_nieves_name: "San Cristóbal y Nieves", san_cristobal_nieves_sub: "QRP2P ST. KITTS Y NEVIS",
-            san_marino_name: "San Marino", san_marino_sub: "QRP2P SAN MARINO",
-            san_martin_name: "San Martín", san_martin_sub: "QRP2P SAN MARTÍN",
-            san_pedro_miquelon_name: "San Pedro y Miquelón", san_pedro_miquelon_sub: "QRP2P ST. PIERRE Y MIQUELON",
-            san_vicente_granadinas_name: "San Vicente y las Granadinas", san_vicente_granadinas_sub: "QRP2P ST. VICENTE",
-            santa_elena_name: "Santa Elena", santa_elena_sub: "QRP2P SANTA ELENA",
-            santa_lucia_name: "Santa Lucía", santa_lucia_sub: "QRP2P SANTA LUCÍA",
-            santo_tome_principe_name: "Santo Tomé y Príncipe", santo_tome_principe_sub: "QRP2P SANTO TOMÉ",
-            senegal_name: "Senegal", senegal_sub: "QRP2P SENEGAL",
-            serbia_name: "Serbia", serbia_sub: "QRP2P SERBIA",
-            seychelles_name: "Seychelles", seychelles_sub: "QRP2P SEYCHELLES",
-            sierra_leona_name: "Sierra Leona", sierra_leona_sub: "QRP2P SIERRA LEONA",
-            singapur_name: "Singapur", singapur_sub: "QRP2P SINGAPUR",
-            sint_maarten_name: "Sint Maarten", sint_maarten_sub: "QRP2P SINT MAARTEN",
-            siria_name: "Siria", siria_sub: "QRP2P SIRIA",
-            somalia_name: "Somalia", somalia_sub: "QRP2P SOMALIA",
-            sri_lanka_name: "Sri Lanka", sri_lanka_sub: "QRP2P SRI LANKA",
-            sudafrica_name: "Sudáfrica", sudafrica_sub: "QRP2P SUDÁFRICA",
-            sudan_name: "Sudán", sudan_sub: "QRP2P SUDÁN",
-            sudan_sur_name: "Sudán del Sur", sudan_sur_sub: "QRP2P SUDÁN DEL SUR",
-            suecia_name: "Suecia", suecia_sub: "QRP2P SUECIA",
-            suiza_name: "Suiza", suiza_sub: "QRP2P SUIZA",
-            surinam_name: "Surinam", surinam_sub: "QRP2P SURINAM",
-            tailandia_name: "Tailandia", tailandia_sub: "QRP2P TAILANDIA",
-            taiwan_name: "Taiwán", taiwan_sub: "QRP2P TAIWÁN",
-            tanzania_name: "Tanzania", tanzania_sub: "QRP2P TANZANIA",
-            tayikistan_name: "Tayikistán", tayikistan_sub: "QRP2P TAYIKISTÁN",
-            timor_oriental_name: "Timor Oriental", timor_oriental_sub: "QRP2P TIMOR ORIENTAL",
-            togo_name: "Togo", togo_sub: "QRP2P TOGO",
-            tonga_name: "Tonga", tonga_sub: "QRP2P TONGA",
-            trinidad_tobago_name: "Trinidad y Tobago", trinidad_tobago_sub: "QRP2P TRINIDAD Y TOBAGO",
-            tunez_name: "Túnez", tunez_sub: "QRP2P TÚNEZ",
-            turkmenistan_name: "Turkmenistán", turkmenistan_sub: "QRP2P TURKMENISTÁN",
-            turquia_name: "Turquía", turquia_sub: "QRP2P TURQUÍA",
-            tuvalu_name: "Tuvalu", tuvalu_sub: "QRP2P TUVALU",
-            ucrania_name: "Ucrania", ucrania_sub: "QRP2P UCRANIA",
-            uganda_name: "Uganda", uganda_sub: "QRP2P UGANDA",
-            uruguay_name: "Uruguay", uruguay_sub: "QRP2P URUGUAY",
-            uzbekistan_name: "Uzbekistán", uzbekistan_sub: "QRP2P UZBEKISTÁN",
-            vanuatu_name: "Vanuatu", vanuatu_sub: "QRP2P VANUATU",
-            venezuela_name: "Venezuela", venezuela_sub: "QRP2P VENEZUELA",
-            vietnam_name: "Vietnam", vietnam_sub: "QRP2P VIETNAM",
-            wallis_futuna_name: "Wallis y Futuna", wallis_futuna_sub: "QRP2P WALLIS Y FUTUNA",
-            yemen_name: "Yemen", yemen_sub: "QRP2P YEMEN",
-            yibuti_name: "Yibuti", yibuti_sub: "QRP2P YIBUTI",
-            zambia_name: "Zambia", zambia_sub: "QRP2P ZAMBIA",
-            zimbabue_name: "Zimbabue", zimbabue_sub: "QRP2P ZIMBABUE",
-            footer_copyright: "© QRP2P.COM — Marketplace descentralizado P2P · 0% comisión",
-            footer_tagline: "venta directa · comprador verificado · cero comisiones",
-            no_results: "No se encontraron países. Prueba con otro término de búsqueda.",
-            install_text: "📱 Instalar QRP2P App",
-            install_btn: "Instalar"
-        },
-        en: {
-            tagline: "DECENTRALIZED P2P MARKETPLACE · 0% COMMISSION",
-            title: "Select your country<br>to enter the P2P marketplace",
-            subtitle: "Direct payments between verified buyer and seller. No commissions. No intermediaries.",
-            afganistan_name: "Afghanistan", afganistan_sub: "QRP2P AFGHANISTAN",
-            albania_name: "Albania", albania_sub: "QRP2P ALBANIA",
-            alemania_name: "Germany", alemania_sub: "QRP2P GERMANY",
-            andorra_name: "Andorra", andorra_sub: "QRP2P ANDORRA",
-            angola_name: "Angola", angola_sub: "QRP2P ANGOLA",
-            anguila_name: "Anguilla", anguila_sub: "QRP2P ANGUILLA",
-            antigua_barbuda_name: "Antigua and Barbuda", antigua_barbuda_sub: "QRP2P ANTIGUA AND BARBUDA",
-            arabia_saudita_name: "Saudi Arabia", arabia_saudita_sub: "QRP2P SAUDI ARABIA",
-            argelia_name: "Algeria", argelia_sub: "QRP2P ALGERIA",
-            argentina_name: "Argentina", argentina_sub: "QRP2P ARGENTINA",
-            armenia_name: "Armenia", armenia_sub: "QRP2P ARMENIA",
-            aruba_name: "Aruba", aruba_sub: "QRP2P ARUBA",
-            australia_name: "Australia", australia_sub: "QRP2P AUSTRALIA",
-            austria_name: "Austria", austria_sub: "QRP2P AUSTRIA",
-            azerbaiyan_name: "Azerbaijan", azerbaiyan_sub: "QRP2P AZERBAIJAN",
-            bahamas_name: "Bahamas", bahamas_sub: "QRP2P BAHAMAS",
-            bahrein_name: "Bahrain", bahrein_sub: "QRP2P BAHRAIN",
-            bangladesh_name: "Bangladesh", bangladesh_sub: "QRP2P BANGLADESH",
-            barbados_name: "Barbados", barbados_sub: "QRP2P BARBADOS",
-            belgica_name: "Belgium", belgica_sub: "QRP2P BELGIUM",
-            belice_name: "Belize", belice_sub: "QRP2P BELIZE",
-            benin_name: "Benin", benin_sub: "QRP2P BENIN",
-            bermudas_name: "Bermuda", bermudas_sub: "QRP2P BERMUDA",
-            bielorrusia_name: "Belarus", bielorrusia_sub: "QRP2P BELARUS",
-            birmania_name: "Myanmar", birmania_sub: "QRP2P MYANMAR",
-            bolivia_name: "Bolivia", bolivia_sub: "QRP2P BOLIVIA",
-            bosnia_herzegovina_name: "Bosnia and Herzegovina", bosnia_herzegovina_sub: "QRP2P BOSNIA AND HERZEGOVINA",
-            botsuana_name: "Botswana", botsuana_sub: "QRP2P BOTSWANA",
-            brasil_name: "Brazil", brasil_sub: "QRP2P BRAZIL",
-            brunei_name: "Brunei", brunei_sub: "QRP2P BRUNEI",
-            bulgaria_name: "Bulgaria", bulgaria_sub: "QRP2P BULGARIA",
-            burkina_faso_name: "Burkina Faso", burkina_faso_sub: "QRP2P BURKINA FASO",
-            burundi_name: "Burundi", burundi_sub: "QRP2P BURUNDI",
-            butan_name: "Bhutan", butan_sub: "QRP2P BHUTAN",
-            cabo_verde_name: "Cape Verde", cabo_verde_sub: "QRP2P CAPE VERDE",
-            camboya_name: "Cambodia", camboya_sub: "QRP2P CAMBODIA",
-            camerun_name: "Cameroon", camerun_sub: "QRP2P CAMEROON",
-            canada_name: "Canada", canada_sub: "QRP2P CANADA",
-            catar_name: "Qatar", catar_sub: "QRP2P QATAR",
-            chad_name: "Chad", chad_sub: "QRP2P CHAD",
-            chile_name: "Chile", chile_sub: "QRP2P CHILE",
-            china_name: "China", china_sub: "QRP2P CHINA",
-            chipre_name: "Cyprus", chipre_sub: "QRP2P CYPRUS",
-            ciudad_vaticano_name: "Vatican City", ciudad_vaticano_sub: "QRP2P VATICAN CITY",
-            colombia_name: "Colombia", colombia_sub: "QRP2P COLOMBIA",
-            comoras_name: "Comoros", comoras_sub: "QRP2P COMOROS",
-            corea_norte_name: "North Korea", corea_norte_sub: "QRP2P NORTH KOREA",
-            corea_sur_name: "South Korea", corea_sur_sub: "QRP2P SOUTH KOREA",
-            costa_marfil_name: "Ivory Coast", costa_marfil_sub: "QRP2P IVORY COAST",
-            costa_rica_name: "Costa Rica", costa_rica_sub: "QRP2P COSTA RICA",
-            croacia_name: "Croatia", croacia_sub: "QRP2P CROATIA",
-            cuba_name: "Cuba", cuba_sub: "QRP2P CUBA",
-            dinamarca_name: "Denmark", dinamarca_sub: "QRP2P DENMARK",
-            dominica_name: "Dominica", dominica_sub: "QRP2P DOMINICA",
-            ecuador_name: "Ecuador", ecuador_sub: "QRP2P ECUADOR",
-            egipto_name: "Egypt", egipto_sub: "QRP2P EGYPT",
-            el_salvador_name: "El Salvador", el_salvador_sub: "QRP2P EL SALVADOR",
-            emiratos_arabes_name: "United Arab Emirates", emiratos_arabes_sub: "QRP2P UAE",
-            eritrea_name: "Eritrea", eritrea_sub: "QRP2P ERITREA",
-            eslovaquia_name: "Slovakia", eslovaquia_sub: "QRP2P SLOVAKIA",
-            eslovenia_name: "Slovenia", eslovenia_sub: "QRP2P SLOVENIA",
-            espana_name: "Spain", espana_sub: "QRP2P SPAIN",
-            estados_unidos_name: "United States", estados_unidos_sub: "QRP2P UNITED STATES",
-            estonia_name: "Estonia", estonia_sub: "QRP2P ESTONIA",
-            esuatini_name: "Eswatini", esuatini_sub: "QRP2P ESWATINI",
-            etiopia_name: "Ethiopia", etiopia_sub: "QRP2P ETHIOPIA",
-            fiji_name: "Fiji", fiji_sub: "QRP2P FIJI",
-            filipinas_name: "Philippines", filipinas_sub: "QRP2P PHILIPPINES",
-            finlandia_name: "Finland", finlandia_sub: "QRP2P FINLAND",
-            francia_name: "France", francia_sub: "QRP2P FRANCE",
-            gabon_name: "Gabon", gabon_sub: "QRP2P GABON",
-            gambia_name: "Gambia", gambia_sub: "QRP2P GAMBIA",
-            georgia_name: "Georgia", georgia_sub: "QRP2P GEORGIA",
-            ghana_name: "Ghana", ghana_sub: "QRP2P GHANA",
-            granada_name: "Grenada", granada_sub: "QRP2P GRENADA",
-            grecia_name: "Greece", grecia_sub: "QRP2P GREECE",
-            groenlandia_name: "Greenland", groenlandia_sub: "QRP2P GREENLAND",
-            guadalupe_name: "Guadeloupe", guadalupe_sub: "QRP2P GUADELOUPE",
-            guam_name: "Guam", guam_sub: "QRP2P GUAM",
-            guatemala_name: "Guatemala", guatemala_sub: "QRP2P GUATEMALA",
-            guayana_francesa_name: "French Guiana", guayana_francesa_sub: "QRP2P FRENCH GUIANA",
-            guernsey_name: "Guernsey", guernsey_sub: "QRP2P GUERNSEY",
-            guinea_name: "Guinea", guinea_sub: "QRP2P GUINEA",
-            guinea_bisau_name: "Guinea-Bissau", guinea_bisau_sub: "QRP2P GUINEA-BISSAU",
-            guinea_ecuatorial_name: "Equatorial Guinea", guinea_ecuatorial_sub: "QRP2P EQUATORIAL GUINEA",
-            guyana_name: "Guyana", guyana_sub: "QRP2P GUYANA",
-            haiti_name: "Haiti", haiti_sub: "QRP2P HAITI",
-            honduras_name: "Honduras", honduras_sub: "QRP2P HONDURAS",
-            hong_kong_name: "Hong Kong", hong_kong_sub: "QRP2P HONG KONG",
-            hungria_name: "Hungary", hungria_sub: "QRP2P HUNGARY",
-            india_name: "India", india_sub: "QRP2P INDIA",
-            indonesia_name: "Indonesia", indonesia_sub: "QRP2P INDONESIA",
-            irak_name: "Iraq", irak_sub: "QRP2P IRAQ",
-            iran_name: "Iran", iran_sub: "QRP2P IRAN",
-            irlanda_name: "Ireland", irlanda_sub: "QRP2P IRELAND",
-            isla_man_name: "Isle of Man", isla_man_sub: "QRP2P ISLE OF MAN",
-            islandia_name: "Iceland", islandia_sub: "QRP2P ICELAND",
-            islas_caiman_name: "Cayman Islands", islas_caiman_sub: "QRP2P CAYMAN ISLANDS",
-            islas_cook_name: "Cook Islands", islas_cook_sub: "QRP2P COOK ISLANDS",
-            islas_feroe_name: "Faroe Islands", islas_feroe_sub: "QRP2P FAROE ISLANDS",
-            islas_malvinas_name: "Falkland Islands", islas_malvinas_sub: "QRP2P FALKLAND ISLANDS",
-            islas_marshall_name: "Marshall Islands", islas_marshall_sub: "QRP2P MARSHALL ISLANDS",
-            islas_salomon_name: "Solomon Islands", islas_salomon_sub: "QRP2P SOLOMON ISLANDS",
-            islas_turcas_caicos_name: "Turks and Caicos Islands", islas_turcas_caicos_sub: "QRP2P TURKS AND CAICOS",
-            islas_virgenes_britanicas_name: "British Virgin Islands", islas_virgenes_britanicas_sub: "QRP2P BRITISH VIRGIN ISLANDS",
-            islas_virgenes_eeuu_name: "US Virgin Islands", islas_virgenes_eeuu_sub: "QRP2P US VIRGIN ISLANDS",
-            israel_name: "Israel", israel_sub: "QRP2P ISRAEL",
-            italia_name: "Italy", italia_sub: "QRP2P ITALY",
-            jamaica_name: "Jamaica", jamaica_sub: "QRP2P JAMAICA",
-            japon_name: "Japan", japon_sub: "QRP2P JAPAN",
-            jersey_name: "Jersey", jersey_sub: "QRP2P JERSEY",
-            jordania_name: "Jordan", jordania_sub: "QRP2P JORDAN",
-            kazajistan_name: "Kazakhstan", kazajistan_sub: "QRP2P KAZAKHSTAN",
-            kenia_name: "Kenya", kenia_sub: "QRP2P KENYA",
-            kirguistan_name: "Kyrgyzstan", kirguistan_sub: "QRP2P KYRGYZSTAN",
-            kiribati_name: "Kiribati", kiribati_sub: "QRP2P KIRIBATI",
-            kuwait_name: "Kuwait", kuwait_sub: "QRP2P KUWAIT",
-            laos_name: "Laos", laos_sub: "QRP2P LAOS",
-            lesoto_name: "Lesotho", lesoto_sub: "QRP2P LESOTHO",
-            letonia_name: "Latvia", letonia_sub: "QRP2P LATVIA",
-            libano_name: "Lebanon", libano_sub: "QRP2P LEBANON",
-            liberia_name: "Liberia", liberia_sub: "QRP2P LIBERIA",
-            libia_name: "Libya", libia_sub: "QRP2P LIBYA",
-            liechtenstein_name: "Liechtenstein", liechtenstein_sub: "QRP2P LIECHTENSTEIN",
-            lituania_name: "Lithuania", lituania_sub: "QRP2P LITHUANIA",
-            luxemburgo_name: "Luxembourg", luxemburgo_sub: "QRP2P LUXEMBOURG",
-            macao_name: "Macau", macao_sub: "QRP2P MACAU",
-            macedonia_norte_name: "North Macedonia", macedonia_norte_sub: "QRP2P NORTH MACEDONIA",
-            madagascar_name: "Madagascar", madagascar_sub: "QRP2P MADAGASCAR",
-            malasia_name: "Malaysia", malasia_sub: "QRP2P MALAYSIA",
-            malaui_name: "Malawi", malaui_sub: "QRP2P MALAWI",
-            maldivas_name: "Maldives", maldivas_sub: "QRP2P MALDIVES",
-            mali_name: "Mali", mali_sub: "QRP2P MALI",
-            malta_name: "Malta", malta_sub: "QRP2P MALTA",
-            marruecos_name: "Morocco", marruecos_sub: "QRP2P MOROCCO",
-            martinica_name: "Martinique", martinica_sub: "QRP2P MARTINIQUE",
-            mauricio_name: "Mauritius", mauricio_sub: "QRP2P MAURITIUS",
-            mauritania_name: "Mauritania", mauritania_sub: "QRP2P MAURITANIA",
-            mayotte_name: "Mayotte", mayotte_sub: "QRP2P MAYOTTE",
-            mexico_name: "Mexico", mexico_sub: "QRP2P MEXICO",
-            micronesia_name: "Micronesia", micronesia_sub: "QRP2P MICRONESIA",
-            moldavia_name: "Moldova", moldavia_sub: "QRP2P MOLDOVA",
-            monaco_name: "Monaco", monaco_sub: "QRP2P MONACO",
-            mongolia_name: "Mongolia", mongolia_sub: "QRP2P MONGOLIA",
-            montenegro_name: "Montenegro", montenegro_sub: "QRP2P MONTENEGRO",
-            montserrat_name: "Montserrat", montserrat_sub: "QRP2P MONTSERRAT",
-            mozambique_name: "Mozambique", mozambique_sub: "QRP2P MOZAMBIQUE",
-            namibia_name: "Namibia", namibia_sub: "QRP2P NAMIBIA",
-            nauru_name: "Nauru", nauru_sub: "QRP2P NAURU",
-            nepal_name: "Nepal", nepal_sub: "QRP2P NEPAL",
-            nicaragua_name: "Nicaragua", nicaragua_sub: "QRP2P NICARAGUA",
-            niger_name: "Niger", niger_sub: "QRP2P NIGER",
-            nigeria_name: "Nigeria", nigeria_sub: "QRP2P NIGERIA",
-            niue_name: "Niue", niue_sub: "QRP2P NIUE",
-            noruega_name: "Norway", noruega_sub: "QRP2P NORWAY",
-            nueva_caledonia_name: "New Caledonia", nueva_caledonia_sub: "QRP2P NEW CALEDONIA",
-            nueva_zelanda_name: "New Zealand", nueva_zelanda_sub: "QRP2P NEW ZEALAND",
-            oman_name: "Oman", oman_sub: "QRP2P OMAN",
-            paises_bajos_name: "Netherlands", paises_bajos_sub: "QRP2P NETHERLANDS",
-            pakistan_name: "Pakistan", pakistan_sub: "QRP2P PAKISTAN",
-            palaos_name: "Palau", palaos_sub: "QRP2P PALAU",
-            palestina_name: "Palestine", palestina_sub: "QRP2P PALESTINE",
-            panama_name: "Panama", panama_sub: "QRP2P PANAMA",
-            papua_nueva_guinea_name: "Papua New Guinea", papua_nueva_guinea_sub: "QRP2P PAPUA NEW GUINEA",
-            paraguay_name: "Paraguay", paraguay_sub: "QRP2P PARAGUAY",
-            peru_name: "Peru", peru_sub: "QRP2P PERU",
-            polinesia_francesa_name: "French Polynesia", polinesia_francesa_sub: "QRP2P FRENCH POLYNESIA",
-            polonia_name: "Poland", polonia_sub: "QRP2P POLAND",
-            portugal_name: "Portugal", portugal_sub: "QRP2P PORTUGAL",
-            puerto_rico_name: "Puerto Rico", puerto_rico_sub: "QRP2P PUERTO RICO",
-            reino_unido_name: "United Kingdom", reino_unido_sub: "QRP2P UNITED KINGDOM",
-            republica_centroafricana_name: "Central African Republic", republica_centroafricana_sub: "QRP2P CENTRAL AFRICAN REP.",
-            republica_checa_name: "Czech Republic", republica_checa_sub: "QRP2P CZECH REPUBLIC",
-            republica_congo_name: "Republic of the Congo", republica_congo_sub: "QRP2P CONGO",
-            republica_dominicana_name: "Dominican Republic", republica_dominicana_sub: "QRP2P DOMINICAN REPUBLIC",
-            republica_democratica_congo_name: "Democratic Republic of the Congo", republica_democratica_congo_sub: "QRP2P DRC",
-            ruanda_name: "Rwanda", ruanda_sub: "QRP2P RWANDA",
-            rumania_name: "Romania", rumania_sub: "QRP2P ROMANIA",
-            rusia_name: "Russia", rusia_sub: "QRP2P RUSSIA",
-            sahara_occidental_name: "Western Sahara", sahara_occidental_sub: "QRP2P WESTERN SAHARA",
-            samoa_name: "Samoa", samoa_sub: "QRP2P SAMOA",
-            samoa_americana_name: "American Samoa", samoa_americana_sub: "QRP2P AMERICAN SAMOA",
-            san_bartolome_name: "Saint Barthélemy", san_bartolome_sub: "QRP2P SAINT BARTHÉLEMY",
-            san_cristobal_nieves_name: "Saint Kitts and Nevis", san_cristobal_nieves_sub: "QRP2P ST. KITTS AND NEVIS",
-            san_marino_name: "San Marino", san_marino_sub: "QRP2P SAN MARINO",
-            san_martin_name: "Saint Martin", san_martin_sub: "QRP2P SAINT MARTIN",
-            san_pedro_miquelon_name: "Saint Pierre and Miquelon", san_pedro_miquelon_sub: "QRP2P ST. PIERRE AND MIQUELON",
-            san_vicente_granadinas_name: "Saint Vincent and the Grenadines", san_vicente_granadinas_sub: "QRP2P ST. VINCENT",
-            santa_elena_name: "Saint Helena", santa_elena_sub: "QRP2P SAINT HELENA",
-            santa_lucia_name: "Saint Lucia", santa_lucia_sub: "QRP2P SAINT LUCIA",
-            santo_tome_principe_name: "São Tomé and Príncipe", santo_tome_principe_sub: "QRP2P SÃO TOMÉ",
-            senegal_name: "Senegal", senegal_sub: "QRP2P SENEGAL",
-            serbia_name: "Serbia", serbia_sub: "QRP2P SERBIA",
-            seychelles_name: "Seychelles", seychelles_sub: "QRP2P SEYCHELLES",
-            sierra_leona_name: "Sierra Leone", sierra_leona_sub: "QRP2P SIERRA LEONE",
-            singapur_name: "Singapore", singapur_sub: "QRP2P SINGAPORE",
-            sint_maarten_name: "Sint Maarten", sint_maarten_sub: "QRP2P SINT MAARTEN",
-            siria_name: "Syria", siria_sub: "QRP2P SYRIA",
-            somalia_name: "Somalia", somalia_sub: "QRP2P SOMALIA",
-            sri_lanka_name: "Sri Lanka", sri_lanka_sub: "QRP2P SRI LANKA",
-            sudafrica_name: "South Africa", sudafrica_sub: "QRP2P SOUTH AFRICA",
-            sudan_name: "Sudan", sudan_sub: "QRP2P SUDAN",
-            sudan_sur_name: "South Sudan", sudan_sur_sub: "QRP2P SOUTH SUDAN",
-            suecia_name: "Sweden", suecia_sub: "QRP2P SWEDEN",
-            suiza_name: "Switzerland", suiza_sub: "QRP2P SWITZERLAND",
-            surinam_name: "Suriname", surinam_sub: "QRP2P SURINAME",
-            tailandia_name: "Thailand", tailandia_sub: "QRP2P THAILAND",
-            taiwan_name: "Taiwan", taiwan_sub: "QRP2P TAIWAN",
-            tanzania_name: "Tanzania", tanzania_sub: "QRP2P TANZANIA",
-            tayikistan_name: "Tajikistan", tayikistan_sub: "QRP2P TAJIKISTAN",
-            timor_oriental_name: "East Timor", timor_oriental_sub: "QRP2P EAST TIMOR",
-            togo_name: "Togo", togo_sub: "QRP2P TOGO",
-            tonga_name: "Tonga", tonga_sub: "QRP2P TONGA",
-            trinidad_tobago_name: "Trinidad and Tobago", trinidad_tobago_sub: "QRP2P TRINIDAD AND TOBAGO",
-            tunez_name: "Tunisia", tunez_sub: "QRP2P TUNISIA",
-            turkmenistan_name: "Turkmenistan", turkmenistan_sub: "QRP2P TURKMENISTAN",
-            turquia_name: "Turkey", turquia_sub: "QRP2P TURKEY",
-            tuvalu_name: "Tuvalu", tuvalu_sub: "QRP2P TUVALU",
-            ucrania_name: "Ukraine", ucrania_sub: "QRP2P UKRAINE",
-            uganda_name: "Uganda", uganda_sub: "QRP2P UGANDA",
-            uruguay_name: "Uruguay", uruguay_sub: "QRP2P URUGUAY",
-            uzbekistan_name: "Uzbekistan", uzbekistan_sub: "QRP2P UZBEKISTAN",
-            vanuatu_name: "Vanuatu", vanuatu_sub: "QRP2P VANUATU",
-            venezuela_name: "Venezuela", venezuela_sub: "QRP2P VENEZUELA",
-            vietnam_name: "Vietnam", vietnam_sub: "QRP2P VIETNAM",
-            wallis_futuna_name: "Wallis and Futuna", wallis_futuna_sub: "QRP2P WALLIS AND FUTUNA",
-            yemen_name: "Yemen", yemen_sub: "QRP2P YEMEN",
-            yibuti_name: "Djibouti", yibuti_sub: "QRP2P DJIBOUTI",
-            zambia_name: "Zambia", zambia_sub: "QRP2P ZAMBIA",
-            zimbabue_name: "Zimbabwe", zimbabue_sub: "QRP2P ZIMBABWE",
-            footer_copyright: "© QRP2P.COM — Decentralized P2P Marketplace · 0% commission",
-            footer_tagline: "direct sales · verified buyer · zero fees",
-            no_results: "No countries found. Try another search term.",
-            install_text: "📱 Install QRP2P App",
-            install_btn: "Install"
-        }
+    
+    // NEGOCIOS VERIFICADOS - Sin inmuebles, ahora son negocios
+    const verifiedBusinesses = [
+      { 
+        id: "BIZ01", 
+        name_es: "TECH SOLUTIONS GROUP", 
+        name_en: "TECH SOLUTIONS GROUP",
+        category_es: "Tecnología & Software", 
+        category_en: "Technology & Software",
+        latlng: [40.7128, -74.0060], 
+        address_es: "350 5th Ave, New York, NY 10118", 
+        address_en: "350 5th Ave, New York, NY 10118",
+        description_es: "Desarrollo de software, ciberseguridad y consultoría IT. +10 años de experiencia.", 
+        description_en: "Software development, cybersecurity and IT consulting. +10 years of experience.",
+        phone: "+12125550123", 
+        email: "contact@techsolutions.com",
+        website: "https://techsolutions.com",
+        whatsapp: "12125550123",
+        social: { instagram: "@techsolutions", linkedin: "techsolutions" }
+      },
+      { 
+        id: "BIZ02", 
+        name_es: "GREEN EARTH ORGANICS", 
+        name_en: "GREEN EARTH ORGANICS",
+        category_es: "Alimentos Saludables", 
+        category_en: "Healthy Food",
+        latlng: [51.5074, -0.1278], 
+        address_es: "Covent Garden, London WC2E 8RF", 
+        address_en: "Covent Garden, London WC2E 8RF",
+        description_es: "Tienda orgánica certificada. Productos frescos, veganos y sostenibles.", 
+        description_en: "Certified organic store. Fresh, vegan and sustainable products.",
+        phone: "+442079460123", 
+        email: "hello@greenearth.com",
+        website: "https://greenearthorganics.co.uk",
+        whatsapp: "447900123456",
+        social: { instagram: "@greenearth" }
+      },
+      { 
+        id: "BIZ03", 
+        name_es: "TOKYO TRADING CO.", 
+        name_en: "TOKYO TRADING CO.",
+        category_es: "Importación/Exportación", 
+        category_en: "Import/Export",
+        latlng: [35.6895, 139.6917], 
+        address_es: "Marunouchi 2-4-1, Chiyoda City, Tokyo", 
+        address_en: "Marunouchi 2-4-1, Chiyoda City, Tokyo",
+        description_es: "Especialistas en electrónica y componentes industriales. Envíos a todo el mundo.", 
+        description_en: "Specialists in electronics and industrial components. Worldwide shipping.",
+        phone: "+81332145678", 
+        email: "sales@tokyotrading.jp",
+        website: "https://tokyotrading.co.jp",
+        whatsapp: "81332145678",
+        social: { linkedin: "tokyo-trading" }
+      },
+      { 
+        id: "BIZ04", 
+        name_es: "DESERT SAFARI TOURS", 
+        name_en: "DESERT SAFARI TOURS",
+        category_es: "Turismo & Aventura", 
+        category_en: "Tourism & Adventure",
+        latlng: [25.2048, 55.2708], 
+        address_es: "Sheikh Zayed Road, Dubai", 
+        address_en: "Sheikh Zayed Road, Dubai",
+        description_es: "Experiencias únicas en el desierto. Safari, cena beduina y actividades extremas.", 
+        description_en: "Unique desert experiences. Safari, Bedouin dinner and extreme activities.",
+        phone: "+97143345678", 
+        email: "info@desertsafari.ae",
+        website: "https://desertsafari.ae",
+        whatsapp: "97150456789",
+        social: { instagram: "@desertsafari" }
+      },
+      { 
+        id: "BIZ05", 
+        name_es: "BOGOTÁ LEGAL & ASOCIADOS", 
+        name_en: "BOGOTA LEGAL & ASSOCIATES",
+        category_es: "Servicios Legales", 
+        category_en: "Legal Services",
+        latlng: [4.7110, -74.0721], 
+        address_es: "Calle 72 #10-34, Chapinero, Bogotá", 
+        address_en: "Calle 72 #10-34, Chapinero, Bogotá",
+        description_es: "Abogados corporativos, migratorios y propiedad intelectual.", 
+        description_en: "Corporate, immigration and intellectual property attorneys.",
+        phone: "+5717456789", 
+        email: "contacto@legalbogota.com",
+        website: "https://legalbogota.com",
+        whatsapp: "573102345678",
+        social: { linkedin: "bogota-legal" }
+      },
+      { 
+        id: "BIZ06", 
+        name_es: "MADRID DESIGN STUDIO", 
+        name_en: "MADRID DESIGN STUDIO",
+        category_es: "Diseño & Arquitectura", 
+        category_en: "Design & Architecture",
+        latlng: [40.4168, -3.7038], 
+        address_es: "Calle de Alcalá 123, Madrid", 
+        address_en: "Calle de Alcalá 123, Madrid",
+        description_es: "Diseño de interiores, branding y arquitectura sostenible.", 
+        description_en: "Interior design, branding and sustainable architecture.",
+        phone: "+34914567890", 
+        email: "hola@madridstudio.es",
+        website: "https://madridstudio.es",
+        whatsapp: "34612345678",
+        social: { instagram: "@madridstudio" }
+      }
+    ];
+    
+    const translations = { 
+      es: { buscar_placeholder: "Buscar negocios verificados en todo el mundo...", centrar: "CENTRAR", servicios: "SERVICIOS", mapa: "Mapa", satelite: "Satélite", servicios_titulo: "SERVICIOS GLOBALES", visit_btn: "Contactar", info_btn: "Info" },
+      en: { buscar_placeholder: "Search verified businesses worldwide...", centrar: "CENTER", servicios: "SERVICES", mapa: "Map", satelite: "Satellite", servicios_titulo: "GLOBAL SERVICES", visit_btn: "Contact", info_btn: "Info" }
     };
-
-    // --------------------------------------------------------------
-    // 4. RESTO DEL CÓDIGO (FUNCIONES DE RENDER, BÚSQUEDA, ETC)
-    // --------------------------------------------------------------
-    let currentLang = 'es';
-    let currentFilter = '';
-    let deferredPrompt = null;
-
-    function normalizeString(str) {
-        return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^\w\s]/g, '');
+    
+    let mapa, userMarker, marcadoresOriginales = [], currentLayer;
+    function t(key) { return translations[currentLang][key] || key; }
+    
+    // Generar popup para negocio
+    function generarPopupHTML(business) { 
+      const name = currentLang === 'es' ? business.name_es : business.name_en;
+      const category = currentLang === 'es' ? business.category_es : business.category_en;
+      const description = currentLang === 'es' ? business.description_es : business.description_en;
+      const address = currentLang === 'es' ? business.address_es : business.address_en;
+      
+      let contactButtons = '';
+      if(business.website) contactButtons += `<a href="${business.website}" target="_blank" class="contact-link"><i class="fas fa-globe"></i> Web</a>`;
+      if(business.whatsapp) contactButtons += `<a href="https://wa.me/${business.whatsapp.replace(/[^0-9]/g, '')}" target="_blank" class="contact-link"><i class="fab fa-whatsapp"></i> WhatsApp</a>`;
+      if(business.phone) contactButtons += `<a href="tel:${business.phone}" class="contact-link"><i class="fas fa-phone"></i> Call</a>`;
+      if(business.email) contactButtons += `<a href="mailto:${business.email}" class="contact-link"><i class="fas fa-envelope"></i> Email</a>`;
+      
+      return `<div class="popup-business-card" data-id="${business.id}">
+                <div class="popup-business-header">
+                  <h3>⚡ ${name}</h3>
+                  <span class="popup-business-category">${category}</span>
+                </div>
+                <div class="popup-business-info">
+                  <div class="popup-business-description">${description}</div>
+                  <div class="popup-business-address"><i class="fas fa-map-pin"></i> ${address}</div>
+                  <div class="popup-business-contact">${contactButtons}</div>
+                  <a href="${business.website || business.whatsapp ? `https://wa.me/${business.whatsapp || WHATSAPP_NUMBER}` : '#'}" target="_blank" class="btn-view-store"><i class="fas fa-store"></i> VER TIENDA</a>
+                </div>
+              </div>`; 
     }
-
-    function getSearchableTextForCountry(country, langData) {
-        const countryName = langData[country.nameKey] || '';
-        const countrySub = langData[country.subKey] || '';
-        const baseTerms = country.searchTerms || [];
-        let combined = `${countryName} ${countrySub} ${baseTerms.join(' ')}`.toLowerCase();
-        return normalizeString(combined);
+    
+    function initMap() { 
+      const openStreetMapLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap' });
+      mapa = L.map('mapa', { center: [20, 0], zoom: 2, zoomControl: false, layers: [openStreetMapLayer] });
+      currentLayer = openStreetMapLayer;
+      
+      let clusters = L.markerClusterGroup({ iconCreateFunction: cluster => L.divIcon({ html: `<div>${cluster.getChildCount()}</div>`, className: 'cluster-marcadores', iconSize: [40,40] }) }); 
+      let icono = L.divIcon({ className: 'negocio-marker', html: '⚡', iconSize: [32,32], popupAnchor: [0,-16] }); 
+      
+      verifiedBusinesses.forEach(business => { 
+        let popup = generarPopupHTML(business); 
+        let marker = L.marker(business.latlng, { icon: icono }).bindPopup(popup, { maxWidth: 380, className: 'custom-popup' }); 
+        marker.datosNegocio = business; 
+        marker.datosBusqueda = `${business.name_es} ${business.name_en} ${business.category_es} ${business.category_en} ${business.description_es} ${business.description_en}`.toLowerCase(); 
+        marcadoresOriginales.push(marker); 
+        marker.on('popupopen', () => { setTimeout(() => {
+            let node = document.querySelector('.custom-popup'); 
+            if(node) { 
+              // No se necesita lógica de imágenes, solo el botón VER TIENDA ya tiene href
+              let infoSpan = node.querySelector(`.enlace-info`); 
+              if(infoSpan) infoSpan.addEventListener('click', (e) => { e.preventDefault(); abrirInfoModal(business); mapa.closePopup(); }); 
+            } 
+          }, 100); 
+        }); 
+        clusters.addLayer(marker); 
+      }); 
+      mapa.addLayer(clusters); 
     }
-
-    function escapeHtml(str) {
-        if (!str) return '';
-        return str.replace(/[&<>]/g, function(m) {
-            if (m === '&') return '&amp;';
-            if (m === '<') return '&lt;';
-            if (m === '>') return '&gt;';
-            return m;
-        });
+    
+    function abrirInfoModal(business) {
+      let name = currentLang === 'es' ? business.name_es : business.name_en;
+      let category = currentLang === 'es' ? business.category_es : business.category_en;
+      let desc = currentLang === 'es' ? business.description_es : business.description_en;
+      let address = currentLang === 'es' ? business.address_es : business.address_en;
+      let html = `<div><strong>⚡ ${name}</strong></div><div>📁 ${category}</div><div>📍 ${address}</div><div>📝 ${desc}</div><div>📞 ${business.phone || 'N/A'}</div><div>✉️ ${business.email || 'N/A'}</div><div>🌐 <a href="${business.website}" target="_blank">${business.website}</a></div>`;
+      document.getElementById('infoContent').innerHTML = html;
+      document.getElementById('infoModal').style.display = 'flex';
     }
-
-    function renderCountries() {
-        const container = document.getElementById('countriesContainer');
-        if (!container) return;
-        const langData = translations[currentLang];
-        const filterNorm = normalizeString(currentFilter);
-        
-        let html = '';
-        let visibleCount = 0;
-        
-        countriesData.forEach(country => {
-            const searchableText = getSearchableTextForCountry(country, langData);
-            const matches = filterNorm === '' || searchableText.includes(filterNorm);
-            if (matches) visibleCount++;
-            
-            const countryName = langData[country.nameKey];
-            const countrySub = langData[country.subKey];
-            const displayStyle = matches ? '' : 'hidden-card';
-            const subdomainUrl = `https://${country.subdomain}.qrp2p.com`;
-            const domainDisplay = `${country.subdomain}.qrp2p.com`;
-            
-            html += `
-                <a href="${subdomainUrl}" class="country-card ${displayStyle}" target="_self" rel="noopener noreferrer" data-country-id="${country.id}">
-                    <div class="country-flag">${country.flag}</div>
-                    <div class="country-name">${escapeHtml(countryName)}</div>
-                    <div class="country-sub">${escapeHtml(countrySub)}</div>
-                    <div class="divider" style="margin: 0.8rem auto; width: 30px;"></div>
-                    <div class="country-domain">${domainDisplay}</div>
-                </a>
-            `;
-        });
-        
-        if (visibleCount === 0 && currentFilter !== '') {
-            html += `<div class="no-results">${escapeHtml(langData.no_results)}</div>`;
-        }
-        
-        container.innerHTML = html;
-        
-        const resultsSpan = document.getElementById('resultsCount');
-        if (resultsSpan) {
-            if (currentFilter === '') {
-                resultsSpan.innerHTML = '';
-            } else {
-                const resultText = currentLang === 'es' 
-                    ? `${visibleCount} resultado${visibleCount !== 1 ? 's' : ''} encontrado${visibleCount !== 1 ? 's' : ''}`
-                    : `${visibleCount} result${visibleCount !== 1 ? 's' : ''} found`;
-                resultsSpan.innerHTML = resultText;
-            }
-        }
-        
-        const clearBtn = document.getElementById('clearSearch');
-        if (clearBtn) {
-            clearBtn.style.display = currentFilter !== '' ? 'block' : 'none';
-        }
+    
+    function updateUILanguage() {
+      document.getElementById('buscador').placeholder = t('buscar_placeholder');
+      document.getElementById('centrar-text').innerText = t('centrar');
+      document.getElementById('servicios-text').innerText = t('servicios');
+      document.getElementById('map-text').innerText = t('mapa');
+      document.getElementById('satellite-text').innerText = t('satelite');
+      document.getElementById('servicios-modal-title').innerText = t('servicios_titulo');
+      marcadoresOriginales.forEach(marker => { 
+        let newPopup = generarPopupHTML(marker.datosNegocio); 
+        marker.bindPopup(newPopup, { maxWidth: 380, className: 'custom-popup' }); 
+      });
     }
-
-    function setLanguage(lang) {
-        if (!translations[lang]) return;
-        currentLang = lang;
-        const elements = document.querySelectorAll('[data-i18n]');
-        elements.forEach(el => {
-            const key = el.getAttribute('data-i18n');
-            if (translations[lang][key] !== undefined) {
-                if (key === 'title') {
-                    el.innerHTML = translations[lang][key];
-                } else {
-                    el.innerText = translations[lang][key];
-                }
-            }
-        });
-        const searchInput = document.getElementById('countrySearch');
-        if (searchInput) {
-            searchInput.placeholder = currentLang === 'es' ? 'Buscar país...' : 'Search country...';
-        }
-        renderCountries();
-        
-        document.getElementById('lang-es').classList.toggle('active', lang === 'es');
-        document.getElementById('lang-en').classList.toggle('active', lang === 'en');
-        document.documentElement.lang = lang === 'es' ? 'es' : 'en';
-        localStorage.setItem('qrp2p_lang', lang);
+    
+    function centrarMapaRapido() {
+      if (navigator.geolocation) {
+        const btn = document.getElementById('centrar-btn');
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span id="centrar-text">GETTING...</span>';
+        navigator.geolocation.getCurrentPosition(
+          pos => { const { latitude, longitude } = pos.coords; if (userMarker) mapa.removeLayer(userMarker); userMarker = L.marker([latitude, longitude], { icon: L.divIcon({ className: 'user-location-marker', html: '📍', iconSize: [28, 28] }) }).addTo(mapa).bindPopup(currentLang === 'es' ? 'Tu ubicación actual' : 'Your current location'); mapa.setView([latitude, longitude], 14); btn.innerHTML = '<i class="fas fa-location-dot"></i><span id="centrar-text">'+t('centrar')+'</span>'; },
+          err => { btn.innerHTML = '<i class="fas fa-location-dot"></i><span id="centrar-text">'+t('centrar')+'</span>'; mapa.setView([20, 0], 2); alert(currentLang === 'es' ? 'No se pudo obtener tu ubicación.' : 'Could not get your location.'); }
+        );
+      } else { mapa.setView([20, 0], 2); }
     }
-
-    let debounceTimer;
-    function onSearchInput(value) {
-        clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(() => {
-            currentFilter = value;
-            renderCountries();
-        }, 180);
+    
+    function abrirServiciosModal() {
+      let container = document.getElementById('serviciosGlobales');
+      container.innerHTML = '';
+      globalServices.forEach(service => {
+        let btn = document.createElement('button');
+        btn.className = 'servicio-btn';
+        let name = currentLang === 'es' ? service.name_es : service.name_en;
+        btn.innerHTML = `<i class="fas ${service.icon}"></i> ${name}`;
+        btn.addEventListener('click', () => { window.open(service.url, '_blank'); });
+        container.appendChild(btn);
+      });
+      document.getElementById('serviciosModal').style.display = 'flex';
     }
-
-    function initSearch() {
-        const searchInput = document.getElementById('countrySearch');
-        const clearBtn = document.getElementById('clearSearch');
-        if (!searchInput) return;
-        
-        searchInput.addEventListener('input', (e) => {
-            onSearchInput(e.target.value);
-        });
-        
-        if (clearBtn) {
-            clearBtn.addEventListener('click', () => {
-                searchInput.value = '';
-                onSearchInput('');
-                searchInput.focus();
-            });
-        }
+    
+    function buscarNegocios(q) { 
+      let term = q.toLowerCase(); 
+      let resultados = marcadoresOriginales.filter(m => m.datosBusqueda.includes(term)); 
+      let sugerenciasDiv = document.getElementById('sugerencias-busqueda'); 
+      if(resultados.length) { 
+        sugerenciasDiv.innerHTML = ''; 
+        resultados.forEach(m => { 
+          let name = currentLang === 'es' ? m.datosNegocio.name_es : m.datosNegocio.name_en;
+          let cat = currentLang === 'es' ? m.datosNegocio.category_es : m.datosNegocio.category_en;
+          let item = document.createElement('div'); 
+          item.className = 'sugerencia-item'; 
+          item.innerHTML = `<div class="sugerencia-texto"><strong>⚡ ${name}</strong><br><small>${cat}</small></div><button class="sugerencia-boton" data-id="${m.datosNegocio.id}">${currentLang==='es'?'Ver':'View'}</button>`; 
+          let btn = item.querySelector('.sugerencia-boton'); 
+          btn.addEventListener('click', (e) => { e.stopPropagation(); abrirInfoModal(m.datosNegocio); }); 
+          item.addEventListener('click', () => { abrirInfoModal(m.datosNegocio); }); 
+          sugerenciasDiv.appendChild(item); 
+        }); 
+      } else { 
+        sugerenciasDiv.innerHTML = `<div class="sugerencia-item">❌ No verified businesses found</div>`; 
+      } 
     }
-
-    function initPWAInstall() {
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            const installBanner = document.getElementById('installBanner');
-            if (installBanner) installBanner.style.display = 'flex';
-        });
-
-        const installBtn = document.getElementById('installBtn');
-        if (installBtn) {
-            installBtn.addEventListener('click', async () => {
-                if (deferredPrompt) {
-                    deferredPrompt.prompt();
-                    const { outcome } = await deferredPrompt.userChoice;
-                    if (outcome === 'accepted') {
-                        console.log('PWA instalada');
-                        const installBanner = document.getElementById('installBanner');
-                        if (installBanner) installBanner.style.display = 'none';
-                    }
-                    deferredPrompt = null;
-                }
-            });
-        }
-    }
-
-    function registerServiceWorker() {
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/worker.js')
-                    .then(registration => {
-                        console.log('Service Worker registrado:', registration);
-                    })
-                    .catch(error => {
-                        console.log('Error al registrar Service Worker:', error);
-                    });
-            });
-        }
-    }
-
-    function loadInitialLanguage() {
-        const savedLang = localStorage.getItem('qrp2p_lang');
-        if (savedLang && (savedLang === 'es' || savedLang === 'en')) {
-            setLanguage(savedLang);
-        } else {
-            const browserLang = navigator.language || '';
-            setLanguage(browserLang.startsWith('es') ? 'es' : 'en');
-        }
-    }
-
-    function bindLanguageEvents() {
-        document.getElementById('lang-es').addEventListener('click', () => setLanguage('es'));
-        document.getElementById('lang-en').addEventListener('click', () => setLanguage('en'));
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-        initSearch();
-        bindLanguageEvents();
-        loadInitialLanguage();
-        renderCountries();
-        initPWAInstall();
-        registerServiceWorker();
-        
-        const searchInputPlace = document.getElementById('countrySearch');
-        if (searchInputPlace) {
-            searchInputPlace.placeholder = currentLang === 'es' ? 'Buscar país...' : 'Search country...';
-        }
+    
+    document.addEventListener('DOMContentLoaded', () => { 
+      initMap(); 
+      updateUILanguage();
+      document.getElementById('centrar-btn').addEventListener('click', centrarMapaRapido);
+      document.getElementById('servicios-btn').addEventListener('click', abrirServiciosModal);
+      document.getElementById('map-btn').addEventListener('click', () => { 
+        mapa.eachLayer(layer => { if(layer instanceof L.TileLayer && layer !== currentLayer) mapa.removeLayer(layer); });
+        const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 });
+        currentLayer = osm; osm.addTo(mapa);
+        document.getElementById('map-btn').classList.add('active'); 
+        document.getElementById('satellite-btn').classList.remove('active'); 
+      }); 
+      document.getElementById('satellite-btn').addEventListener('click', () => { 
+        mapa.eachLayer(layer => { if(layer instanceof L.TileLayer && layer !== currentLayer) mapa.removeLayer(layer); });
+        const satellite = L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', { maxZoom: 20, subdomains: ['mt0','mt1','mt2','mt3'] });
+        currentLayer = satellite; satellite.addTo(mapa);
+        document.getElementById('satellite-btn').classList.add('active'); 
+        document.getElementById('map-btn').classList.remove('active'); 
+      }); 
+      document.getElementById('closeServiciosBtn').addEventListener('click', () => document.getElementById('serviciosModal').style.display='none');
+      document.getElementById('closeInfoModalBtn').addEventListener('click', () => document.getElementById('infoModal').style.display='none');
+      window.addEventListener('click', (e) => { if(e.target === document.getElementById('serviciosModal')) document.getElementById('serviciosModal').style.display='none'; if(e.target === document.getElementById('infoModal')) document.getElementById('infoModal').style.display='none'; });
+      
+      document.querySelectorAll('.lang-btn').forEach(btn => { 
+        btn.addEventListener('click', () => { 
+          document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active')); 
+          btn.classList.add('active'); 
+          currentLang = btn.getAttribute('data-lang'); 
+          updateUILanguage(); 
+          document.getElementById('buscador').value = ''; 
+          document.getElementById('sugerencias-busqueda').style.display = 'none'; 
+        }); 
+      });
+      
+      let inputBuscar = document.getElementById('buscador'); 
+      let buscadorTimeout;
+      inputBuscar.addEventListener('input', (e) => { 
+        clearTimeout(buscadorTimeout); 
+        let term = e.target.value.trim(); 
+        let sugDiv = document.getElementById('sugerencias-busqueda'); 
+        if(term.length < 2) { sugDiv.style.display = 'none'; return; } 
+        sugDiv.innerHTML = `<div class="sugerencia-item">🔍 Searching...</div>`; 
+        sugDiv.style.display = 'block'; 
+        buscadorTimeout = setTimeout(() => buscarNegocios(term), 300); 
+      }); 
+      inputBuscar.addEventListener('keydown', (e) => { if(e.key === 'Enter') { e.preventDefault(); let term = inputBuscar.value.trim(); if(term) buscarNegocios(term); } }); 
+      document.addEventListener('click', (e) => { if(!e.target.closest('.contenedor-buscador')) document.getElementById('sugerencias-busqueda').style.display = 'none'; }); 
     });
-</script>
+  </script>
 </body>
 </html>
