@@ -1,503 +1,1463 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover, shrink-to-fit=no, minimum-scale=1.0, maximum-scale=1.0">
-  <title>QRP2P.COM | NEGOCIOS VERIFICADOS | MARKETPLACE P2P</title>
-  <meta name="description" content="Global decentralized P2P marketplace. Find verified businesses, zero commission forever. QRP2P.COM">
-  <meta name="keywords" content="NEGOCIOS VERIFICADOS, P2P, MARKETPLACE, 0% COMISION">
-  <meta name="author" content="QRP2P">
-  <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="#000000">
-  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; -webkit-tap-highlight-color: transparent; }
-    body { font-family: 'Libre Baskerville', serif; background-color: #ffffff; color: #111111; line-height: 1.5; font-size: 16px; overflow: hidden; position: fixed; width: 100%; height: 100%; }
-    #contenedor-mapa { width: 100%; height: 100vh; display: flex; flex-direction: column; position: relative; overflow: hidden; }
-    #barra-superior { display: flex; gap: 0.8rem; padding: 0.8rem; background: #ffffff; width: 100%; z-index: 1000; justify-content: space-between; align-items: center; flex-wrap: wrap; border-bottom: 1px solid #eaeaea; flex-shrink: 0; }
-    .contenedor-buscador { position: relative; flex: 1; max-width: 400px; }
-    #buscador { width: 100%; padding: 0.6rem 1.2rem; border: 1.5px solid #e0e0e0; border-radius: 50px; font-size: 16px; font-family: 'Libre Baskerville', serif; transition: all 0.3s ease; background: #ffffff; user-select: text; }
-    #buscador:focus { outline: none; border-color: #000000; }
-    .btn-mapa { background: #000000; color: #ffffff; padding: 0.6rem 1.2rem; border-radius: 40px; text-decoration: none; font-weight: 600; border: none; cursor: pointer; white-space: nowrap; display: flex; gap: 5px; font-family: 'Libre Baskerville', serif; transition: all 0.2s ease; }
-    .btn-mapa:hover { background: #333333; }
-    .btn-centrar { background-color: #000000; }
-    .btn-registro { background-color: #25D366; color: #000000; }
-    .botones-izquierda { display: flex; gap: 0.8rem; align-items: center; }
-    .botones-derecha { display: flex; gap: 0.5rem; background: #f0f0f0; padding: 0.3rem; border-radius: 50px; }
-    .map-type-btn { padding: 0.5rem 1rem; border: none; border-radius: 40px; cursor: pointer; background: transparent; font-family: 'Libre Baskerville', serif; font-weight: 600; }
-    .map-type-btn.active { background: #000000; color: white; }
-    .lang-selector { display: flex; gap: 0.3rem; margin-left: 0.5rem; }
-    .lang-btn { background: transparent; border: 1px solid #ccc; border-radius: 20px; padding: 0.4rem 0.8rem; cursor: pointer; font-family: 'Libre Baskerville', serif; font-weight: 600; font-size: 0.8rem; }
-    .lang-btn.active { background: #000000; color: white; border-color: #000000; }
-    #mapa { flex: 1; background: #f0f0f0; width: 100%; min-height: 0; }
-    .leaflet-control-zoom { display: none !important; }
-    .sugerencias-busqueda { position: absolute; top: 100%; left: 0; right: 0; background: white; border-radius: 0 0 20px 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1000; max-height: 200px; overflow-y: auto; display: none; }
-    .sugerencia-item { padding: 12px 15px; cursor: pointer; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
-    .sugerencia-item:hover { background-color: #f5f5f5; }
-    .sugerencia-texto { flex: 1; }
-    .sugerencia-boton { margin-left: 10px; padding: 6px 12px; background-color: #000000; color: white; border: none; border-radius: 20px; cursor: pointer; }
-    .cluster-marcadores { background: rgba(0,0,0,0.7); border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; }
-    .negocio-marker { background: transparent; border: none; font-size: 28px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-    .user-location-marker { background: transparent; border: none; font-size: 28px; display: flex; align-items: center; justify-content: center; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <meta name="description" content="18MLS Real Estate: El MLS inmobiliario más grande del mundo. Compra, vende e invierte en bienes raíces en 196 países.">
+    <meta name="keywords" content="18MLS, Real Estate, bienes raíces, MLS, marketplace P2P, global, compra venta inmuebles, inversión, propiedades, peer-to-peer, internacional, MLS inmobiliario">
+    <meta name="author" content="18MLS Real Estate">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#000000">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="18MLS">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/icon-192.png">
+    <title>18MLS | EL MLS INMOBILIARIO MÁS GRANDE DEL MUNDO</title>
     
-    /* Popup de Negocio Verificado */
-    .popup-business-card {
-      background: #ffffff;
-      border-radius: 24px;
-      overflow: hidden;
-      width: 340px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    }
-    .popup-business-header {
-      background: #000000;
-      color: white;
-      padding: 1rem;
-      text-align: center;
-    }
-    .popup-business-header h3 {
-      font-size: 1rem;
-      margin-bottom: 0.25rem;
-      font-weight: 700;
-    }
-    .popup-business-category {
-      font-size: 0.7rem;
-      opacity: 0.8;
-      background: rgba(255,255,255,0.2);
-      display: inline-block;
-      padding: 0.2rem 0.8rem;
-      border-radius: 50px;
-    }
-    .popup-business-info {
-      padding: 1rem;
-    }
-    .popup-business-description {
-      font-size: 0.75rem;
-      color: #555;
-      margin-bottom: 0.8rem;
-      line-height: 1.4;
-    }
-    .popup-business-address {
-      font-size: 0.7rem;
-      color: #333;
-      margin-bottom: 0.8rem;
-      display: flex;
-      gap: 0.5rem;
-      align-items: flex-start;
-    }
-    .popup-business-address i {
-      margin-top: 0.2rem;
-      color: #000;
-    }
-    .popup-business-contact {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-      margin-top: 0.5rem;
-      border-top: 1px solid #f0f0f0;
-      padding-top: 0.8rem;
-    }
-    .contact-link {
-      font-size: 0.7rem;
-      background: #f5f5f5;
-      padding: 0.3rem 0.6rem;
-      border-radius: 20px;
-      text-decoration: none;
-      color: #000;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      font-weight: 600;
-    }
-    .contact-link i { font-size: 0.7rem; }
-    .btn-view-store {
-      display: block;
-      background: #000000;
-      color: white;
-      text-align: center;
-      padding: 0.7rem;
-      border-radius: 12px;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 0.8rem;
-      margin-top: 0.8rem;
-      transition: all 0.2s ease;
-    }
-    .btn-view-store:hover { background: #333333; transform: scale(0.98); }
+    <meta property="og:title" content="18MLS Real Estate — El MLS más grande del mundo">
+    <meta property="og:description" content="Busca rápidamente tu país y accede al MLS inmobiliario más grande del mundo. Disponible en 196 países.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://18mls.com">
+    <meta property="og:image" content="/icon-512.png">
     
-    /* Modales de Servicios */
-    .pais-modal, .servicio-modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.85);
-      z-index: 2500;
-      justify-content: center;
-      align-items: center;
-    }
-    .pais-container, .servicio-container {
-      background: white;
-      border-radius: 28px;
-      width: 90%;
-      max-width: 480px;
-      max-height: 80vh;
-      overflow-y: auto;
-      padding: 1.2rem;
-    }
-    .servicios-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #eaeaea;
-      padding-bottom: 0.6rem;
-      margin-bottom: 1rem;
-    }
-    .servicios-botones {
-      display: flex;
-      flex-direction: column;
-      gap: 0.7rem;
-    }
-    .pais-btn, .servicio-item-btn {
-      background: #000000;
-      color: white;
-      border: none;
-      padding: 0.8rem;
-      border-radius: 50px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      text-align: center;
-      font-family: 'Libre Baskerville', serif;
-      transition: all 0.2s;
-    }
-    .pais-btn:hover, .servicio-item-btn:hover { background: #333333; transform: scale(0.98); }
-    .info-modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.85);
-      z-index: 2600;
-      justify-content: center;
-      align-items: center;
-    }
-    .info-container {
-      background: white;
-      border-radius: 28px;
-      width: 90%;
-      max-width: 500px;
-      max-height: 70vh;
-      overflow-y: auto;
-      padding: 1.5rem;
-    }
-    @media (max-width: 680px) { .popup-business-card { width: 280px; } }
-  </style>
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="18MLS Real Estate">
+    <meta name="twitter:description" content="El MLS inmobiliario más grande del mundo - 196 países">
+    <meta name="twitter:image" content="/icon-512.png">
+    
+    <style>
+        * {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        input, textarea, [contenteditable="true"] {
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
+        }
+        
+        body {
+            background-color: #ffffff;
+            color: #000000;
+            font-family: 'Libre Baskerville', 'Times New Roman', Georgia, 'Baskerville', serif;
+            font-weight: 400;
+            line-height: 1.4;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            -webkit-touch-callout: none;
+            overflow-x: hidden;
+        }
+        
+        html {
+            touch-action: pan-x pan-y;
+            overflow-x: hidden;
+        }
+        
+        img, a, button {
+            -webkit-user-drag: none;
+            user-drag: none;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        .language-bar {
+            position: absolute;
+            top: 1.8rem;
+            right: 2rem;
+            display: flex;
+            gap: 0.75rem;
+            z-index: 10;
+        }
+
+        .lang-btn {
+            background: none;
+            border: none;
+            font-family: 'Libre Baskerville', serif;
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: #3a3a3a;
+            cursor: pointer;
+            padding: 0.25rem 0.5rem;
+            transition: all 0.2s ease;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .lang-btn.active {
+            color: #000000;
+            font-weight: 700;
+            border-bottom: 1.5px solid #000000;
+        }
+
+        .lang-btn:hover:not(.active) {
+            color: #000000;
+            background-color: #f5f5f5;
+        }
+
+        .brand {
+            margin-bottom: 2rem;
+            margin-top: 0.5rem;
+        }
+
+        .logo {
+            font-size: 2.8rem;
+            letter-spacing: -0.02em;
+            font-weight: 700;
+            text-transform: lowercase;
+            color: #000000;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            display: inline-block;
+            padding-bottom: 0.2rem;
+        }
+
+        .tagline {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-top: 1rem;
+            color: #3a3a3a;
+            font-weight: 400;
+        }
+
+        .hero {
+            margin-bottom: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 1.8rem;
+            font-weight: 400;
+            line-height: 1.3;
+            margin-bottom: 0.75rem;
+            color: #000000;
+            letter-spacing: -0.3px;
+        }
+
+        .hero p {
+            font-size: 1rem;
+            color: #2c2c2c;
+            max-width: 580px;
+            margin: 0 auto;
+            font-weight: 350;
+        }
+
+        .search-section {
+            max-width: 480px;
+            width: 100%;
+            margin: 1.8rem auto 2rem;
+            position: relative;
+        }
+
+        .search-input-wrapper {
+            position: relative;
+            width: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1rem;
+            color: #8a8a8a;
+            pointer-events: none;
+            font-weight: 400;
+            z-index: 2;
+        }
+
+        .search-icon::before {
+            content: "🔍";
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.9rem 3rem 0.9rem 2.8rem;
+            font-family: 'Libre Baskerville', serif;
+            font-size: 0.95rem;
+            background: #ffffff;
+            border: 1.5px solid #e0e0e0;
+            color: #000000;
+            border-radius: 0px;
+            transition: all 0.25s ease;
+            outline: none;
+            letter-spacing: -0.2px;
+            box-shadow: none;
+        }
+
+        .search-input:focus {
+            border-color: #000000;
+            box-shadow: 0 0 0 1px rgba(0,0,0,0.05);
+        }
+
+        .search-input::placeholder {
+            color: #b0b0b0;
+            font-weight: 300;
+            font-style: italic;
+        }
+
+        .search-clear {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: #9a9a9a;
+            padding: 0 6px;
+            display: none;
+            font-family: monospace;
+            z-index: 2;
+            transition: color 0.2s;
+        }
+
+        .search-clear:hover {
+            color: #000000;
+        }
+
+        .results-count {
+            font-size: 0.7rem;
+            text-align: center;
+            margin-top: 0.65rem;
+            color: #5a5a5a;
+            letter-spacing: 0.3px;
+            font-style: italic;
+        }
+
+        .country-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0 2.5rem;
+            transition: all 0.2s;
+        }
+
+        .country-card {
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            padding: 2rem 1.5rem;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            color: #000000;
+            display: block;
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .country-card.hidden-card {
+            display: none;
+        }
+
+        .country-card:hover {
+            border-color: #000000;
+            background-color: #fafafa;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .country-card:active {
+            transform: translateY(1px);
+        }
+
+        .country-flag {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .country-name {
+            font-size: 1.7rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .country-sub {
+            font-size: 0.8rem;
+            color: #4a4a4a;
+            font-style: normal;
+            border-top: 1px solid #efefef;
+            display: inline-block;
+            padding-top: 0.6rem;
+            margin-top: 0.6rem;
+            letter-spacing: 1px;
+        }
+
+        .country-domain {
+            font-size: 0.7rem;
+            color: #8a8a8a;
+            margin-top: 0.5rem;
+            font-family: monospace;
+        }
+
+        .divider {
+            width: 40px;
+            height: 1px;
+            background: #d4d4d4;
+            margin: 1rem auto;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: #6c6c6c;
+            font-style: italic;
+            font-size: 0.9rem;
+            border-top: 1px solid #f0f0f0;
+            margin-top: 1rem;
+        }
+
+        .install-banner {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #000000;
+            color: #ffffff;
+            padding: 12px 24px;
+            border-radius: 40px;
+            display: none;
+            align-items: center;
+            gap: 16px;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            font-family: 'Libre Baskerville', serif;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .install-banner:hover {
+            background: #1a1a1a;
+            transform: translateX(-50%) translateY(-2px);
+        }
+
+        .install-banner button {
+            background: #ffffff;
+            color: #000000;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .footer {
+            margin-top: 3rem;
+            font-size: 0.7rem;
+            color: #6c6c6c;
+            letter-spacing: 0.5px;
+            border-top: 1px solid #ececec;
+            padding-top: 2rem;
+        }
+
+        .footer p {
+            margin-bottom: 0.2rem;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 2px solid #f0f0f0;
+            border-top: 2px solid #000000;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 2rem auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1.5rem;
+            }
+            .language-bar {
+                position: relative;
+                top: 0;
+                right: 0;
+                justify-content: center;
+                margin-bottom: 1rem;
+            }
+            .logo {
+                font-size: 2rem;
+            }
+            .hero h1 {
+                font-size: 1.4rem;
+            }
+            .country-name {
+                font-size: 1.4rem;
+            }
+            .country-selector {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            .search-section {
+                max-width: 360px;
+                margin: 1.2rem auto;
+            }
+            .search-input {
+                padding: 0.8rem 2.8rem 0.8rem 2.5rem;
+                font-size: 0.88rem;
+            }
+            .install-banner {
+                width: 90%;
+                text-align: center;
+                flex-direction: column;
+                padding: 12px;
+            }
+        }
+
+        .country-card:focus-visible {
+            outline: 2px solid #000000;
+            outline-offset: 4px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+    </style>
 </head>
 <body>
-  <div id="contenedor-mapa">
-    <div id="barra-superior">
-      <div class="botones-izquierda">
-        <div class="contenedor-buscador">
-          <input type="search" id="buscador" placeholder="Search verified businesses..." enterkeyhint="search">
-          <div id="sugerencias-busqueda" class="sugerencias-busqueda"></div>
+
+<div class="container">
+    <div class="language-bar">
+        <button class="lang-btn active" id="lang-es" data-lang="es">ES</button>
+        <button class="lang-btn" id="lang-en" data-lang="en">EN</button>
+    </div>
+
+    <div class="brand">
+        <span class="logo">18MLS.COM</span>
+        <div class="tagline" data-i18n="tagline">el mls inmobiliario más grande del mundo</div>
+    </div>
+
+    <div class="hero">
+        <h1 data-i18n="title">SELECCIONAR PAÍS<br></h1>
+        <div class="divider"></div>
+        <p data-i18n="subtitle">Compra, vende e invierte en bienes raíces directamente entre propietarios.</p>
+    </div>
+
+    <div class="search-section">
+        <div class="search-input-wrapper">
+            <span class="search-icon"></span>
+            <input type="text" id="countrySearch" class="search-input" placeholder="Buscar país..." autocomplete="off" spellcheck="false" aria-label="Buscar país">
+            <button id="clearSearch" class="search-clear" aria-label="Limpiar búsqueda">✕</button>
         </div>
-        <button class="btn-mapa btn-centrar" id="centrar-btn"><i class="fas fa-location-dot"></i><span id="centrar-text">CENTER</span></button>
-        <button class="btn-mapa btn-registro" id="servicios-btn"><i class="fas fa-bolt"></i><span id="servicios-text">SERVICES</span></button>
-      </div>
-      <div class="botones-derecha">
-        <button class="map-type-btn active" id="map-btn"><span id="map-text">Map</span></button>
-        <button class="map-type-btn" id="satellite-btn"><span id="satellite-text">Satellite</span></button>
-        <div class="lang-selector">
-          <button class="lang-btn" data-lang="es">ES</button>
-          <button class="lang-btn active" data-lang="en">EN</button>
-        </div>
-      </div>
+        <div id="resultsCount" class="results-count"></div>
     </div>
-    <div id="mapa"></div>
-  </div>
 
-  <!-- Modal de Selección de País (PRIMERO) -->
-  <div id="paisModal" class="pais-modal">
-    <div class="pais-container">
-      <div class="servicios-header">
-        <h2 id="pais-modal-title">SELECCIONAR PAÍS</h2>
-        <button id="closePaisBtn" style="background:transparent; border:none; font-size:1.8rem; cursor:pointer;">&times;</button>
-      </div>
-      <div id="listaPaises" class="servicios-botones"></div>
-    </div>
-  </div>
+    <div id="countriesContainer" class="country-selector"></div>
 
-  <!-- Modal de Selección de Servicio (SEGUNDO) -->
-  <div id="servicioModal" class="servicio-modal">
-    <div class="servicio-container">
-      <div class="servicios-header">
-        <h2 id="servicio-modal-title">SELECCIONAR SERVICIO</h2>
-        <button id="closeServicioBtn" style="background:transparent; border:none; font-size:1.8rem; cursor:pointer;">&times;</button>
-      </div>
-      <div id="listaServicios" class="servicios-botones"></div>
-      <button id="volverPaisesBtn" class="servicio-item-btn" style="background:#555; margin-top:1rem;">← Volver a Países</button>
+    <div class="footer">
+        <p data-i18n="footer_copyright">© 18MLS.COM — El MLS inmobiliario más grande del mundo</p>
+        <p data-i18n="footer_tagline">propiedades directas · sin intermediarios · inversión inteligente</p>
+        <p style="margin-top: 0.5rem; font-size: 0.65rem;">v2.0.0</p>
     </div>
-  </div>
-  
-  <div id="infoModal" class="info-modal">
-    <div class="info-container">
-      <div class="servicios-header">
-        <h2>Business Information</h2>
-        <button id="closeInfoModalBtn" style="background:transparent; border:none; font-size:1.8rem; cursor:pointer;">&times;</button>
-      </div>
-      <div id="infoContent"></div>
-    </div>
-  </div>
+</div>
 
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-  <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
-  <script>
-    const WHATSAPP_NUMBER = "573041146297";
-    let currentLang = 'en';
-    let paisSeleccionado = null;
-    let mapa, userMarker, marcadoresOriginales = [], currentLayer;
-    
-    // PAÍSES DISPONIBLES (se pueden agregar más)
-    const paisesDisponibles = [
-      { id: "colombia", name_en: "Colombia", name_es: "Colombia", code: "CO" },
-      { id: "usa", name_en: "United States", name_es: "Estados Unidos", code: "US" }
-    ];
-    
-    // SERVICIOS (6 servicios)
-    const serviciosLista = [
-      { id: "plan-anual", name_en: "ANNUAL PLAN", name_es: "PLAN ANUAL", icon: "fa-calendar-alt" },
-      { id: "administracion", name_en: "ADMINISTRATION", name_es: "ADMINISTRACIÓN", icon: "fa-building" },
-      { id: "marketing", name_en: "MARKETING", name_es: "MARKETING", icon: "fa-chart-line" },
-      { id: "logistica", name_en: "LOGISTICS", name_es: "LOGÍSTICA", icon: "fa-truck" },
-      { id: "finanzas", name_en: "FINANCE", name_es: "FINANZAS", icon: "fa-coins" },
-      { id: "dropshipping", name_en: "DROPSHIPPING", name_es: "DROPSHIPPING", icon: "fa-boxes" }
-    ];
-    
-    // URLs de redirección para cada servicio y país
-    const urlsRedireccion = {
-      "plan-anual": {
-        "colombia": "https://qrp2p.com/plan-anual-co",
-        "usa": "https://qrp2p.com/annual-plan-us"
-      },
-      "administracion": {
-        "colombia": "https://qrp2p.com/administracion-co",
-        "usa": "https://qrp2p.com/management-us"
-      },
-      "marketing": {
-        "colombia": "https://qrp2p.com/marketing-co",
-        "usa": "https://qrp2p.com/marketing-us"
-      },
-      "logistica": {
-        "colombia": "https://qrp2p.com/logistica-co",
-        "usa": "https://qrp2p.com/logistic-us"
-      },
-      "finanzas": {
-        "colombia": "https://qrp2p.com/finanzas-co",
-        "usa": "https://qrp2p.com/finance-us"
-      },
-      "dropshipping": {
-        "colombia": "https://www.facebook.com/share/g/1F5fZbknEt/?mibextid=wwXIfr",
-        "usa": "https://qrp2p.com/dropshipping/usa"
-      }
-    };
-    
-    // NEGOCIOS VERIFICADOS - SOLO COLOMBIA (2 en Bogotá, 1 en Cali)
-    const verifiedBusinesses = [
-      { 
-        id: "WSC01", 
-        name_es: "WSC DISTRIBUIDORA", 
-        name_en: "WSC DISTRIBUIDORA", 
-        category_es: "Distribuidora Mayorista", 
-        category_en: "Wholesale Distributor", 
-        latlng: [4.6097, -74.0817],
-        address_es: "San Victorino, Centro, Bogotá", 
-        address_en: "San Victorino, Downtown, Bogotá", 
-        description_es: "Distribuidora mayorista con los mejores precios en abarrotes, víveres y productos de consumo masivo.", 
-        description_en: "Wholesale distributor with the best prices in groceries, food and consumer products.", 
-        phone: "+573001234567", 
-        email: "ventas@wscdistribuidora.com", 
-        website: "https://wscdistribuidora.com", 
-        whatsapp: "573001234567" 
-      },
-      { 
-        id: "BIZ05", 
-        name_es: "DISTRIBUIDORA LA 80", 
-        name_en: "DISTRIBUIDORA LA 80", 
-        category_es: "Distribuidora Mayorista", 
-        category_en: "Wholesale Distributor", 
-        latlng: [4.6877, -74.1040],
-        address_es: "Calle 80 # 77-25, Bogotá", 
-        address_en: "Calle 80 # 77-25, Bogotá", 
-        description_es: "Distribución de productos de aseo, limpieza y hogar. Precios de fábrica y entrega inmediata.", 
-        description_en: "Distribution of cleaning and home products. Factory prices and immediate delivery.", 
-        phone: "+573001234568", 
-        email: "ventas@distribuidoral80.com", 
-        website: "https://distribuidoral80.com", 
-        whatsapp: "573001234568" 
-      },
-      { 
-        id: "BIZ06", 
-        name_es: "DISTRIBUIDORA CALI CENTRO", 
-        name_en: "DISTRIBUIDORA CALI CENTRO", 
-        category_es: "Distribuidora Mayorista", 
-        category_en: "Wholesale Distributor", 
-        latlng: [3.4516, -76.5320],
-        address_es: "Calle 13 # 4-30, Centro, Cali", 
-        address_en: "Calle 13 # 4-30, Downtown, Cali", 
-        description_es: "Especialistas en distribución de bebidas, licores y productos gourmet en el Valle del Cauca.", 
-        description_en: "Specialists in distribution of beverages, liquors and gourmet products in Valle del Cauca.", 
-        phone: "+573001234569", 
-        email: "ventas@distribuidoracali.com", 
-        website: "https://distribuidoracali.com", 
-        whatsapp: "573001234569" 
-      }
-    ];
-    
-    const translations = { 
-      es: { buscar_placeholder: "Buscar negocios verificados en Colombia...", centrar: "CENTRAR", servicios: "SERVICIOS", mapa: "Mapa", satelite: "Satélite", seleccionar_pais: "SELECCIONAR PAÍS", seleccionar_servicio: "SELECCIONAR SERVICIO", view_store: "VER TIENDA" },
-      en: { buscar_placeholder: "Search verified businesses in Colombia...", centrar: "CENTER", servicios: "SERVICES", mapa: "Map", satelite: "Satellite", seleccionar_pais: "SELECT COUNTRY", seleccionar_servicio: "SELECT SERVICE", view_store: "VIEW STORE" }
-    };
-    
-    function t(key) { return translations[currentLang][key] || key; }
-    
-    function generarPopupHTML(business) { 
-      const name = currentLang === 'es' ? business.name_es : business.name_en;
-      const category = currentLang === 'es' ? business.category_es : business.category_en;
-      const description = currentLang === 'es' ? business.description_es : business.description_en;
-      const address = currentLang === 'es' ? business.address_es : business.address_en;
-      const storeText = t('view_store');
-      const websiteUrl = business.website || (business.whatsapp ? `https://wa.me/${business.whatsapp.replace(/[^0-9]/g, '')}` : '#');
-      let contactButtons = '';
-      if(business.website) contactButtons += `<a href="${business.website}" target="_blank" class="contact-link"><i class="fas fa-globe"></i> Web</a>`;
-      if(business.whatsapp) contactButtons += `<a href="https://wa.me/${business.whatsapp.replace(/[^0-9]/g, '')}" target="_blank" class="contact-link"><i class="fab fa-whatsapp"></i> WhatsApp</a>`;
-      if(business.phone) contactButtons += `<a href="tel:${business.phone}" class="contact-link"><i class="fas fa-phone"></i> Call</a>`;
-      if(business.email) contactButtons += `<a href="mailto:${business.email}" class="contact-link"><i class="fas fa-envelope"></i> Email</a>`;
-      return `<div class="popup-business-card"><div class="popup-business-header"><h3>⚡ ${name}</h3><span class="popup-business-category">${category}</span></div><div class="popup-business-info"><div class="popup-business-description">${description}</div><div class="popup-business-address"><i class="fas fa-map-pin"></i> ${address}</div><div class="popup-business-contact">${contactButtons}</div><a href="${websiteUrl}" target="_blank" class="btn-view-store"><i class="fas fa-store"></i> ${storeText}</a></div></div>`; 
-    }
-    
-    function initMap() { 
-      const openStreetMapLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap' });
-      const googleMapsLayer = L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', { maxZoom: 20, subdomains: ['mt0','mt1','mt2','mt3'] });
-      const googleSatelliteLayer = L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', { maxZoom: 20, subdomains: ['mt0','mt1','mt2','mt3'] });
-      
-      // Centrar en Colombia
-      mapa = L.map('mapa', { center: [4.5709, -74.2973], zoom: 6, zoomControl: false });
-      currentLayer = googleMapsLayer;
-      currentLayer.addTo(mapa);
-      
-      let clusters = L.markerClusterGroup({ iconCreateFunction: cluster => L.divIcon({ html: `<div>${cluster.getChildCount()}</div>`, className: 'cluster-marcadores', iconSize: [40,40] }) }); 
-      let icono = L.divIcon({ className: 'negocio-marker', html: '⚡', iconSize: [32,32], popupAnchor: [0,-16] }); 
-      
-      verifiedBusinesses.forEach(business => { 
-        let popup = generarPopupHTML(business); 
-        let marker = L.marker(business.latlng, { icon: icono }).bindPopup(popup, { maxWidth: 380, className: 'custom-popup' }); 
-        marker.datosNegocio = business; 
-        marker.datosBusqueda = `${business.name_es} ${business.name_en} ${business.category_es} ${business.category_en} ${business.description_es} ${business.description_en}`.toLowerCase(); 
-        marcadoresOriginales.push(marker); 
-        clusters.addLayer(marker); 
-      }); 
-      mapa.addLayer(clusters); 
-      
-      // Guardar capas para cambiar entre mapa y satélite
-      mapa.googleMapsLayer = googleMapsLayer;
-      mapa.googleSatelliteLayer = googleSatelliteLayer;
-    }
-    
-    function mostrarPaises() {
-      let container = document.getElementById('listaPaises');
-      container.innerHTML = '';
-      paisesDisponibles.forEach(pais => {
-        let btn = document.createElement('button');
-        btn.className = 'pais-btn';
-        let name = currentLang === 'es' ? pais.name_es : pais.name_en;
-        btn.innerHTML = `<i class="fas fa-flag"></i> ${name}`;
-        btn.addEventListener('click', () => {
-          paisSeleccionado = pais;
-          document.getElementById('paisModal').style.display = 'none';
-          mostrarServicios();
+<div id="installBanner" class="install-banner">
+    <span data-i18n="install_text">📱 Instalar 18MLS App</span>
+    <button id="installBtn" data-i18n="install_btn">Instalar</button>
+</div>
+
+<script>
+    // --------------------------------------------------------------
+    // 1. BLOQUEO DE INTERACCIONES
+    // --------------------------------------------------------------
+    (function() {
+        const blockEvents = ['copy', 'cut', 'paste', 'contextmenu', 'dragstart', 'selectstart'];
+        blockEvents.forEach(eventType => {
+            document.addEventListener(eventType, function(e) {
+                const isSearchInput = e.target.id === 'countrySearch' || e.target.closest('#countrySearch');
+                if (!isSearchInput) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return false;
+                }
+                return true;
+            });
         });
-        container.appendChild(btn);
-      });
-      document.getElementById('paisModal').style.display = 'flex';
-    }
-    
-    function mostrarServicios() {
-      let container = document.getElementById('listaServicios');
-      container.innerHTML = '';
-      serviciosLista.forEach(servicio => {
-        let btn = document.createElement('button');
-        btn.className = 'servicio-item-btn';
-        let name = currentLang === 'es' ? servicio.name_es : servicio.name_en;
-        btn.innerHTML = `<i class="fas ${servicio.icon}"></i> ${name}`;
-        btn.addEventListener('click', () => {
-          let url = urlsRedireccion[servicio.id]?.[paisSeleccionado.id];
-          if(url) {
-            window.open(url, '_blank');
-          } else {
-            window.open('https://qrp2p.com', '_blank');
-          }
-          document.getElementById('servicioModal').style.display = 'none';
+        
+        document.addEventListener('keydown', function(e) {
+            const isSearchInputFocused = document.activeElement && document.activeElement.id === 'countrySearch';
+            if ((e.ctrlKey || e.metaKey) && (e.key === 'c' || e.key === 'v' || e.key === 'x' || e.key === 'a')) {
+                if (!isSearchInputFocused) {
+                    e.preventDefault();
+                    return false;
+                }
+            }
         });
-        container.appendChild(btn);
-      });
-      document.getElementById('servicioModal').style.display = 'flex';
+        
+        let lastTouchEnd = 0;
+        document.addEventListener('touchstart', function(e) {
+            if (e.touches.length > 1) e.preventDefault();
+        }, { passive: false });
+        
+        document.addEventListener('touchend', function(e) {
+            const now = Date.now();
+            if (now - lastTouchEnd <= 300) e.preventDefault();
+            lastTouchEnd = now;
+        }, false);
+    })();
+
+    // --------------------------------------------------------------
+    // 2. DATOS DE PAÍSES (196 PAÍSES) - AHORA subdominio en la URL
+    // --------------------------------------------------------------
+    const countriesData = [
+        { id: 'afganistan', subdomain: 'af', flag: '🇦🇫', nameKey: 'afganistan_name', subKey: 'afganistan_sub', domain: 'af.18mls.com', searchTerms: ['afganistan', 'afghanistan', 'afganistán', 'kabul', 'af'] },
+        { id: 'albania', subdomain: 'al', flag: '🇦🇱', nameKey: 'albania_name', subKey: 'albania_sub', domain: 'al.18mls.com', searchTerms: ['albania', 'albanie', 'tirana', 'al'] },
+        { id: 'alemania', subdomain: 'de', flag: '🇩🇪', nameKey: 'alemania_name', subKey: 'alemania_sub', domain: 'de.18mls.com', searchTerms: ['alemania', 'germany', 'deutschland', 'berlin', 'aleman', 'de'] },
+        { id: 'andorra', subdomain: 'ad', flag: '🇦🇩', nameKey: 'andorra_name', subKey: 'andorra_sub', domain: 'ad.18mls.com', searchTerms: ['andorra', 'andorre', 'ad'] },
+        { id: 'angola', subdomain: 'ao', flag: '🇦🇴', nameKey: 'angola_name', subKey: 'angola_sub', domain: 'ao.18mls.com', searchTerms: ['angola', 'luanda', 'ao'] },
+        { id: 'anguila', subdomain: 'ai', flag: '🇦🇮', nameKey: 'anguila_name', subKey: 'anguila_sub', domain: 'ai.18mls.com', searchTerms: ['anguila', 'anguilla', 'ai'] },
+        { id: 'antigua_barbuda', subdomain: 'ag', flag: '🇦🇬', nameKey: 'antigua_barbuda_name', subKey: 'antigua_barbuda_sub', domain: 'ag.18mls.com', searchTerms: ['antigua', 'barbuda', 'antigua y barbuda', 'ag'] },
+        { id: 'arabia_saudita', subdomain: 'sa', flag: '🇸🇦', nameKey: 'arabia_saudita_name', subKey: 'arabia_saudita_sub', domain: 'sa.18mls.com', searchTerms: ['arabia', 'saudi', 'arabia saudita', 'saudi arabia', 'riad', 'riyadh', 'sa'] },
+        { id: 'argelia', subdomain: 'dz', flag: '🇩🇿', nameKey: 'argelia_name', subKey: 'argelia_sub', domain: 'dz.18mls.com', searchTerms: ['argelia', 'algeria', 'algerie', 'argel', 'dz'] },
+        { id: 'argentina', subdomain: 'ar', flag: '🇦🇷', nameKey: 'argentina_name', subKey: 'argentina_sub', domain: 'ar.18mls.com', searchTerms: ['argentina', 'buenos aires', 'bs as', 'arg', 'ar'] },
+        { id: 'armenia', subdomain: 'am', flag: '🇦🇲', nameKey: 'armenia_name', subKey: 'armenia_sub', domain: 'am.18mls.com', searchTerms: ['armenia', 'armenie', 'erevan', 'yerevan', 'am'] },
+        { id: 'aruba', subdomain: 'aw', flag: '🇦🇼', nameKey: 'aruba_name', subKey: 'aruba_sub', domain: 'aw.18mls.com', searchTerms: ['aruba', 'aw'] },
+        { id: 'australia', subdomain: 'au', flag: '🇦🇺', nameKey: 'australia_name', subKey: 'australia_sub', domain: 'au.18mls.com', searchTerms: ['australia', 'aussie', 'sidney', 'sydney', 'melbourne', 'canberra', 'au'] },
+        { id: 'austria', subdomain: 'at', flag: '🇦🇹', nameKey: 'austria_name', subKey: 'austria_sub', domain: 'at.18mls.com', searchTerms: ['austria', 'österreich', 'viena', 'vienna', 'at'] },
+        { id: 'azerbaiyan', subdomain: 'az', flag: '🇦🇿', nameKey: 'azerbaiyan_name', subKey: 'azerbaiyan_sub', domain: 'az.18mls.com', searchTerms: ['azerbaiyan', 'azerbaijan', 'azerbaidjan', 'baku', 'az'] },
+        { id: 'bahamas', subdomain: 'bs', flag: '🇧🇸', nameKey: 'bahamas_name', subKey: 'bahamas_sub', domain: 'bs.18mls.com', searchTerms: ['bahamas', 'nassau', 'bs'] },
+        { id: 'bahrein', subdomain: 'bh', flag: '🇧🇭', nameKey: 'bahrein_name', subKey: 'bahrein_sub', domain: 'bh.18mls.com', searchTerms: ['bahrein', 'bahrain', 'manama', 'bh'] },
+        { id: 'bangladesh', subdomain: 'bd', flag: '🇧🇩', nameKey: 'bangladesh_name', subKey: 'bangladesh_sub', domain: 'bd.18mls.com', searchTerms: ['bangladesh', 'banglades', 'daca', 'dhaka', 'bd'] },
+        { id: 'barbados', subdomain: 'bb', flag: '🇧🇧', nameKey: 'barbados_name', subKey: 'barbados_sub', domain: 'bb.18mls.com', searchTerms: ['barbados', 'bridgetown', 'bb'] },
+        { id: 'belgica', subdomain: 'be', flag: '🇧🇪', nameKey: 'belgica_name', subKey: 'belgica_sub', domain: 'be.18mls.com', searchTerms: ['belgica', 'belgium', 'belgique', 'belgie', 'bruselas', 'brussels', 'be'] },
+        { id: 'belice', subdomain: 'bz', flag: '🇧🇿', nameKey: 'belice_name', subKey: 'belice_sub', domain: 'bz.18mls.com', searchTerms: ['belice', 'belize', 'belmopan', 'bz'] },
+        { id: 'benin', subdomain: 'bj', flag: '🇧🇯', nameKey: 'benin_name', subKey: 'benin_sub', domain: 'bj.18mls.com', searchTerms: ['benin', 'bénin', 'porto novo', 'cotonou', 'bj'] },
+        { id: 'bermudas', subdomain: 'bm', flag: '🇧🇲', nameKey: 'bermudas_name', subKey: 'bermudas_sub', domain: 'bm.18mls.com', searchTerms: ['bermudas', 'bermuda', 'hamilton', 'bm'] },
+        { id: 'bielorrusia', subdomain: 'by', flag: '🇧🇾', nameKey: 'bielorrusia_name', subKey: 'bielorrusia_sub', domain: 'by.18mls.com', searchTerms: ['bielorrusia', 'belarus', 'bielorrusie', 'minsk', 'by'] },
+        { id: 'birmania', subdomain: 'mm', flag: '🇲🇲', nameKey: 'birmania_name', subKey: 'birmania_sub', domain: 'mm.18mls.com', searchTerms: ['birmania', 'myanmar', 'burma', 'naypyido', 'rangun', 'mm'] },
+        { id: 'bolivia', subdomain: 'bo', flag: '🇧🇴', nameKey: 'bolivia_name', subKey: 'bolivia_sub', domain: 'bo.18mls.com', searchTerms: ['bolivia', 'la paz', 'sucre', 'santa cruz', 'bo'] },
+        { id: 'bosnia_herzegovina', subdomain: 'ba', flag: '🇧🇦', nameKey: 'bosnia_herzegovina_name', subKey: 'bosnia_herzegovina_sub', domain: 'ba.18mls.com', searchTerms: ['bosnia', 'herzegovina', 'bosnia y herzegovina', 'sarajevo', 'ba'] },
+        { id: 'botsuana', subdomain: 'bw', flag: '🇧🇼', nameKey: 'botsuana_name', subKey: 'botsuana_sub', domain: 'bw.18mls.com', searchTerms: ['botsuana', 'botswana', 'gaborone', 'bw'] },
+        { id: 'brasil', subdomain: 'br', flag: '🇧🇷', nameKey: 'brasil_name', subKey: 'brasil_sub', domain: 'br.18mls.com', searchTerms: ['brasil', 'brazil', 'brésil', 'brasilia', 'rio', 'sao paulo', 'são paulo', 'br'] },
+        { id: 'brunei', subdomain: 'bn', flag: '🇧🇳', nameKey: 'brunei_name', subKey: 'brunei_sub', domain: 'bn.18mls.com', searchTerms: ['brunei', 'bandar seri begawan', 'bn'] },
+        { id: 'bulgaria', subdomain: 'bg', flag: '🇧🇬', nameKey: 'bulgaria_name', subKey: 'bulgaria_sub', domain: 'bg.18mls.com', searchTerms: ['bulgaria', 'bulgarie', 'sofia', 'sofía', 'bg'] },
+        { id: 'burkina_faso', subdomain: 'bf', flag: '🇧🇫', nameKey: 'burkina_faso_name', subKey: 'burkina_faso_sub', domain: 'bf.18mls.com', searchTerms: ['burkina', 'faso', 'burkina faso', 'uagadugu', 'bf'] },
+        { id: 'burundi', subdomain: 'bi', flag: '🇧🇮', nameKey: 'burundi_name', subKey: 'burundi_sub', domain: 'bi.18mls.com', searchTerms: ['burundi', 'buyumbura', 'bujumbura', 'bi'] },
+        { id: 'butan', subdomain: 'bt', flag: '🇧🇹', nameKey: 'butan_name', subKey: 'butan_sub', domain: 'bt.18mls.com', searchTerms: ['butan', 'bhutan', 'bhoutan', 'timbu', 'thimphu', 'bt'] },
+        { id: 'cabo_verde', subdomain: 'cv', flag: '🇨🇻', nameKey: 'cabo_verde_name', subKey: 'cabo_verde_sub', domain: 'cv.18mls.com', searchTerms: ['cabo verde', 'cape verde', 'praia', 'cv'] },
+        { id: 'camboya', subdomain: 'kh', flag: '🇰🇭', nameKey: 'camboya_name', subKey: 'camboya_sub', domain: 'kh.18mls.com', searchTerms: ['camboya', 'cambodia', 'cambodge', 'phnom penh', 'nom pen', 'kh'] },
+        { id: 'camerun', subdomain: 'cm', flag: '🇨🇲', nameKey: 'camerun_name', subKey: 'camerun_sub', domain: 'cm.18mls.com', searchTerms: ['camerun', 'cameroun', 'cameroon', 'yaunde', 'yaounde', 'douala', 'cm'] },
+        { id: 'canada', subdomain: 'ca', flag: '🇨🇦', nameKey: 'canada_name', subKey: 'canada_sub', domain: 'ca.18mls.com', searchTerms: ['canada', 'canadá', 'ottawa', 'toronto', 'vancouver', 'montreal', 'quebec', 'ca'] },
+        { id: 'catar', subdomain: 'qa', flag: '🇶🇦', nameKey: 'catar_name', subKey: 'catar_sub', domain: 'qa.18mls.com', searchTerms: ['catar', 'qatar', 'doha', 'qa'] },
+        { id: 'chad', subdomain: 'td', flag: '🇹🇩', nameKey: 'chad_name', subKey: 'chad_sub', domain: 'td.18mls.com', searchTerms: ['chad', 'tchad', 'yamena', 'n djamena', 'td'] },
+        { id: 'chile', subdomain: 'cl', flag: '🇨🇱', nameKey: 'chile_name', subKey: 'chile_sub', domain: 'cl.18mls.com', searchTerms: ['chile', 'santiago', 'valparaiso', 'valparaíso', 'cl'] },
+        { id: 'china', subdomain: 'cn', flag: '🇨🇳', nameKey: 'china_name', subKey: 'china_sub', domain: 'cn.18mls.com', searchTerms: ['china', 'chine', 'beijing', 'pekin', 'shanghai', 'shanghái', 'cn'] },
+        { id: 'chipre', subdomain: 'cy', flag: '🇨🇾', nameKey: 'chipre_name', subKey: 'chipre_sub', domain: 'cy.18mls.com', searchTerms: ['chipre', 'cyprus', 'chypre', 'nicosia', 'cy'] },
+        { id: 'ciudad_vaticano', subdomain: 'va', flag: '🇻🇦', nameKey: 'ciudad_vaticano_name', subKey: 'ciudad_vaticano_sub', domain: 'va.18mls.com', searchTerms: ['vaticano', 'vatican', 'ciudad del vaticano', 'santa sede', 'va'] },
+        { id: 'colombia', subdomain: 'co', flag: '🇨🇴', nameKey: 'colombia_name', subKey: 'colombia_sub', domain: 'co.18mls.com', searchTerms: ['colombia', 'colombie', 'columbia', 'col', 'co', 'colombiano', 'bogota', 'medellin', 'cali', 'cartagena', 'barranquilla'] },
+        { id: 'comoras', subdomain: 'km', flag: '🇰🇲', nameKey: 'comoras_name', subKey: 'comoras_sub', domain: 'km.18mls.com', searchTerms: ['comoras', 'comoros', 'comores', 'moroni', 'km'] },
+        { id: 'corea_norte', subdomain: 'kp', flag: '🇰🇵', nameKey: 'corea_norte_name', subKey: 'corea_norte_sub', domain: 'kp.18mls.com', searchTerms: ['corea del norte', 'north korea', 'coree du nord', 'pyongyang', 'pionyang', 'kp'] },
+        { id: 'corea_sur', subdomain: 'kr', flag: '🇰🇷', nameKey: 'corea_sur_name', subKey: 'corea_sur_sub', domain: 'kr.18mls.com', searchTerms: ['corea del sur', 'south korea', 'coree du sud', 'seul', 'seoul', 'seúl', 'kr'] },
+        { id: 'costa_marfil', subdomain: 'ci', flag: '🇨🇮', nameKey: 'costa_marfil_name', subKey: 'costa_marfil_sub', domain: 'ci.18mls.com', searchTerms: ['costa de marfil', 'cote ivoire', 'côte ivoire', 'abiyan', 'abidjan', 'yamusukro', 'ci'] },
+        { id: 'costa_rica', subdomain: 'cr', flag: '🇨🇷', nameKey: 'costa_rica_name', subKey: 'costa_rica_sub', domain: 'cr.18mls.com', searchTerms: ['costa rica', 'san jose', 'san josé', 'cr'] },
+        { id: 'croacia', subdomain: 'hr', flag: '🇭🇷', nameKey: 'croacia_name', subKey: 'croacia_sub', domain: 'hr.18mls.com', searchTerms: ['croacia', 'croatia', 'croatie', 'zagreb', 'hr'] },
+        { id: 'cuba', subdomain: 'cu', flag: '🇨🇺', nameKey: 'cuba_name', subKey: 'cuba_sub', domain: 'cu.18mls.com', searchTerms: ['cuba', 'la habana', 'habana', 'cu'] },
+        { id: 'dinamarca', subdomain: 'dk', flag: '🇩🇰', nameKey: 'dinamarca_name', subKey: 'dinamarca_sub', domain: 'dk.18mls.com', searchTerms: ['dinamarca', 'denmark', 'danmark', 'copenhague', 'copenhagen', 'kobenhavn', 'dk'] },
+        { id: 'dominica', subdomain: 'dm', flag: '🇩🇲', nameKey: 'dominica_name', subKey: 'dominica_sub', domain: 'dm.18mls.com', searchTerms: ['dominica', 'roseau', 'dm'] },
+        { id: 'ecuador', subdomain: 'ec', flag: '🇪🇨', nameKey: 'ecuador_name', subKey: 'ecuador_sub', domain: 'ec.18mls.com', searchTerms: ['ecuador', 'equateur', 'quito', 'guayaquil', 'ec'] },
+        { id: 'egipto', subdomain: 'eg', flag: '🇪🇬', nameKey: 'egipto_name', subKey: 'egipto_sub', domain: 'eg.18mls.com', searchTerms: ['egipto', 'egypt', 'egipte', 'el cairo', 'cairo', 'alejandria', 'eg'] },
+        { id: 'el_salvador', subdomain: 'sv', flag: '🇸🇻', nameKey: 'el_salvador_name', subKey: 'el_salvador_sub', domain: 'sv.18mls.com', searchTerms: ['el salvador', 'salvador', 'san salvador', 'sv'] },
+        { id: 'emiratos_arabes', subdomain: 'ae', flag: '🇦🇪', nameKey: 'emiratos_arabes_name', subKey: 'emiratos_arabes_sub', domain: 'ae.18mls.com', searchTerms: ['emiratos', 'emiratos arabes', 'emiratos árabes', 'uae', 'dubai', 'dubái', 'abu dhabi', 'ae'] },
+        { id: 'eritrea', subdomain: 'er', flag: '🇪🇷', nameKey: 'eritrea_name', subKey: 'eritrea_sub', domain: 'er.18mls.com', searchTerms: ['eritrea', 'erithree', 'asmara', 'er'] },
+        { id: 'eslovaquia', subdomain: 'sk', flag: '🇸🇰', nameKey: 'eslovaquia_name', subKey: 'eslovaquia_sub', domain: 'sk.18mls.com', searchTerms: ['eslovaquia', 'slovakia', 'slovaquie', 'bratislava', 'sk'] },
+        { id: 'eslovenia', subdomain: 'si', flag: '🇸🇮', nameKey: 'eslovenia_name', subKey: 'eslovenia_sub', domain: 'si.18mls.com', searchTerms: ['eslovenia', 'slovenia', 'slovenie', 'liubliana', 'ljubljana', 'si'] },
+        { id: 'espana', subdomain: 'es', flag: '🇪🇸', nameKey: 'espana_name', subKey: 'espana_sub', domain: 'es.18mls.com', searchTerms: ['españa', 'espana', 'spain', 'espagne', 'madrid', 'barcelona', 'valencia', 'sevilla', 'es'] },
+        { id: 'estados_unidos', subdomain: 'us', flag: '🇺🇸', nameKey: 'estados_unidos_name', subKey: 'estados_unidos_sub', domain: 'us.18mls.com', searchTerms: ['usa', 'united states', 'estados unidos', 'eeuu', 'america', 'us', 'ee.uu.', 'north america', 'new york', 'miami', 'california', 'texas', 'florida', 'los angeles', 'chicago'] },
+        { id: 'estonia', subdomain: 'ee', flag: '🇪🇪', nameKey: 'estonia_name', subKey: 'estonia_sub', domain: 'ee.18mls.com', searchTerms: ['estonia', 'estonie', 'tallin', 'tallinn', 'ee'] },
+        { id: 'esuatini', subdomain: 'sz', flag: '🇸🇿', nameKey: 'esuatini_name', subKey: 'esuatini_sub', domain: 'sz.18mls.com', searchTerms: ['esuatini', 'eswatini', 'suazilandia', 'swaziland', 'mbabane', 'sz'] },
+        { id: 'etiopia', subdomain: 'et', flag: '🇪🇹', nameKey: 'etiopia_name', subKey: 'etiopia_sub', domain: 'et.18mls.com', searchTerms: ['etiopia', 'etiopía', 'ethiopia', 'ethiopie', 'adis abeba', 'addis ababa', 'et'] },
+        { id: 'fiji', subdomain: 'fj', flag: '🇫🇯', nameKey: 'fiji_name', subKey: 'fiji_sub', domain: 'fj.18mls.com', searchTerms: ['fiji', 'fidji', 'suva', 'fj'] },
+        { id: 'filipinas', subdomain: 'ph', flag: '🇵🇭', nameKey: 'filipinas_name', subKey: 'filipinas_sub', domain: 'ph.18mls.com', searchTerms: ['filipinas', 'philippines', 'manila', 'quezon', 'ph'] },
+        { id: 'finlandia', subdomain: 'fi', flag: '🇫🇮', nameKey: 'finlandia_name', subKey: 'finlandia_sub', domain: 'fi.18mls.com', searchTerms: ['finlandia', 'finland', 'finlande', 'helsinki', 'fi'] },
+        { id: 'francia', subdomain: 'fr', flag: '🇫🇷', nameKey: 'francia_name', subKey: 'francia_sub', domain: 'fr.18mls.com', searchTerms: ['francia', 'france', 'paris', 'parís', 'marsella', 'lyon', 'niza', 'fr'] },
+        { id: 'gabon', subdomain: 'ga', flag: '🇬🇦', nameKey: 'gabon_name', subKey: 'gabon_sub', domain: 'ga.18mls.com', searchTerms: ['gabon', 'gabón', 'libreville', 'ga'] },
+        { id: 'gambia', subdomain: 'gm', flag: '🇬🇲', nameKey: 'gambia_name', subKey: 'gambia_sub', domain: 'gm.18mls.com', searchTerms: ['gambia', 'gambie', 'banjul', 'gm'] },
+        { id: 'georgia', subdomain: 'ge', flag: '🇬🇪', nameKey: 'georgia_name', subKey: 'georgia_sub', domain: 'ge.18mls.com', searchTerms: ['georgia', 'georgie', 'tiflis', 'tbilisi', 'ge'] },
+        { id: 'ghana', subdomain: 'gh', flag: '🇬🇭', nameKey: 'ghana_name', subKey: 'ghana_sub', domain: 'gh.18mls.com', searchTerms: ['ghana', 'acra', 'accra', 'gh'] },
+        { id: 'granada', subdomain: 'gd', flag: '🇬🇩', nameKey: 'granada_name', subKey: 'granada_sub', domain: 'gd.18mls.com', searchTerms: ['granada', 'grenada', 'grenade', 'saint george', 'gd'] },
+        { id: 'grecia', subdomain: 'gr', flag: '🇬🇷', nameKey: 'grecia_name', subKey: 'grecia_sub', domain: 'gr.18mls.com', searchTerms: ['grecia', 'greece', 'grece', 'atenas', 'athens', 'gr'] },
+        { id: 'groenlandia', subdomain: 'gl', flag: '🇬🇱', nameKey: 'groenlandia_name', subKey: 'groenlandia_sub', domain: 'gl.18mls.com', searchTerms: ['groenlandia', 'greenland', 'nuuk', 'gl'] },
+        { id: 'guadalupe', subdomain: 'gp', flag: '🇬🇵', nameKey: 'guadalupe_name', subKey: 'guadalupe_sub', domain: 'gp.18mls.com', searchTerms: ['guadalupe', 'guadeloupe', 'basse terre', 'gp'] },
+        { id: 'guam', subdomain: 'gu', flag: '🇬🇺', nameKey: 'guam_name', subKey: 'guam_sub', domain: 'gu.18mls.com', searchTerms: ['guam', 'hagatna', 'hagåtña', 'gu'] },
+        { id: 'guatemala', subdomain: 'gt', flag: '🇬🇹', nameKey: 'guatemala_name', subKey: 'guatemala_sub', domain: 'gt.18mls.com', searchTerms: ['guatemala', 'ciudad de guatemala', 'gt'] },
+        { id: 'guayana_francesa', subdomain: 'gf', flag: '🇬🇫', nameKey: 'guayana_francesa_name', subKey: 'guayana_francesa_sub', domain: 'gf.18mls.com', searchTerms: ['guayana francesa', 'guyane', 'cayena', 'cayenne', 'gf'] },
+        { id: 'guernsey', subdomain: 'gg', flag: '🇬🇬', nameKey: 'guernsey_name', subKey: 'guernsey_sub', domain: 'gg.18mls.com', searchTerms: ['guernsey', 'saint peter port', 'gg'] },
+        { id: 'guinea', subdomain: 'gn', flag: '🇬🇳', nameKey: 'guinea_name', subKey: 'guinea_sub', domain: 'gn.18mls.com', searchTerms: ['guinea', 'guinee', 'guinée', 'conakry', 'conakri', 'gn'] },
+        { id: 'guinea_bisau', subdomain: 'gw', flag: '🇬🇼', nameKey: 'guinea_bisau_name', subKey: 'guinea_bisau_sub', domain: 'gw.18mls.com', searchTerms: ['guinea bisau', 'guinea bissau', 'bissau', 'bisau', 'gw'] },
+        { id: 'guinea_ecuatorial', subdomain: 'gq', flag: '🇬🇶', nameKey: 'guinea_ecuatorial_name', subKey: 'guinea_ecuatorial_sub', domain: 'gq.18mls.com', searchTerms: ['guinea ecuatorial', 'equatorial guinea', 'malabo', 'gq'] },
+        { id: 'guyana', subdomain: 'gy', flag: '🇬🇾', nameKey: 'guyana_name', subKey: 'guyana_sub', domain: 'gy.18mls.com', searchTerms: ['guyana', 'georgetown', 'gy'] },
+        { id: 'haiti', subdomain: 'ht', flag: '🇭🇹', nameKey: 'haiti_name', subKey: 'haiti_sub', domain: 'ht.18mls.com', searchTerms: ['haiti', 'haití', 'puerto principe', 'port au prince', 'ht'] },
+        { id: 'honduras', subdomain: 'hn', flag: '🇭🇳', nameKey: 'honduras_name', subKey: 'honduras_sub', domain: 'hn.18mls.com', searchTerms: ['honduras', 'tegucigalpa', 'san pedro sula', 'hn'] },
+        { id: 'hong_kong', subdomain: 'hk', flag: '🇭🇰', nameKey: 'hong_kong_name', subKey: 'hong_kong_sub', domain: 'hk.18mls.com', searchTerms: ['hong kong', 'hk'] },
+        { id: 'hungria', subdomain: 'hu', flag: '🇭🇺', nameKey: 'hungria_name', subKey: 'hungria_sub', domain: 'hu.18mls.com', searchTerms: ['hungria', 'hungría', 'hungary', 'hongrie', 'budapest', 'hu'] },
+        { id: 'india', subdomain: 'in', flag: '🇮🇳', nameKey: 'india_name', subKey: 'india_sub', domain: 'in.18mls.com', searchTerms: ['india', 'inde', 'nueva delhi', 'new delhi', 'mumbai', 'bombay', 'bangalore', 'in'] },
+        { id: 'indonesia', subdomain: 'id', flag: '🇮🇩', nameKey: 'indonesia_name', subKey: 'indonesia_sub', domain: 'id.18mls.com', searchTerms: ['indonesia', 'indonesie', 'indonésie', 'jakarta', 'yacarta', 'bali', 'id'] },
+        { id: 'irak', subdomain: 'iq', flag: '🇮🇶', nameKey: 'irak_name', subKey: 'irak_sub', domain: 'iq.18mls.com', searchTerms: ['irak', 'iraq', 'bagdad', 'baghdad', 'iq'] },
+        { id: 'iran', subdomain: 'ir', flag: '🇮🇷', nameKey: 'iran_name', subKey: 'iran_sub', domain: 'ir.18mls.com', searchTerms: ['iran', 'irán', 'teheran', 'teherán', 'tehran', 'ir'] },
+        { id: 'irlanda', subdomain: 'ie', flag: '🇮🇪', nameKey: 'irlanda_name', subKey: 'irlanda_sub', domain: 'ie.18mls.com', searchTerms: ['irlanda', 'ireland', 'irlande', 'dublin', 'dublín', 'ie'] },
+        { id: 'isla_man', subdomain: 'im', flag: '🇮🇲', nameKey: 'isla_man_name', subKey: 'isla_man_sub', domain: 'im.18mls.com', searchTerms: ['isla de man', 'isle of man', 'douglas', 'im'] },
+        { id: 'islandia', subdomain: 'is', flag: '🇮🇸', nameKey: 'islandia_name', subKey: 'islandia_sub', domain: 'is.18mls.com', searchTerms: ['islandia', 'iceland', 'islande', 'reikiavik', 'reykjavik', 'is'] },
+        { id: 'islas_caiman', subdomain: 'ky', flag: '🇰🇾', nameKey: 'islas_caiman_name', subKey: 'islas_caiman_sub', domain: 'ky.18mls.com', searchTerms: ['islas caiman', 'cayman', 'george town', 'ky'] },
+        { id: 'islas_cook', subdomain: 'ck', flag: '🇨🇰', nameKey: 'islas_cook_name', subKey: 'islas_cook_sub', domain: 'ck.18mls.com', searchTerms: ['islas cook', 'cook islands', 'avarua', 'ck'] },
+        { id: 'islas_feroe', subdomain: 'fo', flag: '🇫🇴', nameKey: 'islas_feroe_name', subKey: 'islas_feroe_sub', domain: 'fo.18mls.com', searchTerms: ['islas feroe', 'faroe', 'torshavn', 'fo'] },
+        { id: 'islas_malvinas', subdomain: 'fk', flag: '🇫🇰', nameKey: 'islas_malvinas_name', subKey: 'islas_malvinas_sub', domain: 'fk.18mls.com', searchTerms: ['islas malvinas', 'falkland', 'stanley', 'fk'] },
+        { id: 'islas_marshall', subdomain: 'mh', flag: '🇲🇭', nameKey: 'islas_marshall_name', subKey: 'islas_marshall_sub', domain: 'mh.18mls.com', searchTerms: ['islas marshall', 'marshall islands', 'majuro', 'mh'] },
+        { id: 'islas_salomon', subdomain: 'sb', flag: '🇸🇧', nameKey: 'islas_salomon_name', subKey: 'islas_salomon_sub', domain: 'sb.18mls.com', searchTerms: ['islas salomon', 'solomon', 'honiara', 'sb'] },
+        { id: 'islas_turcas_caicos', subdomain: 'tc', flag: '🇹🇨', nameKey: 'islas_turcas_caicos_name', subKey: 'islas_turcas_caicos_sub', domain: 'tc.18mls.com', searchTerms: ['islas turcas', 'turcas y caicos', 'turks and caicos', 'tc'] },
+        { id: 'islas_virgenes_britanicas', subdomain: 'vg', flag: '🇻🇬', nameKey: 'islas_virgenes_britanicas_name', subKey: 'islas_virgenes_britanicas_sub', domain: 'vg.18mls.com', searchTerms: ['islas virgenes britanicas', 'british virgin islands', 'tortola', 'road town', 'vg'] },
+        { id: 'islas_virgenes_eeuu', subdomain: 'vi', flag: '🇻🇮', nameKey: 'islas_virgenes_eeuu_name', subKey: 'islas_virgenes_eeuu_sub', domain: 'vi.18mls.com', searchTerms: ['islas virgenes eeuu', 'us virgin islands', 'charlotte amalie', 'vi'] },
+        { id: 'israel', subdomain: 'il', flag: '🇮🇱', nameKey: 'israel_name', subKey: 'israel_sub', domain: 'il.18mls.com', searchTerms: ['israel', 'israël', 'jerusalen', 'jerusalem', 'tel aviv', 'il'] },
+        { id: 'italia', subdomain: 'it', flag: '🇮🇹', nameKey: 'italia_name', subKey: 'italia_sub', domain: 'it.18mls.com', searchTerms: ['italia', 'italy', 'italie', 'roma', 'rome', 'milan', 'milano', 'napoles', 'florencia', 'it'] },
+        { id: 'jamaica', subdomain: 'jm', flag: '🇯🇲', nameKey: 'jamaica_name', subKey: 'jamaica_sub', domain: 'jm.18mls.com', searchTerms: ['jamaica', 'jamaique', 'kingston', 'jm'] },
+        { id: 'japon', subdomain: 'jp', flag: '🇯🇵', nameKey: 'japon_name', subKey: 'japon_sub', domain: 'jp.18mls.com', searchTerms: ['japon', 'japón', 'japan', 'tokio', 'tokyo', 'osaka', 'kioto', 'jp'] },
+        { id: 'jersey', subdomain: 'je', flag: '🇯🇪', nameKey: 'jersey_name', subKey: 'jersey_sub', domain: 'je.18mls.com', searchTerms: ['jersey', 'saint helier', 'je'] },
+        { id: 'jordania', subdomain: 'jo', flag: '🇯🇴', nameKey: 'jordania_name', subKey: 'jordania_sub', domain: 'jo.18mls.com', searchTerms: ['jordania', 'jordan', 'jordanie', 'amman', 'amán', 'jo'] },
+        { id: 'kazajistan', subdomain: 'kz', flag: '🇰🇿', nameKey: 'kazajistan_name', subKey: 'kazajistan_sub', domain: 'kz.18mls.com', searchTerms: ['kazajistan', 'kazajistán', 'kazakhstan', 'nursultan', 'astana', 'almaty', 'kz'] },
+        { id: 'kenia', subdomain: 'ke', flag: '🇰🇪', nameKey: 'kenia_name', subKey: 'kenia_sub', domain: 'ke.18mls.com', searchTerms: ['kenia', 'kenya', 'nairobi', 'ke'] },
+        { id: 'kirguistan', subdomain: 'kg', flag: '🇰🇬', nameKey: 'kirguistan_name', subKey: 'kirguistan_sub', domain: 'kg.18mls.com', searchTerms: ['kirguistan', 'kirguistán', 'kyrgyzstan', 'bishkek', 'kg'] },
+        { id: 'kiribati', subdomain: 'ki', flag: '🇰🇮', nameKey: 'kiribati_name', subKey: 'kiribati_sub', domain: 'ki.18mls.com', searchTerms: ['kiribati', 'tarawa', 'ki'] },
+        { id: 'kuwait', subdomain: 'kw', flag: '🇰🇼', nameKey: 'kuwait_name', subKey: 'kuwait_sub', domain: 'kw.18mls.com', searchTerms: ['kuwait', 'koweit', 'ciudad de kuwait', 'kw'] },
+        { id: 'laos', subdomain: 'la', flag: '🇱🇦', nameKey: 'laos_name', subKey: 'laos_sub', domain: 'la.18mls.com', searchTerms: ['laos', 'vientian', 'vientiane', 'la'] },
+        { id: 'lesoto', subdomain: 'ls', flag: '🇱🇸', nameKey: 'lesoto_name', subKey: 'lesoto_sub', domain: 'ls.18mls.com', searchTerms: ['lesoto', 'lesotho', 'maseru', 'ls'] },
+        { id: 'letonia', subdomain: 'lv', flag: '🇱🇻', nameKey: 'letonia_name', subKey: 'letonia_sub', domain: 'lv.18mls.com', searchTerms: ['letonia', 'latvia', 'lettonie', 'riga', 'lv'] },
+        { id: 'libano', subdomain: 'lb', flag: '🇱🇧', nameKey: 'libano_name', subKey: 'libano_sub', domain: 'lb.18mls.com', searchTerms: ['libano', 'líbano', 'lebanon', 'liban', 'beirut', 'lb'] },
+        { id: 'liberia', subdomain: 'lr', flag: '🇱🇷', nameKey: 'liberia_name', subKey: 'liberia_sub', domain: 'lr.18mls.com', searchTerms: ['liberia', 'monrovia', 'lr'] },
+        { id: 'libia', subdomain: 'ly', flag: '🇱🇾', nameKey: 'libia_name', subKey: 'libia_sub', domain: 'ly.18mls.com', searchTerms: ['libia', 'libya', 'libye', 'tripoli', 'trípoli', 'ly'] },
+        { id: 'liechtenstein', subdomain: 'li', flag: '🇱🇮', nameKey: 'liechtenstein_name', subKey: 'liechtenstein_sub', domain: 'li.18mls.com', searchTerms: ['liechtenstein', 'vaduz', 'li'] },
+        { id: 'lituania', subdomain: 'lt', flag: '🇱🇹', nameKey: 'lituania_name', subKey: 'lituania_sub', domain: 'lt.18mls.com', searchTerms: ['lituania', 'lithuania', 'lituanie', 'vilnius', 'vilna', 'lt'] },
+        { id: 'luxemburgo', subdomain: 'lu', flag: '🇱🇺', nameKey: 'luxemburgo_name', subKey: 'luxemburgo_sub', domain: 'lu.18mls.com', searchTerms: ['luxemburgo', 'luxembourg', 'lu'] },
+        { id: 'macao', subdomain: 'mo', flag: '🇲🇴', nameKey: 'macao_name', subKey: 'macao_sub', domain: 'mo.18mls.com', searchTerms: ['macao', 'macau', 'mo'] },
+        { id: 'macedonia_norte', subdomain: 'mk', flag: '🇲🇰', nameKey: 'macedonia_norte_name', subKey: 'macedonia_norte_sub', domain: 'mk.18mls.com', searchTerms: ['macedonia', 'macedonia del norte', 'north macedonia', 'skopie', 'skopje', 'mk'] },
+        { id: 'madagascar', subdomain: 'mg', flag: '🇲🇬', nameKey: 'madagascar_name', subKey: 'madagascar_sub', domain: 'mg.18mls.com', searchTerms: ['madagascar', 'antananarivo', 'mg'] },
+        { id: 'malasia', subdomain: 'my', flag: '🇲🇾', nameKey: 'malasia_name', subKey: 'malasia_sub', domain: 'my.18mls.com', searchTerms: ['malasia', 'malaysia', 'malaisie', 'kuala lumpur', 'my'] },
+        { id: 'malaui', subdomain: 'mw', flag: '🇲🇼', nameKey: 'malaui_name', subKey: 'malaui_sub', domain: 'mw.18mls.com', searchTerms: ['malaui', 'malawi', 'lilongwe', 'lilongüe', 'mw'] },
+        { id: 'maldivas', subdomain: 'mv', flag: '🇲🇻', nameKey: 'maldivas_name', subKey: 'maldivas_sub', domain: 'mv.18mls.com', searchTerms: ['maldivas', 'maldives', 'male', 'malé', 'mv'] },
+        { id: 'mali', subdomain: 'ml', flag: '🇲🇱', nameKey: 'mali_name', subKey: 'mali_sub', domain: 'ml.18mls.com', searchTerms: ['mali', 'malí', 'bamako', 'ml'] },
+        { id: 'malta', subdomain: 'mt', flag: '🇲🇹', nameKey: 'malta_name', subKey: 'malta_sub', domain: 'mt.18mls.com', searchTerms: ['malta', 'malte', 'valeta', 'valletta', 'mt'] },
+        { id: 'marruecos', subdomain: 'ma', flag: '🇲🇦', nameKey: 'marruecos_name', subKey: 'marruecos_sub', domain: 'ma.18mls.com', searchTerms: ['marruecos', 'morocco', 'maroc', 'rabat', 'casablanca', 'marrakech', 'ma'] },
+        { id: 'martinica', subdomain: 'mq', flag: '🇲🇶', nameKey: 'martinica_name', subKey: 'martinica_sub', domain: 'mq.18mls.com', searchTerms: ['martinica', 'martinique', 'fort de france', 'mq'] },
+        { id: 'mauricio', subdomain: 'mu', flag: '🇲🇺', nameKey: 'mauricio_name', subKey: 'mauricio_sub', domain: 'mu.18mls.com', searchTerms: ['mauricio', 'mauritius', 'maurice', 'port louis', 'mu'] },
+        { id: 'mauritania', subdomain: 'mr', flag: '🇲🇷', nameKey: 'mauritania_name', subKey: 'mauritania_sub', domain: 'mr.18mls.com', searchTerms: ['mauritania', 'mauritanie', 'nuakchot', 'nouakchott', 'mr'] },
+        { id: 'mayotte', subdomain: 'yt', flag: '🇾🇹', nameKey: 'mayotte_name', subKey: 'mayotte_sub', domain: 'yt.18mls.com', searchTerms: ['mayotte', 'mamoudzou', 'yt'] },
+        { id: 'mexico', subdomain: 'mx', flag: '🇲🇽', nameKey: 'mexico_name', subKey: 'mexico_sub', domain: 'mx.18mls.com', searchTerms: ['mexico', 'méxico', 'mexique', 'ciudad de mexico', 'cdmx', 'guadalajara', 'monterrey', 'cancun', 'mx'] },
+        { id: 'micronesia', subdomain: 'fm', flag: '🇫🇲', nameKey: 'micronesia_name', subKey: 'micronesia_sub', domain: 'fm.18mls.com', searchTerms: ['micronesia', 'micronésie', 'palikir', 'fm'] },
+        { id: 'moldavia', subdomain: 'md', flag: '🇲🇩', nameKey: 'moldavia_name', subKey: 'moldavia_sub', domain: 'md.18mls.com', searchTerms: ['moldavia', 'moldova', 'moldavie', 'chisinau', 'chisináu', 'md'] },
+        { id: 'monaco', subdomain: 'mc', flag: '🇲🇨', nameKey: 'monaco_name', subKey: 'monaco_sub', domain: 'mc.18mls.com', searchTerms: ['monaco', 'mónaco', 'montecarlo', 'mc'] },
+        { id: 'mongolia', subdomain: 'mn', flag: '🇲🇳', nameKey: 'mongolia_name', subKey: 'mongolia_sub', domain: 'mn.18mls.com', searchTerms: ['mongolia', 'mongolie', 'ulan bator', 'ulaanbaatar', 'mn'] },
+        { id: 'montenegro', subdomain: 'me', flag: '🇲🇪', nameKey: 'montenegro_name', subKey: 'montenegro_sub', domain: 'me.18mls.com', searchTerms: ['montenegro', 'podgorica', 'me'] },
+        { id: 'montserrat', subdomain: 'ms', flag: '🇲🇸', nameKey: 'montserrat_name', subKey: 'montserrat_sub', domain: 'ms.18mls.com', searchTerms: ['montserrat', 'plymouth', 'ms'] },
+        { id: 'mozambique', subdomain: 'mz', flag: '🇲🇿', nameKey: 'mozambique_name', subKey: 'mozambique_sub', domain: 'mz.18mls.com', searchTerms: ['mozambique', 'maputo', 'mz'] },
+        { id: 'namibia', subdomain: 'na', flag: '🇳🇦', nameKey: 'namibia_name', subKey: 'namibia_sub', domain: 'na.18mls.com', searchTerms: ['namibia', 'namibie', 'windhoek', 'na'] },
+        { id: 'nauru', subdomain: 'nr', flag: '🇳🇷', nameKey: 'nauru_name', subKey: 'nauru_sub', domain: 'nr.18mls.com', searchTerms: ['nauru', 'yaren', 'nr'] },
+        { id: 'nepal', subdomain: 'np', flag: '🇳🇵', nameKey: 'nepal_name', subKey: 'nepal_sub', domain: 'np.18mls.com', searchTerms: ['nepal', 'népal', 'katmandu', 'katmandú', 'np'] },
+        { id: 'nicaragua', subdomain: 'ni', flag: '🇳🇮', nameKey: 'nicaragua_name', subKey: 'nicaragua_sub', domain: 'ni.18mls.com', searchTerms: ['nicaragua', 'managua', 'ni'] },
+        { id: 'niger', subdomain: 'ne', flag: '🇳🇪', nameKey: 'niger_name', subKey: 'niger_sub', domain: 'ne.18mls.com', searchTerms: ['niger', 'níger', 'niamey', 'niamei', 'ne'] },
+        { id: 'nigeria', subdomain: 'ng', flag: '🇳🇬', nameKey: 'nigeria_name', subKey: 'nigeria_sub', domain: 'ng.18mls.com', searchTerms: ['nigeria', 'abuja', 'lagos', 'ng'] },
+        { id: 'niue', subdomain: 'nu', flag: '🇳🇺', nameKey: 'niue_name', subKey: 'niue_sub', domain: 'nu.18mls.com', searchTerms: ['niue', 'alofi', 'nu'] },
+        { id: 'noruega', subdomain: 'no', flag: '🇳🇴', nameKey: 'noruega_name', subKey: 'noruega_sub', domain: 'no.18mls.com', searchTerms: ['noruega', 'norway', 'norge', 'oslo', 'no'] },
+        { id: 'nueva_caledonia', subdomain: 'nc', flag: '🇳🇨', nameKey: 'nueva_caledonia_name', subKey: 'nueva_caledonia_sub', domain: 'nc.18mls.com', searchTerms: ['nueva caledonia', 'new caledonia', 'noumea', 'numea', 'nc'] },
+        { id: 'nueva_zelanda', subdomain: 'nz', flag: '🇳🇿', nameKey: 'nueva_zelanda_name', subKey: 'nueva_zelanda_sub', domain: 'nz.18mls.com', searchTerms: ['nueva zelanda', 'new zealand', 'nouvelle zelande', 'wellington', 'auckland', 'nz'] },
+        { id: 'oman', subdomain: 'om', flag: '🇴🇲', nameKey: 'oman_name', subKey: 'oman_sub', domain: 'om.18mls.com', searchTerms: ['oman', 'omán', 'mascate', 'muscat', 'om'] },
+        { id: 'paises_bajos', subdomain: 'nl', flag: '🇳🇱', nameKey: 'paises_bajos_name', subKey: 'paises_bajos_sub', domain: 'nl.18mls.com', searchTerms: ['paises bajos', 'netherlands', 'holanda', 'holland', 'amsterdam', 'roterdam', 'la haya', 'nl'] },
+        { id: 'pakistan', subdomain: 'pk', flag: '🇵🇰', nameKey: 'pakistan_name', subKey: 'pakistan_sub', domain: 'pk.18mls.com', searchTerms: ['pakistan', 'pakistán', 'islamabad', 'karachi', 'pk'] },
+        { id: 'palaos', subdomain: 'pw', flag: '🇵🇼', nameKey: 'palaos_name', subKey: 'palaos_sub', domain: 'pw.18mls.com', searchTerms: ['palaos', 'palau', 'ngerulmud', 'pw'] },
+        { id: 'palestina', subdomain: 'ps', flag: '🇵🇸', nameKey: 'palestina_name', subKey: 'palestina_sub', domain: 'ps.18mls.com', searchTerms: ['palestina', 'palestine', 'ramala', 'gaza', 'ps'] },
+        { id: 'panama', subdomain: 'pa', flag: '🇵🇦', nameKey: 'panama_name', subKey: 'panama_sub', domain: 'pa.18mls.com', searchTerms: ['panama', 'panamá', 'ciudad de panama', 'pa'] },
+        { id: 'papua_nueva_guinea', subdomain: 'pg', flag: '🇵🇬', nameKey: 'papua_nueva_guinea_name', subKey: 'papua_nueva_guinea_sub', domain: 'pg.18mls.com', searchTerms: ['papua nueva guinea', 'papua new guinea', 'port moresby', 'pg'] },
+        { id: 'paraguay', subdomain: 'py', flag: '🇵🇾', nameKey: 'paraguay_name', subKey: 'paraguay_sub', domain: 'py.18mls.com', searchTerms: ['paraguay', 'asuncion', 'asunción', 'ciudad del este', 'py'] },
+        { id: 'peru', subdomain: 'pe', flag: '🇵🇪', nameKey: 'peru_name', subKey: 'peru_sub', domain: 'pe.18mls.com', searchTerms: ['peru', 'perú', 'pérou', 'lima', 'cusco', 'arequipa', 'pe'] },
+        { id: 'polinesia_francesa', subdomain: 'pf', flag: '🇵🇫', nameKey: 'polinesia_francesa_name', subKey: 'polinesia_francesa_sub', domain: 'pf.18mls.com', searchTerms: ['polinesia francesa', 'french polynesia', 'papeete', 'tahiti', 'pf'] },
+        { id: 'polonia', subdomain: 'pl', flag: '🇵🇱', nameKey: 'polonia_name', subKey: 'polonia_sub', domain: 'pl.18mls.com', searchTerms: ['polonia', 'poland', 'pologne', 'varsovia', 'warsaw', 'cracovia', 'pl'] },
+        { id: 'portugal', subdomain: 'pt', flag: '🇵🇹', nameKey: 'portugal_name', subKey: 'portugal_sub', domain: 'pt.18mls.com', searchTerms: ['portugal', 'lisboa', 'lisbon', 'oporto', 'porto', 'algarve', 'pt'] },
+        { id: 'puerto_rico', subdomain: 'pr', flag: '🇵🇷', nameKey: 'puerto_rico_name', subKey: 'puerto_rico_sub', domain: 'pr.18mls.com', searchTerms: ['puerto rico', 'san juan', 'pr'] },
+        { id: 'reino_unido', subdomain: 'gb', flag: '🇬🇧', nameKey: 'reino_unido_name', subKey: 'reino_unido_sub', domain: 'gb.18mls.com', searchTerms: ['reino unido', 'united kingdom', 'uk', 'inglaterra', 'londres', 'london', 'manchester', 'birmingham', 'gb'] },
+        { id: 'republica_centroafricana', subdomain: 'cf', flag: '🇨🇫', nameKey: 'republica_centroafricana_name', subKey: 'republica_centroafricana_sub', domain: 'cf.18mls.com', searchTerms: ['republica centroafricana', 'central african republic', 'bangui', 'cf'] },
+        { id: 'republica_checa', subdomain: 'cz', flag: '🇨🇿', nameKey: 'republica_checa_name', subKey: 'republica_checa_sub', domain: 'cz.18mls.com', searchTerms: ['republica checa', 'república checa', 'czech republic', 'praga', 'prague', 'cz'] },
+        { id: 'republica_congo', subdomain: 'cg', flag: '🇨🇬', nameKey: 'republica_congo_name', subKey: 'republica_congo_sub', domain: 'cg.18mls.com', searchTerms: ['republica del congo', 'congo', 'brazzaville', 'cg'] },
+        { id: 'republica_dominicana', subdomain: 'do', flag: '🇩🇴', nameKey: 'republica_dominicana_name', subKey: 'republica_dominicana_sub', domain: 'do.18mls.com', searchTerms: ['republica dominicana', 'república dominicana', 'dominican republic', 'santo domingo', 'punta cana', 'do'] },
+        { id: 'republica_democratica_congo', subdomain: 'cd', flag: '🇨🇩', nameKey: 'republica_democratica_congo_name', subKey: 'republica_democratica_congo_sub', domain: 'cd.18mls.com', searchTerms: ['republica democratica del congo', 'rdc', 'kinshasa', 'kinsasa', 'cd'] },
+        { id: 'ruanda', subdomain: 'rw', flag: '🇷🇼', nameKey: 'ruanda_name', subKey: 'ruanda_sub', domain: 'rw.18mls.com', searchTerms: ['ruanda', 'rwanda', 'kigali', 'rw'] },
+        { id: 'rumania', subdomain: 'ro', flag: '🇷🇴', nameKey: 'rumania_name', subKey: 'rumania_sub', domain: 'ro.18mls.com', searchTerms: ['rumania', 'rumanía', 'romania', 'roumanie', 'bucarest', 'bucharest', 'ro'] },
+        { id: 'rusia', subdomain: 'ru', flag: '🇷🇺', nameKey: 'rusia_name', subKey: 'rusia_sub', domain: 'ru.18mls.com', searchTerms: ['rusia', 'russia', 'russie', 'moscu', 'moscow', 'san petersburgo', 'saint petersburg', 'ru'] },
+        { id: 'sahara_occidental', subdomain: 'eh', flag: '🇪🇭', nameKey: 'sahara_occidental_name', subKey: 'sahara_occidental_sub', domain: 'eh.18mls.com', searchTerms: ['sahara occidental', 'western sahara', 'el aaiun', 'eh'] },
+        { id: 'samoa', subdomain: 'ws', flag: '🇼🇸', nameKey: 'samoa_name', subKey: 'samoa_sub', domain: 'ws.18mls.com', searchTerms: ['samoa', 'apia', 'ws'] },
+        { id: 'samoa_americana', subdomain: 'as', flag: '🇦🇸', nameKey: 'samoa_americana_name', subKey: 'samoa_americana_sub', domain: 'as.18mls.com', searchTerms: ['samoa americana', 'american samoa', 'pago pago', 'as'] },
+        { id: 'san_bartolome', subdomain: 'bl', flag: '🇧🇱', nameKey: 'san_bartolome_name', subKey: 'san_bartolome_sub', domain: 'bl.18mls.com', searchTerms: ['san bartolome', 'saint barthelemy', 'gustavia', 'bl'] },
+        { id: 'san_cristobal_nieves', subdomain: 'kn', flag: '🇰🇳', nameKey: 'san_cristobal_nieves_name', subKey: 'san_cristobal_nieves_sub', domain: 'kn.18mls.com', searchTerms: ['san cristobal', 'nieves', 'saint kitts', 'basseterre', 'kn'] },
+        { id: 'san_marino', subdomain: 'sm', flag: '🇸🇲', nameKey: 'san_marino_name', subKey: 'san_marino_sub', domain: 'sm.18mls.com', searchTerms: ['san marino', 'saint marin', 'sm'] },
+        { id: 'san_martin', subdomain: 'mf', flag: '🇲🇫', nameKey: 'san_martin_name', subKey: 'san_martin_sub', domain: 'mf.18mls.com', searchTerms: ['san martin', 'saint martin', 'marigot', 'mf'] },
+        { id: 'san_pedro_miquelon', subdomain: 'pm', flag: '🇵🇲', nameKey: 'san_pedro_miquelon_name', subKey: 'san_pedro_miquelon_sub', domain: 'pm.18mls.com', searchTerms: ['san pedro y miquelon', 'saint pierre', 'miquelon', 'pm'] },
+        { id: 'san_vicente_granadinas', subdomain: 'vc', flag: '🇻🇨', nameKey: 'san_vicente_granadinas_name', subKey: 'san_vicente_granadinas_sub', domain: 'vc.18mls.com', searchTerms: ['san vicente', 'granadinas', 'saint vincent', 'kingstown', 'vc'] },
+        { id: 'santa_elena', subdomain: 'sh', flag: '🇸🇭', nameKey: 'santa_elena_name', subKey: 'santa_elena_sub', domain: 'sh.18mls.com', searchTerms: ['santa elena', 'saint helena', 'jamestown', 'sh'] },
+        { id: 'santa_lucia', subdomain: 'lc', flag: '🇱🇨', nameKey: 'santa_lucia_name', subKey: 'santa_lucia_sub', domain: 'lc.18mls.com', searchTerms: ['santa lucia', 'saint lucia', 'castries', 'lc'] },
+        { id: 'santo_tome_principe', subdomain: 'st', flag: '🇸🇹', nameKey: 'santo_tome_principe_name', subKey: 'santo_tome_principe_sub', domain: 'st.18mls.com', searchTerms: ['santo tome', 'principe', 'sao tome', 'são tomé', 'st'] },
+        { id: 'senegal', subdomain: 'sn', flag: '🇸🇳', nameKey: 'senegal_name', subKey: 'senegal_sub', domain: 'sn.18mls.com', searchTerms: ['senegal', 'sénégal', 'dakar', 'sn'] },
+        { id: 'serbia', subdomain: 'rs', flag: '🇷🇸', nameKey: 'serbia_name', subKey: 'serbia_sub', domain: 'rs.18mls.com', searchTerms: ['serbia', 'serbie', 'belgrado', 'belgrade', 'rs'] },
+        { id: 'seychelles', subdomain: 'sc', flag: '🇸🇨', nameKey: 'seychelles_name', subKey: 'seychelles_sub', domain: 'sc.18mls.com', searchTerms: ['seychelles', 'victoria', 'sc'] },
+        { id: 'sierra_leona', subdomain: 'sl', flag: '🇸🇱', nameKey: 'sierra_leona_name', subKey: 'sierra_leona_sub', domain: 'sl.18mls.com', searchTerms: ['sierra leona', 'sierra leone', 'freetown', 'sl'] },
+        { id: 'singapur', subdomain: 'sg', flag: '🇸🇬', nameKey: 'singapur_name', subKey: 'singapur_sub', domain: 'sg.18mls.com', searchTerms: ['singapur', 'singapore', 'singapour', 'sg'] },
+        { id: 'sint_maarten', subdomain: 'sx', flag: '🇸🇽', nameKey: 'sint_maarten_name', subKey: 'sint_maarten_sub', domain: 'sx.18mls.com', searchTerms: ['sint maarten', 'philipsburg', 'sx'] },
+        { id: 'siria', subdomain: 'sy', flag: '🇸🇾', nameKey: 'siria_name', subKey: 'siria_sub', domain: 'sy.18mls.com', searchTerms: ['siria', 'syria', 'syrie', 'damasco', 'damascus', 'sy'] },
+        { id: 'somalia', subdomain: 'so', flag: '🇸🇴', nameKey: 'somalia_name', subKey: 'somalia_sub', domain: 'so.18mls.com', searchTerms: ['somalia', 'somalie', 'mogadiscio', 'mogadishu', 'so'] },
+        { id: 'sri_lanka', subdomain: 'lk', flag: '🇱🇰', nameKey: 'sri_lanka_name', subKey: 'sri_lanka_sub', domain: 'lk.18mls.com', searchTerms: ['sri lanka', 'colombo', 'sri jayawardenapura', 'lk'] },
+        { id: 'sudafrica', subdomain: 'za', flag: '🇿🇦', nameKey: 'sudafrica_name', subKey: 'sudafrica_sub', domain: 'za.18mls.com', searchTerms: ['sudafrica', 'sudáfrica', 'south africa', 'afrique du sud', 'pretoria', 'ciudad del cabo', 'johannesburgo', 'za'] },
+        { id: 'sudan', subdomain: 'sd', flag: '🇸🇩', nameKey: 'sudan_name', subKey: 'sudan_sub', domain: 'sd.18mls.com', searchTerms: ['sudan', 'sudán', 'jartum', 'khartoum', 'sd'] },
+        { id: 'sudan_sur', subdomain: 'ss', flag: '🇸🇸', nameKey: 'sudan_sur_name', subKey: 'sudan_sur_sub', domain: 'ss.18mls.com', searchTerms: ['sudan del sur', 'south sudan', 'juba', 'yuba', 'ss'] },
+        { id: 'suecia', subdomain: 'se', flag: '🇸🇪', nameKey: 'suecia_name', subKey: 'suecia_sub', domain: 'se.18mls.com', searchTerms: ['suecia', 'sweden', 'sverige', 'estocolmo', 'stockholm', 'gotemburgo', 'se'] },
+        { id: 'suiza', subdomain: 'ch', flag: '🇨🇭', nameKey: 'suiza_name', subKey: 'suiza_sub', domain: 'ch.18mls.com', searchTerms: ['suiza', 'switzerland', 'schweiz', 'berna', 'bern', 'zurich', 'ginebra', 'basilea', 'ch'] },
+        { id: 'surinam', subdomain: 'sr', flag: '🇸🇷', nameKey: 'surinam_name', subKey: 'surinam_sub', domain: 'sr.18mls.com', searchTerms: ['surinam', 'suriname', 'paramaribo', 'sr'] },
+        { id: 'tailandia', subdomain: 'th', flag: '🇹🇭', nameKey: 'tailandia_name', subKey: 'tailandia_sub', domain: 'th.18mls.com', searchTerms: ['tailandia', 'thailand', 'thailande', 'bangkok', 'phuket', 'th'] },
+        { id: 'taiwan', subdomain: 'tw', flag: '🇹🇼', nameKey: 'taiwan_name', subKey: 'taiwan_sub', domain: 'tw.18mls.com', searchTerms: ['taiwan', 'taiwán', 'taipei', 'taipéi', 'tw'] },
+        { id: 'tanzania', subdomain: 'tz', flag: '🇹🇿', nameKey: 'tanzania_name', subKey: 'tanzania_sub', domain: 'tz.18mls.com', searchTerms: ['tanzania', 'tanzanie', 'dodoma', 'dar es salaam', 'tz'] },
+        { id: 'tayikistan', subdomain: 'tj', flag: '🇹🇯', nameKey: 'tayikistan_name', subKey: 'tayikistan_sub', domain: 'tj.18mls.com', searchTerms: ['tayikistan', 'tayikistán', 'tajikistan', 'dushanbe', 'tj'] },
+        { id: 'timor_oriental', subdomain: 'tl', flag: '🇹🇱', nameKey: 'timor_oriental_name', subKey: 'timor_oriental_sub', domain: 'tl.18mls.com', searchTerms: ['timor oriental', 'east timor', 'dili', 'tl'] },
+        { id: 'togo', subdomain: 'tg', flag: '🇹🇬', nameKey: 'togo_name', subKey: 'togo_sub', domain: 'tg.18mls.com', searchTerms: ['togo', 'lome', 'lomé', 'tg'] },
+        { id: 'tonga', subdomain: 'to', flag: '🇹🇴', nameKey: 'tonga_name', subKey: 'tonga_sub', domain: 'to.18mls.com', searchTerms: ['tonga', 'nukualofa', 'to'] },
+        { id: 'trinidad_tobago', subdomain: 'tt', flag: '🇹🇹', nameKey: 'trinidad_tobago_name', subKey: 'trinidad_tobago_sub', domain: 'tt.18mls.com', searchTerms: ['trinidad', 'tobago', 'trinidad y tobago', 'puerto españa', 'port of spain', 'tt'] },
+        { id: 'tunez', subdomain: 'tn', flag: '🇹🇳', nameKey: 'tunez_name', subKey: 'tunez_sub', domain: 'tn.18mls.com', searchTerms: ['tunez', 'túnez', 'tunisia', 'tunisie', 'tn'] },
+        { id: 'turkmenistan', subdomain: 'tm', flag: '🇹🇲', nameKey: 'turkmenistan_name', subKey: 'turkmenistan_sub', domain: 'tm.18mls.com', searchTerms: ['turkmenistan', 'turkmenistán', 'ashgabat', 'asjabad', 'tm'] },
+        { id: 'turquia', subdomain: 'tr', flag: '🇹🇷', nameKey: 'turquia_name', subKey: 'turquia_sub', domain: 'tr.18mls.com', searchTerms: ['turquia', 'turquía', 'turkey', 'turquie', 'ankara', 'estambul', 'istanbul', 'tr'] },
+        { id: 'tuvalu', subdomain: 'tv', flag: '🇹🇻', nameKey: 'tuvalu_name', subKey: 'tuvalu_sub', domain: 'tv.18mls.com', searchTerms: ['tuvalu', 'funafuti', 'tv'] },
+        { id: 'ucrania', subdomain: 'ua', flag: '🇺🇦', nameKey: 'ucrania_name', subKey: 'ucrania_sub', domain: 'ua.18mls.com', searchTerms: ['ucrania', 'ukraine', 'kiev', 'kíev', 'ua'] },
+        { id: 'uganda', subdomain: 'ug', flag: '🇺🇬', nameKey: 'uganda_name', subKey: 'uganda_sub', domain: 'ug.18mls.com', searchTerms: ['uganda', 'kampala', 'ug'] },
+        { id: 'uruguay', subdomain: 'uy', flag: '🇺🇾', nameKey: 'uruguay_name', subKey: 'uruguay_sub', domain: 'uy.18mls.com', searchTerms: ['uruguay', 'montevideo', 'punta del este', 'uy'] },
+        { id: 'uzbekistan', subdomain: 'uz', flag: '🇺🇿', nameKey: 'uzbekistan_name', subKey: 'uzbekistan_sub', domain: 'uz.18mls.com', searchTerms: ['uzbekistan', 'uzbekistán', 'tashkent', 'taskent', 'uz'] },
+        { id: 'vanuatu', subdomain: 'vu', flag: '🇻🇺', nameKey: 'vanuatu_name', subKey: 'vanuatu_sub', domain: 'vu.18mls.com', searchTerms: ['vanuatu', 'port vila', 'vu'] },
+        { id: 'venezuela', subdomain: 've', flag: '🇻🇪', nameKey: 'venezuela_name', subKey: 'venezuela_sub', domain: 've.18mls.com', searchTerms: ['venezuela', 'caracas', 'maracaibo', 'valencia', 've'] },
+        { id: 'vietnam', subdomain: 'vn', flag: '🇻🇳', nameKey: 'vietnam_name', subKey: 'vietnam_sub', domain: 'vn.18mls.com', searchTerms: ['vietnam', 'hanoi', 'hanói', 'ho chi minh', 'saigon', 'vn'] },
+        { id: 'wallis_futuna', subdomain: 'wf', flag: '🇼🇫', nameKey: 'wallis_futuna_name', subKey: 'wallis_futuna_sub', domain: 'wf.18mls.com', searchTerms: ['wallis y futuna', 'wallis et futuna', 'mata utu', 'wf'] },
+        { id: 'yemen', subdomain: 'ye', flag: '🇾🇪', nameKey: 'yemen_name', subKey: 'yemen_sub', domain: 'ye.18mls.com', searchTerms: ['yemen', 'sanaa', 'saná', 'aden', 'ye'] },
+        { id: 'yibuti', subdomain: 'dj', flag: '🇩🇯', nameKey: 'yibuti_name', subKey: 'yibuti_sub', domain: 'dj.18mls.com', searchTerms: ['yibuti', 'djibouti', 'dj'] },
+        { id: 'zambia', subdomain: 'zm', flag: '🇿🇲', nameKey: 'zambia_name', subKey: 'zambia_sub', domain: 'zm.18mls.com', searchTerms: ['zambia', 'lusaka', 'zm'] },
+        { id: 'zimbabue', subdomain: 'zw', flag: '🇿🇼', nameKey: 'zimbabue_name', subKey: 'zimbabue_sub', domain: 'zw.18mls.com', searchTerms: ['zimbabue', 'zimbabwe', 'harare', 'zw'] }
+    ];
+
+    // --------------------------------------------------------------
+    // 3. TRADUCCIONES COMPLETAS (ESPAÑOL E INGLÉS)
+    // --------------------------------------------------------------
+    const translations = {
+        es: {
+            tagline: "EL MLS INMOBILIARIO MÁS GRANDE DEL MUNDO",
+            title: "SELECCIONAR PAÍS<br>",
+            subtitle: "Compra, vende e invierte en bienes raíces directamente entre propietarios. De manera segura y sencilla.",
+            afganistan_name: "Afganistán", afganistan_sub: "18MLS REAL ESTATE AFGANISTÁN",
+            albania_name: "Albania", albania_sub: "18MLS REAL ESTATE ALBANIA",
+            alemania_name: "Alemania", alemania_sub: "18MLS REAL ESTATE ALEMANIA",
+            andorra_name: "Andorra", andorra_sub: "18MLS REAL ESTATE ANDORRA",
+            angola_name: "Angola", angola_sub: "18MLS REAL ESTATE ANGOLA",
+            anguila_name: "Anguila", anguila_sub: "18MLS REAL ESTATE ANGUILA",
+            antigua_barbuda_name: "Antigua y Barbuda", antigua_barbuda_sub: "18MLS REAL ESTATE ANTIGUA Y BARBUDA",
+            arabia_saudita_name: "Arabia Saudita", arabia_saudita_sub: "18MLS REAL ESTATE ARABIA SAUDITA",
+            argelia_name: "Argelia", argelia_sub: "18MLS REAL ESTATE ARGELIA",
+            argentina_name: "Argentina", argentina_sub: "18MLS REAL ESTATE ARGENTINA",
+            armenia_name: "Armenia", armenia_sub: "18MLS REAL ESTATE ARMENIA",
+            aruba_name: "Aruba", aruba_sub: "18MLS REAL ESTATE ARUBA",
+            australia_name: "Australia", australia_sub: "18MLS REAL ESTATE AUSTRALIA",
+            austria_name: "Austria", austria_sub: "18MLS REAL ESTATE AUSTRIA",
+            azerbaiyan_name: "Azerbaiyán", azerbaiyan_sub: "18MLS REAL ESTATE AZERBAIYÁN",
+            bahamas_name: "Bahamas", bahamas_sub: "18MLS REAL ESTATE BAHAMAS",
+            bahrein_name: "Bahrein", bahrein_sub: "18MLS REAL ESTATE BAHREIN",
+            bangladesh_name: "Bangladesh", bangladesh_sub: "18MLS REAL ESTATE BANGLADESH",
+            barbados_name: "Barbados", barbados_sub: "18MLS REAL ESTATE BARBADOS",
+            belgica_name: "Bélgica", belgica_sub: "18MLS REAL ESTATE BÉLGICA",
+            belice_name: "Belice", belice_sub: "18MLS REAL ESTATE BELICE",
+            benin_name: "Benín", benin_sub: "18MLS REAL ESTATE BENÍN",
+            bermudas_name: "Bermudas", bermudas_sub: "18MLS REAL ESTATE BERMUDAS",
+            bielorrusia_name: "Bielorrusia", bielorrusia_sub: "18MLS REAL ESTATE BIELORRUSIA",
+            birmania_name: "Birmania", birmania_sub: "18MLS REAL ESTATE BIRMANIA",
+            bolivia_name: "Bolivia", bolivia_sub: "18MLS REAL ESTATE BOLIVIA",
+            bosnia_herzegovina_name: "Bosnia y Herzegovina", bosnia_herzegovina_sub: "18MLS REAL ESTATE BOSNIA Y HERZEGOVINA",
+            botsuana_name: "Botsuana", botsuana_sub: "18MLS REAL ESTATE BOTSUANA",
+            brasil_name: "Brasil", brasil_sub: "18MLS REAL ESTATE BRASIL",
+            brunei_name: "Brunéi", brunei_sub: "18MLS REAL ESTATE BRUNÉI",
+            bulgaria_name: "Bulgaria", bulgaria_sub: "18MLS REAL ESTATE BULGARIA",
+            burkina_faso_name: "Burkina Faso", burkina_faso_sub: "18MLS REAL ESTATE BURKINA FASO",
+            burundi_name: "Burundi", burundi_sub: "18MLS REAL ESTATE BURUNDI",
+            butan_name: "Bután", butan_sub: "18MLS REAL ESTATE BUTÁN",
+            cabo_verde_name: "Cabo Verde", cabo_verde_sub: "18MLS REAL ESTATE CABO VERDE",
+            camboya_name: "Camboya", camboya_sub: "18MLS REAL ESTATE CAMBOYA",
+            camerun_name: "Camerún", camerun_sub: "18MLS REAL ESTATE CAMERÚN",
+            canada_name: "Canadá", canada_sub: "18MLS REAL ESTATE CANADÁ",
+            catar_name: "Catar", catar_sub: "18MLS REAL ESTATE CATAR",
+            chad_name: "Chad", chad_sub: "18MLS REAL ESTATE CHAD",
+            chile_name: "Chile", chile_sub: "18MLS REAL ESTATE CHILE",
+            china_name: "China", china_sub: "18MLS REAL ESTATE CHINA",
+            chipre_name: "Chipre", chipre_sub: "18MLS REAL ESTATE CHIPRE",
+            ciudad_vaticano_name: "Ciudad del Vaticano", ciudad_vaticano_sub: "18MLS REAL ESTATE VATICANO",
+            colombia_name: "Colombia", colombia_sub: "18MLS REAL ESTATE COLOMBIA",
+            comoras_name: "Comoras", comoras_sub: "18MLS REAL ESTATE COMORAS",
+            corea_norte_name: "Corea del Norte", corea_norte_sub: "18MLS REAL ESTATE COREA DEL NORTE",
+            corea_sur_name: "Corea del Sur", corea_sur_sub: "18MLS REAL ESTATE COREA DEL SUR",
+            costa_marfil_name: "Costa de Marfil", costa_marfil_sub: "18MLS REAL ESTATE COSTA DE MARFIL",
+            costa_rica_name: "Costa Rica", costa_rica_sub: "18MLS REAL ESTATE COSTA RICA",
+            croacia_name: "Croacia", croacia_sub: "18MLS REAL ESTATE CROACIA",
+            cuba_name: "Cuba", cuba_sub: "18MLS REAL ESTATE CUBA",
+            dinamarca_name: "Dinamarca", dinamarca_sub: "18MLS REAL ESTATE DINAMARCA",
+            dominica_name: "Dominica", dominica_sub: "18MLS REAL ESTATE DOMINICA",
+            ecuador_name: "Ecuador", ecuador_sub: "18MLS REAL ESTATE ECUADOR",
+            egipto_name: "Egipto", egipto_sub: "18MLS REAL ESTATE EGIPTO",
+            el_salvador_name: "El Salvador", el_salvador_sub: "18MLS REAL ESTATE EL SALVADOR",
+            emiratos_arabes_name: "Emiratos Árabes", emiratos_arabes_sub: "18MLS REAL ESTATE EAU",
+            eritrea_name: "Eritrea", eritrea_sub: "18MLS REAL ESTATE ERITREA",
+            eslovaquia_name: "Eslovaquia", eslovaquia_sub: "18MLS REAL ESTATE ESLOVAQUIA",
+            eslovenia_name: "Eslovenia", eslovenia_sub: "18MLS REAL ESTATE ESLOVENIA",
+            espana_name: "España", espana_sub: "18MLS REAL ESTATE ESPAÑA",
+            estados_unidos_name: "Estados Unidos", estados_unidos_sub: "18MLS REAL ESTATE USA",
+            estonia_name: "Estonia", estonia_sub: "18MLS REAL ESTATE ESTONIA",
+            esuatini_name: "Esuatini", esuatini_sub: "18MLS REAL ESTATE ESUATINI",
+            etiopia_name: "Etiopía", etiopia_sub: "18MLS REAL ESTATE ETIOPÍA",
+            fiji_name: "Fiyi", fiji_sub: "18MLS REAL ESTATE FIYI",
+            filipinas_name: "Filipinas", filipinas_sub: "18MLS REAL ESTATE FILIPINAS",
+            finlandia_name: "Finlandia", finlandia_sub: "18MLS REAL ESTATE FINLANDIA",
+            francia_name: "Francia", francia_sub: "18MLS REAL ESTATE FRANCIA",
+            gabon_name: "Gabón", gabon_sub: "18MLS REAL ESTATE GABÓN",
+            gambia_name: "Gambia", gambia_sub: "18MLS REAL ESTATE GAMBIA",
+            georgia_name: "Georgia", georgia_sub: "18MLS REAL ESTATE GEORGIA",
+            ghana_name: "Ghana", ghana_sub: "18MLS REAL ESTATE GHANA",
+            granada_name: "Granada", granada_sub: "18MLS REAL ESTATE GRANADA",
+            grecia_name: "Grecia", grecia_sub: "18MLS REAL ESTATE GRECIA",
+            groenlandia_name: "Groenlandia", groenlandia_sub: "18MLS REAL ESTATE GROENLANDIA",
+            guadalupe_name: "Guadalupe", guadalupe_sub: "18MLS REAL ESTATE GUADALUPE",
+            guam_name: "Guam", guam_sub: "18MLS REAL ESTATE GUAM",
+            guatemala_name: "Guatemala", guatemala_sub: "18MLS REAL ESTATE GUATEMALA",
+            guayana_francesa_name: "Guayana Francesa", guayana_francesa_sub: "18MLS REAL ESTATE GUAYANA FRANCESA",
+            guernsey_name: "Guernsey", guernsey_sub: "18MLS REAL ESTATE GUERNSEY",
+            guinea_name: "Guinea", guinea_sub: "18MLS REAL ESTATE GUINEA",
+            guinea_bisau_name: "Guinea Bisáu", guinea_bisau_sub: "18MLS REAL ESTATE GUINEA BISÁU",
+            guinea_ecuatorial_name: "Guinea Ecuatorial", guinea_ecuatorial_sub: "18MLS REAL ESTATE GUINEA ECUATORIAL",
+            guyana_name: "Guyana", guyana_sub: "18MLS REAL ESTATE GUYANA",
+            haiti_name: "Haití", haiti_sub: "18MLS REAL ESTATE HAITÍ",
+            honduras_name: "Honduras", honduras_sub: "18MLS REAL ESTATE HONDURAS",
+            hong_kong_name: "Hong Kong", hong_kong_sub: "18MLS REAL ESTATE HONG KONG",
+            hungria_name: "Hungría", hungria_sub: "18MLS REAL ESTATE HUNGRÍA",
+            india_name: "India", india_sub: "18MLS REAL ESTATE INDIA",
+            indonesia_name: "Indonesia", indonesia_sub: "18MLS REAL ESTATE INDONESIA",
+            irak_name: "Irak", irak_sub: "18MLS REAL ESTATE IRAK",
+            iran_name: "Irán", iran_sub: "18MLS REAL ESTATE IRÁN",
+            irlanda_name: "Irlanda", irlanda_sub: "18MLS REAL ESTATE IRLANDA",
+            isla_man_name: "Isla de Man", isla_man_sub: "18MLS REAL ESTATE ISLA DE MAN",
+            islandia_name: "Islandia", islandia_sub: "18MLS REAL ESTATE ISLANDIA",
+            islas_caiman_name: "Islas Caimán", islas_caiman_sub: "18MLS REAL ESTATE ISLAS CAIMÁN",
+            islas_cook_name: "Islas Cook", islas_cook_sub: "18MLS REAL ESTATE ISLAS COOK",
+            islas_feroe_name: "Islas Feroe", islas_feroe_sub: "18MLS REAL ESTATE ISLAS FEROE",
+            islas_malvinas_name: "Islas Malvinas", islas_malvinas_sub: "18MLS REAL ESTATE ISLAS MALVINAS",
+            islas_marshall_name: "Islas Marshall", islas_marshall_sub: "18MLS REAL ESTATE ISLAS MARSHALL",
+            islas_salomon_name: "Islas Salomón", islas_salomon_sub: "18MLS REAL ESTATE ISLAS SALOMÓN",
+            islas_turcas_caicos_name: "Islas Turcas y Caicos", islas_turcas_caicos_sub: "18MLS REAL ESTATE ISLAS TURCAS Y CAICOS",
+            islas_virgenes_britanicas_name: "Islas Vírgenes Británicas", islas_virgenes_britanicas_sub: "18MLS REAL ESTATE ISLAS VÍRGENES BRITÁNICAS",
+            islas_virgenes_eeuu_name: "Islas Vírgenes EEUU", islas_virgenes_eeuu_sub: "18MLS REAL ESTATE ISLAS VÍRGENES EEUU",
+            israel_name: "Israel", israel_sub: "18MLS REAL ESTATE ISRAEL",
+            italia_name: "Italia", italia_sub: "18MLS REAL ESTATE ITALIA",
+            jamaica_name: "Jamaica", jamaica_sub: "18MLS REAL ESTATE JAMAICA",
+            japon_name: "Japón", japon_sub: "18MLS REAL ESTATE JAPÓN",
+            jersey_name: "Jersey", jersey_sub: "18MLS REAL ESTATE JERSEY",
+            jordania_name: "Jordania", jordania_sub: "18MLS REAL ESTATE JORDANIA",
+            kazajistan_name: "Kazajistán", kazajistan_sub: "18MLS REAL ESTATE KAZAJISTÁN",
+            kenia_name: "Kenia", kenia_sub: "18MLS REAL ESTATE KENIA",
+            kirguistan_name: "Kirguistán", kirguistan_sub: "18MLS REAL ESTATE KIRGUISTÁN",
+            kiribati_name: "Kiribati", kiribati_sub: "18MLS REAL ESTATE KIRIBATI",
+            kuwait_name: "Kuwait", kuwait_sub: "18MLS REAL ESTATE KUWAIT",
+            laos_name: "Laos", laos_sub: "18MLS REAL ESTATE LAOS",
+            lesoto_name: "Lesoto", lesoto_sub: "18MLS REAL ESTATE LESOTO",
+            letonia_name: "Letonia", letonia_sub: "18MLS REAL ESTATE LETONIA",
+            libano_name: "Líbano", libano_sub: "18MLS REAL ESTATE LÍBANO",
+            liberia_name: "Liberia", liberia_sub: "18MLS REAL ESTATE LIBERIA",
+            libia_name: "Libia", libia_sub: "18MLS REAL ESTATE LIBIA",
+            liechtenstein_name: "Liechtenstein", liechtenstein_sub: "18MLS REAL ESTATE LIECHTENSTEIN",
+            lituania_name: "Lituania", lituania_sub: "18MLS REAL ESTATE LITUANIA",
+            luxemburgo_name: "Luxemburgo", luxemburgo_sub: "18MLS REAL ESTATE LUXEMBURGO",
+            macao_name: "Macao", macao_sub: "18MLS REAL ESTATE MACAO",
+            macedonia_norte_name: "Macedonia del Norte", macedonia_norte_sub: "18MLS REAL ESTATE MACEDONIA",
+            madagascar_name: "Madagascar", madagascar_sub: "18MLS REAL ESTATE MADAGASCAR",
+            malasia_name: "Malasia", malasia_sub: "18MLS REAL ESTATE MALASIA",
+            malaui_name: "Malaui", malaui_sub: "18MLS REAL ESTATE MALAUI",
+            maldivas_name: "Maldivas", maldivas_sub: "18MLS REAL ESTATE MALDIVAS",
+            mali_name: "Malí", mali_sub: "18MLS REAL ESTATE MALÍ",
+            malta_name: "Malta", malta_sub: "18MLS REAL ESTATE MALTA",
+            marruecos_name: "Marruecos", marruecos_sub: "18MLS REAL ESTATE MARRUECOS",
+            martinica_name: "Martinica", martinica_sub: "18MLS REAL ESTATE MARTINICA",
+            mauricio_name: "Mauricio", mauricio_sub: "18MLS REAL ESTATE MAURICIO",
+            mauritania_name: "Mauritania", mauritania_sub: "18MLS REAL ESTATE MAURITANIA",
+            mayotte_name: "Mayotte", mayotte_sub: "18MLS REAL ESTATE MAYOTTE",
+            mexico_name: "México", mexico_sub: "18MLS REAL ESTATE MÉXICO",
+            micronesia_name: "Micronesia", micronesia_sub: "18MLS REAL ESTATE MICRONESIA",
+            moldavia_name: "Moldavia", moldavia_sub: "18MLS REAL ESTATE MOLDAVIA",
+            monaco_name: "Mónaco", monaco_sub: "18MLS REAL ESTATE MÓNACO",
+            mongolia_name: "Mongolia", mongolia_sub: "18MLS REAL ESTATE MONGOLIA",
+            montenegro_name: "Montenegro", montenegro_sub: "18MLS REAL ESTATE MONTENEGRO",
+            montserrat_name: "Montserrat", montserrat_sub: "18MLS REAL ESTATE MONTSERRAT",
+            mozambique_name: "Mozambique", mozambique_sub: "18MLS REAL ESTATE MOZAMBIQUE",
+            namibia_name: "Namibia", namibia_sub: "18MLS REAL ESTATE NAMIBIA",
+            nauru_name: "Nauru", nauru_sub: "18MLS REAL ESTATE NAURU",
+            nepal_name: "Nepal", nepal_sub: "18MLS REAL ESTATE NEPAL",
+            nicaragua_name: "Nicaragua", nicaragua_sub: "18MLS REAL ESTATE NICARAGUA",
+            niger_name: "Níger", niger_sub: "18MLS REAL ESTATE NÍGER",
+            nigeria_name: "Nigeria", nigeria_sub: "18MLS REAL ESTATE NIGERIA",
+            niue_name: "Niue", niue_sub: "18MLS REAL ESTATE NIUE",
+            noruega_name: "Noruega", noruega_sub: "18MLS REAL ESTATE NORUEGA",
+            nueva_caledonia_name: "Nueva Caledonia", nueva_caledonia_sub: "18MLS REAL ESTATE NUEVA CALEDONIA",
+            nueva_zelanda_name: "Nueva Zelanda", nueva_zelanda_sub: "18MLS REAL ESTATE NUEVA ZELANDA",
+            oman_name: "Omán", oman_sub: "18MLS REAL ESTATE OMÁN",
+            paises_bajos_name: "Países Bajos", paises_bajos_sub: "18MLS REAL ESTATE PAÍSES BAJOS",
+            pakistan_name: "Pakistán", pakistan_sub: "18MLS REAL ESTATE PAKISTÁN",
+            palaos_name: "Palaos", palaos_sub: "18MLS REAL ESTATE PALAOS",
+            palestina_name: "Palestina", palestina_sub: "18MLS REAL ESTATE PALESTINA",
+            panama_name: "Panamá", panama_sub: "18MLS REAL ESTATE PANAMÁ",
+            papua_nueva_guinea_name: "Papúa Nueva Guinea", papua_nueva_guinea_sub: "18MLS REAL ESTATE PAPÚA NUEVA GUINEA",
+            paraguay_name: "Paraguay", paraguay_sub: "18MLS REAL ESTATE PARAGUAY",
+            peru_name: "Perú", peru_sub: "18MLS REAL ESTATE PERÚ",
+            polinesia_francesa_name: "Polinesia Francesa", polinesia_francesa_sub: "18MLS REAL ESTATE POLINESIA FRANCESA",
+            polonia_name: "Polonia", polonia_sub: "18MLS REAL ESTATE POLONIA",
+            portugal_name: "Portugal", portugal_sub: "18MLS REAL ESTATE PORTUGAL",
+            puerto_rico_name: "Puerto Rico", puerto_rico_sub: "18MLS REAL ESTATE PUERTO RICO",
+            reino_unido_name: "Reino Unido", reino_unido_sub: "18MLS REAL ESTATE REINO UNIDO",
+            republica_centroafricana_name: "República Centroafricana", republica_centroafricana_sub: "18MLS REAL ESTATE REP. CENTROAFRICANA",
+            republica_checa_name: "República Checa", republica_checa_sub: "18MLS REAL ESTATE REPÚBLICA CHECA",
+            republica_congo_name: "República del Congo", republica_congo_sub: "18MLS REAL ESTATE CONGO",
+            republica_dominicana_name: "República Dominicana", republica_dominicana_sub: "18MLS REAL ESTATE REP. DOMINICANA",
+            republica_democratica_congo_name: "Rep. Dem. del Congo", republica_democratica_congo_sub: "18MLS REAL ESTATE RDC",
+            ruanda_name: "Ruanda", ruanda_sub: "18MLS REAL ESTATE RUANDA",
+            rumania_name: "Rumanía", rumania_sub: "18MLS REAL ESTATE RUMANÍA",
+            rusia_name: "Rusia", rusia_sub: "18MLS REAL ESTATE RUSIA",
+            sahara_occidental_name: "Sáhara Occidental", sahara_occidental_sub: "18MLS REAL ESTATE SÁHARA OCC.",
+            samoa_name: "Samoa", samoa_sub: "18MLS REAL ESTATE SAMOA",
+            samoa_americana_name: "Samoa Americana", samoa_americana_sub: "18MLS REAL ESTATE SAMOA AMERICANA",
+            san_bartolome_name: "San Bartolomé", san_bartolome_sub: "18MLS REAL ESTATE SAN BARTOLOMÉ",
+            san_cristobal_nieves_name: "San Cristóbal y Nieves", san_cristobal_nieves_sub: "18MLS REAL ESTATE ST. KITTS Y NEVIS",
+            san_marino_name: "San Marino", san_marino_sub: "18MLS REAL ESTATE SAN MARINO",
+            san_martin_name: "San Martín", san_martin_sub: "18MLS REAL ESTATE SAN MARTÍN",
+            san_pedro_miquelon_name: "San Pedro y Miquelón", san_pedro_miquelon_sub: "18MLS REAL ESTATE ST. PIERRE Y MIQUELON",
+            san_vicente_granadinas_name: "San Vicente y las Granadinas", san_vicente_granadinas_sub: "18MLS REAL ESTATE ST. VICENTE",
+            santa_elena_name: "Santa Elena", santa_elena_sub: "18MLS REAL ESTATE SANTA ELENA",
+            santa_lucia_name: "Santa Lucía", santa_lucia_sub: "18MLS REAL ESTATE SANTA LUCÍA",
+            santo_tome_principe_name: "Santo Tomé y Príncipe", santo_tome_principe_sub: "18MLS REAL ESTATE SANTO TOMÉ",
+            senegal_name: "Senegal", senegal_sub: "18MLS REAL ESTATE SENEGAL",
+            serbia_name: "Serbia", serbia_sub: "18MLS REAL ESTATE SERBIA",
+            seychelles_name: "Seychelles", seychelles_sub: "18MLS REAL ESTATE SEYCHELLES",
+            sierra_leona_name: "Sierra Leona", sierra_leona_sub: "18MLS REAL ESTATE SIERRA LEONA",
+            singapur_name: "Singapur", singapur_sub: "18MLS REAL ESTATE SINGAPUR",
+            sint_maarten_name: "Sint Maarten", sint_maarten_sub: "18MLS REAL ESTATE SINT MAARTEN",
+            siria_name: "Siria", siria_sub: "18MLS REAL ESTATE SIRIA",
+            somalia_name: "Somalia", somalia_sub: "18MLS REAL ESTATE SOMALIA",
+            sri_lanka_name: "Sri Lanka", sri_lanka_sub: "18MLS REAL ESTATE SRI LANKA",
+            sudafrica_name: "Sudáfrica", sudafrica_sub: "18MLS REAL ESTATE SUDÁFRICA",
+            sudan_name: "Sudán", sudan_sub: "18MLS REAL ESTATE SUDÁN",
+            sudan_sur_name: "Sudán del Sur", sudan_sur_sub: "18MLS REAL ESTATE SUDÁN DEL SUR",
+            suecia_name: "Suecia", suecia_sub: "18MLS REAL ESTATE SUECIA",
+            suiza_name: "Suiza", suiza_sub: "18MLS REAL ESTATE SUIZA",
+            surinam_name: "Surinam", surinam_sub: "18MLS REAL ESTATE SURINAM",
+            tailandia_name: "Tailandia", tailandia_sub: "18MLS REAL ESTATE TAILANDIA",
+            taiwan_name: "Taiwán", taiwan_sub: "18MLS REAL ESTATE TAIWÁN",
+            tanzania_name: "Tanzania", tanzania_sub: "18MLS REAL ESTATE TANZANIA",
+            tayikistan_name: "Tayikistán", tayikistan_sub: "18MLS REAL ESTATE TAYIKISTÁN",
+            timor_oriental_name: "Timor Oriental", timor_oriental_sub: "18MLS REAL ESTATE TIMOR ORIENTAL",
+            togo_name: "Togo", togo_sub: "18MLS REAL ESTATE TOGO",
+            tonga_name: "Tonga", tonga_sub: "18MLS REAL ESTATE TONGA",
+            trinidad_tobago_name: "Trinidad y Tobago", trinidad_tobago_sub: "18MLS REAL ESTATE TRINIDAD Y TOBAGO",
+            tunez_name: "Túnez", tunez_sub: "18MLS REAL ESTATE TÚNEZ",
+            turkmenistan_name: "Turkmenistán", turkmenistan_sub: "18MLS REAL ESTATE TURKMENISTÁN",
+            turquia_name: "Turquía", turquia_sub: "18MLS REAL ESTATE TURQUÍA",
+            tuvalu_name: "Tuvalu", tuvalu_sub: "18MLS REAL ESTATE TUVALU",
+            ucrania_name: "Ucrania", ucrania_sub: "18MLS REAL ESTATE UCRANIA",
+            uganda_name: "Uganda", uganda_sub: "18MLS REAL ESTATE UGANDA",
+            uruguay_name: "Uruguay", uruguay_sub: "18MLS REAL ESTATE URUGUAY",
+            uzbekistan_name: "Uzbekistán", uzbekistan_sub: "18MLS REAL ESTATE UZBEKISTÁN",
+            vanuatu_name: "Vanuatu", vanuatu_sub: "18MLS REAL ESTATE VANUATU",
+            venezuela_name: "Venezuela", venezuela_sub: "18MLS REAL ESTATE VENEZUELA",
+            vietnam_name: "Vietnam", vietnam_sub: "18MLS REAL ESTATE VIETNAM",
+            wallis_futuna_name: "Wallis y Futuna", wallis_futuna_sub: "18MLS REAL ESTATE WALLIS Y FUTUNA",
+            yemen_name: "Yemen", yemen_sub: "18MLS REAL ESTATE YEMEN",
+            yibuti_name: "Yibuti", yibuti_sub: "18MLS REAL ESTATE YIBUTI",
+            zambia_name: "Zambia", zambia_sub: "18MLS REAL ESTATE ZAMBIA",
+            zimbabue_name: "Zimbabue", zimbabue_sub: "18MLS REAL ESTATE ZIMBABUE",
+            footer_copyright: "© 18MLS.COM — El MLS inmobiliario más grande del mundo",
+            footer_tagline: "Propiedades Directas · Sin Intermediarios · Transacciones Aseguradas",
+            no_results: "No se encontraron países. Prueba con otro término de búsqueda.",
+            install_text: "📱 Instalar 18MLS App",
+            install_btn: "Instalar"
+        },
+        en: {
+            tagline: "THE LARGEST REAL ESTATE MLS IN THE WORLD",
+            title: "Select your country<br>to enter the real estate marketplace",
+            subtitle: "Buy, sell and invest in real estate directly between owners. No excessive commissions. Choose your region.",
+            afganistan_name: "Afghanistan", afganistan_sub: "18MLS REAL ESTATE AFGHANISTAN",
+            albania_name: "Albania", albania_sub: "18MLS REAL ESTATE ALBANIA",
+            alemania_name: "Germany", alemania_sub: "18MLS REAL ESTATE GERMANY",
+            andorra_name: "Andorra", andorra_sub: "18MLS REAL ESTATE ANDORRA",
+            angola_name: "Angola", angola_sub: "18MLS REAL ESTATE ANGOLA",
+            anguila_name: "Anguilla", anguila_sub: "18MLS REAL ESTATE ANGUILLA",
+            antigua_barbuda_name: "Antigua and Barbuda", antigua_barbuda_sub: "18MLS REAL ESTATE ANTIGUA AND BARBUDA",
+            arabia_saudita_name: "Saudi Arabia", arabia_saudita_sub: "18MLS REAL ESTATE SAUDI ARABIA",
+            argelia_name: "Algeria", argelia_sub: "18MLS REAL ESTATE ALGERIA",
+            argentina_name: "Argentina", argentina_sub: "18MLS REAL ESTATE ARGENTINA",
+            armenia_name: "Armenia", armenia_sub: "18MLS REAL ESTATE ARMENIA",
+            aruba_name: "Aruba", aruba_sub: "18MLS REAL ESTATE ARUBA",
+            australia_name: "Australia", australia_sub: "18MLS REAL ESTATE AUSTRALIA",
+            austria_name: "Austria", austria_sub: "18MLS REAL ESTATE AUSTRIA",
+            azerbaiyan_name: "Azerbaijan", azerbaiyan_sub: "18MLS REAL ESTATE AZERBAIJAN",
+            bahamas_name: "Bahamas", bahamas_sub: "18MLS REAL ESTATE BAHAMAS",
+            bahrein_name: "Bahrain", bahrein_sub: "18MLS REAL ESTATE BAHRAIN",
+            bangladesh_name: "Bangladesh", bangladesh_sub: "18MLS REAL ESTATE BANGLADESH",
+            barbados_name: "Barbados", barbados_sub: "18MLS REAL ESTATE BARBADOS",
+            belgica_name: "Belgium", belgica_sub: "18MLS REAL ESTATE BELGIUM",
+            belice_name: "Belize", belice_sub: "18MLS REAL ESTATE BELIZE",
+            benin_name: "Benin", benin_sub: "18MLS REAL ESTATE BENIN",
+            bermudas_name: "Bermuda", bermudas_sub: "18MLS REAL ESTATE BERMUDA",
+            bielorrusia_name: "Belarus", bielorrusia_sub: "18MLS REAL ESTATE BELARUS",
+            birmania_name: "Myanmar", birmania_sub: "18MLS REAL ESTATE MYANMAR",
+            bolivia_name: "Bolivia", bolivia_sub: "18MLS REAL ESTATE BOLIVIA",
+            bosnia_herzegovina_name: "Bosnia and Herzegovina", bosnia_herzegovina_sub: "18MLS REAL ESTATE BOSNIA AND HERZEGOVINA",
+            botsuana_name: "Botswana", botsuana_sub: "18MLS REAL ESTATE BOTSWANA",
+            brasil_name: "Brazil", brasil_sub: "18MLS REAL ESTATE BRAZIL",
+            brunei_name: "Brunei", brunei_sub: "18MLS REAL ESTATE BRUNEI",
+            bulgaria_name: "Bulgaria", bulgaria_sub: "18MLS REAL ESTATE BULGARIA",
+            burkina_faso_name: "Burkina Faso", burkina_faso_sub: "18MLS REAL ESTATE BURKINA FASO",
+            burundi_name: "Burundi", burundi_sub: "18MLS REAL ESTATE BURUNDI",
+            butan_name: "Bhutan", butan_sub: "18MLS REAL ESTATE BHUTAN",
+            cabo_verde_name: "Cape Verde", cabo_verde_sub: "18MLS REAL ESTATE CAPE VERDE",
+            camboya_name: "Cambodia", camboya_sub: "18MLS REAL ESTATE CAMBODIA",
+            camerun_name: "Cameroon", camerun_sub: "18MLS REAL ESTATE CAMEROON",
+            canada_name: "Canada", canada_sub: "18MLS REAL ESTATE CANADA",
+            catar_name: "Qatar", catar_sub: "18MLS REAL ESTATE QATAR",
+            chad_name: "Chad", chad_sub: "18MLS REAL ESTATE CHAD",
+            chile_name: "Chile", chile_sub: "18MLS REAL ESTATE CHILE",
+            china_name: "China", china_sub: "18MLS REAL ESTATE CHINA",
+            chipre_name: "Cyprus", chipre_sub: "18MLS REAL ESTATE CYPRUS",
+            ciudad_vaticano_name: "Vatican City", ciudad_vaticano_sub: "18MLS REAL ESTATE VATICAN CITY",
+            colombia_name: "Colombia", colombia_sub: "18MLS REAL ESTATE COLOMBIA",
+            comoras_name: "Comoros", comoras_sub: "18MLS REAL ESTATE COMOROS",
+            corea_norte_name: "North Korea", corea_norte_sub: "18MLS REAL ESTATE NORTH KOREA",
+            corea_sur_name: "South Korea", corea_sur_sub: "18MLS REAL ESTATE SOUTH KOREA",
+            costa_marfil_name: "Ivory Coast", costa_marfil_sub: "18MLS REAL ESTATE IVORY COAST",
+            costa_rica_name: "Costa Rica", costa_rica_sub: "18MLS REAL ESTATE COSTA RICA",
+            croacia_name: "Croatia", croacia_sub: "18MLS REAL ESTATE CROATIA",
+            cuba_name: "Cuba", cuba_sub: "18MLS REAL ESTATE CUBA",
+            dinamarca_name: "Denmark", dinamarca_sub: "18MLS REAL ESTATE DENMARK",
+            dominica_name: "Dominica", dominica_sub: "18MLS REAL ESTATE DOMINICA",
+            ecuador_name: "Ecuador", ecuador_sub: "18MLS REAL ESTATE ECUADOR",
+            egipto_name: "Egypt", egipto_sub: "18MLS REAL ESTATE EGYPT",
+            el_salvador_name: "El Salvador", el_salvador_sub: "18MLS REAL ESTATE EL SALVADOR",
+            emiratos_arabes_name: "United Arab Emirates", emiratos_arabes_sub: "18MLS REAL ESTATE UAE",
+            eritrea_name: "Eritrea", eritrea_sub: "18MLS REAL ESTATE ERITREA",
+            eslovaquia_name: "Slovakia", eslovaquia_sub: "18MLS REAL ESTATE SLOVAKIA",
+            eslovenia_name: "Slovenia", eslovenia_sub: "18MLS REAL ESTATE SLOVENIA",
+            espana_name: "Spain", espana_sub: "18MLS REAL ESTATE SPAIN",
+            estados_unidos_name: "United States", estados_unidos_sub: "18MLS REAL ESTATE UNITED STATES",
+            estonia_name: "Estonia", estonia_sub: "18MLS REAL ESTATE ESTONIA",
+            esuatini_name: "Eswatini", esuatini_sub: "18MLS REAL ESTATE ESWATINI",
+            etiopia_name: "Ethiopia", etiopia_sub: "18MLS REAL ESTATE ETHIOPIA",
+            fiji_name: "Fiji", fiji_sub: "18MLS REAL ESTATE FIJI",
+            filipinas_name: "Philippines", filipinas_sub: "18MLS REAL ESTATE PHILIPPINES",
+            finlandia_name: "Finland", finlandia_sub: "18MLS REAL ESTATE FINLAND",
+            francia_name: "France", francia_sub: "18MLS REAL ESTATE FRANCE",
+            gabon_name: "Gabon", gabon_sub: "18MLS REAL ESTATE GABON",
+            gambia_name: "Gambia", gambia_sub: "18MLS REAL ESTATE GAMBIA",
+            georgia_name: "Georgia", georgia_sub: "18MLS REAL ESTATE GEORGIA",
+            ghana_name: "Ghana", ghana_sub: "18MLS REAL ESTATE GHANA",
+            granada_name: "Grenada", granada_sub: "18MLS REAL ESTATE GRENADA",
+            grecia_name: "Greece", grecia_sub: "18MLS REAL ESTATE GREECE",
+            groenlandia_name: "Greenland", groenlandia_sub: "18MLS REAL ESTATE GREENLAND",
+            guadalupe_name: "Guadeloupe", guadalupe_sub: "18MLS REAL ESTATE GUADELOUPE",
+            guam_name: "Guam", guam_sub: "18MLS REAL ESTATE GUAM",
+            guatemala_name: "Guatemala", guatemala_sub: "18MLS REAL ESTATE GUATEMALA",
+            guayana_francesa_name: "French Guiana", guayana_francesa_sub: "18MLS REAL ESTATE FRENCH GUIANA",
+            guernsey_name: "Guernsey", guernsey_sub: "18MLS REAL ESTATE GUERNSEY",
+            guinea_name: "Guinea", guinea_sub: "18MLS REAL ESTATE GUINEA",
+            guinea_bisau_name: "Guinea-Bissau", guinea_bisau_sub: "18MLS REAL ESTATE GUINEA-BISSAU",
+            guinea_ecuatorial_name: "Equatorial Guinea", guinea_ecuatorial_sub: "18MLS REAL ESTATE EQUATORIAL GUINEA",
+            guyana_name: "Guyana", guyana_sub: "18MLS REAL ESTATE GUYANA",
+            haiti_name: "Haiti", haiti_sub: "18MLS REAL ESTATE HAITI",
+            honduras_name: "Honduras", honduras_sub: "18MLS REAL ESTATE HONDURAS",
+            hong_kong_name: "Hong Kong", hong_kong_sub: "18MLS REAL ESTATE HONG KONG",
+            hungria_name: "Hungary", hungria_sub: "18MLS REAL ESTATE HUNGARY",
+            india_name: "India", india_sub: "18MLS REAL ESTATE INDIA",
+            indonesia_name: "Indonesia", indonesia_sub: "18MLS REAL ESTATE INDONESIA",
+            irak_name: "Iraq", irak_sub: "18MLS REAL ESTATE IRAQ",
+            iran_name: "Iran", iran_sub: "18MLS REAL ESTATE IRAN",
+            irlanda_name: "Ireland", irlanda_sub: "18MLS REAL ESTATE IRELAND",
+            isla_man_name: "Isle of Man", isla_man_sub: "18MLS REAL ESTATE ISLE OF MAN",
+            islandia_name: "Iceland", islandia_sub: "18MLS REAL ESTATE ICELAND",
+            islas_caiman_name: "Cayman Islands", islas_caiman_sub: "18MLS REAL ESTATE CAYMAN ISLANDS",
+            islas_cook_name: "Cook Islands", islas_cook_sub: "18MLS REAL ESTATE COOK ISLANDS",
+            islas_feroe_name: "Faroe Islands", islas_feroe_sub: "18MLS REAL ESTATE FAROE ISLANDS",
+            islas_malvinas_name: "Falkland Islands", islas_malvinas_sub: "18MLS REAL ESTATE FALKLAND ISLANDS",
+            islas_marshall_name: "Marshall Islands", islas_marshall_sub: "18MLS REAL ESTATE MARSHALL ISLANDS",
+            islas_salomon_name: "Solomon Islands", islas_salomon_sub: "18MLS REAL ESTATE SOLOMON ISLANDS",
+            islas_turcas_caicos_name: "Turks and Caicos Islands", islas_turcas_caicos_sub: "18MLS REAL ESTATE TURKS AND CAICOS",
+            islas_virgenes_britanicas_name: "British Virgin Islands", islas_virgenes_britanicas_sub: "18MLS REAL ESTATE BRITISH VIRGIN ISLANDS",
+            islas_virgenes_eeuu_name: "US Virgin Islands", islas_virgenes_eeuu_sub: "18MLS REAL ESTATE US VIRGIN ISLANDS",
+            israel_name: "Israel", israel_sub: "18MLS REAL ESTATE ISRAEL",
+            italia_name: "Italy", italia_sub: "18MLS REAL ESTATE ITALY",
+            jamaica_name: "Jamaica", jamaica_sub: "18MLS REAL ESTATE JAMAICA",
+            japon_name: "Japan", japon_sub: "18MLS REAL ESTATE JAPAN",
+            jersey_name: "Jersey", jersey_sub: "18MLS REAL ESTATE JERSEY",
+            jordania_name: "Jordan", jordania_sub: "18MLS REAL ESTATE JORDAN",
+            kazajistan_name: "Kazakhstan", kazajistan_sub: "18MLS REAL ESTATE KAZAKHSTAN",
+            kenia_name: "Kenya", kenia_sub: "18MLS REAL ESTATE KENYA",
+            kirguistan_name: "Kyrgyzstan", kirguistan_sub: "18MLS REAL ESTATE KYRGYZSTAN",
+            kiribati_name: "Kiribati", kiribati_sub: "18MLS REAL ESTATE KIRIBATI",
+            kuwait_name: "Kuwait", kuwait_sub: "18MLS REAL ESTATE KUWAIT",
+            laos_name: "Laos", laos_sub: "18MLS REAL ESTATE LAOS",
+            lesoto_name: "Lesotho", lesoto_sub: "18MLS REAL ESTATE LESOTHO",
+            letonia_name: "Latvia", letonia_sub: "18MLS REAL ESTATE LATVIA",
+            libano_name: "Lebanon", libano_sub: "18MLS REAL ESTATE LEBANON",
+            liberia_name: "Liberia", liberia_sub: "18MLS REAL ESTATE LIBERIA",
+            libia_name: "Libya", libia_sub: "18MLS REAL ESTATE LIBYA",
+            liechtenstein_name: "Liechtenstein", liechtenstein_sub: "18MLS REAL ESTATE LIECHTENSTEIN",
+            lituania_name: "Lithuania", lituania_sub: "18MLS REAL ESTATE LITHUANIA",
+            luxemburgo_name: "Luxembourg", luxemburgo_sub: "18MLS REAL ESTATE LUXEMBOURG",
+            macao_name: "Macau", macao_sub: "18MLS REAL ESTATE MACAU",
+            macedonia_norte_name: "North Macedonia", macedonia_norte_sub: "18MLS REAL ESTATE NORTH MACEDONIA",
+            madagascar_name: "Madagascar", madagascar_sub: "18MLS REAL ESTATE MADAGASCAR",
+            malasia_name: "Malaysia", malasia_sub: "18MLS REAL ESTATE MALAYSIA",
+            malaui_name: "Malawi", malaui_sub: "18MLS REAL ESTATE MALAWI",
+            maldivas_name: "Maldives", maldivas_sub: "18MLS REAL ESTATE MALDIVES",
+            mali_name: "Mali", mali_sub: "18MLS REAL ESTATE MALI",
+            malta_name: "Malta", malta_sub: "18MLS REAL ESTATE MALTA",
+            marruecos_name: "Morocco", marruecos_sub: "18MLS REAL ESTATE MOROCCO",
+            martinica_name: "Martinique", martinica_sub: "18MLS REAL ESTATE MARTINIQUE",
+            mauricio_name: "Mauritius", mauricio_sub: "18MLS REAL ESTATE MAURITIUS",
+            mauritania_name: "Mauritania", mauritania_sub: "18MLS REAL ESTATE MAURITANIA",
+            mayotte_name: "Mayotte", mayotte_sub: "18MLS REAL ESTATE MAYOTTE",
+            mexico_name: "Mexico", mexico_sub: "18MLS REAL ESTATE MEXICO",
+            micronesia_name: "Micronesia", micronesia_sub: "18MLS REAL ESTATE MICRONESIA",
+            moldavia_name: "Moldova", moldavia_sub: "18MLS REAL ESTATE MOLDOVA",
+            monaco_name: "Monaco", monaco_sub: "18MLS REAL ESTATE MONACO",
+            mongolia_name: "Mongolia", mongolia_sub: "18MLS REAL ESTATE MONGOLIA",
+            montenegro_name: "Montenegro", montenegro_sub: "18MLS REAL ESTATE MONTENEGRO",
+            montserrat_name: "Montserrat", montserrat_sub: "18MLS REAL ESTATE MONTSERRAT",
+            mozambique_name: "Mozambique", mozambique_sub: "18MLS REAL ESTATE MOZAMBIQUE",
+            namibia_name: "Namibia", namibia_sub: "18MLS REAL ESTATE NAMIBIA",
+            nauru_name: "Nauru", nauru_sub: "18MLS REAL ESTATE NAURU",
+            nepal_name: "Nepal", nepal_sub: "18MLS REAL ESTATE NEPAL",
+            nicaragua_name: "Nicaragua", nicaragua_sub: "18MLS REAL ESTATE NICARAGUA",
+            niger_name: "Niger", niger_sub: "18MLS REAL ESTATE NIGER",
+            nigeria_name: "Nigeria", nigeria_sub: "18MLS REAL ESTATE NIGERIA",
+            niue_name: "Niue", niue_sub: "18MLS REAL ESTATE NIUE",
+            noruega_name: "Norway", noruega_sub: "18MLS REAL ESTATE NORWAY",
+            nueva_caledonia_name: "New Caledonia", nueva_caledonia_sub: "18MLS REAL ESTATE NEW CALEDONIA",
+            nueva_zelanda_name: "New Zealand", nueva_zelanda_sub: "18MLS REAL ESTATE NEW ZEALAND",
+            oman_name: "Oman", oman_sub: "18MLS REAL ESTATE OMAN",
+            paises_bajos_name: "Netherlands", paises_bajos_sub: "18MLS REAL ESTATE NETHERLANDS",
+            pakistan_name: "Pakistan", pakistan_sub: "18MLS REAL ESTATE PAKISTAN",
+            palaos_name: "Palau", palaos_sub: "18MLS REAL ESTATE PALAU",
+            palestina_name: "Palestine", palestina_sub: "18MLS REAL ESTATE PALESTINE",
+            panama_name: "Panama", panama_sub: "18MLS REAL ESTATE PANAMA",
+            papua_nueva_guinea_name: "Papua New Guinea", papua_nueva_guinea_sub: "18MLS REAL ESTATE PAPUA NEW GUINEA",
+            paraguay_name: "Paraguay", paraguay_sub: "18MLS REAL ESTATE PARAGUAY",
+            peru_name: "Peru", peru_sub: "18MLS REAL ESTATE PERU",
+            polinesia_francesa_name: "French Polynesia", polinesia_francesa_sub: "18MLS REAL ESTATE FRENCH POLYNESIA",
+            polonia_name: "Poland", polonia_sub: "18MLS REAL ESTATE POLAND",
+            portugal_name: "Portugal", portugal_sub: "18MLS REAL ESTATE PORTUGAL",
+            puerto_rico_name: "Puerto Rico", puerto_rico_sub: "18MLS REAL ESTATE PUERTO RICO",
+            reino_unido_name: "United Kingdom", reino_unido_sub: "18MLS REAL ESTATE UNITED KINGDOM",
+            republica_centroafricana_name: "Central African Republic", republica_centroafricana_sub: "18MLS REAL ESTATE CENTRAL AFRICAN REP.",
+            republica_checa_name: "Czech Republic", republica_checa_sub: "18MLS REAL ESTATE CZECH REPUBLIC",
+            republica_congo_name: "Republic of the Congo", republica_congo_sub: "18MLS REAL ESTATE CONGO",
+            republica_dominicana_name: "Dominican Republic", republica_dominicana_sub: "18MLS REAL ESTATE DOMINICAN REPUBLIC",
+            republica_democratica_congo_name: "Democratic Republic of the Congo", republica_democratica_congo_sub: "18MLS REAL ESTATE DRC",
+            ruanda_name: "Rwanda", ruanda_sub: "18MLS REAL ESTATE RWANDA",
+            rumania_name: "Romania", rumania_sub: "18MLS REAL ESTATE ROMANIA",
+            rusia_name: "Russia", rusia_sub: "18MLS REAL ESTATE RUSSIA",
+            sahara_occidental_name: "Western Sahara", sahara_occidental_sub: "18MLS REAL ESTATE WESTERN SAHARA",
+            samoa_name: "Samoa", samoa_sub: "18MLS REAL ESTATE SAMOA",
+            samoa_americana_name: "American Samoa", samoa_americana_sub: "18MLS REAL ESTATE AMERICAN SAMOA",
+            san_bartolome_name: "Saint Barthélemy", san_bartolome_sub: "18MLS REAL ESTATE SAINT BARTHÉLEMY",
+            san_cristobal_nieves_name: "Saint Kitts and Nevis", san_cristobal_nieves_sub: "18MLS REAL ESTATE ST. KITTS AND NEVIS",
+            san_marino_name: "San Marino", san_marino_sub: "18MLS REAL ESTATE SAN MARINO",
+            san_martin_name: "Saint Martin", san_martin_sub: "18MLS REAL ESTATE SAINT MARTIN",
+            san_pedro_miquelon_name: "Saint Pierre and Miquelon", san_pedro_miquelon_sub: "18MLS REAL ESTATE ST. PIERRE AND MIQUELON",
+            san_vicente_granadinas_name: "Saint Vincent and the Grenadines", san_vicente_granadinas_sub: "18MLS REAL ESTATE ST. VINCENT",
+            santa_elena_name: "Saint Helena", santa_elena_sub: "18MLS REAL ESTATE SAINT HELENA",
+            santa_lucia_name: "Saint Lucia", santa_lucia_sub: "18MLS REAL ESTATE SAINT LUCIA",
+            santo_tome_principe_name: "São Tomé and Príncipe", santo_tome_principe_sub: "18MLS REAL ESTATE SÃO TOMÉ",
+            senegal_name: "Senegal", senegal_sub: "18MLS REAL ESTATE SENEGAL",
+            serbia_name: "Serbia", serbia_sub: "18MLS REAL ESTATE SERBIA",
+            seychelles_name: "Seychelles", seychelles_sub: "18MLS REAL ESTATE SEYCHELLES",
+            sierra_leona_name: "Sierra Leone", sierra_leona_sub: "18MLS REAL ESTATE SIERRA LEONE",
+            singapur_name: "Singapore", singapur_sub: "18MLS REAL ESTATE SINGAPORE",
+            sint_maarten_name: "Sint Maarten", sint_maarten_sub: "18MLS REAL ESTATE SINT MAARTEN",
+            siria_name: "Syria", siria_sub: "18MLS REAL ESTATE SYRIA",
+            somalia_name: "Somalia", somalia_sub: "18MLS REAL ESTATE SOMALIA",
+            sri_lanka_name: "Sri Lanka", sri_lanka_sub: "18MLS REAL ESTATE SRI LANKA",
+            sudafrica_name: "South Africa", sudafrica_sub: "18MLS REAL ESTATE SOUTH AFRICA",
+            sudan_name: "Sudan", sudan_sub: "18MLS REAL ESTATE SUDAN",
+            sudan_sur_name: "South Sudan", sudan_sur_sub: "18MLS REAL ESTATE SOUTH SUDAN",
+            suecia_name: "Sweden", suecia_sub: "18MLS REAL ESTATE SWEDEN",
+            suiza_name: "Switzerland", suiza_sub: "18MLS REAL ESTATE SWITZERLAND",
+            surinam_name: "Suriname", surinam_sub: "18MLS REAL ESTATE SURINAME",
+            tailandia_name: "Thailand", tailandia_sub: "18MLS REAL ESTATE THAILAND",
+            taiwan_name: "Taiwan", taiwan_sub: "18MLS REAL ESTATE TAIWAN",
+            tanzania_name: "Tanzania", tanzania_sub: "18MLS REAL ESTATE TANZANIA",
+            tayikistan_name: "Tajikistan", tayikistan_sub: "18MLS REAL ESTATE TAJIKISTAN",
+            timor_oriental_name: "East Timor", timor_oriental_sub: "18MLS REAL ESTATE EAST TIMOR",
+            togo_name: "Togo", togo_sub: "18MLS REAL ESTATE TOGO",
+            tonga_name: "Tonga", tonga_sub: "18MLS REAL ESTATE TONGA",
+            trinidad_tobago_name: "Trinidad and Tobago", trinidad_tobago_sub: "18MLS REAL ESTATE TRINIDAD AND TOBAGO",
+            tunez_name: "Tunisia", tunez_sub: "18MLS REAL ESTATE TUNISIA",
+            turkmenistan_name: "Turkmenistan", turkmenistan_sub: "18MLS REAL ESTATE TURKMENISTAN",
+            turquia_name: "Turkey", turquia_sub: "18MLS REAL ESTATE TURKEY",
+            tuvalu_name: "Tuvalu", tuvalu_sub: "18MLS REAL ESTATE TUVALU",
+            ucrania_name: "Ukraine", ucrania_sub: "18MLS REAL ESTATE UKRAINE",
+            uganda_name: "Uganda", uganda_sub: "18MLS REAL ESTATE UGANDA",
+            uruguay_name: "Uruguay", uruguay_sub: "18MLS REAL ESTATE URUGUAY",
+            uzbekistan_name: "Uzbekistan", uzbekistan_sub: "18MLS REAL ESTATE UZBEKISTAN",
+            vanuatu_name: "Vanuatu", vanuatu_sub: "18MLS REAL ESTATE VANUATU",
+            venezuela_name: "Venezuela", venezuela_sub: "18MLS REAL ESTATE VENEZUELA",
+            vietnam_name: "Vietnam", vietnam_sub: "18MLS REAL ESTATE VIETNAM",
+            wallis_futuna_name: "Wallis and Futuna", wallis_futuna_sub: "18MLS REAL ESTATE WALLIS AND FUTUNA",
+            yemen_name: "Yemen", yemen_sub: "18MLS REAL ESTATE YEMEN",
+            yibuti_name: "Djibouti", yibuti_sub: "18MLS REAL ESTATE DJIBOUTI",
+            zambia_name: "Zambia", zambia_sub: "18MLS REAL ESTATE ZAMBIA",
+            zimbabue_name: "Zimbabwe", zimbabue_sub: "18MLS REAL ESTATE ZIMBABWE",
+            footer_copyright: "© 18MLS.COM — The largest real estate MLS in the world",
+            footer_tagline: "direct properties · no intermediaries · smart investing",
+            no_results: "No countries found. Try another search term.",
+            install_text: "📱 Install 18MLS App",
+            install_btn: "Install"
+        }
+    };
+
+    // --------------------------------------------------------------
+    // 4. RESTO DEL CÓDIGO (RENDER, BÚSQUEDA, IDIOMAS, PWA)
+    // --------------------------------------------------------------
+    let currentLang = 'es';
+    let currentFilter = '';
+    let deferredPrompt = null;
+
+    function normalizeString(str) {
+        return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^\w\s]/g, '');
     }
-    
-    function volverPaises() {
-      document.getElementById('servicioModal').style.display = 'none';
-      mostrarPaises();
+
+    function getSearchableTextForCountry(country, langData) {
+        const countryName = langData[country.nameKey] || '';
+        const countrySub = langData[country.subKey] || '';
+        const baseTerms = country.searchTerms || [];
+        let combined = `${countryName} ${countrySub} ${baseTerms.join(' ')}`.toLowerCase();
+        return normalizeString(combined);
     }
-    
-    function centrarMapaRapido() {
-      if (navigator.geolocation) {
-        const btn = document.getElementById('centrar-btn');
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>GETTING...</span>';
-        navigator.geolocation.getCurrentPosition(
-          pos => { const { latitude, longitude } = pos.coords; if (userMarker) mapa.removeLayer(userMarker); userMarker = L.marker([latitude, longitude], { icon: L.divIcon({ className: 'user-location-marker', html: '📍', iconSize: [28, 28] }) }).addTo(mapa).bindPopup(currentLang === 'es' ? 'Tu ubicación actual' : 'Your current location'); mapa.setView([latitude, longitude], 14); btn.innerHTML = '<i class="fas fa-location-dot"></i><span>'+t('centrar')+'</span>'; },
-          err => { btn.innerHTML = '<i class="fas fa-location-dot"></i><span>'+t('centrar')+'</span>'; mapa.setView([4.5709, -74.2973], 6); alert(currentLang === 'es' ? 'No se pudo obtener tu ubicación.' : 'Could not get your location.'); }
-        );
-      } else { mapa.setView([4.5709, -74.2973], 6); }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
     }
-    
-    function updateUILanguage() {
-      document.getElementById('buscador').placeholder = t('buscar_placeholder');
-      document.getElementById('centrar-text').innerText = t('centrar');
-      document.getElementById('servicios-text').innerText = t('servicios');
-      document.getElementById('map-text').innerText = t('mapa');
-      document.getElementById('satellite-text').innerText = t('satelite');
-      document.getElementById('pais-modal-title').innerText = t('seleccionar_pais');
-      document.getElementById('servicio-modal-title').innerText = t('seleccionar_servicio');
-      marcadoresOriginales.forEach(marker => { marker.bindPopup(generarPopupHTML(marker.datosNegocio), { maxWidth: 380, className: 'custom-popup' }); });
+
+    function renderCountries() {
+        const container = document.getElementById('countriesContainer');
+        if (!container) return;
+        const langData = translations[currentLang];
+        const filterNorm = normalizeString(currentFilter);
+        
+        let html = '';
+        let visibleCount = 0;
+        
+        countriesData.forEach(country => {
+            const searchableText = getSearchableTextForCountry(country, langData);
+            const matches = filterNorm === '' || searchableText.includes(filterNorm);
+            if (matches) visibleCount++;
+            
+            const countryName = langData[country.nameKey];
+            const countrySub = langData[country.subKey];
+            const displayStyle = matches ? '' : 'hidden-card';
+            
+            // ✅ AHORA LA URL ES UN SUBDOMINIO (ejemplo: https://co.18mls.com)
+            const fullUrl = `https://${country.domain}`;
+            
+            html += `
+                <a href="${fullUrl}" class="country-card ${displayStyle}" target="_self" rel="noopener noreferrer" data-country-id="${country.id}">
+                    <div class="country-flag">${country.flag}</div>
+                    <div class="country-name">${escapeHtml(countryName)}</div>
+                    <div class="country-sub">${escapeHtml(countrySub)}</div>
+                    <div class="divider" style="margin: 0.8rem auto; width: 30px;"></div>
+                    <div class="country-domain">${fullUrl}</div>
+                </a>
+            `;
+        });
+        
+        if (visibleCount === 0 && currentFilter !== '') {
+            html += `<div class="no-results">${escapeHtml(langData.no_results)}</div>`;
+        }
+        
+        container.innerHTML = html;
+        
+        const resultsSpan = document.getElementById('resultsCount');
+        if (resultsSpan) {
+            if (currentFilter === '') {
+                resultsSpan.innerHTML = '';
+            } else {
+                const resultText = currentLang === 'es' 
+                    ? `${visibleCount} resultado${visibleCount !== 1 ? 's' : ''} encontrado${visibleCount !== 1 ? 's' : ''}`
+                    : `${visibleCount} result${visibleCount !== 1 ? 's' : ''} found`;
+                resultsSpan.innerHTML = resultText;
+            }
+        }
+        
+        const clearBtn = document.getElementById('clearSearch');
+        if (clearBtn) {
+            clearBtn.style.display = currentFilter !== '' ? 'block' : 'none';
+        }
     }
-    
-    document.addEventListener('DOMContentLoaded', () => { 
-      initMap(); updateUILanguage();
-      document.getElementById('centrar-btn').addEventListener('click', centrarMapaRapido);
-      document.getElementById('servicios-btn').addEventListener('click', mostrarPaises);
-      document.getElementById('map-btn').addEventListener('click', () => { mapa.removeLayer(currentLayer); currentLayer = mapa.googleMapsLayer; currentLayer.addTo(mapa); document.getElementById('map-btn').classList.add('active'); document.getElementById('satellite-btn').classList.remove('active'); }); 
-      document.getElementById('satellite-btn').addEventListener('click', () => { mapa.removeLayer(currentLayer); currentLayer = mapa.googleSatelliteLayer; currentLayer.addTo(mapa); document.getElementById('satellite-btn').classList.add('active'); document.getElementById('map-btn').classList.remove('active'); }); 
-      document.getElementById('closePaisBtn').addEventListener('click', () => document.getElementById('paisModal').style.display='none');
-      document.getElementById('closeServicioBtn').addEventListener('click', () => document.getElementById('servicioModal').style.display='none');
-      document.getElementById('volverPaisesBtn').addEventListener('click', volverPaises);
-      document.getElementById('closeInfoModalBtn').addEventListener('click', () => document.getElementById('infoModal').style.display='none');
-      window.addEventListener('click', (e) => { if(e.target === document.getElementById('paisModal')) document.getElementById('paisModal').style.display='none'; if(e.target === document.getElementById('servicioModal')) document.getElementById('servicioModal').style.display='none'; });
-      
-      document.querySelectorAll('.lang-btn').forEach(btn => { 
-        btn.addEventListener('click', () => { document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); currentLang = btn.getAttribute('data-lang'); updateUILanguage(); }); 
-      });
-      
-      let inputBuscar = document.getElementById('buscador'); let buscadorTimeout;
-      inputBuscar.addEventListener('input', (e) => { clearTimeout(buscadorTimeout); let term = e.target.value.trim(); let sugDiv = document.getElementById('sugerencias-busqueda'); if(term.length < 2) { sugDiv.style.display = 'none'; return; } sugDiv.innerHTML = `<div class="sugerencia-item">🔍 Searching...</div>`; sugDiv.style.display = 'block'; buscadorTimeout = setTimeout(() => { let resultados = marcadoresOriginales.filter(m => m.datosBusqueda.includes(term.toLowerCase())); sugDiv.innerHTML = ''; resultados.forEach(m => { let name = currentLang === 'es' ? m.datosNegocio.name_es : m.datosNegocio.name_en; let item = document.createElement('div'); item.className = 'sugerencia-item'; item.innerHTML = `<div class="sugerencia-texto"><strong>⚡ ${name}</strong></div><button class="sugerencia-boton">${currentLang==='es'?'Ver':'View'}</button>`; item.querySelector('.sugerencia-boton').addEventListener('click', () => { m.openPopup(); mapa.setView(m.getLatLng(), 14); sugDiv.style.display = 'none'; }); sugDiv.appendChild(item); }); if(resultados.length===0) sugDiv.innerHTML = `<div class="sugerencia-item">❌ No results</div>`; }, 300); }); 
-      document.addEventListener('click', (e) => { if(!e.target.closest('.contenedor-buscador')) document.getElementById('sugerencias-busqueda').style.display = 'none'; });
+
+    function setLanguage(lang) {
+        if (!translations[lang]) return;
+        currentLang = lang;
+        const elements = document.querySelectorAll('[data-i18n]');
+        elements.forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (translations[lang][key] !== undefined) {
+                if (key === 'title') {
+                    el.innerHTML = translations[lang][key];
+                } else {
+                    el.innerText = translations[lang][key];
+                }
+            }
+        });
+        const searchInput = document.getElementById('countrySearch');
+        if (searchInput) {
+            searchInput.placeholder = currentLang === 'es' ? 'Buscar país...' : 'Search country...';
+        }
+        renderCountries();
+        
+        document.getElementById('lang-es').classList.toggle('active', lang === 'es');
+        document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+        document.documentElement.lang = lang === 'es' ? 'es' : 'en';
+        localStorage.setItem('18mls_lang', lang);
+    }
+
+    let debounceTimer;
+    function onSearchInput(value) {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+            currentFilter = value;
+            renderCountries();
+        }, 180);
+    }
+
+    function initSearch() {
+        const searchInput = document.getElementById('countrySearch');
+        const clearBtn = document.getElementById('clearSearch');
+        if (!searchInput) return;
+        
+        searchInput.addEventListener('input', (e) => {
+            onSearchInput(e.target.value);
+        });
+        
+        if (clearBtn) {
+            clearBtn.addEventListener('click', () => {
+                searchInput.value = '';
+                onSearchInput('');
+                searchInput.focus();
+            });
+        }
+    }
+
+    function initPWAInstall() {
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            const installBanner = document.getElementById('installBanner');
+            if (installBanner) installBanner.style.display = 'flex';
+        });
+
+        const installBtn = document.getElementById('installBtn');
+        if (installBtn) {
+            installBtn.addEventListener('click', async () => {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    const { outcome } = await deferredPrompt.userChoice;
+                    if (outcome === 'accepted') {
+                        console.log('PWA instalada');
+                        const installBanner = document.getElementById('installBanner');
+                        if (installBanner) installBanner.style.display = 'none';
+                    }
+                    deferredPrompt = null;
+                }
+            });
+        }
+    }
+
+    function registerServiceWorker() {
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/worker.js')
+                    .then(registration => {
+                        console.log('Service Worker registrado:', registration);
+                    })
+                    .catch(error => {
+                        console.log('Error al registrar Service Worker:', error);
+                    });
+            });
+        }
+    }
+
+    function loadInitialLanguage() {
+        const savedLang = localStorage.getItem('18mls_lang');
+        if (savedLang && (savedLang === 'es' || savedLang === 'en')) {
+            setLanguage(savedLang);
+        } else {
+            const browserLang = navigator.language || '';
+            setLanguage(browserLang.startsWith('es') ? 'es' : 'en');
+        }
+    }
+
+    function bindLanguageEvents() {
+        document.getElementById('lang-es').addEventListener('click', () => setLanguage('es'));
+        document.getElementById('lang-en').addEventListener('click', () => setLanguage('en'));
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        initSearch();
+        bindLanguageEvents();
+        loadInitialLanguage();
+        renderCountries();
+        initPWAInstall();
+        registerServiceWorker();
+        
+        const searchInputPlace = document.getElementById('countrySearch');
+        if (searchInputPlace) {
+            searchInputPlace.placeholder = currentLang === 'es' ? 'Buscar país...' : 'Search country...';
+        }
     });
-  </script>
+</script>
 </body>
 </html>
