@@ -11,6 +11,9 @@
   <meta name="theme-color" content="#000000">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="data:application/manifest+json,{%22name%22:%2218MLS%20Cali%20Valle%22,%22short_name%22:%2218MLS%20Cali%22,%22start_url%22:%22.%22,%22display%22:%22standalone%22,%22theme_color%22:%22%23000000%22,%22background_color%22:%22%23ffffff%22,%22icons%22:[{%22src%22:%22https://cdn-icons-png.flaticon.com/512/1036/1036221.png%22,%22sizes%22:%22192x192%22,%22type%22:%22image/png%22}]}">
+  <meta property="og:title" content="18MLS | CALI VALLE">
+  <meta property="og:description" content="CALI VALLE REAL ESTATE PLATFORM">
   <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
@@ -56,36 +59,17 @@
       border-bottom: 1px solid #eaeaea;
       flex-shrink: 0;
     }
-    .logo-area {
-      display: flex;
-      align-items: baseline;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-    }
-    .logo-18mls {
-      font-size: 1.2rem;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-      color: #000000;
-      text-decoration: none;
-    }
-    .logo-city {
-      font-size: 0.8rem;
-      color: #555;
-      font-weight: 400;
-      letter-spacing: 1px;
-    }
     .contenedor-buscador {
       position: relative;
       flex: 1;
-      max-width: 350px;
+      max-width: 400px;
     }
     #buscador { 
       width: 100%;
       padding: 0.6rem 1.2rem; 
       border: 1.5px solid #e0e0e0; 
       border-radius: 50px; 
-      font-size: 14px;
+      font-size: 16px;
       font-family: 'Libre Baskerville', serif;
       transition: all 0.3s ease;
       background: #ffffff;
@@ -98,7 +82,7 @@
     .btn-mapa { 
       background: #000000;
       color: #ffffff;
-      padding: 0.5rem 1rem; 
+      padding: 0.6rem 1.2rem; 
       border-radius: 40px; 
       text-decoration: none;
       font-weight: 600;
@@ -109,22 +93,20 @@
       gap: 5px;
       font-family: 'Libre Baskerville', serif;
       transition: all 0.2s ease;
-      font-size: 0.8rem;
     }
     .btn-mapa:hover { background: #333333; }
     .btn-centrar { background-color: #000000; }
-    .btn-servicios { background-color: #000000; }
-    .botones-izquierda { display: flex; gap: 0.8rem; align-items: center; flex-wrap: wrap; }
+    .btn-registro { background-color: #000000; }
+    .botones-izquierda { display: flex; gap: 0.8rem; align-items: center; }
     .botones-derecha { display: flex; gap: 0.5rem; background: #f0f0f0; padding: 0.3rem; border-radius: 50px; }
     .map-type-btn {
-      padding: 0.4rem 0.9rem;
+      padding: 0.5rem 1rem;
       border: none;
       border-radius: 40px;
       cursor: pointer;
       background: transparent;
       font-family: 'Libre Baskerville', serif;
       font-weight: 600;
-      font-size: 0.75rem;
     }
     .map-type-btn.active { background: #000000; color: white; }
     .lang-selector {
@@ -136,11 +118,11 @@
       background: transparent;
       border: 1px solid #ccc;
       border-radius: 20px;
-      padding: 0.3rem 0.7rem;
+      padding: 0.4rem 0.8rem;
       cursor: pointer;
       font-family: 'Libre Baskerville', serif;
       font-weight: 600;
-      font-size: 0.7rem;
+      font-size: 0.8rem;
     }
     .lang-btn.active {
       background: #000000;
@@ -181,6 +163,16 @@
       border-radius: 20px;
       cursor: pointer;
     }
+    .cargando {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(0,0,0,.3);
+      border-radius: 50%;
+      border-top-color: #000;
+      animation: spin 1s ease-in-out infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
     .cluster-marcadores { background: rgba(0,0,0,0.7); border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; }
     .inmueble-marker { background: transparent; border: none; font-size: 28px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
     .user-location-marker { background: transparent; border: none; font-size: 28px; display: flex; align-items: center; justify-content: center; }
@@ -191,13 +183,13 @@
       background: #ffffff;
       border-radius: 20px;
       overflow: hidden;
-      width: 340px;
+      width: 360px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
     .popup-product-image-container { 
       position: relative; 
       width: 100%; 
-      height: 190px; 
+      height: 200px; 
       overflow: hidden; 
       background-color: #f0f0f0; 
       cursor: pointer;
@@ -222,11 +214,11 @@
       background-color: rgba(0, 0, 0, 0.6); 
       color: white; 
       border: none; 
-      width: 28px; 
-      height: 28px; 
+      width: 30px; 
+      height: 30px; 
       border-radius: 50%; 
       cursor: pointer; 
-      font-size: 12px; 
+      font-size: 14px; 
       display: flex; 
       align-items: center; 
       justify-content: center; 
@@ -240,27 +232,111 @@
       color: white; 
       padding: 2px 8px; 
       border-radius: 20px; 
-      font-size: 0.65rem; 
+      font-size: 0.7rem; 
       z-index: 10; 
     }
     .popup-product-info { padding: 0.8rem; }
-    .popup-product-title { font-size: 0.85rem; margin-bottom: 0.4rem; font-weight: 700; line-height: 1.3; cursor: pointer; color: #000; text-decoration: none; }
+    .popup-product-title { font-size: 0.9rem; margin-bottom: 0.4rem; font-weight: 700; line-height: 1.3; cursor: pointer; color: #000; text-decoration: none; }
     .popup-product-title:hover { text-decoration: underline; }
     .precio-line { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem; }
-    .popup-product-price { font-size: 1rem; font-weight: 800; color: #000000; }
-    .enlaces-secundarios { display: flex; gap: 0.8rem; font-size: 0.7rem; }
+    .popup-product-price { font-size: 1.1rem; font-weight: 800; color: #000000; }
+    .enlaces-secundarios { display: flex; gap: 0.8rem; font-size: 0.75rem; }
     .enlace-info { color: #000000; text-decoration: none; font-weight: 600; cursor: pointer; display: flex; gap: 4px; }
-    .enlace-mapa { color: #000000; text-decoration: none; font-size: 0.9rem; cursor: pointer; }
-    .popup-product-details { margin-bottom: 0.5rem; display: flex; flex-wrap: wrap; gap: 0.4rem; }
-    .popup-product-details span { background-color: #f5f5f5; padding: 0.2rem 0.5rem; border-radius: 30px; font-size: 0.65rem; }
+    .enlace-mapa { color: #000000; text-decoration: none; font-size: 1rem; cursor: pointer; }
+    .popup-product-details { margin-bottom: 0.6rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .popup-product-details span { background-color: #f5f5f5; padding: 0.2rem 0.6rem; border-radius: 30px; font-size: 0.7rem; }
     .popup-product-actions { display: flex; gap: 0.5rem; margin-top: 0.3rem; }
-    .popup-add-to-cart, .popup-buy-now { padding: 0.4rem; border: none; border-radius: 10px; cursor: pointer; font-family: 'Libre Baskerville', serif; font-size: 0.65rem; font-weight: 600; flex: 1; display: flex; justify-content: center; align-items: center; gap: 0.3rem; transition: all 0.2s ease; }
+    .popup-add-to-cart, .popup-buy-now { padding: 0.5rem; border: none; border-radius: 10px; cursor: pointer; font-family: 'Libre Baskerville', serif; font-size: 0.7rem; font-weight: 600; flex: 1; display: flex; justify-content: center; align-items: center; gap: 0.3rem; transition: all 0.2s ease; }
     .popup-add-to-cart { background-color: #000000; color: #ffffff; }
     .popup-buy-now { background-color: #f0f0f0; color: #000000; border: 1px solid #ddd; }
-    .gm-style .gm-style-iw-c { border-radius: 20px !important; padding: 0 !important; max-width: 360px !important; }
+    .gm-style .gm-style-iw-c { border-radius: 20px !important; padding: 0 !important; max-width: 380px !important; }
     .gm-style .gm-style-iw-d { overflow: auto !important; max-height: none !important; padding: 0 !important; }
     .gm-style-iw-tc { display: none; }
     
+    .lightbox-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.95);
+      z-index: 10000;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    .lightbox-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .lightbox-img {
+      max-width: 90vw;
+      max-height: 85vh;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 40px;
+      color: white;
+      cursor: pointer;
+      background: none;
+      border: none;
+      z-index: 10001;
+      font-weight: bold;
+    }
+    .lightbox-nav {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 20px;
+      transform: translateY(-50%);
+      z-index: 10001;
+    }
+    .lightbox-nav-btn {
+      background-color: rgba(0,0,0,0.6);
+      color: white;
+      font-size: 30px;
+      border: none;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .lightbox-nav-btn:hover {
+      background-color: rgba(0,0,0,0.9);
+    }
+    .lightbox-counter {
+      position: absolute;
+      bottom: 20px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      color: white;
+      background: rgba(0,0,0,0.6);
+      padding: 5px 12px;
+      width: fit-content;
+      margin: 0 auto;
+      border-radius: 30px;
+      font-size: 14px;
+      font-family: monospace;
+      z-index: 10001;
+    }
+
     .modal-overlay {
       display: none;
       position: fixed;
@@ -276,7 +352,7 @@
       padding: 1rem;
     }
     .modal-container {
-      max-width: 550px;
+      max-width: 580px;
       width: 100%;
       max-height: 90vh;
       overflow-y: auto;
@@ -308,7 +384,7 @@
       padding: 1.2rem 1.5rem;
     }
     .step-title {
-      font-size: 1.2rem;
+      font-size: 1.3rem;
       font-weight: 700;
       margin-bottom: 1rem;
     }
@@ -326,7 +402,7 @@
     input, select, textarea {
       width: 100%;
       padding: 0.7rem 0.9rem;
-      font-size: 14px !important;
+      font-size: 15px !important;
       border: 1.5px solid #e0e0e0;
       border-radius: 16px;
       font-family: inherit;
@@ -352,31 +428,26 @@
       margin: 1rem 0;
     }
     .calendar-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; }
-    .month-year { font-weight: 700; font-size: 0.9rem; }
-    .weekdays { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-weight: 600; font-size: 0.6rem; margin-bottom: 0.5rem; color: #888; }
+    .month-year { font-weight: 700; font-size: 1rem; }
+    .weekdays { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-weight: 600; font-size: 0.65rem; margin-bottom: 0.5rem; color: #888; }
     .days-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; }
-    .day-cell { padding: 0.5rem 0; font-size: 0.75rem; border-radius: 50px; cursor: pointer; background: #fff; }
+    .day-cell { padding: 0.5rem 0; font-size: 0.8rem; border-radius: 50px; cursor: pointer; background: #fff; }
     .day-cell.selected { background: #000000; color: white; }
     .day-cell.available:hover { background: #f0f0f0; }
     .day-cell.other-month { opacity: 0.3; cursor: default; }
     .day-cell.disabled { opacity: 0.3; cursor: not-allowed; background: #f5f5f5; }
-    .horarios-list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; max-height: 120px; overflow-y: auto; padding: 0.5rem; background: #f9f9f9; border-radius: 16px; }
-    .horario-badge { display: inline-block; padding: 0.4rem 0.8rem; border: 1.5px solid #e0e0e0; border-radius: 50px; font-size: 0.7rem; cursor: pointer; background: white; font-weight: 500; }
+    .horarios-list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; max-height: 140px; overflow-y: auto; padding: 0.5rem; background: #f9f9f9; border-radius: 16px; }
+    .horario-badge { display: inline-block; padding: 0.4rem 0.9rem; border: 1.5px solid #e0e0e0; border-radius: 50px; font-size: 0.75rem; cursor: pointer; background: white; font-weight: 500; }
     .horario-badge.selected { background: #000; color: white; border-color: #000; }
-    .btn-submit { width: 100%; padding: 0.8rem; font-size: 0.85rem; font-weight: 700; background: #000000; color: white; border: none; border-radius: 50px; cursor: pointer; margin-top: 1rem; }
+    .btn-submit { width: 100%; padding: 0.8rem; font-size: 0.9rem; font-weight: 700; background: #000000; color: white; border: none; border-radius: 50px; cursor: pointer; margin-top: 1rem; }
     .section { background: #ffffff; border-radius: 20px; padding: 1rem; margin-bottom: 1rem; border: 1px solid #eaeaea; }
-    .section-title { font-size: 0.9rem; font-weight: 700; border-left: 4px solid #000000; padding-left: 0.8rem; margin-bottom: 1rem; }
+    .section-title { font-size: 1rem; font-weight: 700; border-left: 4px solid #000000; padding-left: 0.8rem; margin-bottom: 1rem; }
     .property-info { background: linear-gradient(135deg, #f8f9fa 0%, #f0f2f5 100%); border-radius: 18px; padding: 0.8rem 1rem; margin-bottom: 1rem; }
-    .property-info h4 { font-size: 0.9rem; margin-bottom: 0.3rem; }
-    .row-2cols {
-      display: flex;
-      gap: 1rem;
-    }
-    .row-2cols .form-group {
-      flex: 1;
-    }
+    .property-info h4 { font-size: 1rem; margin-bottom: 0.3rem; }
+    .terms-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); z-index: 3000; justify-content: center; align-items: center; padding: 1rem; }
+    .terms-modal-content { background: white; max-width: 450px; width: 100%; border-radius: 28px; padding: 1.5rem; max-height: 70vh; overflow-y: auto; }
     
-    /* SERVICIOS MODAL - DIRECTO SIN PAÍSES */
+    /* SERVICIOS MODAL - DIRECTO SIN PAÍSES (mismo estilo original) */
     .servicios-modal {
       display: none;
       position: fixed;
@@ -393,7 +464,7 @@
       background: white;
       border-radius: 28px;
       width: 90%;
-      max-width: 420px;
+      max-width: 480px;
       max-height: 80vh;
       overflow-y: auto;
       padding: 1.2rem;
@@ -406,19 +477,6 @@
       padding-bottom: 0.6rem;
       margin-bottom: 1rem;
     }
-    .servicios-header h2 {
-      font-size: 1.2rem;
-      font-weight: 700;
-    }
-    .close-servicios {
-      background: #f0f0f0;
-      border: none;
-      font-size: 1.5rem;
-      cursor: pointer;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-    }
     .servicios-botones {
       display: flex;
       flex-direction: column;
@@ -430,16 +488,11 @@
       border: none;
       padding: 0.8rem;
       border-radius: 50px;
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       font-weight: 600;
       cursor: pointer;
       text-align: center;
       font-family: 'Libre Baskerville', serif;
-      transition: all 0.2s ease;
-    }
-    .servicio-btn:hover {
-      background: #333333;
-      transform: translateY(-1px);
     }
     
     .info-modal {
@@ -458,48 +511,67 @@
       background: white;
       border-radius: 28px;
       width: 90%;
-      max-width: 450px;
+      max-width: 500px;
       max-height: 70vh;
       overflow-y: auto;
-      padding: 1.2rem;
-    }
-    .terms-modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.8);
-      z-index: 3000;
-      justify-content: center;
-      align-items: center;
-      padding: 1rem;
-    }
-    .terms-modal-content {
-      background: white;
-      max-width: 400px;
-      width: 100%;
-      border-radius: 28px;
       padding: 1.5rem;
     }
-    
+    .fixed-price-field {
+      background-color: #f9f9f9;
+      border: 1px solid #e0e0e0;
+      border-radius: 16px;
+      padding: 0.7rem 0.9rem;
+      font-weight: 700;
+      color: #111;
+      font-size: 1rem;
+    }
+    .radio-group,
+    .financing-option {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      margin: 0.8rem 0 1rem;
+    }
+    .radio-group label,
+    .financing-option label {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      font-weight: normal;
+      text-transform: none;
+      font-size: 0.85rem;
+      cursor: pointer;
+      margin-bottom: 0;
+    }
+    .radio-group input[type="radio"],
+    .financing-option input[type="radio"] {
+      width: 1.1rem;
+      height: 1.1rem;
+      margin: 0;
+      flex-shrink: 0;
+      accent-color: #000000;
+    }
+    .inline-checkbox input[type="checkbox"] {
+      width: 1.1rem;
+      height: 1.1rem;
+      margin: 0;
+      flex-shrink: 0;
+      accent-color: #000000;
+    }
+    .row-2cols {
+      display: flex;
+      gap: 1rem;
+    }
+    .row-2cols .form-group {
+      flex: 1;
+    }
     @media (max-width: 680px) {
       .modal-container { max-width: 95%; }
       .form-panel { padding: 1rem; }
-      .popup-product-card { width: 280px; }
-      .popup-product-image-container { height: 160px; }
-      .btn-mapa { padding: 0.4rem 0.8rem; font-size: 0.7rem; }
-      .logo-18mls { font-size: 1rem; }
-      .logo-city { font-size: 0.7rem; }
+      .popup-product-card { width: 300px; }
+      .popup-product-image-container { height: 170px; }
+      .btn-mapa { padding: 0.5rem 0.8rem; font-size: 0.8rem; }
       .row-2cols { flex-direction: column; gap: 0; }
-      .botones-izquierda { width: 100%; justify-content: center; }
-      .botones-derecha { margin-top: 0.3rem; }
-    }
-    @media (max-width: 480px) {
-      #barra-superior { flex-direction: column; }
-      .logo-area { justify-content: center; }
-      .contenedor-buscador { max-width: 100%; }
     }
   </style>
 </head>
@@ -507,16 +579,12 @@
   <div id="contenedor-mapa">
     <div id="barra-superior">
       <div class="botones-izquierda">
-        <div class="logo-area">
-          <span class="logo-18mls">18MLS.COM</span>
-          <span class="logo-city">CALI · VALLE</span>
-        </div>
         <div class="contenedor-buscador">
           <input type="search" id="buscador" placeholder="Buscar propiedades en Cali, Valle..." enterkeyhint="search">
           <div id="sugerencias-busqueda" class="sugerencias-busqueda"></div>
         </div>
         <button class="btn-mapa btn-centrar" id="centrar-btn"><i class="fas fa-location-dot"></i><span id="centrar-text">CENTRAR</span></button>
-        <button class="btn-mapa btn-servicios" id="servicios-btn"><i class="fas fa-key"></i><span id="servicios-text">SERVICIOS</span></button>
+        <button class="btn-mapa btn-registro" id="servicios-btn"><i class="fas fa-key"></i><span id="servicios-text">SERVICIOS</span></button>
       </div>
       <div class="botones-derecha">
         <button class="map-type-btn active" id="map-btn"><span id="map-text">Mapa</span></button>
@@ -530,17 +598,16 @@
     <div id="mapa"></div>
   </div>
   
-  <!-- MODALES -->
   <div id="visitaModal" class="modal-overlay"><div class="modal-container"><div class="close-modal"><button class="close-visita-modal">&times;</button></div><div id="visitaFormContainer" class="form-panel"></div></div></div>
   <div id="ofertaModal" class="modal-overlay"><div class="modal-container"><div class="close-modal"><button class="close-oferta-modal">&times;</button></div><div id="ofertaFormContainer" class="form-panel"></div></div></div>
   <div id="termsModal" class="terms-modal"><div class="terms-modal-content"><h3 id="terms-title">Términos y Condiciones</h3><p id="terms-text">Al agendar aceptas recibir información de la propiedad.</p><button class="close-terms" id="closeTermsBtn">Aceptar</button></div></div>
   
-  <!-- MODAL DE SERVICIOS - DIRECTO SIN SELECCIÓN DE PAÍS -->
+  <!-- MODAL DE SERVICIOS DIRECTO (sin selección de país) -->
   <div id="serviciosModal" class="servicios-modal">
     <div class="servicios-container">
       <div class="servicios-header">
         <h2 id="servicios-modal-title">SERVICIOS INMOBILIARIOS</h2>
-        <button class="close-servicios" id="closeServiciosBtn">&times;</button>
+        <button class="close-servicios" id="closeServiciosBtn" style="background:transparent; border:none; font-size:1.8rem; cursor:pointer;">&times;</button>
       </div>
       <div id="serviciosListaDirecta" class="servicios-botones"></div>
     </div>
@@ -548,16 +615,16 @@
   
   <div id="infoModal" class="info-modal"><div class="info-container"><div class="servicios-header"><h2>Información de la Propiedad</h2><button id="closeInfoModalBtn" style="background:transparent; border:none; font-size:1.8rem; cursor:pointer;">&times;</button></div><div id="infoContent"></div></div></div>
   
-  <div id="lightbox" class="lightbox-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:10000; justify-content:center; align-items:center;">
-    <button class="lightbox-close" style="position:absolute; top:20px; right:30px; font-size:40px; color:white; background:none; border:none; cursor:pointer;">&times;</button>
-    <div class="lightbox-container" style="position:relative; width:100%; height:100%; display:flex; justify-content:center; align-items:center;">
-      <img class="lightbox-img" style="max-width:90vw; max-height:85vh; object-fit:contain;" src="" alt="">
+  <div id="lightbox" class="lightbox-overlay">
+    <button class="lightbox-close">&times;</button>
+    <div class="lightbox-container">
+      <img class="lightbox-img" src="" alt="Fullscreen view">
     </div>
-    <div class="lightbox-nav" style="position:absolute; top:50%; width:100%; display:flex; justify-content:space-between; padding:0 20px; transform:translateY(-50%);">
-      <button class="lightbox-nav-btn" style="background:rgba(0,0,0,0.6); color:white; font-size:30px; border:none; width:50px; height:50px; border-radius:50%; cursor:pointer;">‹</button>
-      <button class="lightbox-nav-btn" style="background:rgba(0,0,0,0.6); color:white; font-size:30px; border:none; width:50px; height:50px; border-radius:50%; cursor:pointer;">›</button>
+    <div class="lightbox-nav">
+      <button class="lightbox-nav-btn lightbox-prev"><i class="fas fa-chevron-left"></i></button>
+      <button class="lightbox-nav-btn lightbox-next"><i class="fas fa-chevron-right"></i></button>
     </div>
-    <div class="lightbox-counter" style="position:absolute; bottom:20px; left:0; right:0; text-align:center; color:white; background:rgba(0,0,0,0.6); padding:5px 12px; width:fit-content; margin:0 auto; border-radius:30px;"></div>
+    <div class="lightbox-counter"></div>
   </div>
 
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
@@ -601,13 +668,52 @@
     properties.forEach(p => { if(!p.currency) p.currency = getCurrencyForCoordinates(p.latlng[0], p.latlng[1]); });
     
     const translations = { 
-      es: { buscar_placeholder: "Buscar propiedades en Cali, Valle...", centrar: "CENTRAR", servicios: "SERVICIOS", mapa: "Mapa", satelite: "Satélite", servicios_titulo: "SERVICIOS INMOBILIARIOS", visita_title: "📅 Agendar visita", oferta_title: "📩 Enviar oferta", nombre_label: "NOMBRE COMPLETO *", telefono_label: "TELÉFONO *", email_label: "CORREO", codigo_agente_label: "CÓDIGO DE AGENTE (opcional)", comentarios_label: "COMENTARIOS", terms_check: "Acepto ", terms_link: "términos", submit_visita: "📩 Agendar por WhatsApp", submit_oferta: "📩 Enviar oferta", visit_btn: "Visita", offer_btn_venta: "Ofertar inmueble", offer_btn_arriendo: "Iniciar arriendo", info_btn: "Info", select_date: "📅 Selecciona una fecha", monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'], weekdays: ['L', 'M', 'M', 'J', 'V', 'S', 'D'], tipo_id: "TIPO DE IDENTIFICACIÓN *", numero_id: "NÚMERO DE IDENTIFICACIÓN *" },
-      en: { buscar_placeholder: "Search properties in Cali, Valle...", centrar: "CENTER", servicios: "SERVICES", mapa: "Map", satelite: "Satellite", servicios_titulo: "REAL ESTATE SERVICES", visita_title: "📅 Schedule visit", oferta_title: "📩 Send offer", nombre_label: "FULL NAME *", telefono_label: "PHONE *", email_label: "EMAIL", codigo_agente_label: "AGENT CODE (optional)", comentarios_label: "COMMENTS", terms_check: "I accept ", terms_link: "terms", submit_visita: "📩 Schedule via WhatsApp", submit_oferta: "📩 Send offer", visit_btn: "Visit", offer_btn_venta: "Make offer", offer_btn_arriendo: "Start rental", info_btn: "Info", select_date: "📅 Select a date", monthNames: ['January','February','March','April','May','June','July','August','September','October','November','December'], weekdays: ['M', 'T', 'W', 'T', 'F', 'S', 'S'], tipo_id: "ID TYPE *", numero_id: "ID NUMBER *" }
+      es: { buscar_placeholder: "Buscar propiedades en Cali, Valle...", centrar: "CENTRAR", servicios: "SERVICIOS", mapa: "Mapa", satelite: "Satélite", servicios_titulo: "SERVICIOS INMOBILIARIOS", visita_title: "📅 Agendar visita", oferta_title: "📩 Enviar oferta", nombre_label: "NOMBRE COMPLETO *", telefono_label: "TELÉFONO *", email_label: "CORREO", codigo_agente_label: "CÓDIGO DE AGENTE (opcional)", comentarios_label: "COMENTARIOS", terms_check: "Acepto ", terms_link: "términos", submit_visita: "📩 Agendar por WhatsApp", submit_oferta: "📩 Enviar oferta", visit_btn: "Visita", offer_btn_venta: "Ofertar inmueble", offer_btn_arriendo: "Iniciar arriendo", info_btn: "Info", select_date: "📅 Selecciona una fecha", monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'], weekdays: ['L', 'M', 'M', 'J', 'V', 'S', 'D'], pago_contado: "Contado", pago_credito: "Cuota inicial + Crédito", precio_fijo: "PRECIO TOTAL (FIJO)", valor_inicial: "VALOR DE LA CUOTA INICIAL (mínimo 30%)", opciones_financiacion: "OPCIÓN DE FINANCIACIÓN", cesantias: "Cesantías", credito_preaprobado: "Ya cuento con crédito pre aprobado", solicitar_credito: "Solicitar crédito inmobiliario", tipo_id: "TIPO DE IDENTIFICACIÓN *", numero_id: "NÚMERO DE IDENTIFICACIÓN *" },
+      en: { buscar_placeholder: "Search properties in Cali, Valle...", centrar: "CENTER", servicios: "SERVICES", mapa: "Map", satelite: "Satellite", servicios_titulo: "REAL ESTATE SERVICES", visita_title: "📅 Schedule visit", oferta_title: "📩 Send offer", nombre_label: "FULL NAME *", telefono_label: "PHONE *", email_label: "EMAIL", codigo_agente_label: "AGENT CODE (optional)", comentarios_label: "COMMENTS", terms_check: "I accept ", terms_link: "terms", submit_visita: "📩 Schedule via WhatsApp", submit_oferta: "📩 Send offer", visit_btn: "Visit", offer_btn_venta: "Make offer", offer_btn_arriendo: "Start rental", info_btn: "Info", select_date: "📅 Select a date", monthNames: ['January','February','March','April','May','June','July','August','September','October','November','December'], weekdays: ['M', 'T', 'W', 'T', 'F', 'S', 'S'], pago_contado: "Cash payment", pago_credito: "Down payment + Credit", precio_fijo: "TOTAL PRICE (FIXED)", valor_inicial: "DOWN PAYMENT (min 30%)", opciones_financiacion: "FINANCING OPTION", cesantias: "Severance funds", credito_preaprobado: "Pre-approved credit", solicitar_credito: "Request mortgage rates", tipo_id: "ID TYPE *", numero_id: "ID NUMBER *" }
     };
     
     let mapa, userMarker, marcadoresOriginales = [], buscadorTimeout, googleMapsLayer, googleSatelliteLayer, currentLayer, currentProperty = null, selectedDate = null, selectedHorario = null, currentYear = new Date().getFullYear(), currentMonth = new Date().getMonth(), today = new Date(); today.setHours(0,0,0,0);
     const allHorarios = ['08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00'];
     let currentIndices = {};
+    
+    let currentLightboxImages = [];
+    let currentLightboxIndex = 0;
+    const lightboxEl = document.getElementById('lightbox');
+    const lightboxImg = lightboxEl.querySelector('.lightbox-img');
+    const lightboxCounter = lightboxEl.querySelector('.lightbox-counter');
+    
+    function openLightbox(images, startIndex) {
+      if(!images || images.length === 0) return;
+      currentLightboxImages = images.filter(img => typeof img === 'string');
+      currentLightboxIndex = startIndex;
+      updateLightbox();
+      lightboxEl.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+    
+    function updateLightbox() {
+      if(currentLightboxImages.length > 0) {
+        lightboxImg.src = currentLightboxImages[currentLightboxIndex];
+        lightboxCounter.textContent = `${currentLightboxIndex+1} / ${currentLightboxImages.length}`;
+      }
+    }
+    
+    function nextLightbox() {
+      if(currentLightboxImages.length === 0) return;
+      currentLightboxIndex = (currentLightboxIndex + 1) % currentLightboxImages.length;
+      updateLightbox();
+    }
+    
+    function prevLightbox() {
+      if(currentLightboxImages.length === 0) return;
+      currentLightboxIndex = (currentLightboxIndex - 1 + currentLightboxImages.length) % currentLightboxImages.length;
+      updateLightbox();
+    }
+    
+    function closeLightbox() {
+      lightboxEl.style.display = 'none';
+      document.body.style.overflow = '';
+    }
     
     function t(key) { return translations[currentLang][key] || key; }
     function formatPriceForProp(prop, isRent = false) { let value = isRent ? prop.priceRent : prop.price; if(value === 0) return "Contactar"; return formatPriceWithCurrency(value, prop.currency); }
@@ -636,7 +742,8 @@
       if(currentIndices[property.id]===undefined) currentIndices[property.id]=0; 
       const idx=currentIndices[property.id]; const media=property.media[idx]; 
       let mediaHtml=''; 
-      if(typeof media==='string') mediaHtml=`<img src="${media}" alt="${title}" class="popup-product-image">`; 
+      if(typeof media==='string') mediaHtml=`<img src="${media}" alt="${title}" class="popup-product-image" data-fullscreen="${media}">`; 
+      else if(media.type==='video') mediaHtml=`<div class="popup-video-container"><iframe src="https://www.youtube.com/embed/${media.videoId}?autoplay=0" frameborder="0" allowfullscreen></iframe></div>`; 
       return `<div class="popup-product-card" data-id="${property.id}">
                 <div class="popup-product-image-container" id="popup-img-container-${property.id}">
                   ${mediaHtml}
@@ -660,7 +767,7 @@
                     <span><i class="fas fa-bed"></i> ${property.cuartos} ${currentLang==='es'?'hab':'beds'}</span>
                     <span><i class="fas fa-bath"></i> ${property.baños} ${currentLang==='es'?'baños':'baths'}</span>
                   </div>
-                  <p style="font-size:0.65rem; margin-bottom:0.5rem;">${description}</p>
+                  <p style="font-size:0.7rem; margin-bottom:0.6rem;">${description}</p>
                   <div class="popup-product-actions">
                     <button class="popup-add-to-cart" data-id="${property.id}"><i class="fas fa-calendar-check"></i> ${t('visit_btn')}</button>
                     <button class="popup-buy-now" data-id="${property.id}"><i class="${actionIcon}"></i> ${actionText}</button>
@@ -669,39 +776,22 @@
               </div>`; 
     }
     
-    function updateMediaInPopup(propertyId, newIndex) { 
-      let property=properties.find(p=>p.id===propertyId); 
-      if(!property) return; 
-      let popupNode=document.querySelector('.custom-popup'); 
-      if(!popupNode) return; 
-      let container=popupNode.querySelector(`#popup-img-container-${propertyId}`); 
-      if(!container) return; 
-      let mediaItem=property.media[newIndex]; 
-      let navDiv=container.querySelector('.popup-image-nav'); 
-      let counterDiv=container.querySelector('.popup-image-counter'); 
-      let existing=container.querySelector('.popup-product-image'); 
-      if(existing) existing.remove(); 
-      if(typeof mediaItem === 'string'){ 
-        let img=document.createElement('img'); 
-        img.src=mediaItem; 
-        img.alt=property.title_es; 
-        img.className='popup-product-image'; 
-        img.style.cursor='pointer';
+    function attachLightboxToImage(container, property) {
+      const img = container.querySelector('.popup-product-image');
+      if(img) {
+        img.style.cursor = 'pointer';
         img.addEventListener('click', (e) => {
           e.stopPropagation();
           redirigirInmueble(property);
         });
-        container.insertBefore(img, navDiv); 
-      } 
-      if(counterDiv) counterDiv.textContent=`${newIndex+1}/${property.media.length}`; 
-      currentIndices[propertyId]=newIndex; 
+      }
     }
     
     function refreshAllPopups() { 
       marcadoresOriginales.forEach(marker => { 
         let prop = marker.datosInmueble; 
         let newPopup = generarPopupHTML(prop); 
-        marker.bindPopup(newPopup, {maxWidth:360, className:'custom-popup'}); 
+        marker.bindPopup(newPopup, {maxWidth:380, className:'custom-popup'}); 
       }); 
     }
     
@@ -715,7 +805,7 @@
       refreshAllPopups();
     }
     
-    // INICIALIZAR SERVICIOS DIRECTOS
+    // Inicializar servicios directos
     function initServiciosDirectos() {
       const container = document.getElementById('serviciosListaDirecta');
       if(!container) return;
@@ -743,7 +833,7 @@
       let icono=L.divIcon({className:'inmueble-marker',html:'🔑',iconSize:[32,32],popupAnchor:[0,-16]}); 
       properties.forEach(prop=>{ 
         let popup=generarPopupHTML(prop); 
-        let marker=L.marker(prop.latlng,{icon:icono}).bindPopup(popup,{maxWidth:360,className:'custom-popup'}); 
+        let marker=L.marker(prop.latlng,{icon:icono}).bindPopup(popup,{maxWidth:380,className:'custom-popup'}); 
         marker.datosInmueble=prop; 
         marker.datosBusqueda=`${prop.title_es} ${prop.title_en} ${prop.description_es} ${prop.description_en}`.toLowerCase(); 
         marcadoresOriginales.push(marker); 
@@ -778,12 +868,47 @@
               let visaBtn=node.querySelector(`.popup-add-to-cart[data-id="${prop.id}"]`), offerBtn=node.querySelector(`.popup-buy-now[data-id="${prop.id}"]`); 
               if(visaBtn) visaBtn.addEventListener('click',(e)=>{e.preventDefault(); openVisitaModal(prop); mapa.closePopup();}); 
               if(offerBtn) offerBtn.addEventListener('click',(e)=>{e.preventDefault(); openOfertaModal(prop); mapa.closePopup();}); 
+              const containerImg = node.querySelector(`#popup-img-container-${prop.id}`);
+              if(containerImg) attachLightboxToImage(containerImg, prop);
             } 
           },100); 
         }); 
         clusters.addLayer(marker); 
       }); 
       mapa.addLayer(clusters); 
+    }
+    
+    function updateMediaInPopup(propertyId, newIndex) { 
+      let property=properties.find(p=>p.id===propertyId); 
+      if(!property) return; 
+      let popupNode=document.querySelector('.custom-popup'); 
+      if(!popupNode) return; 
+      let container=popupNode.querySelector(`#popup-img-container-${propertyId}`); 
+      if(!container) return; 
+      let mediaItem=property.media[newIndex]; 
+      let navDiv=container.querySelector('.popup-image-nav'); 
+      let counterDiv=container.querySelector('.popup-image-counter'); 
+      let existing=container.querySelector('.popup-product-image, .popup-video-container'); 
+      if(existing) existing.remove(); 
+      if(typeof mediaItem === 'string'){ 
+        let img=document.createElement('img'); 
+        img.src=mediaItem; 
+        img.alt=property.title_es; 
+        img.className='popup-product-image'; 
+        img.style.cursor='pointer';
+        img.addEventListener('click', (e) => {
+          e.stopPropagation();
+          redirigirInmueble(property);
+        });
+        container.insertBefore(img, navDiv); 
+      } else if(mediaItem.type==='video'){ 
+        let videoDiv=document.createElement('div'); 
+        videoDiv.className='popup-video-container'; 
+        videoDiv.innerHTML=`<iframe src="https://www.youtube.com/embed/${mediaItem.videoId}?autoplay=0" frameborder="0" allowfullscreen></iframe>`; 
+        container.insertBefore(videoDiv, navDiv); 
+      } 
+      if(counterDiv) counterDiv.textContent=`${newIndex+1}/${property.media.length}`; 
+      currentIndices[propertyId]=newIndex; 
     }
     
     function centrarMapaRapido() {
@@ -833,18 +958,48 @@
       let title = currentLang === 'es' ? property.title_es : property.title_en;
       let desc = currentLang === 'es' ? property.description_es : property.description_en;
       let displayPrice = property.category==='sale' ? formatPriceForProp(property) : formatPriceForProp(property, true);
-      let formHtml = `<div class="property-info"><h4>🏠 ${title}</h4><p>${property.m2} m² · ${property.cuartos} ${currentLang==='es'?'hab':'beds'} · ${property.baños} ${currentLang==='es'?'baños':'baths'}</p><p>${desc}</p></div><div class="step-title">${t('oferta_title')}</div><div class="form-group"><label>${currentLang==='es'?'PRECIO':'PRICE'}</label><div class="fixed-price-field"><strong>${displayPrice}</strong></div></div>`;
+      let basePriceNum = property.category==='sale' ? property.price : 0;
+      let minInitialPercent = 0.3;
+      let defaultInitial = Math.floor(basePriceNum * minInitialPercent);
+      
+      let formHtml = `<div class="property-info"><h4>🏠 ${title}</h4><p>${property.m2} m² · ${property.cuartos} ${currentLang==='es'?'hab':'beds'} · ${property.baños} ${currentLang==='es'?'baños':'baths'}</p><p>${desc}</p></div><div class="step-title">${t('oferta_title')}</div>`;
+      formHtml += `<div class="form-group"><label>${t('precio_fijo')}</label><div class="fixed-price-field"><strong>${displayPrice}</strong></div></div>`;
+      if(property.category === 'sale' && property.price > 0) {
+        formHtml += `<div class="form-group"><label>MÉTODO DE PAGO</label><div class="radio-group" id="paymentMethodGroup"><label><input type="radio" name="paymentMethod" value="contado" checked> ${t('pago_contado')}</label><label><input type="radio" name="paymentMethod" value="credito"> ${t('pago_credito')}</label></div></div>`;
+        formHtml += `<div id="creditSection" style="display:none;"><div class="form-group"><label>${t('valor_inicial')}</label><input type="number" id="initialAmount" step="10000" value="${defaultInitial}" min="${defaultInitial}" max="${basePriceNum}"><small style="color:#555;">Mínimo: ${formatPriceWithCurrency(defaultInitial, property.currency)} (30%)</small></div><div class="form-group"><label>${t('opciones_financiacion')}</label><div class="financing-option"><label><input type="radio" name="financingOption" value="${t('cesantias')}"> ${t('cesantias')}</label><label><input type="radio" name="financingOption" value="${t('credito_preaprobado')}"> ${t('credito_preaprobado')}</label><label><input type="radio" name="financingOption" value="${t('solicitar_credito')}"> ${t('solicitar_credito')}</label></div></div></div>`;
+      }
       formHtml += `<div class="form-group"><label>${t('nombre_label')}</label><input type="text" id="ofertaNombre" placeholder="${currentLang==='es'?'Ej: Juan Pérez':'Ex: John Doe'}"></div>`;
       formHtml += `<div class="row-2cols"><div class="form-group"><label>${t('tipo_id')}</label><input type="text" id="ofertaTipoId" placeholder="${currentLang==='es'?'Ej: Cédula, Pasaporte...':'Ex: ID Card, Passport...'}"></div><div class="form-group"><label>${t('numero_id')}</label><input type="text" id="ofertaNumeroId" placeholder="${currentLang==='es'?'Ej: 12345678':'Ex: 12345678'}"></div></div>`;
-      formHtml += `<div class="form-group"><label>${t('telefono_label')}</label><input type="tel" id="ofertaTelefono" placeholder="3001234567"></div><div class="form-group"><label>${t('email_label')}</label><input type="email" id="ofertaEmail"></div><div class="form-group"><label>${t('codigo_agente_label')}</label><input type="text" id="ofertaCodigoAgente" placeholder="${currentLang==='es'?'Ej: AGENTE123':'Ex: AGENT123'}"></div><div class="form-group"><label>${t('comentarios_label')}</label><textarea rows="2" id="ofertaComentarios" placeholder="${currentLang==='es'?'Ej: Me interesa financiación...':'Ex: I need financing...'}"></textarea></div><button class="btn-submit" id="submitOferta">${t('submit_oferta')}</button>`;
+      formHtml += `<div class="form-group"><label>${t('telefono_label')}</label><input type="tel" id="ofertaTelefono" placeholder="3001234567"></div><div class="form-group"><label>${t('email_label')}</label><input type="email" id="ofertaEmail"></div><div class="form-group"><label>${t('codigo_agente_label')}</label><input type="text" id="ofertaCodigoAgente" placeholder="${currentLang==='es'?'Ej: AGENTE123':'Ex: AGENT123'}"></div><div class="form-group"><label>${t('comentarios_label')}</label><textarea rows="2" id="ofertaComentarios" placeholder="${currentLang==='es'?'Ej: Requiero financiación...':'Ex: I need financing...'}"></textarea></div><button class="btn-submit" id="submitOferta">${t('submit_oferta')}</button>`;
       container.innerHTML = formHtml;
+      
+      if(property.category === 'sale' && property.price > 0) {
+        let radios = document.querySelectorAll('#paymentMethodGroup input');
+        let creditDiv = document.getElementById('creditSection');
+        let initialInput = document.getElementById('initialAmount');
+        function toggleCredit() { let selected = document.querySelector('input[name="paymentMethod"]:checked').value; creditDiv.style.display = selected === 'credito' ? 'block' : 'none'; }
+        radios.forEach(r => r.addEventListener('change', toggleCredit));
+        toggleCredit();
+        if(initialInput) initialInput.addEventListener('change', function() { let val = parseFloat(this.value); if(isNaN(val)) this.value = defaultInitial; else if(val < defaultInitial) { alert(`Pago inicial mínimo: ${formatPriceWithCurrency(defaultInitial, property.currency)}`); this.value = defaultInitial; } else if(val > basePriceNum) { alert(`No puede superar el precio total`); this.value = basePriceNum; } });
+      }
       document.getElementById('submitOferta').addEventListener('click',()=>{ 
         let nombre=document.getElementById('ofertaNombre').value.trim(), tel=document.getElementById('ofertaTelefono').value.trim(), email=document.getElementById('ofertaEmail').value.trim(), coment=document.getElementById('ofertaComentarios').value.trim(), codigoAgente=document.getElementById('ofertaCodigoAgente').value.trim(); 
         let tipoId = document.getElementById('ofertaTipoId')?.value.trim() || '';
         let numeroId = document.getElementById('ofertaNumeroId')?.value.trim() || '';
         if(!nombre||!tel){alert(currentLang==='es'?'Completa datos básicos (nombre y teléfono)':'Complete basic data (name and phone)'); return;} 
         if(!tipoId || !numeroId){alert(currentLang==='es'?'Completa tipo y número de identificación':'Complete ID type and number'); return;}
-        let msg = `OFERTA: ${title}\nNombre: ${nombre}\nID: ${tipoId} ${numeroId}\nTeléfono: ${tel}\nEmail: ${email}\nComentarios: ${coment||(currentLang==='es'?'Sin comentarios':'No comments')}\n${codigoAgente ? `Código Agente: ${codigoAgente}` : ''}`; 
+        let paymentDetails = "";
+        if(property.category === 'sale' && property.price > 0) {
+          let method = document.querySelector('input[name="paymentMethod"]:checked')?.value || 'contado';
+          if(method === 'contado') paymentDetails = `\nMétodo: ${t('pago_contado')} - Total: ${displayPrice}`;
+          else {
+            let initialVal = document.getElementById('initialAmount')?.value || defaultInitial;
+            let selectedFin = document.querySelector('input[name="financingOption"]:checked')?.value || '';
+            if(!selectedFin) { alert(currentLang==='es'?'Selecciona opción de financiación':'Select financing option'); return; }
+            paymentDetails = `\nMétodo: ${t('pago_credito')}\nCuota inicial: ${formatPriceWithCurrency(parseInt(initialVal), property.currency)}\nFinanciación: ${selectedFin}`;
+          }
+        }
+        let msg = `OFERTA: ${title}\nNombre: ${nombre}\nID: ${tipoId} ${numeroId}\nTeléfono: ${tel}\nEmail: ${email}\nComentarios: ${coment||(currentLang==='es'?'Sin comentarios':'No comments')}\n${codigoAgente ? `Código Agente: ${codigoAgente}` : ''}${paymentDetails}`; 
         window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`,'_blank'); 
         modal.style.display='none'; 
       }); 
@@ -877,12 +1032,10 @@
       window.addEventListener('click',(e)=>{ if(e.target===document.getElementById('visitaModal')) document.getElementById('visitaModal').style.display='none'; if(e.target===document.getElementById('ofertaModal')) document.getElementById('ofertaModal').style.display='none'; if(e.target===document.getElementById('termsModal')) closeTermsModal(); }); 
       document.getElementById('closeTermsBtn').addEventListener('click',closeTermsModal);
       
-      // Lightbox
-      const lightbox = document.getElementById('lightbox');
-      const lightboxImg = lightbox.querySelector('.lightbox-img');
-      const closeLightbox = () => lightbox.style.display = 'none';
-      lightbox.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
-      lightbox.addEventListener('click', (e) => { if(e.target === lightbox) closeLightbox(); });
+      document.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
+      document.querySelector('.lightbox-prev').addEventListener('click', prevLightbox);
+      document.querySelector('.lightbox-next').addEventListener('click', nextLightbox);
+      lightboxEl.addEventListener('click', (e) => { if(e.target === lightboxEl) closeLightbox(); });
     });
   </script>
 </body>
