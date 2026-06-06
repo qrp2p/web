@@ -2,779 +2,849 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=5.0">
-    <title>QRP2P Colombia | Marketplace P2P en Ciudades y Municipios de Colombia</title>
-    
-    <!-- PWA Meta Tags -->
-    <link rel="manifest" href="manifest.json">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <meta name="description" content="18MLS Real Estate: El MLS inmobiliario más grande del mundo. Compra, vende e invierte en bienes raíces en 196 países.">
+    <meta name="keywords" content="18MLS, Real Estate, bienes raíces, MLS, marketplace P2P, global, compra venta inmuebles, inversión, propiedades, peer-to-peer, internacional, MLS inmobiliario, Colombia, Cali, Bogotá, Medellín">
+    <meta name="author" content="18MLS Real Estate">
+    <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#000000">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="QRP2P Colombia">
+    <meta name="apple-mobile-web-app-title" content="18MLS">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="QRP2P MARKETPLACE COLOMBIA">
-    <meta name="format-detection" content="telephone=no">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/icon-192.png">
+    <title>18MLS | Colombia - Ciudades</title>
     
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="QRP2P Colombia - El marketplace P2P líder en Colombia. Compra y vende de forma segura en Bogotá, Medellín, Cali, Barranquilla, Cartagena y más de 100 ciudades y municipios colombianos.">
-    <meta name="keywords" content="marketplace Colombia, P2P Colombia, comprar y vender Colombia, QRP2P, Bogotá marketplace, Medellín marketplace, Cali marketplace, Barranquilla, Cartagena, Bucaramanga, Pereira, Manizales, Ibagué, Cúcuta, Santa Marta, Villavicencio, Sincelejo, Valledupar, Riohacha, Quibdó, Neiva, Popayán, Pasto, Tunja, Armenia, Leticia, Yopal, Florencia, Mocoa, Inírida, Mitú, Puerto Carreño, San Andrés, comercio peer to peer Colombia">
-    <meta name="author" content="QRP2P">
-    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
-    <meta name="googlebot" content="index, follow">
-    <link rel="canonical" href="https://qrp2p.com/co">
-    <meta property="og:title" content="QRP2P Colombia - Marketplace P2P en todo el país">
-    <meta property="og:description" content="El marketplace peer-to-peer más seguro de Colombia. Compra y vende en tu ciudad con protección por escrow y 0% comisión.">
-    <meta property="og:image" content="https://qrp2p.com/img/og-colombia.jpg">
-    <meta property="og:url" content="https://qrp2p.com/co">
+    <meta property="og:title" content="18MLS Real Estate — Colombia">
+    <meta property="og:description" content="Selecciona tu ciudad en Colombia y accede al MLS inmobiliario más grande del mundo.">
     <meta property="og:type" content="website">
-    <meta property="og:locale" content="es_CO">
+    <meta property="og:url" content="https://18mls.com/co">
+    <meta property="og:image" content="/icon-512.png">
+    
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="QRP2P Colombia - Marketplace P2P">
-    <meta name="twitter:description" content="Compra y vende de forma segura en Colombia con QRP2P - 0% comisión">
-    <meta name="geo.region" content="CO">
-    <meta name="geo.placename" content="Colombia">
-    
-    <!-- Favicons -->
-    <link rel="icon" type="image/png" sizes="192x192" href="img/icon-192.png">
-    <link rel="icon" type="image/png" sizes="512x512" href="img/icon-512.png">
-    <link rel="apple-touch-icon" href="img/icon-192.png">
-    
-    <!-- CSS / Fonts -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <meta name="twitter:title" content="18MLS Real Estate - Colombia">
+    <meta name="twitter:description" content="Encuentra propiedades en las principales ciudades de Colombia">
+    <meta name="twitter:image" content="/icon-512.png">
     
     <style>
-        /* Evita zoom automático al hacer scroll en iOS */
         * {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
+        }
+        
+        input, textarea, [contenteditable="true"] {
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
         }
         
         body {
-            background-color: #FFFFFF;
+            background-color: #ffffff;
             color: #000000;
-            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
-            line-height: 1.45;
+            font-family: 'Libre Baskerville', 'Times New Roman', Georgia, 'Baskerville', serif;
+            font-weight: 400;
+            line-height: 1.4;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            -webkit-touch-callout: none;
             overflow-x: hidden;
-            -webkit-text-size-adjust: 100%;
-            touch-action: pan-x pan-y; /* Permite scroll pero NO zoom automático */
         }
         
-        /* Previene zoom no deseado en inputs en iOS */
-        input, select, textarea, button {
-            font-size: 16px !important;
-            -webkit-appearance: none;
-            appearance: none;
+        html {
+            touch-action: pan-x pan-y;
+            overflow-x: hidden;
         }
         
-        :root {
-            --bg-body: #ffffff;
-            --card-bg: #ffffff;
-            --text-primary: #000000;
-            --text-secondary: #2c2c2c;
-            --border-light: #e5e5e5;
-            --border-dark: #aaaaaa;
-            --shadow-sm: 0 2px 6px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.03);
-            --shadow-hover: 0 12px 24px -8px rgba(0,0,0,0.12), 0 4px 8px rgba(0,0,0,0.05);
-        }
-        
-        #install-button {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #000000;
-            color: white;
-            border: none;
-            border-radius: 48px;
-            padding: 10px 22px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            cursor: pointer;
-            z-index: 1000;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            font-family: inherit;
-        }
-        
-        #install-button:hover {
-            background: #2c2c2c;
-            transform: scale(1.02);
-        }
-        
-        header {
-            background: #ffffff;
-            padding: 1.5rem 1rem 1rem;
-            text-align: center;
-            border-bottom: 1px solid #eaeaea;
-        }
-        
-        .logo-container {
-            max-width: 260px;
-            margin: 0 auto 0.5rem;
-        }
-        
-        .logo-container img {
-            width: 100%;
-            height: auto;
-            max-height: 68px;
-            object-fit: contain;
-        }
-        
-        .fallback-logo {
-            font-size: 1.8rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-            color: #000;
-            border: 2px solid #000;
-            display: inline-block;
-            padding: 0.3rem 1.2rem;
-            background: white;
-        }
-        
-        .tagline {
-            font-size: 0.9rem;
-            letter-spacing: 0.5px;
-            font-weight: 500;
-            color: #1a1a1a;
-            text-transform: uppercase;
-            margin-top: 0.25rem;
+        img, a, button {
+            -webkit-user-drag: none;
+            user-drag: none;
         }
         
         .container {
-            max-width: 1400px;
-            margin: 1.2rem auto;
-            padding: 0 1rem;
-        }
-        
-        .search-container {
-            margin: 0.75rem auto 1.5rem;
-            max-width: 560px;
-        }
-        
-        #marketplace-search {
+            max-width: 1200px;
             width: 100%;
-            padding: 0.85rem 1.2rem;
-            border-radius: 60px;
-            border: 1.5px solid #cbcbcb;
-            background: #ffffff;
-            color: #000000;
-            font-size: 0.95rem;
-            transition: all 0.2s;
-            outline: none;
-            font-family: inherit;
-        }
-        
-        #marketplace-search:focus {
-            border-color: #000000;
-            box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
-        }
-        
-        .result-count {
+            margin: 0 auto;
             text-align: center;
-            margin-bottom: 1.5rem;
-            font-size: 0.85rem;
-            color: #555;
-            font-weight: 500;
+            overflow-x: hidden;
         }
-        
-        .cities-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
             gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 0 0.5rem;
+        }
+
+        .back-link {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 0.85rem;
+            color: #3a3a3a;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: #000000;
+        }
+
+        .language-bar {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .lang-btn {
+            background: none;
+            border: none;
+            font-family: 'Libre Baskerville', serif;
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: #3a3a3a;
+            cursor: pointer;
+            padding: 0.25rem 0.5rem;
+            transition: all 0.2s ease;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .lang-btn.active {
+            color: #000000;
+            font-weight: 700;
+            border-bottom: 1.5px solid #000000;
+        }
+
+        .lang-btn:hover:not(.active) {
+            color: #000000;
+            background-color: #f5f5f5;
+        }
+
+        .brand {
+            margin-bottom: 1.5rem;
             margin-top: 0.5rem;
         }
-        
-        .city-card {
-            background: var(--card-bg);
-            border-radius: 20px;
-            overflow: hidden;
-            transition: all 0.25s cubic-bezier(0.2, 0, 0, 1);
-            box-shadow: var(--shadow-sm);
-            cursor: pointer;
-            border: 1px solid #e2e2e2;
-            display: flex;
-            flex-direction: column;
-            animation: fadeInUp 0.4s ease forwards;
-            opacity: 0;
-        }
-        
-        .city-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-hover);
-            border-color: #aaaaaa;
-        }
-        
-        .city-image {
-            height: 140px;
-            background-size: cover;
-            background-position: center;
-            background-color: #f6f6f6;
-            position: relative;
-            border-bottom: 1px solid #ececec;
-        }
-        
-        .city-info {
-            padding: 1rem 0.9rem 1rem 0.9rem;
-            flex: 1;
-        }
-        
-        .city-name {
-            font-size: 1.05rem;
+
+        .logo {
+            font-size: 2.5rem;
+            letter-spacing: -0.02em;
             font-weight: 700;
-            margin-bottom: 0.45rem;
+            text-transform: lowercase;
+            color: #000000;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            display: inline-block;
+            padding-bottom: 0.2rem;
+        }
+
+        .tagline {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-top: 0.8rem;
+            color: #3a3a3a;
+            font-weight: 400;
+        }
+
+        .hero {
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h1 {
+            font-size: 1.5rem;
+            font-weight: 400;
+            line-height: 1.3;
+            margin-bottom: 0.75rem;
+            color: #000000;
+            letter-spacing: -0.3px;
+        }
+
+        .hero p {
+            font-size: 0.9rem;
+            color: #2c2c2c;
+            max-width: 580px;
+            margin: 0 auto;
+            font-weight: 350;
+            padding: 0 1rem;
+        }
+
+        .search-section {
+            max-width: 400px;
+            width: 100%;
+            margin: 1.5rem auto 1.8rem;
+            position: relative;
+            padding: 0 0.5rem;
+        }
+
+        .search-input-wrapper {
+            position: relative;
+            width: 100%;
             display: flex;
             align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-            color: #000;
         }
-        
-        .small-flag {
-            width: 28px;
-            height: 21px;
-            object-fit: cover;
-            border-radius: 3px;
-            border: 1px solid #d4d4d4;
+
+        .search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1rem;
+            color: #8a8a8a;
+            pointer-events: none;
+            font-weight: 400;
+            z-index: 2;
         }
-        
-        .city-desc {
-            font-size: 0.8rem;
-            color: #2b2b2b;
-            line-height: 1.4;
-            margin-bottom: 0.6rem;
+
+        .search-icon::before {
+            content: "🔍";
         }
-        
-        .city-desc.departamento {
-            font-size: 0.7rem;
-            font-weight: 600;
-            color: #3d3d3d;
-            margin-top: 0.2rem;
-            background: #f4f4f4;
-            display: inline-block;
-            padding: 0.15rem 0.55rem;
-            border-radius: 20px;
-        }
-        
-        .route-hint {
-            font-size: 0.65rem;
-            font-family: monospace;
-            color: #5a5a5a;
-            background: #f8f8f8;
-            padding: 0.2rem 0.45rem;
-            border-radius: 12px;
-            display: inline-block;
-            margin: 0.5rem 0 0.6rem;
-        }
-        
-        .city-link {
-            display: inline-block;
-            background: #000000;
-            color: white;
-            text-decoration: none;
-            padding: 0.5rem 0.9rem;
-            border-radius: 36px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            transition: all 0.2s;
-            text-align: center;
+
+        .search-input {
             width: 100%;
-        }
-        
-        .city-link:hover {
+            padding: 0.8rem 3rem 0.8rem 2.8rem;
+            font-family: 'Libre Baskerville', serif;
+            font-size: 0.9rem;
             background: #ffffff;
+            border: 1.5px solid #e0e0e0;
             color: #000000;
-            border: 1px solid #000;
+            border-radius: 0px;
+            transition: all 0.25s ease;
+            outline: none;
+            letter-spacing: -0.2px;
+            box-shadow: none;
         }
-        
-        .offline-indicator {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: #111111;
-            color: white;
-            text-align: center;
-            padding: 8px;
-            font-size: 0.8rem;
-            z-index: 2000;
-            transform: translateY(-100%);
-            transition: transform 0.25s;
+
+        .search-input:focus {
+            border-color: #000000;
+            box-shadow: 0 0 0 1px rgba(0,0,0,0.05);
         }
-        
-        .offline-indicator.show {
-            transform: translateY(0);
+
+        .search-input::placeholder {
+            color: #b0b0b0;
+            font-weight: 300;
+            font-style: italic;
         }
-        
-        .seo-content {
-            max-width: 1400px;
-            margin: 3rem auto;
-            padding: 2rem;
-            background: #fafafa;
-            border-top: 1px solid #e5e5e5;
-            border-bottom: 1px solid #e5e5e5;
+
+        .search-clear {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: #9a9a9a;
+            padding: 0 6px;
+            display: none;
+            font-family: monospace;
+            z-index: 2;
+            transition: color 0.2s;
         }
-        
-        .seo-content h2 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: #000;
+
+        .search-clear:hover {
+            color: #000000;
         }
-        
-        .seo-content h3 {
-            font-size: 1.125rem;
-            font-weight: 600;
-            margin: 1.5rem 0 0.75rem;
-            color: #000;
-        }
-        
-        .seo-content p {
-            margin-bottom: 1rem;
-            color: #333;
-            font-size: 0.9375rem;
-            line-height: 1.6;
-        }
-        
-        .region-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin: 1rem 0 1.5rem;
-        }
-        
-        .region-tag {
-            display: inline-block;
-            padding: 0.375rem 1rem;
-            background: #FFFFFF;
-            border: 1px solid #E5E5E5;
-            border-radius: 40px;
-            font-size: 0.75rem;
-            text-decoration: none;
-            color: #000;
-            transition: all 0.2s;
-        }
-        
-        .region-tag:hover {
-            background: #000;
-            color: #fff;
-            border-color: #000;
-        }
-        
-        footer {
-            background: #fafafa;
-            padding: 2rem 1rem;
-            text-align: center;
-            margin-top: 2rem;
-            border-top: 1px solid #e0e0e0;
-        }
-        
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-        }
-        
-        .footer-links a {
-            color: #1f1f1f;
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 500;
-        }
-        
-        .footer-links a:hover {
-            text-decoration: underline;
-        }
-        
-        .copyright {
+
+        .results-count {
             font-size: 0.7rem;
-            color: #4f4f4f;
+            text-align: center;
+            margin-top: 0.65rem;
+            color: #5a5a5a;
+            letter-spacing: 0.3px;
+            font-style: italic;
         }
-        
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(14px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+
+        .city-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.2rem;
+            margin: 1.5rem 0 2rem;
+            transition: all 0.2s;
+            padding: 0 0.5rem;
         }
-        
+
+        .city-card {
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            padding: 1.5rem 1rem;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            color: #000000;
+            display: block;
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .city-card.hidden-card {
+            display: none;
+        }
+
+        .city-card:hover {
+            border-color: #000000;
+            background-color: #fafafa;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .city-card:active {
+            transform: translateY(1px);
+        }
+
+        .city-flag {
+            font-size: 2.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .city-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            margin-bottom: 0.4rem;
+            text-transform: uppercase;
+        }
+
+        .city-sub {
+            font-size: 0.7rem;
+            color: #4a4a4a;
+            font-style: normal;
+            border-top: 1px solid #efefef;
+            display: inline-block;
+            padding-top: 0.5rem;
+            margin-top: 0.5rem;
+            letter-spacing: 1px;
+        }
+
+        .city-domain {
+            font-size: 0.6rem;
+            color: #8a8a8a;
+            margin-top: 0.5rem;
+            font-family: monospace;
+            word-break: break-all;
+        }
+
+        .divider {
+            width: 40px;
+            height: 1px;
+            background: #d4d4d4;
+            margin: 0.8rem auto;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: #6c6c6c;
+            font-style: italic;
+            font-size: 0.9rem;
+            border-top: 1px solid #f0f0f0;
+            margin-top: 1rem;
+        }
+
+        .footer {
+            margin-top: 2rem;
+            font-size: 0.65rem;
+            color: #6c6c6c;
+            letter-spacing: 0.5px;
+            border-top: 1px solid #ececec;
+            padding-top: 1.5rem;
+        }
+
+        .footer p {
+            margin-bottom: 0.2rem;
+        }
+
+        /* Responsive móvil */
         @media (max-width: 640px) {
-            .cities-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 0.85rem;
+            body {
+                padding: 0.8rem;
             }
-            .city-image {
-                height: 110px;
+            
+            .top-bar {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.8rem;
+                margin-bottom: 1rem;
             }
-            .city-info {
-                padding: 0.8rem 0.7rem 0.9rem;
+            
+            .back-link {
+                justify-content: center;
             }
+            
+            .language-bar {
+                justify-content: center;
+            }
+            
+            .logo {
+                font-size: 1.8rem;
+            }
+            
+            .tagline {
+                font-size: 0.6rem;
+                letter-spacing: 2px;
+            }
+            
+            .hero h1 {
+                font-size: 1.2rem;
+            }
+            
+            .hero p {
+                font-size: 0.8rem;
+                padding: 0 0.5rem;
+            }
+            
+            .city-selector {
+                grid-template-columns: 1fr;
+                gap: 0.9rem;
+                padding: 0;
+            }
+            
+            .city-card {
+                padding: 1.2rem 0.8rem;
+            }
+            
             .city-name {
-                font-size: 0.9rem;
+                font-size: 1.1rem;
             }
-            .small-flag {
-                width: 24px;
-                height: 18px;
+            
+            .city-flag {
+                font-size: 2rem;
             }
-        }
-        
-        @media (min-width: 800px) {
-            .cities-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 1.5rem;
+            
+            .search-section {
+                margin: 1rem auto 1.2rem;
+                padding: 0;
             }
-        }
-        
-        @media (min-width: 1100px) {
-            .cities-grid {
-                grid-template-columns: repeat(4, 1fr);
+            
+            .search-input {
+                padding: 0.7rem 2.8rem 0.7rem 2.5rem;
+                font-size: 0.85rem;
             }
-        }
-        
-        @media (min-width: 1400px) {
-            .cities-grid {
-                grid-template-columns: repeat(5, 1fr);
+            
+            .footer {
+                margin-top: 1.5rem;
+                padding-top: 1rem;
             }
         }
-        
-        .flag-icon, .small-flag, .city-image {
-            filter: none !important;
+
+        /* Para pantallas muy pequeñas */
+        @media (max-width: 380px) {
+            .city-name {
+                font-size: 1rem;
+            }
+            
+            .city-sub {
+                font-size: 0.6rem;
+            }
+            
+            .city-domain {
+                font-size: 0.55rem;
+            }
+            
+            .hero h1 {
+                font-size: 1rem;
+            }
         }
+
+        .city-card:focus-visible {
+            outline: 2px solid #000000;
+            outline-offset: 4px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
     </style>
 </head>
 <body>
 
-    <div class="offline-indicator" id="offline-indicator">
-        🔴 Sin conexión — Contenido en caché
-    </div>
-    
-    <button id="install-button" style="display: none;">
-        📱 Instalar App
-    </button>
-    
-    <header>
-        <div class="logo-container">
-            <img src="img/c-index.png" 
-                 alt="QRP2P Colombia" 
-                 onerror="this.onerror=null; this.style.display='none'; this.parentElement.innerHTML='<div class=\'fallback-logo\'>QRP2P</div>';">
+<div class="container">
+    <div class="top-bar">
+        <a href="/" class="back-link" data-i18n="back_link">← Volver a países</a>
+        <div class="language-bar">
+            <button class="lang-btn active" id="lang-es" data-lang="es">ES</button>
+            <button class="lang-btn" id="lang-en" data-lang="en">EN</button>
         </div>
-        <div class="tagline">MARKETPLACE COLOMBIA</div>
-    </header>
-    
-    <div class="container">
-        <div class="search-container">
-            <input type="text" id="marketplace-search" placeholder="Buscar ciudad o municipio...">
-        </div>
-        
-        <div class="result-count" id="result-count"></div>
-        
-        <div class="cities-grid" id="cities-container"></div>
     </div>
-    
-    <div class="seo-content">
-        <h2>QRP2P Colombia: El Marketplace P2P más Grande del País</h2>
-        <p>QRP2P Colombia es la plataforma líder de comercio peer-to-peer en Colombia. Conectamos compradores y vendedores en más de <strong>120 ciudades y municipios</strong> colombianos, ofreciendo transacciones seguras con nuestro sistema de escrow, protección al comprador y vendedor, y <strong>0% comisión</strong> entre compradores y vendedores.</p>
-        
-        <h3>Presencia Nacional en Todas las Regiones</h3>
-        <div class="region-tags" id="region-tags-container"></div>
-        
-        <h3>¿Por qué elegir QRP2P Colombia?</h3>
-        <p>✓ <strong>Seguridad Garantizada:</strong> Sistema de escrow que protege ambas partes.<br>
-        ✓ <strong>Cobertura Nacional:</strong> Presente en Bogotá, Medellín, Cali, Barranquilla, Cartagena y más de 100 ciudades adicionales.<br>
-        ✓ <strong>0% Comisión:</strong> Sin tarifas ocultas. Compradores y vendedores no pagan comisión.<br>
-        ✓ <strong>Soporte en Español:</strong> Atención al cliente en tu idioma, 7 días a la semana.<br>
-        ✓ <strong>App PWA:</strong> Instala nuestra aplicación en tu dispositivo móvil.</p>
-        
-        <p>Descubre el marketplace de tu ciudad y comienza a comerciar de forma segura y sin comisiones. QRP2P es la plataforma preferida por miles de colombianos para comprar y vender productos, servicios y activos digitales.</p>
-    </div>
-    
-    <footer>
-        <div class="footer-links">
-            <a href="terms.html">Términos de Servicio</a>
-            <a href="privacy.html">Política de Privacidad</a>
-            <a href="contact.html">Contáctanos</a>
-            <a href="blog.html">Blog</a>
-        </div>
-        <div class="copyright">© QRP2P MARKETPLACE COLOMBIA — 0% Comisión • Compra y Vende con Seguridad</div>
-    </footer>
 
-    <script>
-        const colombiaFlagUrl = "https://flagcdn.com/co.svg";
-        const baseDomain = "https://qrp2p.com";
-        
-        // MÁS DE 120 CIUDADES Y MUNICIPIOS DE COLOMBIA
-        const municipios = [
-            // Amazonas
-            { ciudad: "Leticia", depto: "Amazonas", descripcion: "Capital del Amazonas, puerta a la selva amazónica", slug: "leticia", ruta: "/leticia", poblacion: "Alta" },
-            { ciudad: "Puerto Nariño", depto: "Amazonas", descripcion: "Municipio turístico en medio de la Amazonía", slug: "puerto-narino", ruta: "/puerto-narino", poblacion: "Media" },
-            // Antioquia
-            { ciudad: "Medellín", depto: "Antioquia", descripcion: "La ciudad de la eterna primavera, innovación y negocios", slug: "medellin", ruta: "/medellin", poblacion: "Muy Alta" },
-            { ciudad: "Envigado", depto: "Antioquia", descripcion: "Ciudad del sur del Valle de Aburrá", slug: "envigado", ruta: "/envigado", poblacion: "Alta" },
-            { ciudad: "Itagüí", depto: "Antioquia", descripcion: "Importante centro industrial y comercial", slug: "itagui", ruta: "/itagui", poblacion: "Alta" },
-            { ciudad: "Bello", depto: "Antioquia", descripcion: "Ciudad del norte del Valle de Aburrá", slug: "bello", ruta: "/bello", poblacion: "Alta" },
-            { ciudad: "Rionegro", depto: "Antioquia", descripcion: "Ciudad del oriente antioqueño", slug: "rionegro", ruta: "/rionegro", poblacion: "Alta" },
-            { ciudad: "Apartadó", depto: "Antioquia", descripcion: "Capital del Urabá antioqueño", slug: "apartado", ruta: "/apartado", poblacion: "Media" },
-            // Arauca
-            { ciudad: "Arauca", depto: "Arauca", descripcion: "Capital del departamento, tierra del joropo", slug: "arauca", ruta: "/arauca", poblacion: "Media" },
-            // Atlántico
-            { ciudad: "Barranquilla", depto: "Atlántico", descripcion: "Sede del carnaval más importante de Colombia", slug: "barranquilla", ruta: "/barranquilla", poblacion: "Muy Alta" },
-            { ciudad: "Soledad", depto: "Atlántico", descripcion: "Segundo municipio más poblado del Atlántico", slug: "soledad", ruta: "/soledad", poblacion: "Alta" },
-            { ciudad: "Malambo", depto: "Atlántico", descripcion: "Importante zona industrial", slug: "malambo", ruta: "/malambo", poblacion: "Media" },
-            // Bogotá D.C.
-            { ciudad: "Bogotá", depto: "Bogotá D.C.", descripcion: "Capital de Colombia, ciudad cosmopolita y cultural", slug: "bogota", ruta: "/bogota", poblacion: "Muy Alta" },
-            { ciudad: "Soacha", depto: "Cundinamarca", descripcion: "Municipio conurbado con Bogotá", slug: "soacha", ruta: "/soacha", poblacion: "Alta" },
-            // Bolívar
-            { ciudad: "Cartagena", depto: "Bolívar", descripcion: "La heroica, ciudad amurallada del Caribe", slug: "cartagena", ruta: "/cartagena", poblacion: "Muy Alta" },
-            { ciudad: "Magangué", depto: "Bolívar", descripcion: "Importante puerto fluvial", slug: "magangue", ruta: "/magangue", poblacion: "Media" },
-            // Boyacá
-            { ciudad: "Tunja", depto: "Boyacá", descripcion: "Capital de Boyacá, ciudad histórica", slug: "tunja", ruta: "/tunja", poblacion: "Media" },
-            { ciudad: "Duitama", depto: "Boyacá", descripcion: "Ciudad industrial del altiplano", slug: "duitama", ruta: "/duitama", poblacion: "Media" },
-            { ciudad: "Sogamoso", depto: "Boyacá", descripcion: "Ciudad del sol y del acero", slug: "sogamoso", ruta: "/sogamoso", poblacion: "Media" },
-            // Caldas
-            { ciudad: "Manizales", depto: "Caldas", descripcion: "Ciudad del paisaje cultural cafetero", slug: "manizales", ruta: "/manizales", poblacion: "Alta" },
-            { ciudad: "La Dorada", depto: "Caldas", descripcion: "Puerto sobre el río Magdalena", slug: "la-dorada", ruta: "/la-dorada", poblacion: "Media" },
-            // Caquetá
-            { ciudad: "Florencia", depto: "Caquetá", descripcion: "Puerta de entrada a la Amazonía", slug: "florencia", ruta: "/florencia", poblacion: "Media" },
-            // Casanare
-            { ciudad: "Yopal", depto: "Casanare", descripcion: "Capital petrolera de Colombia", slug: "yopal", ruta: "/yopal", poblacion: "Media" },
-            // Cauca
-            { ciudad: "Popayán", depto: "Cauca", descripcion: "La ciudad blanca de Colombia", slug: "popayan", ruta: "/popayan", poblacion: "Media" },
-            { ciudad: "Santander de Quilichao", depto: "Cauca", descripcion: "Importante centro comercial del norte del Cauca", slug: "santander-quilichao", ruta: "/santander-quilichao", poblacion: "Media" },
-            // Cesar
-            { ciudad: "Valledupar", depto: "Cesar", descripcion: "Cuna del vallenato", slug: "valledupar", ruta: "/valledupar", poblacion: "Media" },
-            { ciudad: "Aguachica", depto: "Cesar", descripcion: "Importante nudo de comunicaciones", slug: "aguachica", ruta: "/aguachica", poblacion: "Media" },
-            // Chocó
-            { ciudad: "Quibdó", depto: "Chocó", descripcion: "Ciudad del Pacífico colombiano", slug: "quibdo", ruta: "/quibdo", poblacion: "Media" },
-            // Córdoba
-            { ciudad: "Montería", depto: "Córdoba", descripcion: "Ciudad de la ganadería y la cultura sabanera", slug: "monteria", ruta: "/monteria", poblacion: "Alta" },
-            { ciudad: "Cereté", depto: "Córdoba", descripcion: "Ciudad del bajo Sinú", slug: "cerete", ruta: "/cerete", poblacion: "Media" },
-            // Cundinamarca
-            { ciudad: "Girardot", depto: "Cundinamarca", descripcion: "Ciudad turística sobre el río Magdalena", slug: "girardot", ruta: "/girardot", poblacion: "Media" },
-            { ciudad: "Zipaquirá", depto: "Cundinamarca", descripcion: "Ciudad de la Catedral de Sal", slug: "zipaquira", ruta: "/zipaquira", poblacion: "Media" },
-            { ciudad: "Facatativá", depto: "Cundinamarca", descripcion: "Ciudad del occidente de Cundinamarca", slug: "facatativa", ruta: "/facatativa", poblacion: "Media" },
-            { ciudad: "Chía", depto: "Cundinamarca", descripcion: "Ciudad universitaria del norte de Bogotá", slug: "chia", ruta: "/chia", poblacion: "Alta" },
-            // Guainía
-            { ciudad: "Inírida", depto: "Guainía", descripcion: "Tierra del cerro de Mavecure", slug: "inirida", ruta: "/inirida", poblacion: "Baja" },
-            // Guaviare
-            { ciudad: "San José del Guaviare", depto: "Guaviare", descripcion: "Puerta a la Amazonía", slug: "san-jose-guaviare", ruta: "/san-jose-guaviare", poblacion: "Baja" },
-            // Huila
-            { ciudad: "Neiva", depto: "Huila", descripcion: "Ciudad del bambuco", slug: "neiva", ruta: "/neiva", poblacion: "Alta" },
-            { ciudad: "Pitalito", depto: "Huila", descripcion: "Capital del sur del Huila", slug: "pitalito", ruta: "/pitalito", poblacion: "Media" },
-            // La Guajira
-            { ciudad: "Riohacha", depto: "La Guajira", descripcion: "Puerta al desierto y la cultura wayuu", slug: "riohacha", ruta: "/riohacha", poblacion: "Media" },
-            { ciudad: "Maicao", depto: "La Guajira", descripcion: "Importante centro comercial fronterizo", slug: "maicao", ruta: "/maicao", poblacion: "Media" },
-            // Magdalena
-            { ciudad: "Santa Marta", depto: "Magdalena", descripcion: "Ciudad más antigua de Colombia", slug: "santa-marta", ruta: "/santa-marta", poblacion: "Alta" },
-            { ciudad: "Ciénaga", depto: "Magdalena", descripcion: "Ciudad de la Ciénaga Grande", slug: "cienaga", ruta: "/cienaga", poblacion: "Media" },
-            // Meta
-            { ciudad: "Villavicencio", depto: "Meta", descripcion: "Puerta de entrada a los Llanos Orientales", slug: "villavicencio", ruta: "/villavicencio", poblacion: "Alta" },
-            { ciudad: "Acacías", depto: "Meta", descripcion: "Importante centro petrolero", slug: "acacias", ruta: "/acacias", poblacion: "Media" },
-            { ciudad: "Granada", depto: "Meta", descripcion: "Ciudad del Ariari", slug: "granada-meta", ruta: "/granada-meta", poblacion: "Media" },
-            // Nariño
-            { ciudad: "Pasto", depto: "Nariño", descripcion: "Ciudad del carnaval de negros y blancos", slug: "pasto", ruta: "/pasto", poblacion: "Alta" },
-            { ciudad: "Ipiales", depto: "Nariño", descripcion: "Ciudad fronteriza con Ecuador", slug: "ipiales", ruta: "/ipiales", poblacion: "Media" },
-            { ciudad: "Tumaco", depto: "Nariño", descripcion: "Importante puerto del Pacífico", slug: "tumaco", ruta: "/tumaco", poblacion: "Media" },
-            // Norte de Santander
-            { ciudad: "Cúcuta", depto: "Norte de Santander", descripcion: "Ciudad fronteriza con Venezuela", slug: "cucuta", ruta: "/cucuta", poblacion: "Alta" },
-            { ciudad: "Ocaña", depto: "Norte de Santander", descripcion: "Ciudad histórica de la Gran Convención", slug: "ocana", ruta: "/ocana", poblacion: "Media" },
-            // Putumayo
-            { ciudad: "Mocoa", depto: "Putumayo", descripcion: "Puerta a la Amazonía colombiana", slug: "mocoa", ruta: "/mocoa", poblacion: "Baja" },
-            // Quindío
-            { ciudad: "Armenia", depto: "Quindío", descripcion: "Corazón del eje cafetero", slug: "armenia", ruta: "/armenia", poblacion: "Alta" },
-            { ciudad: "Calarcá", depto: "Quindío", descripcion: "Ciudad del paisaje cafetero", slug: "calarca", ruta: "/calarca", poblacion: "Media" },
-            // Risaralda
-            { ciudad: "Pereira", depto: "Risaralda", descripcion: "Ciudad del eje cafetero", slug: "pereira", ruta: "/pereira", poblacion: "Alta" },
-            { ciudad: "Dosquebradas", depto: "Risaralda", descripcion: "Ciudad industrial", slug: "dosquebradas", ruta: "/dosquebradas", poblacion: "Alta" },
-            { ciudad: "Santa Rosa de Cabal", depto: "Risaralda", descripcion: "Ciudad de las aguas termales", slug: "santa-rosa-cabal", ruta: "/santa-rosa-cabal", poblacion: "Media" },
-            // San Andrés
-            { ciudad: "San Andrés", depto: "San Andrés", descripcion: "Paraíso caribeño", slug: "san-andres", ruta: "/san-andres", poblacion: "Media" },
-            // Santander
-            { ciudad: "Bucaramanga", depto: "Santander", descripcion: "Ciudad de los parques", slug: "bucaramanga", ruta: "/bucaramanga", poblacion: "Alta" },
-            { ciudad: "Barrancabermeja", depto: "Santander", descripcion: "Puerto petrolero sobre el Magdalena", slug: "barrancabermeja", ruta: "/barrancabermeja", poblacion: "Alta" },
-            { ciudad: "Floridablanca", depto: "Santander", descripcion: "Ciudad del área metropolitana", slug: "floridablanca", ruta: "/floridablanca", poblacion: "Alta" },
-            { ciudad: "Girón", depto: "Santander", descripcion: "Ciudad colonial histórica", slug: "giron", ruta: "/giron", poblacion: "Media" },
-            { ciudad: "Piedecuesta", depto: "Santander", descripcion: "Ciudad del área metropolitana", slug: "piedecuesta", ruta: "/piedecuesta", poblacion: "Media" },
-            // Sucre
-            { ciudad: "Sincelejo", depto: "Sucre", descripcion: "Ciudad de las corralejas", slug: "sincelejo", ruta: "/sincelejo", poblacion: "Media" },
-            // Tolima
-            { ciudad: "Ibagué", depto: "Tolima", descripcion: "Ciudad musical de Colombia", slug: "ibague", ruta: "/ibague", poblacion: "Alta" },
-            { ciudad: "Espinal", depto: "Tolima", descripcion: "Ciudad arrocera", slug: "espinal", ruta: "/espinal", poblacion: "Media" },
-            // Valle del Cauca
-            { ciudad: "Cali", depto: "Valle del Cauca", descripcion: "La sucursal del cielo, capital mundial de la salsa", slug: "cali", ruta: "/cali", poblacion: "Muy Alta" },
-            { ciudad: "Palmira", depto: "Valle del Cauca", descripcion: "Ciudad agrícola e industrial", slug: "palmira", ruta: "/palmira", poblacion: "Alta" },
-            { ciudad: "Buenaventura", depto: "Valle del Cauca", descripcion: "Principal puerto del Pacífico", slug: "buenaventura", ruta: "/buenaventura", poblacion: "Media" },
-            { ciudad: "Tuluá", depto: "Valle del Cauca", descripcion: "Ciudad del centro del Valle", slug: "tulua", ruta: "/tulua", poblacion: "Media" },
-            { ciudad: "Cartago", depto: "Valle del Cauca", descripcion: "Ciudad del norte del Valle", slug: "cartago", ruta: "/cartago", poblacion: "Media" },
-            { ciudad: "Buga", depto: "Valle del Cauca", descripcion: "Ciudad del Señor de los Milagros", slug: "buga", ruta: "/buga", poblacion: "Media" },
-            // Vaupés
-            { ciudad: "Mitú", depto: "Vaupés", descripcion: "Puerta a la selva amazónica", slug: "mitu", ruta: "/mitu", poblacion: "Baja" },
-            // Vichada
-            { ciudad: "Puerto Carreño", depto: "Vichada", descripcion: "Puerta a los Llanos Orientales", slug: "puerto-carreno", ruta: "/puerto-carreno", poblacion: "Baja" }
-        ];
-        
-        // Construir array de ciudades
-        const cities = municipios.map(m => ({
-            code: "CO",
-            name: `QRP2P ${m.ciudad.toUpperCase()}`,
-            ciudad: m.ciudad,
-            departamento: m.depto,
-            description: m.descripcion,
-            slug: m.slug,
-            link: `${baseDomain}${m.ruta}`,
-            flagUrl: colombiaFlagUrl,
-            imageBg: colombiaFlagUrl
-        }));
-        
-        // Ordenar alfabéticamente por ciudad
-        cities.sort((a, b) => a.ciudad.localeCompare(b.ciudad));
-        
-        // Generar region tags únicas
-        const deptosUnicos = [...new Set(municipios.map(m => m.depto))].sort();
-        const tagsContainer = document.getElementById('region-tags-container');
-        if (tagsContainer) {
-            deptosUnicos.forEach(depto => {
-                const tag = document.createElement('a');
-                tag.href = `#`;
-                tag.className = 'region-tag';
-                tag.textContent = depto;
-                tag.addEventListener('click', (e) => {
+    <div class="brand">
+        <span class="logo">18MLS.COM</span>
+        <div class="tagline" data-i18n="tagline">Colombia · El MLS inmobiliario más grande del mundo</div>
+    </div>
+
+    <div class="hero">
+        <h1 data-i18n="title">SELECCIONA TU CIUDAD</h1>
+        <div class="divider"></div>
+        <p data-i18n="subtitle">Encuentra propiedades en las principales ciudades de Colombia. Compra, vende e invierte directamente entre propietarios.</p>
+    </div>
+
+    <div class="search-section">
+        <div class="search-input-wrapper">
+            <span class="search-icon"></span>
+            <input type="text" id="citySearch" class="search-input" placeholder="Buscar ciudad..." autocomplete="off" spellcheck="false" aria-label="Buscar ciudad">
+            <button id="clearSearch" class="search-clear" aria-label="Limpiar búsqueda">✕</button>
+        </div>
+        <div id="resultsCount" class="results-count"></div>
+    </div>
+
+    <div id="citiesContainer" class="city-selector"></div>
+
+    <div class="footer">
+        <p data-i18n="footer_copyright">© 18MLS.COM — El MLS inmobiliario más grande del mundo</p>
+        <p data-i18n="footer_tagline">Propiedades Directas · Sin Intermediarios · Transacciones Aseguradas</p>
+        <p style="margin-top: 0.4rem; font-size: 0.6rem;">Colombia v1.0</p>
+    </div>
+</div>
+
+<script>
+    // --------------------------------------------------------------
+    // 1. BLOQUEO DE INTERACCIONES
+    // --------------------------------------------------------------
+    (function() {
+        const blockEvents = ['copy', 'cut', 'paste', 'contextmenu', 'dragstart', 'selectstart'];
+        blockEvents.forEach(eventType => {
+            document.addEventListener(eventType, function(e) {
+                const isSearchInput = e.target.id === 'citySearch' || e.target.closest('#citySearch');
+                if (!isSearchInput) {
                     e.preventDefault();
-                    const searchInput = document.getElementById('marketplace-search');
-                    searchInput.value = depto;
-                    performSearch(depto);
-                });
-                tagsContainer.appendChild(tag);
+                    e.stopPropagation();
+                    return false;
+                }
+                return true;
             });
+        });
+        
+        document.addEventListener('keydown', function(e) {
+            const isSearchInputFocused = document.activeElement && document.activeElement.id === 'citySearch';
+            if ((e.ctrlKey || e.metaKey) && (e.key === 'c' || e.key === 'v' || e.key === 'x' || e.key === 'a')) {
+                if (!isSearchInputFocused) {
+                    e.preventDefault();
+                    return false;
+                }
+            }
+        });
+        
+        let lastTouchEnd = 0;
+        document.addEventListener('touchstart', function(e) {
+            if (e.touches.length > 1) e.preventDefault();
+        }, { passive: false });
+        
+        document.addEventListener('touchend', function(e) {
+            const now = Date.now();
+            if (now - lastTouchEnd <= 300) e.preventDefault();
+            lastTouchEnd = now;
+        }, false);
+    })();
+
+    // --------------------------------------------------------------
+    // 2. DATOS DE CIUDADES DE COLOMBIA (32 DEPARTAMENTOS)
+    // --------------------------------------------------------------
+    const citiesData = [
+        { id: 'leticia', slug: '18mlsleticiaamazonas', flag: '🇨🇴', nameKey: 'leticia_name', subKey: 'leticia_sub', city: 'Leticia', department: 'Amazonas', searchTerms: ['leticia', 'amazonas', 'tabatinga'] },
+        { id: 'medellin', slug: '18mlsmedellinantioquia', flag: '🇨🇴', nameKey: 'medellin_name', subKey: 'medellin_sub', city: 'Medellín', department: 'Antioquia', searchTerms: ['medellin', 'antioquia', 'medallo', 'aburra'] },
+        { id: 'arauca', slug: '18mlsaraucaarauca', flag: '🇨🇴', nameKey: 'arauca_name', subKey: 'arauca_sub', city: 'Arauca', department: 'Arauca', searchTerms: ['arauca'] },
+        { id: 'barranquilla', slug: '18mlsbarranquillaatlantico', flag: '🇨🇴', nameKey: 'barranquilla_name', subKey: 'barranquilla_sub', city: 'Barranquilla', department: 'Atlántico', searchTerms: ['barranquilla', 'atlantic', 'curramba'] },
+        { id: 'bogota', slug: '18mlsbogotacundinamarca', flag: '🇨🇴', nameKey: 'bogota_name', subKey: 'bogota_sub', city: 'Bogotá', department: 'Cundinamarca', searchTerms: ['bogota', 'bogotá', 'capital', 'distrito', 'dc', 'cundinamarca'] },
+        { id: 'cartagena', slug: '18mlscartagenabolivar', flag: '🇨🇴', nameKey: 'cartagena_name', subKey: 'cartagena_sub', city: 'Cartagena', department: 'Bolívar', searchTerms: ['cartagena', 'bolivar', 'heroica'] },
+        { id: 'tunja', slug: '18mlstunjaboyaca', flag: '🇨🇴', nameKey: 'tunja_name', subKey: 'tunja_sub', city: 'Tunja', department: 'Boyacá', searchTerms: ['tunja', 'boyaca'] },
+        { id: 'manizales', slug: '18mlsmanizalescaldas', flag: '🇨🇴', nameKey: 'manizales_name', subKey: 'manizales_sub', city: 'Manizales', department: 'Caldas', searchTerms: ['manizales', 'caldas'] },
+        { id: 'florencia', slug: '18mlsflorenciacaqueta', flag: '🇨🇴', nameKey: 'florencia_name', subKey: 'florencia_sub', city: 'Florencia', department: 'Caquetá', searchTerms: ['florencia', 'caqueta'] },
+        { id: 'yopal', slug: '18mlsyopalcasanare', flag: '🇨🇴', nameKey: 'yopal_name', subKey: 'yopal_sub', city: 'Yopal', department: 'Casanare', searchTerms: ['yopal', 'casanare'] },
+        { id: 'popayan', slug: '18mlspopayancauca', flag: '🇨🇴', nameKey: 'popayan_name', subKey: 'popayan_sub', city: 'Popayán', department: 'Cauca', searchTerms: ['popayan', 'cauca'] },
+        { id: 'valledupar', slug: '18mlsvalleduparcesar', flag: '🇨🇴', nameKey: 'valledupar_name', subKey: 'valledupar_sub', city: 'Valledupar', department: 'Cesar', searchTerms: ['valledupar', 'cesar'] },
+        { id: 'quibdo', slug: '18mlsquibdochoco', flag: '🇨🇴', nameKey: 'quibdo_name', subKey: 'quibdo_sub', city: 'Quibdó', department: 'Chocó', searchTerms: ['quibdo', 'choco'] },
+        { id: 'monteria', slug: '18mlsmonteriacordoba', flag: '🇨🇴', nameKey: 'monteria_name', subKey: 'monteria_sub', city: 'Montería', department: 'Córdoba', searchTerms: ['monteria', 'cordoba'] },
+        { id: 'soacha', slug: '18mlssoachacundinamarca', flag: '🇨🇴', nameKey: 'soacha_name', subKey: 'soacha_sub', city: 'Soacha', department: 'Cundinamarca', searchTerms: ['soacha', 'cundinamarca'] },
+        { id: 'puertoinirida', slug: '18mlspuertoiniridaguainia', flag: '🇨🇴', nameKey: 'puertoinirida_name', subKey: 'puertoinirida_sub', city: 'Puerto Inírida', department: 'Guainía', searchTerms: ['puerto inirida', 'guainia'] },
+        { id: 'sanjoseguaviare', slug: '18mlssanjosedelguaviareguaviare', flag: '🇨🇴', nameKey: 'sanjosedelguaviare_name', subKey: 'sanjosedelguaviare_sub', city: 'San José del Guaviare', department: 'Guaviare', searchTerms: ['san jose del guaviare', 'guaviare'] },
+        { id: 'neiva', slug: '18mlsnevahuila', flag: '🇨🇴', nameKey: 'neiva_name', subKey: 'neiva_sub', city: 'Neiva', department: 'Huila', searchTerms: ['neiva', 'huila'] },
+        { id: 'riohacha', slug: '18mlsriohachalaguajira', flag: '🇨🇴', nameKey: 'riohacha_name', subKey: 'riohacha_sub', city: 'Riohacha', department: 'La Guajira', searchTerms: ['riohacha', 'guajira'] },
+        { id: 'santamarta', slug: '18mlssantamartamagdalena', flag: '🇨🇴', nameKey: 'santamarta_name', subKey: 'santamarta_sub', city: 'Santa Marta', department: 'Magdalena', searchTerms: ['santa marta', 'magdalena'] },
+        { id: 'villavicencio', slug: '18mlsvillavicenciometa', flag: '🇨🇴', nameKey: 'villavicencio_name', subKey: 'villavicencio_sub', city: 'Villavicencio', department: 'Meta', searchTerms: ['villavicencio', 'meta'] },
+        { id: 'pasto', slug: '18mlspastonarino', flag: '🇨🇴', nameKey: 'pasto_name', subKey: 'pasto_sub', city: 'Pasto', department: 'Nariño', searchTerms: ['pasto', 'narino'] },
+        { id: 'cucuta', slug: '18mlscucutanortedesantander', flag: '🇨🇴', nameKey: 'cucuta_name', subKey: 'cucuta_sub', city: 'Cúcuta', department: 'Norte de Santander', searchTerms: ['cucuta', 'norte de santander'] },
+        { id: 'mocoa', slug: '18mlsmocoaputumayo', flag: '🇨🇴', nameKey: 'mocoa_name', subKey: 'mocoa_sub', city: 'Mocoa', department: 'Putumayo', searchTerms: ['mocoa', 'putumayo'] },
+        { id: 'armenia', slug: '18mlsarmeniaquindio', flag: '🇨🇴', nameKey: 'armenia_name', subKey: 'armenia_sub', city: 'Armenia', department: 'Quindío', searchTerms: ['armenia', 'quindio'] },
+        { id: 'pereira', slug: '18mlspereirarisaralda', flag: '🇨🇴', nameKey: 'pereira_name', subKey: 'pereira_sub', city: 'Pereira', department: 'Risaralda', searchTerms: ['pereira', 'risaralda'] },
+        { id: 'sanandres', slug: '18mlssanandresprovidencia', flag: '🇨🇴', nameKey: 'sanandres_name', subKey: 'sanandres_sub', city: 'San Andrés', department: 'San Andrés y Providencia', searchTerms: ['san andres', 'providencia', 'islas'] },
+        { id: 'bucaramanga', slug: '18mlsbucaramangasantander', flag: '🇨🇴', nameKey: 'bucaramanga_name', subKey: 'bucaramanga_sub', city: 'Bucaramanga', department: 'Santander', searchTerms: ['bucaramanga', 'santander', 'bucara'] },
+        { id: 'sincelejo', slug: '18mlssincelejosucre', flag: '🇨🇴', nameKey: 'sincelejo_name', subKey: 'sincelejo_sub', city: 'Sincelejo', department: 'Sucre', searchTerms: ['sincelejo', 'sucre'] },
+        { id: 'ibague', slug: '18mlsibaguetolima', flag: '🇨🇴', nameKey: 'ibague_name', subKey: 'ibague_sub', city: 'Ibagué', department: 'Tolima', searchTerms: ['ibague', 'tolima'] },
+        { id: 'cali', slug: '18mlscalivalle', flag: '🇨🇴', nameKey: 'cali_name', subKey: 'cali_sub', city: 'Cali', department: 'Valle del Cauca', searchTerms: ['cali', 'valle', 'valle del cauca', 'calenos'] },
+        { id: 'mitupu', slug: '18mlsmitupuvauapes', flag: '🇨🇴', nameKey: 'mitupu_name', subKey: 'mitupu_sub', city: 'Mitú', department: 'Vaupés', searchTerms: ['mitu', 'vaupe'] },
+        { id: 'puertocarreno', slug: '18mlspuertocarrenovichada', flag: '🇨🇴', nameKey: 'puertocarreno_name', subKey: 'puertocarreno_sub', city: 'Puerto Carreño', department: 'Vichada', searchTerms: ['puerto carreno', 'vichada'] }
+    ];
+
+    // --------------------------------------------------------------
+    // 3. TRADUCCIONES
+    // --------------------------------------------------------------
+    const translations = {
+        es: {
+            back_link: "← Volver a países",
+            tagline: "Colombia · El MLS inmobiliario más grande del mundo",
+            title: "SELECCIONA TU CIUDAD",
+            subtitle: "Encuentra propiedades en las principales ciudades de Colombia. Compra, vende e invierte directamente entre propietarios.",
+            leticia_name: "Leticia", leticia_sub: "Capital del Amazonas",
+            medellin_name: "Medellín", medellin_sub: "Capital de la Montaña · Antioquia",
+            arauca_name: "Arauca", arauca_sub: "Capital del Arauca",
+            barranquilla_name: "Barranquilla", barranquilla_sub: "Puerta de Oro de Colombia · Atlántico",
+            bogota_name: "Bogotá", bogota_sub: "Distrito Capital · Cundinamarca",
+            cartagena_name: "Cartagena", cartagena_sub: "La Heroica · Bolívar",
+            tunja_name: "Tunja", tunja_sub: "Capital de Boyacá",
+            manizales_name: "Manizales", manizales_sub: "Capital de Caldas",
+            florencia_name: "Florencia", florencia_sub: "Capital de Caquetá",
+            yopal_name: "Yopal", yopal_sub: "Capital de Casanare",
+            popayan_name: "Popayán", popayan_sub: "Capital de Cauca",
+            valledupar_name: "Valledupar", valledupar_sub: "Capital del Cesar",
+            quibdo_name: "Quibdó", quibdo_sub: "Capital del Chocó",
+            monteria_name: "Montería", monteria_sub: "Capital de Córdoba",
+            soacha_name: "Soacha", soacha_sub: "Cundinamarca",
+            puertoinirida_name: "Puerto Inírida", puertoinirida_sub: "Capital de Guainía",
+            sanjosedelguaviare_name: "San José del Guaviare", sanjosedelguaviare_sub: "Capital del Guaviare",
+            neiva_name: "Neiva", neiva_sub: "Capital del Huila",
+            riohacha_name: "Riohacha", riohacha_sub: "Capital de La Guajira",
+            santamarta_name: "Santa Marta", santamarta_sub: "Capital del Magdalena",
+            villavicencio_name: "Villavicencio", villavicencio_sub: "Capital del Meta",
+            pasto_name: "Pasto", pasto_sub: "Capital de Nariño",
+            cucuta_name: "Cúcuta", cucuta_sub: "Capital de Norte de Santander",
+            mocoa_name: "Mocoa", mocoa_sub: "Capital del Putumayo",
+            armenia_name: "Armenia", armenia_sub: "Capital del Quindío",
+            pereira_name: "Pereira", pereira_sub: "Capital de Risaralda",
+            sanandres_name: "San Andrés", sanandres_sub: "San Andrés y Providencia",
+            bucaramanga_name: "Bucaramanga", bucaramanga_sub: "Capital de Santander",
+            sincelejo_name: "Sincelejo", sincelejo_sub: "Capital de Sucre",
+            ibague_name: "Ibagué", ibague_sub: "Capital del Tolima",
+            cali_name: "Cali", cali_sub: "Sucursal del Cielo · Valle del Cauca",
+            mitupu_name: "Mitú", mitupu_sub: "Capital de Vaupés",
+            puertocarreno_name: "Puerto Carreño", puertocarreno_sub: "Capital de Vichada",
+            footer_copyright: "© 18MLS.COM — El MLS inmobiliario más grande del mundo",
+            footer_tagline: "Propiedades Directas · Sin Intermediarios · Transacciones Aseguradas",
+            no_results: "No se encontraron ciudades. Prueba con otro término de búsqueda."
+        },
+        en: {
+            back_link: "← Back to countries",
+            tagline: "Colombia · The largest real estate MLS in the world",
+            title: "SELECT YOUR CITY",
+            subtitle: "Find properties in Colombia's main cities. Buy, sell and invest directly between owners.",
+            leticia_name: "Leticia", leticia_sub: "Amazonas Capital",
+            medellin_name: "Medellín", medellin_sub: "Mountain Capital · Antioquia",
+            arauca_name: "Arauca", arauca_sub: "Arauca Capital",
+            barranquilla_name: "Barranquilla", barranquilla_sub: "Colombia's Golden Gate · Atlántico",
+            bogota_name: "Bogotá", bogota_sub: "Capital District · Cundinamarca",
+            cartagena_name: "Cartagena", cartagena_sub: "The Heroic City · Bolívar",
+            tunja_name: "Tunja", tunja_sub: "Boyacá Capital",
+            manizales_name: "Manizales", manizales_sub: "Caldas Capital",
+            florencia_name: "Florencia", florencia_sub: "Caquetá Capital",
+            yopal_name: "Yopal", yopal_sub: "Casanare Capital",
+            popayan_name: "Popayán", popayan_sub: "Cauca Capital",
+            valledupar_name: "Valledupar", valledupar_sub: "Cesar Capital",
+            quibdo_name: "Quibdó", quibdo_sub: "Chocó Capital",
+            monteria_name: "Montería", monteria_sub: "Córdoba Capital",
+            soacha_name: "Soacha", soacha_sub: "Cundinamarca",
+            puertoinirida_name: "Puerto Inírida", puertoinirida_sub: "Guainía Capital",
+            sanjosedelguaviare_name: "San José del Guaviare", sanjosedelguaviare_sub: "Guaviare Capital",
+            neiva_name: "Neiva", neiva_sub: "Huila Capital",
+            riohacha_name: "Riohacha", riohacha_sub: "La Guajira Capital",
+            santamarta_name: "Santa Marta", santamarta_sub: "Magdalena Capital",
+            villavicencio_name: "Villavicencio", villavicencio_sub: "Meta Capital",
+            pasto_name: "Pasto", pasto_sub: "Nariño Capital",
+            cucuta_name: "Cúcuta", cucuta_sub: "Norte de Santander Capital",
+            mocoa_name: "Mocoa", mocoa_sub: "Putumayo Capital",
+            armenia_name: "Armenia", armenia_sub: "Quindío Capital",
+            pereira_name: "Pereira", pereira_sub: "Risaralda Capital",
+            sanandres_name: "San Andrés", sanandres_sub: "San Andrés and Providencia",
+            bucaramanga_name: "Bucaramanga", bucaramanga_sub: "Santander Capital",
+            sincelejo_name: "Sincelejo", sincelejo_sub: "Sucre Capital",
+            ibague_name: "Ibagué", ibague_sub: "Tolima Capital",
+            cali_name: "Cali", cali_sub: "Valle del Cauca Capital · Branch of Heaven",
+            mitupu_name: "Mitú", mitupu_sub: "Vaupés Capital",
+            puertocarreno_name: "Puerto Carreño", puertocarreno_sub: "Vichada Capital",
+            footer_copyright: "© 18MLS.COM — The largest real estate MLS in the world",
+            footer_tagline: "direct properties · no intermediaries · smart investing",
+            no_results: "No cities found. Try another search term."
+        }
+    };
+
+    // --------------------------------------------------------------
+    // 4. LÓGICA DE RENDER Y BÚSQUEDA
+    // --------------------------------------------------------------
+    let currentLang = 'es';
+    let currentFilter = '';
+
+    function normalizeString(str) {
+        return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^\w\s]/g, '');
+    }
+
+    function getSearchableTextForCity(city, langData) {
+        const cityName = langData[city.nameKey] || city.city;
+        const citySub = langData[city.subKey] || city.department;
+        const baseTerms = city.searchTerms || [];
+        let combined = `${cityName} ${citySub} ${city.department} ${baseTerms.join(' ')}`.toLowerCase();
+        return normalizeString(combined);
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+
+    function renderCities() {
+        const container = document.getElementById('citiesContainer');
+        if (!container) return;
+        const langData = translations[currentLang];
+        const filterNorm = normalizeString(currentFilter);
+        
+        let html = '';
+        let visibleCount = 0;
+        
+        citiesData.forEach(city => {
+            const searchableText = getSearchableTextForCity(city, langData);
+            const matches = filterNorm === '' || searchableText.includes(filterNorm);
+            if (matches) visibleCount++;
+            
+            const cityName = langData[city.nameKey] || city.city;
+            const citySub = langData[city.subKey] || city.department;
+            const displayStyle = matches ? '' : 'hidden-card';
+            
+            // URL: https://co.qrp2p.com/vendedores/ + slug (con prefijo 18mls)
+            const fullUrl = `https://co.qrp2p.com/vendedores/${city.slug}`;
+            
+            html += `
+                <a href="${fullUrl}" class="city-card ${displayStyle}" target="_self" rel="noopener noreferrer" data-city-id="${city.id}">
+                    <div class="city-flag">${city.flag}</div>
+                    <div class="city-name">${escapeHtml(cityName)}</div>
+                    <div class="city-sub">${escapeHtml(citySub)}</div>
+                    <div class="divider"></div>
+                    <div class="city-domain">${fullUrl}</div>
+                </a>
+            `;
+        });
+        
+        if (visibleCount === 0 && currentFilter !== '') {
+            html += `<div class="no-results">${escapeHtml(langData.no_results)}</div>`;
         }
         
-        // Contador de resultados
-        function updateResultCount(count) {
-            const counter = document.getElementById('result-count');
-            if (counter) {
-                if (count === cities.length) {
-                    counter.innerHTML = `🇨🇴 ${count} ciudades y municipios disponibles en Colombia | 0% Comisión`;
-                } else {
-                    counter.innerHTML = `🔍 ${count} resultado${count !== 1 ? 's' : ''} encontrado${count !== 1 ? 's' : ''}`;
-                }
+        container.innerHTML = html;
+        
+        const resultsSpan = document.getElementById('resultsCount');
+        if (resultsSpan) {
+            if (currentFilter === '') {
+                resultsSpan.innerHTML = '';
+            } else {
+                const resultText = currentLang === 'es' 
+                    ? `${visibleCount} resultado${visibleCount !== 1 ? 's' : ''} encontrado${visibleCount !== 1 ? 's' : ''}`
+                    : `${visibleCount} result${visibleCount !== 1 ? 's' : ''} found`;
+                resultsSpan.innerHTML = resultText;
             }
         }
         
-        // PWA install
-        let deferredPrompt;
-        const installBtn = document.getElementById('install-button');
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            installBtn.style.display = 'block';
-            installBtn.addEventListener('click', () => {
-                installBtn.style.display = 'none';
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
-            });
+        const clearBtn = document.getElementById('clearSearch');
+        if (clearBtn) {
+            clearBtn.style.display = currentFilter !== '' ? 'block' : 'none';
+        }
+    }
+
+    function setLanguage(lang) {
+        if (!translations[lang]) return;
+        currentLang = lang;
+        const elements = document.querySelectorAll('[data-i18n]');
+        elements.forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (translations[lang][key] !== undefined) {
+                if (key === 'title') {
+                    el.innerHTML = translations[lang][key];
+                } else {
+                    el.innerText = translations[lang][key];
+                }
+            }
+        });
+        const searchInput = document.getElementById('citySearch');
+        if (searchInput) {
+            searchInput.placeholder = currentLang === 'es' ? 'Buscar ciudad...' : 'Search city...';
+        }
+        renderCities();
+        
+        document.getElementById('lang-es').classList.toggle('active', lang === 'es');
+        document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+        document.documentElement.lang = lang === 'es' ? 'es' : 'en';
+        localStorage.setItem('18mls_lang_colombia', lang);
+    }
+
+    let debounceTimer;
+    function onSearchInput(value) {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+            currentFilter = value;
+            renderCities();
+        }, 180);
+    }
+
+    function initSearch() {
+        const searchInput = document.getElementById('citySearch');
+        const clearBtn = document.getElementById('clearSearch');
+        if (!searchInput) return;
+        
+        searchInput.addEventListener('input', (e) => {
+            onSearchInput(e.target.value);
         });
         
-        // Offline indicator
-        const offlineDiv = document.getElementById('offline-indicator');
-        function updateOnlineStatus() {
-            if (navigator.onLine) offlineDiv.classList.remove('show');
-            else offlineDiv.classList.add('show');
-        }
-        window.addEventListener('online', updateOnlineStatus);
-        window.addEventListener('offline', updateOnlineStatus);
-        updateOnlineStatus();
-        
-        function normalizeText(text) {
-            return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase();
-        }
-        
-        function renderCities(cityList) {
-            const container = document.getElementById('cities-container');
-            container.innerHTML = '';
-            
-            cityList.forEach((city, idx) => {
-                const card = document.createElement('div');
-                card.className = 'city-card';
-                card.style.animationDelay = `${idx * 0.015}s`;
-                
-                card.innerHTML = `
-                    <div class="city-image" style="background-image: url('${city.flagUrl}'); background-size: cover; background-position: center;">
-                    </div>
-                    <div class="city-info">
-                        <h3 class="city-name">
-                            <img class="small-flag" src="${city.flagUrl}" alt="Colombia" onerror="this.style.display='none';">
-                            ${city.name}
-                        </h3>
-                        <p class="city-desc">${city.description}</p>
-                        <div class="city-desc departamento">📌 ${city.departamento}</div>
-                        <div class="route-hint">${baseDomain}${city.link.replace(baseDomain, '')}</div>
-                        <a href="${city.link}" class="city-link" target="_blank" rel="noopener noreferrer">Ingresar al Marketplace</a>
-                    </div>
-                `;
-                
-                const imgDiv = card.querySelector('.city-image');
-                if (imgDiv) {
-                    const testImg = new Image();
-                    testImg.onerror = () => {
-                        imgDiv.style.backgroundImage = "none";
-                        imgDiv.style.backgroundColor = "#f0f0f0";
-                        imgDiv.innerHTML = '<div style="display:flex; align-items:center; justify-content:center; height:100%; font-size:2.5rem;">🇨🇴</div>';
-                    };
-                    testImg.src = city.flagUrl;
-                }
-                
-                card.addEventListener('click', (e) => {
-                    if (e.target.tagName !== 'A' && !e.target.closest('.city-link')) {
-                        window.open(city.link, '_blank');
-                    }
-                });
-                
-                container.appendChild(card);
-            });
-            
-            updateResultCount(cityList.length);
-        }
-        
-        function performSearch(searchTerm) {
-            const normalized = normalizeText(searchTerm);
-            const filtered = cities.filter(city => 
-                normalizeText(city.name).includes(normalized) || 
-                normalizeText(city.ciudad).includes(normalized) ||
-                normalizeText(city.departamento).includes(normalized) ||
-                normalizeText(city.description).includes(normalized)
-            );
-            renderCities(filtered);
-            return filtered.length ? filtered[0] : null;
-        }
-        
-        document.addEventListener('DOMContentLoaded', () => {
-            renderCities(cities);
-            const searchInput = document.getElementById('marketplace-search');
-            searchInput.addEventListener('input', (e) => {
-                performSearch(e.target.value);
-            });
-            searchInput.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') {
-                    const first = performSearch(e.target.value);
-                    if (first) window.open(first.link, '_blank');
-                }
-            });
-        });
-        
-        // Service Worker
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('✅ SW registrado:', reg.scope))
-                    .catch(err => console.log('❌ SW error:', err));
+        if (clearBtn) {
+            clearBtn.addEventListener('click', () => {
+                searchInput.value = '';
+                onSearchInput('');
+                searchInput.focus();
             });
         }
-    </script>
+    }
+
+    function loadInitialLanguage() {
+        const savedLang = localStorage.getItem('18mls_lang_colombia');
+        if (savedLang && (savedLang === 'es' || savedLang === 'en')) {
+            setLanguage(savedLang);
+        } else {
+            const browserLang = navigator.language || '';
+            setLanguage(browserLang.startsWith('es') ? 'es' : 'en');
+        }
+    }
+
+    function bindLanguageEvents() {
+        document.getElementById('lang-es').addEventListener('click', () => setLanguage('es'));
+        document.getElementById('lang-en').addEventListener('click', () => setLanguage('en'));
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        initSearch();
+        bindLanguageEvents();
+        loadInitialLanguage();
+        renderCities();
+        
+        const searchInputPlace = document.getElementById('citySearch');
+        if (searchInputPlace) {
+            searchInputPlace.placeholder = currentLang === 'es' ? 'Buscar ciudad...' : 'Search city...';
+        }
+    });
+</script>
 </body>
 </html>
