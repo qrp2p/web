@@ -554,42 +554,42 @@
     })();
 
     // --------------------------------------------------------------
-    // 2. DATOS DE CIUDADES DE COLOMBIA (32 DEPARTAMENTOS)
+    // 2. DATOS DE CIUDADES DE COLOMBIA CON RUTAS PERSONALIZADAS
     // --------------------------------------------------------------
     const citiesData = [
-        { id: 'leticia', slug: '18mlsleticiaamazonas', flag: '🇨🇴', nameKey: 'leticia_name', subKey: 'leticia_sub', city: 'Leticia', department: 'Amazonas', searchTerms: ['leticia', 'amazonas', 'tabatinga'] },
-        { id: 'medellin', slug: '18mlsmedellinantioquia', flag: '🇨🇴', nameKey: 'medellin_name', subKey: 'medellin_sub', city: 'Medellín', department: 'Antioquia', searchTerms: ['medellin', 'antioquia', 'medallo', 'aburra'] },
-        { id: 'arauca', slug: '18mlsaraucaarauca', flag: '🇨🇴', nameKey: 'arauca_name', subKey: 'arauca_sub', city: 'Arauca', department: 'Arauca', searchTerms: ['arauca'] },
-        { id: 'barranquilla', slug: '18mlsbarranquillaatlantico', flag: '🇨🇴', nameKey: 'barranquilla_name', subKey: 'barranquilla_sub', city: 'Barranquilla', department: 'Atlántico', searchTerms: ['barranquilla', 'atlantic', 'curramba'] },
-        { id: 'bogota', slug: '18mlsbogotacundinamarca', flag: '🇨🇴', nameKey: 'bogota_name', subKey: 'bogota_sub', city: 'Bogotá', department: 'Cundinamarca', searchTerms: ['bogota', 'bogotá', 'capital', 'distrito', 'dc', 'cundinamarca'] },
-        { id: 'cartagena', slug: '18mlscartagenabolivar', flag: '🇨🇴', nameKey: 'cartagena_name', subKey: 'cartagena_sub', city: 'Cartagena', department: 'Bolívar', searchTerms: ['cartagena', 'bolivar', 'heroica'] },
-        { id: 'tunja', slug: '18mlstunjaboyaca', flag: '🇨🇴', nameKey: 'tunja_name', subKey: 'tunja_sub', city: 'Tunja', department: 'Boyacá', searchTerms: ['tunja', 'boyaca'] },
-        { id: 'manizales', slug: '18mlsmanizalescaldas', flag: '🇨🇴', nameKey: 'manizales_name', subKey: 'manizales_sub', city: 'Manizales', department: 'Caldas', searchTerms: ['manizales', 'caldas'] },
-        { id: 'florencia', slug: '18mlsflorenciacaqueta', flag: '🇨🇴', nameKey: 'florencia_name', subKey: 'florencia_sub', city: 'Florencia', department: 'Caquetá', searchTerms: ['florencia', 'caqueta'] },
-        { id: 'yopal', slug: '18mlsyopalcasanare', flag: '🇨🇴', nameKey: 'yopal_name', subKey: 'yopal_sub', city: 'Yopal', department: 'Casanare', searchTerms: ['yopal', 'casanare'] },
-        { id: 'popayan', slug: '18mlspopayancauca', flag: '🇨🇴', nameKey: 'popayan_name', subKey: 'popayan_sub', city: 'Popayán', department: 'Cauca', searchTerms: ['popayan', 'cauca'] },
-        { id: 'valledupar', slug: '18mlsvalleduparcesar', flag: '🇨🇴', nameKey: 'valledupar_name', subKey: 'valledupar_sub', city: 'Valledupar', department: 'Cesar', searchTerms: ['valledupar', 'cesar'] },
-        { id: 'quibdo', slug: '18mlsquibdochoco', flag: '🇨🇴', nameKey: 'quibdo_name', subKey: 'quibdo_sub', city: 'Quibdó', department: 'Chocó', searchTerms: ['quibdo', 'choco'] },
-        { id: 'monteria', slug: '18mlsmonteriacordoba', flag: '🇨🇴', nameKey: 'monteria_name', subKey: 'monteria_sub', city: 'Montería', department: 'Córdoba', searchTerms: ['monteria', 'cordoba'] },
-        { id: 'soacha', slug: '18mlssoachacundinamarca', flag: '🇨🇴', nameKey: 'soacha_name', subKey: 'soacha_sub', city: 'Soacha', department: 'Cundinamarca', searchTerms: ['soacha', 'cundinamarca'] },
-        { id: 'puertoinirida', slug: '18mlspuertoiniridaguainia', flag: '🇨🇴', nameKey: 'puertoinirida_name', subKey: 'puertoinirida_sub', city: 'Puerto Inírida', department: 'Guainía', searchTerms: ['puerto inirida', 'guainia'] },
-        { id: 'sanjoseguaviare', slug: '18mlssanjosedelguaviareguaviare', flag: '🇨🇴', nameKey: 'sanjosedelguaviare_name', subKey: 'sanjosedelguaviare_sub', city: 'San José del Guaviare', department: 'Guaviare', searchTerms: ['san jose del guaviare', 'guaviare'] },
-        { id: 'neiva', slug: '18mlsnevahuila', flag: '🇨🇴', nameKey: 'neiva_name', subKey: 'neiva_sub', city: 'Neiva', department: 'Huila', searchTerms: ['neiva', 'huila'] },
-        { id: 'riohacha', slug: '18mlsriohachalaguajira', flag: '🇨🇴', nameKey: 'riohacha_name', subKey: 'riohacha_sub', city: 'Riohacha', department: 'La Guajira', searchTerms: ['riohacha', 'guajira'] },
-        { id: 'santamarta', slug: '18mlssantamartamagdalena', flag: '🇨🇴', nameKey: 'santamarta_name', subKey: 'santamarta_sub', city: 'Santa Marta', department: 'Magdalena', searchTerms: ['santa marta', 'magdalena'] },
-        { id: 'villavicencio', slug: '18mlsvillavicenciometa', flag: '🇨🇴', nameKey: 'villavicencio_name', subKey: 'villavicencio_sub', city: 'Villavicencio', department: 'Meta', searchTerms: ['villavicencio', 'meta'] },
-        { id: 'pasto', slug: '18mlspastonarino', flag: '🇨🇴', nameKey: 'pasto_name', subKey: 'pasto_sub', city: 'Pasto', department: 'Nariño', searchTerms: ['pasto', 'narino'] },
-        { id: 'cucuta', slug: '18mlscucutanortedesantander', flag: '🇨🇴', nameKey: 'cucuta_name', subKey: 'cucuta_sub', city: 'Cúcuta', department: 'Norte de Santander', searchTerms: ['cucuta', 'norte de santander'] },
-        { id: 'mocoa', slug: '18mlsmocoaputumayo', flag: '🇨🇴', nameKey: 'mocoa_name', subKey: 'mocoa_sub', city: 'Mocoa', department: 'Putumayo', searchTerms: ['mocoa', 'putumayo'] },
-        { id: 'armenia', slug: '18mlsarmeniaquindio', flag: '🇨🇴', nameKey: 'armenia_name', subKey: 'armenia_sub', city: 'Armenia', department: 'Quindío', searchTerms: ['armenia', 'quindio'] },
-        { id: 'pereira', slug: '18mlspereirarisaralda', flag: '🇨🇴', nameKey: 'pereira_name', subKey: 'pereira_sub', city: 'Pereira', department: 'Risaralda', searchTerms: ['pereira', 'risaralda'] },
-        { id: 'sanandres', slug: '18mlssanandresprovidencia', flag: '🇨🇴', nameKey: 'sanandres_name', subKey: 'sanandres_sub', city: 'San Andrés', department: 'San Andrés y Providencia', searchTerms: ['san andres', 'providencia', 'islas'] },
-        { id: 'bucaramanga', slug: '18mlsbucaramangasantander', flag: '🇨🇴', nameKey: 'bucaramanga_name', subKey: 'bucaramanga_sub', city: 'Bucaramanga', department: 'Santander', searchTerms: ['bucaramanga', 'santander', 'bucara'] },
-        { id: 'sincelejo', slug: '18mlssincelejosucre', flag: '🇨🇴', nameKey: 'sincelejo_name', subKey: 'sincelejo_sub', city: 'Sincelejo', department: 'Sucre', searchTerms: ['sincelejo', 'sucre'] },
-        { id: 'ibague', slug: '18mlsibaguetolima', flag: '🇨🇴', nameKey: 'ibague_name', subKey: 'ibague_sub', city: 'Ibagué', department: 'Tolima', searchTerms: ['ibague', 'tolima'] },
-        { id: 'cali', slug: '18mlscalivalle', flag: '🇨🇴', nameKey: 'cali_name', subKey: 'cali_sub', city: 'Cali', department: 'Valle del Cauca', searchTerms: ['cali', 'valle', 'valle del cauca', 'calenos'] },
-        { id: 'mitupu', slug: '18mlsmitupuvauapes', flag: '🇨🇴', nameKey: 'mitupu_name', subKey: 'mitupu_sub', city: 'Mitú', department: 'Vaupés', searchTerms: ['mitu', 'vaupe'] },
-        { id: 'puertocarreno', slug: '18mlspuertocarrenovichada', flag: '🇨🇴', nameKey: 'puertocarreno_name', subKey: 'puertocarreno_sub', city: 'Puerto Carreño', department: 'Vichada', searchTerms: ['puerto carreno', 'vichada'] }
+        { id: 'leticia', slug: 'leticiaamazonas', flag: '🇨🇴', nameKey: 'leticia_name', subKey: 'leticia_sub', city: 'Leticia', department: 'Amazonas', searchTerms: ['leticia', 'amazonas', 'tabatinga'] },
+        { id: 'medellin', slug: 'medellinantioquia', flag: '🇨🇴', nameKey: 'medellin_name', subKey: 'medellin_sub', city: 'Medellín', department: 'Antioquia', searchTerms: ['medellin', 'antioquia', 'medallo', 'aburra'] },
+        { id: 'arauca', slug: 'araucaarauca', flag: '🇨🇴', nameKey: 'arauca_name', subKey: 'arauca_sub', city: 'Arauca', department: 'Arauca', searchTerms: ['arauca'] },
+        { id: 'barranquilla', slug: 'barranquillaatlantico', flag: '🇨🇴', nameKey: 'barranquilla_name', subKey: 'barranquilla_sub', city: 'Barranquilla', department: 'Atlántico', searchTerms: ['barranquilla', 'atlantic', 'curramba'] },
+        { id: 'bogota', slug: 'bogotacundinamarca', flag: '🇨🇴', nameKey: 'bogota_name', subKey: 'bogota_sub', city: 'Bogotá', department: 'Cundinamarca', searchTerms: ['bogota', 'bogotá', 'capital', 'distrito', 'dc', 'cundinamarca'] },
+        { id: 'cartagena', slug: 'cartagenabolivar', flag: '🇨🇴', nameKey: 'cartagena_name', subKey: 'cartagena_sub', city: 'Cartagena', department: 'Bolívar', searchTerms: ['cartagena', 'bolivar', 'heroica'] },
+        { id: 'tunja', slug: 'tunjaboyaca', flag: '🇨🇴', nameKey: 'tunja_name', subKey: 'tunja_sub', city: 'Tunja', department: 'Boyacá', searchTerms: ['tunja', 'boyaca'] },
+        { id: 'manizales', slug: 'manizalescaldas', flag: '🇨🇴', nameKey: 'manizales_name', subKey: 'manizales_sub', city: 'Manizales', department: 'Caldas', searchTerms: ['manizales', 'caldas'] },
+        { id: 'florencia', slug: 'florenciacaqueta', flag: '🇨🇴', nameKey: 'florencia_name', subKey: 'florencia_sub', city: 'Florencia', department: 'Caquetá', searchTerms: ['florencia', 'caqueta'] },
+        { id: 'yopal', slug: 'yopalcasanare', flag: '🇨🇴', nameKey: 'yopal_name', subKey: 'yopal_sub', city: 'Yopal', department: 'Casanare', searchTerms: ['yopal', 'casanare'] },
+        { id: 'popayan', slug: 'popayancauca', flag: '🇨🇴', nameKey: 'popayan_name', subKey: 'popayan_sub', city: 'Popayán', department: 'Cauca', searchTerms: ['popayan', 'cauca'] },
+        { id: 'valledupar', slug: 'valleduparcesar', flag: '🇨🇴', nameKey: 'valledupar_name', subKey: 'valledupar_sub', city: 'Valledupar', department: 'Cesar', searchTerms: ['valledupar', 'cesar'] },
+        { id: 'quibdo', slug: 'quibdochoco', flag: '🇨🇴', nameKey: 'quibdo_name', subKey: 'quibdo_sub', city: 'Quibdó', department: 'Chocó', searchTerms: ['quibdo', 'choco'] },
+        { id: 'monteria', slug: 'monteriacordoba', flag: '🇨🇴', nameKey: 'monteria_name', subKey: 'monteria_sub', city: 'Montería', department: 'Córdoba', searchTerms: ['monteria', 'cordoba'] },
+        { id: 'soacha', slug: 'soachacundinamarca', flag: '🇨🇴', nameKey: 'soacha_name', subKey: 'soacha_sub', city: 'Soacha', department: 'Cundinamarca', searchTerms: ['soacha', 'cundinamarca'] },
+        { id: 'puertoinirida', slug: 'puertoiniridaguainia', flag: '🇨🇴', nameKey: 'puertoinirida_name', subKey: 'puertoinirida_sub', city: 'Puerto Inírida', department: 'Guainía', searchTerms: ['puerto inirida', 'guainia'] },
+        { id: 'sanjoseguaviare', slug: 'sanjosedelguaviareguaviare', flag: '🇨🇴', nameKey: 'sanjosedelguaviare_name', subKey: 'sanjosedelguaviare_sub', city: 'San José del Guaviare', department: 'Guaviare', searchTerms: ['san jose del guaviare', 'guaviare'] },
+        { id: 'neiva', slug: 'nevahuila', flag: '🇨🇴', nameKey: 'neiva_name', subKey: 'neiva_sub', city: 'Neiva', department: 'Huila', searchTerms: ['neiva', 'huila'] },
+        { id: 'riohacha', slug: 'riohachalaguajira', flag: '🇨🇴', nameKey: 'riohacha_name', subKey: 'riohacha_sub', city: 'Riohacha', department: 'La Guajira', searchTerms: ['riohacha', 'guajira'] },
+        { id: 'santamarta', slug: 'santamartamagdalena', flag: '🇨🇴', nameKey: 'santamarta_name', subKey: 'santamarta_sub', city: 'Santa Marta', department: 'Magdalena', searchTerms: ['santa marta', 'magdalena'] },
+        { id: 'villavicencio', slug: 'villavicenciometa', flag: '🇨🇴', nameKey: 'villavicencio_name', subKey: 'villavicencio_sub', city: 'Villavicencio', department: 'Meta', searchTerms: ['villavicencio', 'meta'] },
+        { id: 'pasto', slug: 'pastonarino', flag: '🇨🇴', nameKey: 'pasto_name', subKey: 'pasto_sub', city: 'Pasto', department: 'Nariño', searchTerms: ['pasto', 'narino'] },
+        { id: 'cucuta', slug: 'cucutanortedesantander', flag: '🇨🇴', nameKey: 'cucuta_name', subKey: 'cucuta_sub', city: 'Cúcuta', department: 'Norte de Santander', searchTerms: ['cucuta', 'norte de santander'] },
+        { id: 'mocoa', slug: 'mocoaputumayo', flag: '🇨🇴', nameKey: 'mocoa_name', subKey: 'mocoa_sub', city: 'Mocoa', department: 'Putumayo', searchTerms: ['mocoa', 'putumayo'] },
+        { id: 'armenia', slug: 'armeniaquindio', flag: '🇨🇴', nameKey: 'armenia_name', subKey: 'armenia_sub', city: 'Armenia', department: 'Quindío', searchTerms: ['armenia', 'quindio'] },
+        { id: 'pereira', slug: 'pereirarisaralda', flag: '🇨🇴', nameKey: 'pereira_name', subKey: 'pereira_sub', city: 'Pereira', department: 'Risaralda', searchTerms: ['pereira', 'risaralda'] },
+        { id: 'sanandres', slug: 'sanandresprovidencia', flag: '🇨🇴', nameKey: 'sanandres_name', subKey: 'sanandres_sub', city: 'San Andrés', department: 'San Andrés y Providencia', searchTerms: ['san andres', 'providencia', 'islas'] },
+        { id: 'bucaramanga', slug: 'bucaramangasantander', flag: '🇨🇴', nameKey: 'bucaramanga_name', subKey: 'bucaramanga_sub', city: 'Bucaramanga', department: 'Santander', searchTerms: ['bucaramanga', 'santander', 'bucara'] },
+        { id: 'sincelejo', slug: 'sincelejosucre', flag: '🇨🇴', nameKey: 'sincelejo_name', subKey: 'sincelejo_sub', city: 'Sincelejo', department: 'Sucre', searchTerms: ['sincelejo', 'sucre'] },
+        { id: 'ibague', slug: 'ibaguetolima', flag: '🇨🇴', nameKey: 'ibague_name', subKey: 'ibague_sub', city: 'Ibagué', department: 'Tolima', searchTerms: ['ibague', 'tolima'] },
+        { id: 'cali', slug: 'calivalle', flag: '🇨🇴', nameKey: 'cali_name', subKey: 'cali_sub', city: 'Cali', department: 'Valle del Cauca', searchTerms: ['cali', 'valle', 'valle del cauca', 'calenos'] },
+        { id: 'mitupu', slug: 'mitupuvauapes', flag: '🇨🇴', nameKey: 'mitupu_name', subKey: 'mitupu_sub', city: 'Mitú', department: 'Vaupés', searchTerms: ['mitu', 'vaupe'] },
+        { id: 'puertocarreno', slug: 'puertocarrenovichada', flag: '🇨🇴', nameKey: 'puertocarreno_name', subKey: 'puertocarreno_sub', city: 'Puerto Carreño', department: 'Vichada', searchTerms: ['puerto carreno', 'vichada'] }
     ];
 
     // --------------------------------------------------------------
@@ -728,8 +728,8 @@
             const citySub = langData[city.subKey] || city.department;
             const displayStyle = matches ? '' : 'hidden-card';
             
-            // URL: https://co.qrp2p.com/vendedores/ + slug (con prefijo 18mls)
-            const fullUrl = `https://co.qrp2p.com/vendedores/${city.slug}`;
+            // Ruta personalizada: 18mls.com/[slug]
+            const fullUrl = `https://18mls.com/${city.slug}`;
             
             html += `
                 <a href="${fullUrl}" class="city-card ${displayStyle}" target="_self" rel="noopener noreferrer" data-city-id="${city.id}">
